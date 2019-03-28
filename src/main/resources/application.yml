@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: yzfwh
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+server:
+  port: 9100
+
+
+wx:
+  appId: wx33ceaedab9a6ed8f
+  appsecret: 4c83cdaed8d11e54d447a421a5923202
+  token: Hfjd334Hdsncb873KjdNf322
