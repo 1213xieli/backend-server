@@ -8,7 +8,15 @@ spring:
 
 server:
   port: 9100
-
+zb:
+  rest:
+    enabled: true
+swagger:
+  enabled: true
+  base-package: com.zb.byb.controller
+  title: 帮养宝养户服务号
+  version: 1.0.0.SNAPSHOT
+  description: 帮养宝养户服务号API
 
 wx:
   appId: wx33ceaedab9a6ed8f

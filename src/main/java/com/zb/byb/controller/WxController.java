@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 public class WxController {
     private static final Logger logger = LoggerFactory.getLogger(WxController.class);
     @Value("${wx.appId}")
