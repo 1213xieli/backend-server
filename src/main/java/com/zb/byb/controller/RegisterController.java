@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,6 +21,8 @@ public class RegisterController {
     @ApiOperation("获取注册信息")
     @GetMapping("/list")
     public ResponseEntity<List<UserInfo>> getList(){
-        return null;
+        ResponseEntity<List<UserInfo>>  ent=new ResponseEntity<>();
+        ent.setStatus(201);
+        return ent;
     }
 }
