@@ -22,7 +22,6 @@ public class RegisterController {
     @GetMapping("/list")
     public ResponseEntity<List<UserInfo>> getList(){
         ResponseEntity<List<UserInfo>>  ent=new ResponseEntity<>();
-        ent.setStatus(201);
         return ent;
     }
 }
