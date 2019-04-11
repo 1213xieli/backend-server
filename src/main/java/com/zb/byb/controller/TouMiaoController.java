@@ -30,6 +30,12 @@ public class TouMiaoController {
 
         return ResponseEntity.buildSuccess(info);
     }
+
+    /**
+     * 前台传入，用户登录id
+     * 返回 对象列表数据“TouMiao”
+     * @return
+     */
     @ApiOperation("获取投苗记录列表")
     @GetMapping
     public ResponseEntity<List<TouMiao>> getList(){
