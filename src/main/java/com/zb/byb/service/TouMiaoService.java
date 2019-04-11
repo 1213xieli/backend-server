@@ -1,6 +1,7 @@
 package com.zb.byb.service;
 
 import com.zb.byb.entity.TouMiao;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface TouMiaoService
      * @return
      * @throws Exception
      */
-    List<TouMiao> queryListByUser(String userId) throws Exception;
+    String queryListByUser(String userId) throws Exception;
 
     /**
      * 投苗数据保存
