@@ -19,6 +19,6 @@ public class QuestionReportController {
     @PostMapping("/save")
     public ResponseEntity<?> questionReport(@RequestBody String question) {
 
-        return ResponseEntity.buildSuccess(null);
+        return ResponseEntity.buildSuccess("保存功能-xieli");
     }
 }

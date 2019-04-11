@@ -1,6 +1,7 @@
 package com.zb.byb.controller;
 
 
+import com.zb.byb.entity.DealDetail;
 import com.zb.byb.entity.YuE;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,8 @@ public class YuEQueryController {
     @ApiOperation("获取余额信息")
     @GetMapping("/query")
     public ResponseEntity<YuE> yuEQuery(){
-        return null;
+        YuE info = new YuE();
+        info.setCurrentYuE(3232.54366);
+        return ResponseEntity.buildSuccess(info);
     }
 }

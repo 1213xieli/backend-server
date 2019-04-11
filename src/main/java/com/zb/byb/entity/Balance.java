@@ -2,13 +2,13 @@ package com.zb.byb.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @ApiModel("结算申请")
 public class Balance {
     @ApiModelProperty("结算申请id")
@@ -37,6 +37,5 @@ public class Balance {
     private Double meatRate;
     @ApiModelProperty("平均上市日龄")
     private Integer AvgDayAge;
-
 
 }

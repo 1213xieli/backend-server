@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,8 @@ public class BatchRecordController {
     @ApiOperation("获取批次记录")
     @GetMapping("/list")
     public ResponseEntity<List<BatchRecord>> getList(){
-        return null;
+        List<BatchRecord> list = new ArrayList<>();
+        BatchRecord info = new BatchRecord();
+        return ResponseEntity.buildSuccess(list);
     }
 }

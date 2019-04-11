@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +20,15 @@ public class BalanceRecordController {
     @ApiOperation("获取结算记录")
     @GetMapping("/list")
     public ResponseEntity<List<DeathApply>> getList(){
-        return null;
+        List<DeathApply>  list = new ArrayList<>();
+        DeathApply info = new DeathApply();
+        info.setId("xieli");
+        info.setActualDieNum(32);
+        info.setApplyDieNum(31);
+        info.setBatchId("xie3222");
+        info.setDieDate(new Date());
+        list.add(info);
+        return ResponseEntity.buildSuccess(list);
     }
 
 }
