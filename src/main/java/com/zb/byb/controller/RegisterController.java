@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 注册信息
+ */
 @RestController
 @RequestMapping("/api/register")
 public class RegisterController {

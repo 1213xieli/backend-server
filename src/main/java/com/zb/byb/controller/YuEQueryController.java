@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-
+/**
+ * 余额信息
+ */
 @RestController
 @RequestMapping("/api/yuEQuery")
 public class YuEQueryController {

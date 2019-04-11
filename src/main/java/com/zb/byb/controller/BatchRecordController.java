@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 批次记录
+ */
 @RestController
 @RequestMapping("/api/batchRecord")
 public class BatchRecordController {

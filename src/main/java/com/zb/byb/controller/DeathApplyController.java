@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 死亡申报
+ */
 @RestController
 @RequestMapping("/api/deathApply")
 public class DeathApplyController {

@@ -1,15 +1,14 @@
 package com.zb.byb.entity;
 
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @ApiModel("领料申请")
 public class FeedApply {
     @ApiModelProperty("领料申请id")

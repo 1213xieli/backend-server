@@ -9,7 +9,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.ksoap2.transport.HttpTransportSE;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;

@@ -5,11 +5,11 @@ import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * 物资申请
- *
  */
 @RestController
 @RequestMapping("/api/material")
@@ -22,12 +22,20 @@ public class MaterialController {
     @ApiOperation("保存领料申请")
     @PostMapping("/saveFeedApply")
     public ResponseEntity<?> feedApply(@RequestBody FeedApply feedApply) {
-        return ResponseEntity.buildSuccess(null);
+        FeedApply fee = new FeedApply();
+        fee.setId("xieli");
+        fee.setBatchId("xieli");
+        fee.setPlanDate(new Date());
+        return ResponseEntity.buildSuccess(fee);
     }
     @ApiOperation("获取领料申请记录")
     @GetMapping("/feedList")
     public ResponseEntity<List<FeedApply>> getFeedList(){
-        return null;
+        FeedApply fee = new FeedApply();
+        fee.setId("xieli");
+        fee.setBatchId("xieli");
+        fee.setPlanDate(new Date());
+        return ResponseEntity.buildSuccess(fee);
     }
     /**
      * 我要领药

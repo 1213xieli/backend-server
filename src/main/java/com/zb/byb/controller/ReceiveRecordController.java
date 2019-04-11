@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 领料记录
+ */
 @RestController
 @RequestMapping("/api/receiveRecord")
 public class ReceiveRecordController {
