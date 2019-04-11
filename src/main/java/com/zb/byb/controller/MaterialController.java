@@ -5,6 +5,7 @@ import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -79,10 +80,20 @@ public class MaterialController {
     public ResponseEntity<?> balanceApply(@RequestBody Balance balance) {
         return ResponseEntity.buildSuccess(null);
     }
+
     @ApiOperation("获取结算申请记录")
     @GetMapping("/balanceList")
     public ResponseEntity<List<Balance>> getBalanceList(){
-        return null;
+        List<Balance> list = new ArrayList<Balance>();
+        Balance ba = new Balance();
+        ba.setAliveRate(0.8);
+        ba.setAvgDayAge(12);
+        ba.setAvgWeight(0.8);
+        ba.setId("xieliId");
+        ba.setBatchId("batchid");
+        ba.setGoodAmount(32);
+        list.add(ba);
+        return ResponseEntity.buildSuccess(list);
     }
 
     /**
