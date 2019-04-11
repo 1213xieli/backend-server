@@ -29,6 +29,75 @@ public class BalanceRecord {
     @ApiModelProperty("结算明细")
     private BalanceDetail balanceDetail;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(String batchId) {
+        this.batchId = batchId;
+    }
+
+    public String getBread() {
+        return bread;
+    }
+
+    public void setBread(String bread) {
+        this.bread = bread;
+    }
+
+    public Double getTouMiaoAvgWeight() {
+        return touMiaoAvgWeight;
+    }
+
+    public void setTouMiaoAvgWeight(Double touMiaoAvgWeight) {
+        this.touMiaoAvgWeight = touMiaoAvgWeight;
+    }
+
+    public Double getAvgWeight() {
+        return AvgWeight;
+    }
+
+    public void setAvgWeight(Double avgWeight) {
+        AvgWeight = avgWeight;
+    }
+
+    public Double getAliveRate() {
+        return aliveRate;
+    }
+
+    public void setAliveRate(Double aliveRate) {
+        this.aliveRate = aliveRate;
+    }
+
+    public Double getMeatRate() {
+        return meatRate;
+    }
+
+    public void setMeatRate(Double meatRate) {
+        this.meatRate = meatRate;
+    }
+
+    public Double getGoodRate() {
+        return goodRate;
+    }
+
+    public void setGoodRate(Double goodRate) {
+        this.goodRate = goodRate;
+    }
+
+    public BalanceDetail getBalanceDetail() {
+        return balanceDetail;
+    }
+
+    public void setBalanceDetail(BalanceDetail balanceDetail) {
+        this.balanceDetail = balanceDetail;
+    }
 }
