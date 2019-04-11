@@ -15,6 +15,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Map;
 
+/**
+ * 微信相关
+ */
 @RestController
 @RequestMapping("/api")
 public class WxController {

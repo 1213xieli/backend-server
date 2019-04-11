@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 问题反馈信息
+ */
 @RestController
 @RequestMapping("/api/questionReport")
 public class QuestionReportController {
@@ -16,6 +19,6 @@ public class QuestionReportController {
     @PostMapping("/save")
     public ResponseEntity<?> questionReport(@RequestBody String question) {
 
-        return ResponseEntity.buildSuccess(null);
+        return ResponseEntity.buildSuccess("保存功能-xieli");
     }
 }

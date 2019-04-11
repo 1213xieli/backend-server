@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- *
+ * 销售通知
  */
 @RestController
 @RequestMapping("/api/saleNotice")

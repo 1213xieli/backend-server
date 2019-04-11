@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 注册信息
+ */
 @RestController
 @RequestMapping("/api/register")
 public class RegisterController {

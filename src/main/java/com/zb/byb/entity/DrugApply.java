@@ -31,4 +31,5 @@ public class DrugApply {
     @ApiModelProperty("实际领药明细")
     private List<Drug> actualList;
 
+
 }
