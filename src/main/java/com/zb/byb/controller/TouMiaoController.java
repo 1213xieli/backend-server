@@ -24,8 +24,9 @@ public class TouMiaoController {
     private TouMiaoService touMiaoService;
 
     @ApiOperation("保存投苗申请")
-    @PostMapping("toumiaoApply")
-    public ResponseEntity<?> toumiaoApply(@RequestBody TouMiao touMiao) {
+    @GetMapping("/toumiaoApply")
+    @ResponseBody
+    public ResponseEntity<?> toumiaoApply(@RequestBody(required = false) TouMiao touMiao) {
         try{
             boolean flag = touMiaoService.saveInfo(touMiao);
             return ResponseEntity.buildSuccess(flag);
@@ -34,8 +35,36 @@ public class TouMiaoController {
         {
             return ResponseEntity.build(100, "无法保存数据");
         }
-
     }
+
+    @ApiOperation("初始化投苗数据")
+    @GetMapping("/queryTouMiaoInitData")
+    @ResponseBody
+    public ResponseEntity<TouMiao> queryTouMiaoInitData(@RequestBody(required = false) String tokenid)
+    {
+        try{
+            return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(tokenid));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+    @ApiOperation("根据用户id查询到投苗记录")
+    @GetMapping("/queryTouMiaoRecordList")
+    @ResponseBody
+    public ResponseEntity<TouMiao> queryTouMiaoRecordList(@RequestBody(required = false) String tokenid)
+    {
+        try{
+            return ResponseEntity.buildSuccess(touMiaoService.queryInfoRecordList(tokenid));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
 
     /**
      * 前台传入，用户登录id
@@ -44,7 +73,8 @@ public class TouMiaoController {
      */
     @ApiOperation("获取投苗记录列表")
     @GetMapping("/getList")
-    public ResponseEntity<List<TouMiao>> getList(@RequestBody UserInfo userInfo){
+    @ResponseBody
+    public ResponseEntity<List<TouMiao>> getList(@RequestBody(required = false) UserInfo userInfo){
         try{
             return ResponseEntity.buildSuccess(touMiaoService.queryListByUser(userInfo.getIdentity()));
         }
