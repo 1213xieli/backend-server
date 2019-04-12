@@ -2,13 +2,13 @@ package com.zb.byb.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @ApiModel("投苗申请")
 public class TouMiao {
     @ApiModelProperty("申请投苗ID")
@@ -41,6 +41,6 @@ public class TouMiao {
     private Boolean barrelReadied;
     @ApiModelProperty("上猪台是否准备")
     private Boolean pigTableReadied;
-    @ApiModelProperty("上猪台是否准备")
+    @ApiModelProperty("加温/降温设施是否达到标准")
     private Boolean temperatureControlReadied;
 }

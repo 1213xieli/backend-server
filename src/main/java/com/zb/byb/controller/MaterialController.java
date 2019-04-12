@@ -1,8 +1,11 @@
 package com.zb.byb.controller;
 
 import com.zb.byb.entity.*;
+import com.zb.byb.service.DrugApplyService;
+import com.zb.byb.service.EquipmentApplyService;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,6 +18,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/material")
 public class MaterialController {
+
+    @Autowired
+    private DrugApplyService drugApplyService;
+    @Autowired
+    private EquipmentApplyService equipmentApplyService;
+
+
     /**
      * 我要领料
      * @param feedApply
@@ -29,6 +39,7 @@ public class MaterialController {
         fee.setPlanDate(new Date());
         return ResponseEntity.buildSuccess(fee);
     }
+
     @ApiOperation("获取领料申请记录")
     @GetMapping("/feedList")
     public ResponseEntity<List<FeedApply>> getFeedList(){
@@ -38,6 +49,8 @@ public class MaterialController {
         fee.setPlanDate(new Date());
         return ResponseEntity.buildSuccess(fee);
     }
+
+
     /**
      * 我要领药
      * @param drugApply
@@ -46,35 +59,125 @@ public class MaterialController {
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
     public ResponseEntity<?> drugApply(@RequestBody DrugApply drugApply) {
-        DrugApply d = new DrugApply();
-        d.setId("xieli");
-        d.setApplyDate(new Date());
-        d.setBatchId("xieli11");
-        d.setReason("gadce");
-        d.setEntrust(true);
-        d.setVoice("voice");
-        return ResponseEntity.buildSuccess(d);
+        try{
+            boolean flag = drugApplyService.saveInfo(drugApply);
+            return ResponseEntity.buildSuccess(flag);
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法保存数据");
+        }
     }
-    @ApiOperation("获取领药申请记录")
-    @GetMapping("/drugList")
-    public ResponseEntity<List<DrugApply>> getDrugList(){
-        DrugApply d = new DrugApply();
-        d.setId("xieli");
-        d.setApplyDate(new Date());
-        d.setBatchId("xieli11");
-        d.setReason("gadce");
-        d.setEntrust(true);
-        d.setVoice("voice");
-        List<DrugApply> list = new ArrayList<DrugApply>();
-        list.add(d);
-        return ResponseEntity.buildSuccess(list);
+    @ApiOperation("初始化我要领药数据")
+    @PostMapping("queryDrugApplyInitData")
+    public ResponseEntity<DrugApply> queryDrugApplyInitData(@RequestBody String tokenid)
+    {
+        try{
+            return ResponseEntity.buildSuccess(drugApplyService.queryListInitData(tokenid));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
     }
 
+    @ApiOperation("根据用户id查询到投苗记录")
+    @PostMapping("queryTouMiaoRecordList")
+    public ResponseEntity<DrugApply> queryDrugApplyRecordList(@RequestBody String tokenid)
+    {
+        try{
+            return ResponseEntity.buildSuccess(drugApplyService.queryInfoRecordList(tokenid));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+
     /**
+     * 前台传入，用户登录id
+     * 返回 对象列表数据“TouMiao”
+     * @return
+     */
+    @ApiOperation("获取领药申请记录")
+    @GetMapping("/getDrugList")
+    public ResponseEntity<List<DrugApply>> getDrugList(@RequestBody UserInfo userInfo){
+        try{
+            return ResponseEntity.buildSuccess(drugApplyService.queryListByUser(userInfo.getIdentity()));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+    /**
+     * 设备领用
+     * @param
+     * @return
+     */
+    @ApiOperation("保存领药申请")
+    @PostMapping("/saveEquipmentApply")
+    public ResponseEntity<?> saveEquipmentApply(@RequestBody EquipmentApply equipmentApply) {
+        try{
+            boolean flag = equipmentApplyService.saveInfo(equipmentApply);
+            return ResponseEntity.buildSuccess(flag);
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法保存数据");
+        }
+    }
+    @ApiOperation("初始化设备申请数据")
+    @PostMapping("queryEquipmentApplyInitData")
+    public ResponseEntity queryEquipmentApplyInitData(@RequestBody String tokenid)
+    {
+        try{
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryListInitData(tokenid));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+    @ApiOperation("根据用户id查询到投苗记录")
+    @PostMapping("queryEquipmentApplyRecordList")
+    public ResponseEntity<EquipmentApply> queryEquipmentApplyRecordList(@RequestBody String tokenid)
+    {
+        try{
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoRecordList(tokenid));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+
+    /**
+     * 前台传入，用户登录id
+     * 返回 对象列表数据“TouMiao”
+     * @return
+     */
+    @ApiOperation("获取设备申请记录")
+    @GetMapping("/getEquipmentApplyList")
+    public ResponseEntity<List<EquipmentApply>> getEquipmentApplyList(@RequestBody UserInfo userInfo){
+        try{
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryListByUser(userInfo.getIdentity()));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+
+/*    *//**
      * 设备领用
      * @param equipmentApply
      * @return
-     */
+     *//*
     @ApiOperation("保存设备领用申请")
     @PostMapping("/saveEquipmentApply")
     public ResponseEntity<?> equipmentApply(@RequestBody EquipmentApply equipmentApply) {
@@ -98,7 +201,7 @@ public class MaterialController {
         e.setEntrust(true);
         list.add(e);
         return ResponseEntity.buildSuccess(list);
-    }
+    }*/
 
     /**
      * 我要结算
