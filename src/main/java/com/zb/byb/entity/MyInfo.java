@@ -11,6 +11,8 @@ import java.util.Date;
 @Setter
 @ApiModel("我的信息")
 public class MyInfo {
+    @ApiModelProperty("养户id")
+    private String id;
     @ApiModelProperty("姓名")
     private String Name;
     @ApiModelProperty("手机号")
@@ -18,7 +20,7 @@ public class MyInfo {
     @ApiModelProperty("猪舍地址")
     private String piggeryAddress;
     @ApiModelProperty("开户时间")
-    private Date registerDate;
+    private String registerDate;
     @ApiModelProperty("所属服务部")
     private String dept;
     @ApiModelProperty("管理员")

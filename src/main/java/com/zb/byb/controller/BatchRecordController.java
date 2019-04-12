@@ -1,15 +1,20 @@
 package com.zb.byb.controller;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.BatchRecord;
 import com.zb.byb.entity.DeathApply;
+import com.zb.byb.service.BatchRecordService;
+import com.zb.byb.service.TouMiaoService;
 import com.zb.byb.util.HttpUtils;
 import com.zb.byb.util.JDService;
 import com.zb.byb.util.MethodName;
 import com.zb.byb.util.RequestUtils;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,34 +31,48 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/batchRecord")
 public class BatchRecordController {
+    @Autowired
+    private BatchRecordService batchRecordService;
     @ApiOperation("获取批次记录")
     @GetMapping("/list")
     public ResponseEntity<List<BatchRecord>> getList(HttpServletRequest request,BatchRecord batchRecord){
         //获取openid
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        //登入获取sessionId
-        String sessionId=null;
+        //批次号
+        String batchId=batchRecord.getBatchId();
+        //假数据
+        List<BatchRecord> list=new ArrayList<>();
+        BatchRecord record=new BatchRecord();
+        record.setBatchId("zb221");
+        record.setBread("黑猪");
+        record.setDayAge(10);
+        record.setDieNum(10);
+        record.setInNum(7777);
+        BatchRecord record2=new BatchRecord();
+        record2.setBatchId("zbc2212");
+        record2.setBread("白猪");
+        record2.setDayAge(1);
+        record2.setDieNum(200);
+        record2.setInNum(120);
+        list.add(record2);
+        list.add(record);
+        ResponseEntity<List<BatchRecord>> resp=new ResponseEntity<>();
+        resp.setData(list);
         try {
-            sessionId = JDService.login();
+            String backData= batchRecordService.viewBatchRecord(batchId,openId);
+            JSONObject jsonObjec=JSONObject.fromObject(backData);
+
+
+
+            return resp;
+            //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseEntity.build(100, "无法查询");
         }
-        //将数据传入map
-        Map map=new HashMap();
-        map.put("openId",openId);
-        map.put("sessionId",sessionId);
-        map.put("data",batchRecord);
-        String data=JSONObject.fromObject(map).toString();
-        //获取返回的json字符串
-        String dataBack=null;
-        try {
-            dataBack=JDService.bybService(sessionId,data, MethodName.METHOD_NAME_QUERY_BATCHRECORD);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        List<BatchRecord> list = new ArrayList<>();
-        JSONObject obj=JSONObject.fromObject(dataBack);
-        list.add((BatchRecord)JSONObject.toBean(obj,BatchRecord.class));
-        return ResponseEntity.buildSuccess(list);
     }
+
+
+
+
+
 }

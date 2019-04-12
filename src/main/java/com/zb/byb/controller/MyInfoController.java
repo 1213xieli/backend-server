@@ -2,16 +2,15 @@ package com.zb.byb.controller;
 
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.MyInfo;
+import com.zb.byb.service.MyInfoService;
 import com.zb.byb.util.JDService;
 import com.zb.byb.util.MethodName;
 import com.zb.byb.util.RequestUtils;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -19,35 +18,35 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/myInfo")
 public class MyInfoController {
-
+    @Autowired
+    private MyInfoService myInfoService;
     @ApiOperation("查看我的信息")
-    @PostMapping("/list")
-    public ResponseEntity<?> queryMyInfo(@RequestBody MyInfo myInfo, HttpServletRequest request) {
+    @GetMapping("/list")
+    public ResponseEntity<List<MyInfo>> queryMyInfo(MyInfo myInfo,HttpServletRequest request) {
+        //获取openid
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        String sessionId=null;
+        openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
         try {
-             sessionId= JDService.login();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //将数据传入map
-        Map map=new HashMap();
-        map.put("openId",openId);
-        map.put("sessionId",sessionId);
-        map.put("data",myInfo);
-        String data= JSONObject.fromObject(map).toString();
-        //获取返回的json字符串
-        String dataBack=null;
-        try {
-            dataBack=JDService.bybService(sessionId,data, MethodName.METHOD_NAME_QUERY_BATCHRECORD);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        List<MyInfo> list = new ArrayList<>();
-        JSONObject obj=JSONObject.fromObject(dataBack);
-        list.add((MyInfo)JSONObject.toBean(obj,MyInfo.class));
+            JSONObject jsonObject = null;
+            jsonObject = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
+            myInfo.setDept(jsonObject.getString("servicedep"));
+            myInfo.setEntrustedIdentity("");//被委托人身份证
+            myInfo.setEntrustedName("");//被委托人姓名
+            myInfo.setGrowUp("");//我的成长
+            myInfo.setManager(jsonObject.getString("manager"));
+            myInfo.setManagerTelNum(jsonObject.getString("fcell"));
+            myInfo.setName(jsonObject.getString("fname"));
+            myInfo.setPiggeryAddress(jsonObject.getString("cfpigpen"));//猪舍地址
+            myInfo.setRegisterDate(jsonObject.getString("fkhsj"));
+            myInfo.setStatus(jsonObject.getString("cfraisestate"));
+            myInfo.setTelNum(jsonObject.getString("ftelno"));
+            System.out.println(myInfo.getName());
+            return ResponseEntity.buildSuccess(myInfoService.viewMyInfo(openId));
 
-        return ResponseEntity.buildSuccess(list);
+        } catch (Exception e) {
+            return ResponseEntity.build(500, "内部服务器错误");
+        }
+
     }
 
 }
