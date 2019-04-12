@@ -1,16 +1,12 @@
 package com.zb.byb.service;
 
-import com.zb.byb.entity.TouMiao;
-import org.mapstruct.Mapper;
-
-import java.util.List;
+import com.zb.byb.entity.DrugApply;
 
 /**
- * 投苗业务层处理
+ * 领药申请,业务接口
  * 作者：谢李
  */
-public interface TouMiaoService
-{
+public interface DrugApplyService{
     /**
      * 通过登入人id获取投苗
      * @param userId
@@ -25,7 +21,7 @@ public interface TouMiaoService
      * @return
      * @throws Exception
      */
-    boolean saveInfo(TouMiao info) throws Exception;
+    boolean saveInfo(DrugApply info) throws Exception;
 
     /**
      * 根据前台传过来的tokenid，初始化数据
@@ -33,7 +29,7 @@ public interface TouMiaoService
      * @return 返回对象
      * @throws Exception 异常
      */
-    TouMiao queryListInitData(String tokenId) throws Exception;
+    DrugApply queryListInitData(String tokenId) throws Exception;
 
     /**
      * 根据用户id查询到投苗记录
@@ -41,5 +37,5 @@ public interface TouMiaoService
      * @return 返回对象
      * @throws Exception 异常
      */
-    TouMiao queryInfoRecordList(String tokenId) throws Exception;
+    DrugApply queryInfoRecordList(String tokenId) throws Exception;
 }
