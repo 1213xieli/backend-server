@@ -43,8 +43,10 @@ public class LoginController {
         String userId=null;
         try {
             String backData=myInfoService.viewMyInfo(openId);
-            JSONObject jsonObject=JSONObject.fromObject(backData);
+            JSONObject jsonObject1=JSONObject.fromObject(backData);
+            JSONObject jsonObject=JSONObject.fromObject(jsonObject1.getString("data"));
             userId=jsonObject.getString("id");
+            System.out.println("userId="+userId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,6 +62,8 @@ public class LoginController {
         //失败
         return ResponseEntity.buildSuccess("登入成功");
     }
+
+
     @ApiOperation("获取验证码")
     @PostMapping("/getCode")
     public ResponseEntity<?> getCode(@RequestBody UserInfo userInfo, HttpServletRequest request) {

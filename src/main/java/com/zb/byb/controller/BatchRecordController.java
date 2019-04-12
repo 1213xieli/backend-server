@@ -37,37 +37,24 @@ public class BatchRecordController {
     @GetMapping("/list")
     public ResponseEntity<List<BatchRecord>> getList(HttpServletRequest request,BatchRecord batchRecord){
         //获取openid
-        String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
+        //String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
+        //获取userId
+        String userId=(String) request.getSession().getAttribute("userId");
         //批次号
         String batchId=batchRecord.getBatchId();
-        //假数据
-        List<BatchRecord> list=new ArrayList<>();
-        BatchRecord record=new BatchRecord();
-        record.setBatchId("zb221");
-        record.setBread("黑猪");
-        record.setDayAge(10);
-        record.setDieNum(10);
-        record.setInNum(7777);
-        BatchRecord record2=new BatchRecord();
-        record2.setBatchId("zbc2212");
-        record2.setBread("白猪");
-        record2.setDayAge(1);
-        record2.setDieNum(200);
-        record2.setInNum(120);
-        list.add(record2);
-        list.add(record);
-        ResponseEntity<List<BatchRecord>> resp=new ResponseEntity<>();
-        resp.setData(list);
         try {
-            String backData= batchRecordService.viewBatchRecord(batchId,openId);
-            JSONObject jsonObjec=JSONObject.fromObject(backData);
-
-
-
+            String backData= batchRecordService.viewBatchRecord(batchId,userId);
+            String data=JSONObject.fromObject(backData).getString("data");
+            //转成list
+            JSONArray fromObject = JSONArray.fromObject(backData);
+            List<BatchRecord> list = fromObject.toList(fromObject,BatchRecord.class);
+            ResponseEntity<List<BatchRecord>> resp=new ResponseEntity<>();
+            resp.setData(list);
             return resp;
             //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {
-            return ResponseEntity.build(100, "无法查询");
+            e.printStackTrace();
+            return ResponseEntity.build(500,"服务器出错");
         }
     }
 
