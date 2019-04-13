@@ -58,7 +58,7 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
-    public ResponseEntity<?> drugApply(@RequestBody DrugApply drugApply) {
+    public ResponseEntity<?> drugApply(DrugApply drugApply) {
         try{
             boolean flag = drugApplyService.saveInfo(drugApply);
             return ResponseEntity.buildSuccess(flag);
@@ -69,8 +69,8 @@ public class MaterialController {
         }
     }
     @ApiOperation("初始化我要领药数据")
-    @PostMapping("queryDrugApplyInitData")
-    public ResponseEntity<DrugApply> queryDrugApplyInitData(@RequestBody String tokenid)
+    @GetMapping("/queryDrugApplyInitData")
+    public ResponseEntity<DrugApply> queryDrugApplyInitData(String tokenid)
     {
         try{
             return ResponseEntity.buildSuccess(drugApplyService.queryListInitData(tokenid));
@@ -82,8 +82,8 @@ public class MaterialController {
     }
 
     @ApiOperation("根据用户id查询到投苗记录")
-    @PostMapping("queryTouMiaoRecordList")
-    public ResponseEntity<DrugApply> queryDrugApplyRecordList(@RequestBody String tokenid)
+    @GetMapping("/queryTouMiaoRecordList")
+    public ResponseEntity<DrugApply> queryDrugApplyRecordList(String tokenid)
     {
         try{
             return ResponseEntity.buildSuccess(drugApplyService.queryInfoRecordList(tokenid));
@@ -102,7 +102,7 @@ public class MaterialController {
      */
     @ApiOperation("获取领药申请记录")
     @GetMapping("/getDrugList")
-    public ResponseEntity<List<DrugApply>> getDrugList(@RequestBody UserInfo userInfo){
+    public ResponseEntity<List<DrugApply>> getDrugList(UserInfo userInfo){
         try{
             return ResponseEntity.buildSuccess(drugApplyService.queryListByUser(userInfo.getIdentity()));
         }
@@ -118,7 +118,7 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveEquipmentApply")
-    public ResponseEntity<?> saveEquipmentApply(@RequestBody EquipmentApply equipmentApply) {
+    public ResponseEntity<?> saveEquipmentApply(EquipmentApply equipmentApply) {
         try{
             boolean flag = equipmentApplyService.saveInfo(equipmentApply);
             return ResponseEntity.buildSuccess(flag);
@@ -129,8 +129,8 @@ public class MaterialController {
         }
     }
     @ApiOperation("初始化设备申请数据")
-    @PostMapping("queryEquipmentApplyInitData")
-    public ResponseEntity queryEquipmentApplyInitData(@RequestBody String tokenid)
+    @GetMapping("/queryEquipmentApplyInitData")
+    public ResponseEntity queryEquipmentApplyInitData(String tokenid)
     {
         try{
             return ResponseEntity.buildSuccess(equipmentApplyService.queryListInitData(tokenid));
@@ -142,8 +142,8 @@ public class MaterialController {
     }
 
     @ApiOperation("根据用户id查询到投苗记录")
-    @PostMapping("queryEquipmentApplyRecordList")
-    public ResponseEntity<EquipmentApply> queryEquipmentApplyRecordList(@RequestBody String tokenid)
+    @GetMapping("/queryEquipmentApplyRecordList")
+    public ResponseEntity<EquipmentApply> queryEquipmentApplyRecordList(String tokenid)
     {
         try{
             return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoRecordList(tokenid));
@@ -162,7 +162,7 @@ public class MaterialController {
      */
     @ApiOperation("获取设备申请记录")
     @GetMapping("/getEquipmentApplyList")
-    public ResponseEntity<List<EquipmentApply>> getEquipmentApplyList(@RequestBody UserInfo userInfo){
+    public ResponseEntity<List<EquipmentApply>> getEquipmentApplyList(UserInfo userInfo){
         try{
             return ResponseEntity.buildSuccess(equipmentApplyService.queryListByUser(userInfo.getIdentity()));
         }

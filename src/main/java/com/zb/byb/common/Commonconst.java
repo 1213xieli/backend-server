@@ -6,9 +6,10 @@ package com.zb.byb.common;
  */
 public class Commonconst
 {
-    public final String Back_Success = "保存成功";
-    public final String Back_Fail = "保存失败";
-
+    public static final String Back_Success = "保存成功";
+    public static final String Back_Fail = "保存失败";
+    // 设置一个固定的openid,测试数据使用
+    public static final String OpenId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
 
 
 }
