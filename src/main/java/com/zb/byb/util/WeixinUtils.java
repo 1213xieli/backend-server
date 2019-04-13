@@ -32,7 +32,7 @@ public class WeixinUtils {
 	 *            请求方式（GET、POST）
 	 * @param outputStr
 	 *            提交的数据
-	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
+	 * @return EquipmentApplyObject(通过EquipmentApplyObject.get(key)的方式获取EquipmentApply对象的属性值)
 	 */
 	public static String httpRequest(String requestUrl, String requestMethod, String outputStr) {
 		String result = null;

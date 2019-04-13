@@ -24,12 +24,12 @@ public class TouMiaoController {
     private TouMiaoService touMiaoService;
 
     @ApiOperation("保存投苗申请")
-    @GetMapping("/toumiaoApply")
+    @PostMapping("/saveToumiaoApply")
     @ResponseBody
-    public ResponseEntity<?> toumiaoApply(@RequestBody(required = false) TouMiao touMiao) {
+    public ResponseEntity<?> saveToumiaoApply(TouMiao touMiao) {
         try{
             boolean flag = touMiaoService.saveInfo(touMiao);
-            return ResponseEntity.buildSuccess(flag);
+            return ResponseEntity.buildSuccess(Commonconst.Back_Success);
         }
         catch (Exception e)
         {
@@ -40,7 +40,7 @@ public class TouMiaoController {
     @ApiOperation("初始化投苗数据")
     @GetMapping("/queryTouMiaoInitData")
     @ResponseBody
-    public ResponseEntity<TouMiao> queryTouMiaoInitData(@RequestBody(required = false) String tokenid)
+    public ResponseEntity<TouMiao> queryTouMiaoInitData(String tokenid)
     {
         try{
             return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(tokenid));
@@ -54,7 +54,7 @@ public class TouMiaoController {
     @ApiOperation("根据用户id查询到投苗记录")
     @GetMapping("/queryTouMiaoRecordList")
     @ResponseBody
-    public ResponseEntity<TouMiao> queryTouMiaoRecordList(@RequestBody(required = false) String tokenid)
+    public ResponseEntity<TouMiao> queryTouMiaoRecordList(String tokenid)
     {
         try{
             return ResponseEntity.buildSuccess(touMiaoService.queryInfoRecordList(tokenid));
@@ -74,9 +74,9 @@ public class TouMiaoController {
     @ApiOperation("获取投苗记录列表")
     @GetMapping("/getList")
     @ResponseBody
-    public ResponseEntity<List<TouMiao>> getList(@RequestBody(required = false) UserInfo userInfo){
+    public ResponseEntity<List<TouMiao>> getList(String id){
         try{
-            return ResponseEntity.buildSuccess(touMiaoService.queryListByUser(userInfo.getIdentity()));
+            return ResponseEntity.buildSuccess(touMiaoService.queryListByUser(id));
         }
         catch (Exception e)
         {
