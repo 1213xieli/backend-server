@@ -8,11 +8,9 @@ import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,7 +24,7 @@ public class QuestionReportController {
 
     @ApiOperation("保存问题反馈信息")
     @PostMapping("/saveQuestionReport")
-    public ResponseEntity<?> saveQuestionReport(@RequestBody QuestionReportInfo info) {
+    public ResponseEntity<?> saveQuestionReport(QuestionReportInfo info) {
         try {
             questionReportInfoService.saveQuestionReport(info);
 
@@ -39,9 +37,11 @@ public class QuestionReportController {
     }
 
     @ApiOperation("常见问题查询列表")
-    @PostMapping("/queryNormalQuestionList")
-    public ResponseEntity<?> queryNormalQuestionList(@RequestBody Map<String, Object> map) {
+    @GetMapping("/queryNormalQuestionList")
+    public ResponseEntity<?> queryNormalQuestionList(String id) {
         try {
+            Map map = new HashMap();
+            map.put("id", id);
             questionReportInfoService.queryNormalQuestionList(map);
 
             return ResponseEntity.buildSuccess(Commonconst.Back_Success);
