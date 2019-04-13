@@ -45,6 +45,7 @@ public class BatchRecordController {
         try {
             String backData= batchRecordService.viewBatchRecord(batchId,userId);
             String data=JSONObject.fromObject(backData).getString("data");
+            System.out.println("data="+data);
             //转成list
             JSONArray fromObject = JSONArray.fromObject(backData);
             List<BatchRecord> list = fromObject.toList(fromObject,BatchRecord.class);

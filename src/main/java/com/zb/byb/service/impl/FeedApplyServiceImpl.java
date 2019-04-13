@@ -5,32 +5,28 @@ import com.zb.byb.service.FeedRecordService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
-import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-@Service
-public class FeedRecordServiceImpl implements FeedRecordService {
+
+public class FeedApplyServiceImpl implements FeedRecordService {
     @Override
-    public String addFeedRecord(FeedRecord feedRecord, String userId) throws Exception{
+    public String addFeedRecord(FeedRecord feedRecord, String userId) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("data",feedRecord);
         map.put("userId",userId);
         String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_SUPPLIESBILL);
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PICKINGAPPLY);
         return jsonStr;
     }
 
     @Override
-    public String queryFeedRecord(String userId)throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> map1 = new HashMap<>();
+    public String queryFeedRecord(String userId) throws Exception {
 
-        map1.put("","");
+        Map<String, Object> map = new HashMap<>();
         map.put("userId",userId);
         String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_SUPPLIESBILL);
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PICKINGAPPLY);
         return jsonStr;
-
     }
 }

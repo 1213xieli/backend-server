@@ -1,5 +1,6 @@
 package com.zb.byb.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.MyInfo;
 import com.zb.byb.service.MyInfoService;
@@ -20,15 +21,21 @@ import java.util.*;
 public class MyInfoController {
     @Autowired
     private MyInfoService myInfoService;
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @ApiOperation("查看我的信息")
     @GetMapping("/list")
-    public ResponseEntity<List<MyInfo>> queryMyInfo(MyInfo myInfo,HttpServletRequest request) {
+    public ResponseEntity<MyInfo> queryMyInfo(MyInfo myInfo,HttpServletRequest request) {
         //获取openid
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
         try {
-            JSONObject jsonObject = null;
-            jsonObject = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
+
+            /*JSONObject jsonObject1 = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
+            System.out.println(jsonObject1.toString());
+            JSONObject jsonObject=JSONObject.fromObject(jsonObject1.getString("data"));
+            //赋值
             myInfo.setDept(jsonObject.getString("servicedep"));
             myInfo.setEntrustedIdentity("");//被委托人身份证
             myInfo.setEntrustedName("");//被委托人姓名
@@ -41,9 +48,18 @@ public class MyInfoController {
             myInfo.setStatus(jsonObject.getString("cfraisestate"));
             myInfo.setTelNum(jsonObject.getString("ftelno"));
             System.out.println(myInfo.getName());
-            return ResponseEntity.buildSuccess(myInfoService.viewMyInfo(openId));
+            */
+            System.out.println("json="+myInfoService.viewMyInfo(openId));
+           JSONObject result = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
+           String dataInfo = result.getString("data");
 
+            myInfo = objectMapper.readValue(dataInfo, MyInfo.class);
+
+            ResponseEntity<MyInfo> resp=new ResponseEntity<>();
+            resp.setData(myInfo);
+            return resp;
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.build(500, "内部服务器错误");
         }
 

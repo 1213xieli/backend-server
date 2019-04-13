@@ -10,6 +10,7 @@ import com.zb.byb.util.RequestUtils;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,18 +22,30 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/register")
 public class RegisterController {
+    @Autowired
     private LoginService loginService;
     @ApiOperation("保存注册信息")
     @PostMapping("/save")
     public ResponseEntity<?> register(@RequestBody UserInfo userInfo, HttpServletRequest request) {
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
+        /*userInfo.setName("cqp");
+        userInfo.setTelNum("18070505443");
+        userInfo.setTelNum("新建区");
+        userInfo.setIdentity("360122199311090914");
+        openId="oIWY8wahhrID4MLw68Ks3zIb12cqptest";*/
+        System.out.println("openId="+openId);
         try {
-            return ResponseEntity.buildSuccess(loginService.register(userInfo,openId));
+            String backData=loginService.register(userInfo,openId);
+            System.out.println("data="+backData);
+            return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.build(100, "注册失败");
         }
 
     }
+
+
     /*@ApiOperation("获取注册信息")
     @GetMapping("/list")
     public ResponseEntity<List<UserInfo>> getList(){

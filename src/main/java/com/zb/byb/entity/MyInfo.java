@@ -1,5 +1,6 @@
 package com.zb.byb.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -11,22 +12,31 @@ import java.util.Date;
 @Setter
 @ApiModel("我的信息")
 public class MyInfo {
+
     @ApiModelProperty("养户id")
     private String id;
+
     @ApiModelProperty("姓名")
-    private String Name;
+    private String fname;
+
     @ApiModelProperty("手机号")
-    private String telNum;
+    private String ftelno;
+    @JsonProperty(value = "cfpigpen")
     @ApiModelProperty("猪舍地址")
     private String piggeryAddress;
+    @JsonProperty(value = "fkhsj")
     @ApiModelProperty("开户时间")
     private String registerDate;
+    @JsonProperty(value = "servicedep")
     @ApiModelProperty("所属服务部")
     private String dept;
+    @JsonProperty(value = "manager")
     @ApiModelProperty("管理员")
     private String manager;
+    @JsonProperty(value = "fcell")
     @ApiModelProperty("管理员电话")
     private String managerTelNum;
+    @JsonProperty(value = "cfraisestate")
     @ApiModelProperty("饲养状态")
     private String status;
     @ApiModelProperty("我的成长")
