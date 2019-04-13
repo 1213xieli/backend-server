@@ -12,9 +12,9 @@ import java.util.Map;
 public class BatchRecordServiceImpl implements BatchRecordService {
 
     @Override
-    public String viewBatchRecord(String batchId, String openId) throws Exception {
+    public String viewBatchRecord(String batchId, String userId) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("openId",openId);
+        map.put("openId",userId);
         map.put("data",batchId);
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_BATCHRECORD);

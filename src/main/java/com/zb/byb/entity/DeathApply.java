@@ -31,5 +31,7 @@ public class DeathApply {
     private Double wei;
     @ApiModelProperty("死猪照片")
     private String DiePic;
+    @ApiModelProperty("申请记录状态")
+    private String status;
 
 }
