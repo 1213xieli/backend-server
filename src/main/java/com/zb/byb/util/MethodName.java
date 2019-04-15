@@ -1,7 +1,8 @@
 package com.zb.byb.util;
 
 public class MethodName {
-    public static final String METHOD_NAME_LOGIN_CUSTSTART="saveLoginStart";//登入
+    public  static final String METHOD_NAME_UNBIND_CUSTINFO="unBindCustInfo";//解绑
+    public  static final String METHOD_NAME_BIND_CUSTINFO="bindCustInfo";//绑定
     public static final String METHOD_NAME_SAVE_CUSTSTART="saveCustStart";//开户申请保存
     public static final String METHOD_NAME_QUERY_CUSTSTART="queryCustStart";//开户申请查看序时簿
     public static final String METHOD_NAME_VIEW_CUSTSTART="viewCustStart";//开户申请查看

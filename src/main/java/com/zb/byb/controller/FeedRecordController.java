@@ -31,7 +31,7 @@ public class FeedRecordController {
             return ResponseEntity.buildSuccess(feedRecordService.addFeedRecord(feedRecord,userId));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500,"服务出现问题");
+            return ResponseEntity.build(500,"服务器出现问题");
         }
     }
     @ApiOperation("获取饲喂记录")
@@ -39,9 +39,16 @@ public class FeedRecordController {
     public ResponseEntity<List<FeedRecord>> getList(HttpServletRequest request){
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
+        System.out.println("userId="+userId);
+        userId="Va4AAAA+/JHMns7U";
+        System.out.println();
+
         try {
             String backData= feedRecordService.queryFeedRecord(userId);
+            System.out.println("backData="+backData);
             String data= JSONObject.fromObject(backData).getString("data");
+            //获取字段
+
             //转成list
             JSONArray fromObject = JSONArray.fromObject(backData);
             List<FeedRecord> list1 = fromObject.toList(fromObject,FeedRecord.class);

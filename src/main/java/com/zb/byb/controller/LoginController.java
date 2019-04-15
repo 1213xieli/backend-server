@@ -3,7 +3,6 @@ package com.zb.byb.controller;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.MyInfoService;
-import com.zb.byb.util.HttpUtils;
 import com.zb.byb.util.JDService;
 import com.zb.byb.util.RequestUtils;
 import com.zb.framework.common.entity.ResponseEntity;
