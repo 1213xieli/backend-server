@@ -32,23 +32,33 @@ public class QuestionReportController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Success);
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
         }
     }
 
-    @ApiOperation("常见问题查询列表")
-    @GetMapping("/queryNormalQuestionList")
-    public ResponseEntity<?> queryNormalQuestionList(String id) {
+    @ApiOperation("常见问题查询列表，通过养户id")
+    @GetMapping("/queryQuestionList")
+    public ResponseEntity<?> queryQuestionList(String yhid) {
         try {
-            Map map = new HashMap();
-            map.put("id", id);
-            questionReportInfoService.queryNormalQuestionList(map);
+            questionReportInfoService.queryNormalQuestionList(yhid);
 
             return ResponseEntity.buildSuccess(Commonconst.Back_Success);
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Success);
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+        }
+    }
+
+    @ApiOperation("问题查询通过问题id")
+    @GetMapping("/queryQuestionInfoById")
+    public ResponseEntity<?> queryQuestionInfoById(String id) {
+        try {
+            return ResponseEntity.buildSuccess(questionReportInfoService.queryQuestionInfoById(id));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
         }
     }
 }

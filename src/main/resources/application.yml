@@ -22,3 +22,9 @@ wx:
   appId: wx33ceaedab9a6ed8f
   appsecret: 4c83cdaed8d11e54d447a421a5923202
   token: Hfjd334Hdsncb873KjdNf322
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true

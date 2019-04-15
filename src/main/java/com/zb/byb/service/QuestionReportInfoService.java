@@ -24,5 +24,13 @@ public interface QuestionReportInfoService
      * @return
      * @throws Exception
      */
-    List<NormalQuestionInfo> queryNormalQuestionList(Map<String, Object> paramMap) throws Exception;
+    List<QuestionReportInfo> queryNormalQuestionList(String id) throws Exception;
+
+    /**
+     * 通过问题id查询问题信息信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    QuestionReportInfo queryQuestionInfoById (String id) throws Exception;
 }

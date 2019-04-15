@@ -38,4 +38,12 @@ public interface EquipmentApplyService {
      * @throws Exception 异常
      */
     EquipmentApply queryInfoRecordList(String tokenId) throws Exception;
+
+    /**
+     * 根据id查询对象信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    EquipmentApply queryInfoById(String id) throws Exception;
 }

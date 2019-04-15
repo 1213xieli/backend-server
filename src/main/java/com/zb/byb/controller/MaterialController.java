@@ -81,7 +81,7 @@ public class MaterialController {
         }
     }
 
-    @ApiOperation("根据用户id查询到投苗记录")
+    @ApiOperation("根据用户id查询到记录")
     @GetMapping("/queryTouMiaoRecordList")
     public ResponseEntity<DrugApply> queryDrugApplyRecordList(String tokenid)
     {
@@ -94,23 +94,36 @@ public class MaterialController {
         }
     }
 
-
-    /**
-     * 前台传入，用户登录id
-     * 返回 对象列表数据“TouMiao”
-     * @return
-     */
-    @ApiOperation("获取领药申请记录")
-    @GetMapping("/getDrugList")
-    public ResponseEntity<List<DrugApply>> getDrugList(UserInfo userInfo){
+    @ApiOperation("根据id查询到对象信息")
+    @GetMapping("/queryRugApplyInfoById")
+    @ResponseBody
+    public ResponseEntity<DrugApply> queryRugApplyInfoById(String id)
+    {
         try{
-            return ResponseEntity.buildSuccess(drugApplyService.queryListByUser(userInfo.getIdentity()));
+            return ResponseEntity.buildSuccess(drugApplyService.queryInfoById(id));
         }
         catch (Exception e)
         {
             return ResponseEntity.build(100, "无法查询到数据");
         }
     }
+
+//    /**
+//     * 前台传入，用户登录id
+//     * 返回 对象列表数据“TouMiao”
+//     * @return
+//     */
+//    @ApiOperation("获取领药申请记录")
+//    @GetMapping("/getDrugList")
+//    public ResponseEntity<List<DrugApply>> getDrugList(UserInfo userInfo){
+//        try{
+//            return ResponseEntity.buildSuccess(drugApplyService.queryListByUser(userInfo.getIdentity()));
+//        }
+//        catch (Exception e)
+//        {
+//            return ResponseEntity.build(100, "无法查询到数据");
+//        }
+//    }
     /**
      * 设备领用
      * @param
@@ -154,23 +167,36 @@ public class MaterialController {
         }
     }
 
-
-    /**
-     * 前台传入，用户登录id
-     * 返回 对象列表数据“TouMiao”
-     * @return
-     */
-    @ApiOperation("获取设备申请记录")
-    @GetMapping("/getEquipmentApplyList")
-    public ResponseEntity<List<EquipmentApply>> getEquipmentApplyList(UserInfo userInfo){
+    @ApiOperation("根据id查询到对象信息")
+    @GetMapping("/queryEquipmentApplyInfoById")
+    @ResponseBody
+    public ResponseEntity<DrugApply> queryEquipmentApplyInfoById(String id)
+    {
         try{
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryListByUser(userInfo.getIdentity()));
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(id));
         }
         catch (Exception e)
         {
             return ResponseEntity.build(100, "无法查询到数据");
         }
     }
+
+//    /**
+//     * 前台传入，用户登录id
+//     * 返回 对象列表数据“TouMiao”
+//     * @return
+//     */
+//    @ApiOperation("获取设备申请记录")
+//    @GetMapping("/getEquipmentApplyList")
+//    public ResponseEntity<List<EquipmentApply>> getEquipmentApplyList(UserInfo userInfo){
+//        try{
+//            return ResponseEntity.buildSuccess(equipmentApplyService.queryListByUser(userInfo.getIdentity()));
+//        }
+//        catch (Exception e)
+//        {
+//            return ResponseEntity.build(100, "无法查询到数据");
+//        }
+//    }
 
 
 /*    *//**

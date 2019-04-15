@@ -26,14 +26,14 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService
 
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
         return jsonStr;
     }
 
     @Override
     public boolean saveInfo(EquipmentApply info) throws Exception {
         String data = JSONObject.fromObject(info).toString();
-        BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PIGINGAPPLY);
+        BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_EQUIPMENTRECBILL);
         return true;
     }
 
@@ -43,7 +43,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService
         map.put("tokenId", tokenId);
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PIGINGAPPLY);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 
@@ -54,7 +54,18 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService
 
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
+        return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
+    }
+
+    @Override
+    public EquipmentApply queryInfoById(String id) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+
+        // 要传入数据进行转化
+        String data = JSONObject.fromObject(map).toString();
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 }

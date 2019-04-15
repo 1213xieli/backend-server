@@ -1,9 +1,11 @@
 package com.zb.byb.util;
 
+import com.zb.byb.common.CommonFunc;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -13,6 +15,8 @@ import java.util.*;
  */
 public class JsonPluginsUtil
 {
+    // 获取数据标识
+    public static final String Data = "data";
     /**
      * 从一个JSON 对象字符格式中得到一个java对象
      *
@@ -24,7 +28,12 @@ public class JsonPluginsUtil
     public static <T> T jsonToBean(String jsonString, Class<T> beanCalss) {
 
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        T bean = (T) JSONObject.toBean(jsonObject, beanCalss);
+        String obj = jsonObject.getString(Data);
+        if (CommonFunc.checkNullOrEmpty(obj))
+            return null;
+
+        JSONObject beanJson = JSONObject.fromObject(obj);
+        T bean = (T) JSONObject.toBean(beanJson, beanCalss);
 
         return bean;
 
@@ -255,19 +264,26 @@ public class JsonPluginsUtil
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass) {
+        if (beanClass == null || CommonFunc.checkNullOrEmpty(jsonString))
+            return new ArrayList<>();
 
-        JSONArray jsonArray = JSONArray.fromObject(jsonString);
-        JSONObject jsonObject;
+        // 通过Data 字段获取数据
+        JSONObject jsonObject = JSONObject.fromObject(jsonString);
+        String obj = jsonObject.getString(Data);
+        if (CommonFunc.checkNullOrEmpty(obj))
+            return null;
+
+        // 进行数据转换，变成实体对象
+        JSONArray jsonArray = JSONArray.fromObject(obj);
+        JSONObject jsonObjectValue;
         T bean;
         int size = jsonArray.size();
         List<T> list = new ArrayList<T>(size);
 
         for (int i = 0; i < size; i++) {
-
-            jsonObject = jsonArray.getJSONObject(i);
-            bean = (T) JSONObject.toBean(jsonObject, beanClass);
+            jsonObjectValue = jsonArray.getJSONObject(i);
+            bean = (T) JSONObject.toBean(jsonObjectValue, beanClass);
             list.add(bean);
-
         }
 
         return list;

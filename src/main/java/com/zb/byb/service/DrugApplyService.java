@@ -1,6 +1,7 @@
 package com.zb.byb.service;
 
 import com.zb.byb.entity.DrugApply;
+import com.zb.byb.entity.EquipmentApply;
 
 /**
  * 领药申请,业务接口
@@ -38,4 +39,12 @@ public interface DrugApplyService{
      * @throws Exception 异常
      */
     DrugApply queryInfoRecordList(String tokenId) throws Exception;
+
+    /**
+     * 根据id查询对象信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    DrugApply queryInfoById(String id) throws Exception;
 }

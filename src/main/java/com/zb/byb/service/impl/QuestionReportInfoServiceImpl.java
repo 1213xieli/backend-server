@@ -28,35 +28,48 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
     private MyInfoService myInfoService;
     @Override
     public void saveQuestionReport(QuestionReportInfo info) throws Exception {
-        String data = JSONObject.fromObject(info).toString();
+
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("openId", Commonconst.OpenId);
+        map.put("custId", Commonconst.CustId);
+        map.put("source", Commonconst.WX_Flag);
+
+        map.put("data", info);
+        String data = JSONObject.fromObject(map).toString();
         BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PROBLEMFEEDBACK);
         return;
     }
 
     @Override
-    public List<NormalQuestionInfo> queryNormalQuestionList(Map<String, Object> paramMap) throws Exception {
-        String backData= myInfoService.viewMyInfo(Commonconst.OpenId);
+    public List<QuestionReportInfo> queryNormalQuestionList(String id) throws Exception {
 
-//        Map<String, String> map1 = JsonPluginsUtil.jsonToMap(backData);
-        JSONObject jsonObject1=JSONObject.fromObject(backData);
-        JSONObject jsonObject=JSONObject.fromObject(jsonObject1.getString("data"));
-        String custId=jsonObject.getString("id");
-
+        QuestionReportInfo queryInfo = new QuestionReportInfo();
+        queryInfo.setFcustid(id);
         Map<String, Object> map = new HashMap<>();
-        // 传一个养户id、openid
         map.put("openId", Commonconst.OpenId);
-        map.put("custId", custId);
+        map.put("custId", Commonconst.CustId);
+        map.put("data", queryInfo);
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PROBLEMFEEDBACK);
-//        Map dataMap = JsonPluginsUtil.jsonToMap(jsonData);
+        return JsonPluginsUtil.jsonToBeanList(jsonData, QuestionReportInfo.class);
+    }
 
-        JSONObject jsonObj= JSONObject.fromObject(jsonData);
-        String normalStr = jsonObj.getString("data");
-        List<NormalQuestionInfo> result = new ArrayList<>();
-        result = JsonPluginsUtil.jsonToBeanList(normalStr, NormalQuestionInfo.class);
+    @Override
+    public QuestionReportInfo queryQuestionInfoById(String id) throws Exception {
+        QuestionReportInfo queryInfo = new QuestionReportInfo();
+        queryInfo.setId(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("openId", Commonconst.OpenId);
+        map.put("custId", Commonconst.CustId);
+        map.put("data", queryInfo);
 
-        return result;
+        // 要传入数据进行转化
+        String data= JSONObject.fromObject(map).toString();
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PROBLEMFEEDBACK);
+
+        return JsonPluginsUtil.jsonToBean(jsonData, QuestionReportInfo.class);
     }
 }
