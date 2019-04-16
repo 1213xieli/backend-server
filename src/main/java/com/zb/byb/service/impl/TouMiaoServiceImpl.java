@@ -54,22 +54,30 @@ public class TouMiaoServiceImpl implements TouMiaoService {
     }
 
     @Override
-    public TouMiao queryListInitData(String tokenId) throws Exception {
+    public TouMiao queryListInitData(String custId) throws Exception {
 
         Map<String, Object> map = new HashMap<>();
 //        map.put("openId", Commonconst.OpenId);
 //        map.put("custId", Commonconst.CustId);
         map.put("source", Commonconst.WX_Flag);
         TouMiao queryInfo = new TouMiao();
-        queryInfo.setCustId(tokenId);
+        queryInfo.setCustId(custId);
         map.put("data", queryInfo);
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PIGINGAPPLY);
-        TouMiao info = JsonPluginsUtil.jsonToBean(jsonData, TouMiao.class);
-        if (info == null)
-            info = new TouMiao();
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_CUSTINFO);
+
+        JSONObject jsonObject = JSONObject.fromObject(jsonData);
+        String obj = jsonObject.getString(JsonPluginsUtil.Data);
+        JSONObject custInfoStr = JSONObject.fromObject(obj);
+        TouMiao info = new TouMiao();
+        info.setCustName(custInfoStr.getString("fname"));
+        info.setScope(custInfoStr.getString("cfwinternum"));
+
+//        TouMiao info = JsonPluginsUtil.jsonToBean(jsonData, TouMiao.class);
+//        if (info == null)
+//            info = new TouMiao();
 
         return info;
     }
