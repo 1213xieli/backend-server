@@ -1,6 +1,7 @@
 package com.zb.byb.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.QuestionReportInfo;
 import com.zb.byb.service.QuestionReportInfoService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,29 +28,63 @@ public class QuestionReportController {
     @PostMapping("/saveQuestionReport")
     public ResponseEntity<?> saveQuestionReport(QuestionReportInfo info) {
         try {
-            questionReportInfoService.saveQuestionReport(info);
-
-            return ResponseEntity.buildSuccess(Commonconst.Back_Success);
+            return ResponseEntity.buildSuccess(questionReportInfoService.saveQuestionReport(info));
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Success);
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
         }
     }
 
-    @ApiOperation("常见问题查询列表")
-    @GetMapping("/queryNormalQuestionList")
-    public ResponseEntity<?> queryNormalQuestionList(String id) {
+    @ApiOperation("删除问题反馈信息")
+    @PostMapping("/deleteQuestionReportById")
+    public ResponseEntity<?> deleteQuestionReportById(String id) {
         try {
-            Map map = new HashMap();
-            map.put("id", id);
-            questionReportInfoService.queryNormalQuestionList(map);
-
+            questionReportInfoService.deleteQuestionInfoById(id);
             return ResponseEntity.buildSuccess(Commonconst.Back_Success);
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Success);
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+        }
+    }
+
+
+    @ApiOperation("常见问题查询列表，通过养户id")
+    @GetMapping("/queryQuestionList")
+    public ResponseEntity<?> queryQuestionList(String yhid) {
+        try {
+            List<QuestionReportInfo> list = questionReportInfoService.queryNormalQuestionList(yhid);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+        }
+    }
+
+    @ApiOperation("问题查询通过问题id")
+    @GetMapping("/queryQuestionInfoById")
+    public ResponseEntity<?> queryQuestionInfoById(String id) {
+        try {
+            return ResponseEntity.buildSuccess(questionReportInfoService.queryQuestionInfoById(id));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+        }
+    }
+
+    @ApiOperation("删除问题通过问题id")
+    @GetMapping("/deleteQuestionInfoById")
+    public ResponseEntity<?> deleteQuestionInfoById(String id) {
+        try {
+            return ResponseEntity.buildSuccess(questionReportInfoService.deleteQuestionInfoById(id));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
         }
     }
 }

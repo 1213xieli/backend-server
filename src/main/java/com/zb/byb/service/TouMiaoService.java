@@ -1,5 +1,6 @@
 package com.zb.byb.service;
 
+import com.zb.byb.entity.DataRecord;
 import com.zb.byb.entity.TouMiao;
 import org.mapstruct.Mapper;
 
@@ -25,7 +26,7 @@ public interface TouMiaoService
      * @return
      * @throws Exception
      */
-    boolean saveInfo(TouMiao info) throws Exception;
+    String saveInfo(TouMiao info) throws Exception;
 
     /**
      * 根据前台传过来的tokenid，初始化数据
@@ -36,11 +37,19 @@ public interface TouMiaoService
     TouMiao queryListInitData(String tokenId) throws Exception;
 
     /**
+     * 根据前台tmid,查询到详细信息
+     * @param tmid
+     * @return 返回对象
+     * @throws Exception 异常
+     */
+    TouMiao queryInfoById(String tmid) throws Exception;
+
+    /**
      * 根据用户id查询到投苗记录
      * @param tokenId
      * @return 返回对象
      * @throws Exception 异常
      */
-    TouMiao queryInfoRecordList(String tokenId) throws Exception;
+    List<TouMiao> queryInfoRecordList(String tokenId) throws Exception;
 
 }

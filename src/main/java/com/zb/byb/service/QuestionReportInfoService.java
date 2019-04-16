@@ -16,7 +16,7 @@ public interface QuestionReportInfoService
      * @param info 问题反馈
      * @throws Exception 异常
      */
-    void saveQuestionReport(QuestionReportInfo info)throws Exception;
+    String saveQuestionReport(QuestionReportInfo info)throws Exception;
 
     /**
      * 根据参数,进行常见问题获取
@@ -24,5 +24,21 @@ public interface QuestionReportInfoService
      * @return
      * @throws Exception
      */
-    List<NormalQuestionInfo> queryNormalQuestionList(Map<String, Object> paramMap) throws Exception;
+    List<QuestionReportInfo> queryNormalQuestionList(String id) throws Exception;
+
+    /**
+     * 通过问题id查询问题信息信息
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    QuestionReportInfo queryQuestionInfoById (String id) throws Exception;
+
+    /**
+     * 根据id删除问题信息
+     * @param id id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteQuestionInfoById(String id) throws Exception;
 }
