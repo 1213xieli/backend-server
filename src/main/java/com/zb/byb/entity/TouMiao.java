@@ -19,6 +19,8 @@ public class TouMiao {
     private String custId;
     @ApiModelProperty("养户名称")
     private String custName;
+    @ApiModelProperty("规模")
+    private String scope;
     @ApiModelProperty("养户信息")
     private Farmer farmer;
     @ApiModelProperty("申请投苗日期")

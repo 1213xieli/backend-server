@@ -44,10 +44,10 @@ public class TouMiaoController {
     @ApiOperation("初始化投苗数据")
     @GetMapping("/queryTouMiaoInitData")
     @ResponseBody
-    public ResponseEntity<TouMiao> queryTouMiaoInitData(String tokenid)
+    public ResponseEntity<TouMiao> queryTouMiaoInitData(String custId)
     {
         try{
-            return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(tokenid));
+            return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(custId));
         }
         catch (Exception e)
         {
@@ -66,8 +66,6 @@ public class TouMiaoController {
 
             List list = touMiaoService.queryInfoRecordList(custId);
             PageInfo<TouMiao> info = new PageInfo(list);
-//            info.setSize(list.size());
-//            info.getList().add(list);
             return ResponseEntity.build(200,new Message(), info);
         }
         catch (Exception e)
@@ -90,22 +88,4 @@ public class TouMiaoController {
         }
     }
 
-//    /**
-//     * 前台传入，用户登录id
-//     * 返回 对象列表数据“TouMiao”
-//     * @return
-//     */
-//    @ApiOperation("获取投苗记录列表")
-//    @GetMapping("/getList")
-//    @ResponseBody
-//    public ResponseEntity<List<TouMiao>> getList(String id){
-//        try{
-//            return ResponseEntity.buildSuccess(touMiaoService.queryListByUser(id));
-//        }
-//        catch (Exception e)
-//        {
-//            return ResponseEntity.build(100, "无法查询到数据");
-//        }
-//
-//    }
 }
