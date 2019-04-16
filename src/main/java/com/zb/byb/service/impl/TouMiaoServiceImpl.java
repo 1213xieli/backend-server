@@ -72,7 +72,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         String obj = jsonObject.getString(JsonPluginsUtil.Data);
         JSONObject custInfoStr = JSONObject.fromObject(obj);
         TouMiao info = new TouMiao();
-        info.setCustName(custInfoStr.getString("custName"));
+        info.setCustName(custInfoStr.getString("fname"));
         info.setScope(custInfoStr.getString("cfwinternum"));
 
 //        TouMiao info = JsonPluginsUtil.jsonToBean(jsonData, TouMiao.class);
