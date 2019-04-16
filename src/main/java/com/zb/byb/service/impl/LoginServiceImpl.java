@@ -23,6 +23,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String bind(UserInfo userInfo, String openId) throws Exception {
         Map<String, Object> map = new HashMap<>();
+
         map.put("data",userInfo);
         map.put("openId",openId);
         String data=JSONObject.fromObject(map).toString();
@@ -77,7 +78,10 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String getIntroducer(String instroducerName) throws Exception{
         Map<String, Object> map = new HashMap<>();
-        map.put("data",instroducerName);
+        Map<String, Object> param = new HashMap<>();
+        param.put("instroducerName",instroducerName);//介绍人姓名
+        map.put("source","WECHAT");//微信
+        map.put("data",param);//
         String data=JSONObject.fromObject(map).toString();
         //String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_CUSTSTART);
         return null;

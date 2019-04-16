@@ -1,6 +1,7 @@
 package com.zb.byb.controller;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.BatchRecord;
 import com.zb.byb.entity.DeathApply;
@@ -17,6 +18,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,10 @@ import java.util.Map;
 @RequestMapping("/api/batchRecord")
 public class BatchRecordController {
     @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
     private BatchRecordService batchRecordService;
+
     @ApiOperation("获取批次记录")
     @GetMapping("/list")
     public ResponseEntity<List<BatchRecord>> getList(HttpServletRequest request,BatchRecord batchRecord){
@@ -56,6 +61,28 @@ public class BatchRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.build(500,"服务器出错");
+        }
+
+
+    }
+    @ApiOperation("获取批次列表下拉框")
+    @GetMapping("/batchListList")
+    public ResponseEntity<List<String>> getBatchList(HttpServletRequest request){
+        String userId=(String) request.getSession().getAttribute("userId");
+        //写死
+        System.out.println("userId="+userId+"批次类型=");
+        userId="Va4AAAA+/JHMns7U";//测试方便写死
+        try {
+            String str=batchRecordService.getBatchList(userId,null);
+            String batchIdlist=JSONObject.fromObject(str).getString("data");
+            System.out.println("下拉batchIdlist="+batchIdlist);
+            List<String> list=objectMapper.readValue(batchIdlist,List.class);
+            ResponseEntity<List<String>> resp=new ResponseEntity<>();
+            resp.setData(list);
+            return resp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(500);
         }
     }
 

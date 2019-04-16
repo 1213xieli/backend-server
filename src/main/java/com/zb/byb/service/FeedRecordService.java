@@ -13,9 +13,17 @@ public interface FeedRecordService {
     String addFeedRecord(FeedRecord feedRecord, String userId)throws Exception;
 
     /**
-     *
+     *饲喂记录
      * @param userId 养户id
      * @return
      */
-    String queryFeedRecord(String userId)throws Exception;
+    String queryFeedRecord(String batchId,String userId)throws Exception;
+
+    /**
+     * 序时簿查看
+     * @param recordId
+     * @param userId
+     * @return
+     */
+    String queryFeedRecordList(String recordId,String userId);
 }

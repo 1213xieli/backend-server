@@ -15,19 +15,19 @@ import java.util.List;
 @Data
 @ApiModel("饲喂记录")
 public class FeedRecord {
-    /*@JsonProperty(value = "bb")
+    //@JsonProperty(value = "bb")
     @ApiModelProperty("饲喂记录id")
-    private String id;
+    private String rcordId;
     @ApiModelProperty("饲喂记录批次号")
-    private String batchId;
+    private String batchName;
      @ApiModelProperty("饲喂日期")
      private Date  feedDate;
-     @ApiModelProperty("饲料信息")
-     private Pigwash  pigwash;*/
+     @ApiModelProperty("饲喂列表")
+     private List<Pigwash>  feedList;
 
 
 
-   public String userName;//用户id--
+   /*public String userName;//用户id--
     public String userId;//用户id--
     public String pigfarmerCode;//养户编号--
     @ApiModelProperty("饲喂记录批次号")
@@ -50,10 +50,6 @@ public class FeedRecord {
     public String Create;//操作员
     public List<FeedTypeBean> feedList;//物料品种列表
     public String  bizdate;//饲喂日期--
-    public String eveningRemainingInventory;//今夜剩余库存--
-
-
-
-
+    public String eveningRemainingInventory;//今夜剩余库存--*/
 
 }
