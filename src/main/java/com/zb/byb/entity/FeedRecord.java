@@ -21,7 +21,7 @@ public class FeedRecord {
     @ApiModelProperty("饲喂记录批次号")
     private String batchName;
      @ApiModelProperty("饲喂日期")
-     private Date  feedDate;
+     private String feedDate;
      @ApiModelProperty("饲喂列表")
      private List<Pigwash>  feedList;
 

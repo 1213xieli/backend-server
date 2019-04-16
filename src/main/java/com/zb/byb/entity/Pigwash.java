@@ -25,6 +25,4 @@ public class Pigwash implements Serializable {
     private Double received;
     @ApiModelProperty("定额")
     private Double quota;
-
-
 }

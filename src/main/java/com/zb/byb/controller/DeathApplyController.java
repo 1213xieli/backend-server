@@ -28,7 +28,7 @@ public class DeathApplyController {
     public ResponseEntity<?> deathApply(@RequestBody DeathApply deathApply, HttpServletRequest request) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        userId="Va4AAAA+/JHMns7U";//测试方便写死
+        //userId="Va4AAAA+/JHMns7U";//测试方便写死
         try {
             String backData= deathApplyService.deathApply(deathApply,userId);
             return ResponseEntity.buildSuccess(backData);
@@ -49,11 +49,7 @@ public class DeathApplyController {
             String data=JSONObject.fromObject(backData).getString("data");
             System.out.println("死亡记录data="+data);
             //System.out.println("data="+data);
-            //转成list
-//            JSONArray fromObject = JSONArray.fromObject(backData);
-//            List<DeathApply> list1 = fromObject.toList(fromObject,DeathApply.class);
-//            ResponseEntity<List<DeathApply>> resp=new ResponseEntity<>();
-//            resp.setData(list1);
+
             return ResponseEntity.buildSuccess(data);
             //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {

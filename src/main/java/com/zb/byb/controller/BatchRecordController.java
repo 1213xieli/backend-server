@@ -3,6 +3,7 @@ package com.zb.byb.controller;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zb.byb.common.Constants;
+import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.BatchRecord;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.service.BatchRecordService;
@@ -67,7 +68,7 @@ public class BatchRecordController {
     }
     @ApiOperation("获取批次列表下拉框")
     @GetMapping("/batchListList")
-    public ResponseEntity<List<String>> getBatchList(HttpServletRequest request){
+    public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request){
         String userId=(String) request.getSession().getAttribute("userId");
         //写死
         System.out.println("userId="+userId+"批次类型=");
@@ -76,8 +77,8 @@ public class BatchRecordController {
             String str=batchRecordService.getBatchList(userId,null);
             String batchIdlist=JSONObject.fromObject(str).getString("data");
             System.out.println("下拉batchIdlist="+batchIdlist);
-            List<String> list=objectMapper.readValue(batchIdlist,List.class);
-            ResponseEntity<List<String>> resp=new ResponseEntity<>();
+            List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
+            ResponseEntity<List<Batch>> resp=new ResponseEntity<>();
             resp.setData(list);
             return resp;
         } catch (Exception e) {
