@@ -29,7 +29,6 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
     @Override
     public void saveQuestionReport(QuestionReportInfo info) throws Exception {
 
-
         Map<String, Object> map = new HashMap<>();
         map.put("openId", Commonconst.OpenId);
         map.put("custId", Commonconst.CustId);
@@ -71,5 +70,21 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PROBLEMFEEDBACK);
 
         return JsonPluginsUtil.jsonToBean(jsonData, QuestionReportInfo.class);
+    }
+
+    @Override
+    public boolean deleteQuestionInfoById(String id) throws Exception {
+        QuestionReportInfo queryInfo = new QuestionReportInfo();
+        queryInfo.setId(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("openId", Commonconst.OpenId);
+        map.put("custId", Commonconst.CustId);
+        map.put("data", queryInfo);
+
+        // 要传入数据进行转化
+        String data= JSONObject.fromObject(map).toString();
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_PROBLEMFEEDBACK);
+
+        return true;
     }
 }

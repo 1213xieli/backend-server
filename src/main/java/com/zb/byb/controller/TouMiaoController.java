@@ -62,7 +62,7 @@ public class TouMiaoController {
     {
         try{
             List list = touMiaoService.queryInfoRecordList(tokenid);
-            PageInfo<DataRecord> info = new PageInfo(list);
+            PageInfo<TouMiao> info = new PageInfo(list);
 //            info.setSize(list.size());
 //            info.getList().add(list);
             return ResponseEntity.build(200,new Message(), info);

@@ -1,6 +1,7 @@
 package com.zb.byb.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.QuestionReportInfo;
 import com.zb.byb.service.QuestionReportInfoService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,9 +42,9 @@ public class QuestionReportController {
     @GetMapping("/queryQuestionList")
     public ResponseEntity<?> queryQuestionList(String yhid) {
         try {
-            questionReportInfoService.queryNormalQuestionList(yhid);
-
-            return ResponseEntity.buildSuccess(Commonconst.Back_Success);
+            List<QuestionReportInfo> list = questionReportInfoService.queryNormalQuestionList(yhid);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
         }
         catch (Exception e)
         {
@@ -55,6 +57,18 @@ public class QuestionReportController {
     public ResponseEntity<?> queryQuestionInfoById(String id) {
         try {
             return ResponseEntity.buildSuccess(questionReportInfoService.queryQuestionInfoById(id));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+        }
+    }
+
+    @ApiOperation("删除问题通过问题id")
+    @GetMapping("/deleteQuestionInfoById")
+    public ResponseEntity<?> deleteQuestionInfoById(String id) {
+        try {
+            return ResponseEntity.buildSuccess(questionReportInfoService.deleteQuestionInfoById(id));
         }
         catch (Exception e)
         {

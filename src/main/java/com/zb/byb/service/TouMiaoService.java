@@ -50,6 +50,6 @@ public interface TouMiaoService
      * @return 返回对象
      * @throws Exception 异常
      */
-    List<DataRecord> queryInfoRecordList(String tokenId) throws Exception;
+    List<TouMiao> queryInfoRecordList(String tokenId) throws Exception;
 
 }

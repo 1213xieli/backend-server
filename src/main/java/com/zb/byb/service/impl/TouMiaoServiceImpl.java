@@ -137,7 +137,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
     }
 
     @Override
-    public List<DataRecord> queryInfoRecordList(String tokenId) throws Exception
+    public List<TouMiao> queryInfoRecordList(String tokenId) throws Exception
     {
 //        DataRecord record = new DataRecord();
 //        record.setId("xieli");
@@ -150,7 +150,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 //        return list;
 
         Map<String, Object> map = new HashMap<>();
-        DataRecord queryInfo = new DataRecord();
+        TouMiao queryInfo = new TouMiao();
         queryInfo.setId(tokenId);
         map.put("openId", Commonconst.OpenId);
         map.put("custId", Commonconst.CustId);
@@ -160,6 +160,6 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
-        return JsonPluginsUtil.jsonToBeanList(jsonData, DataRecord.class);
+        return JsonPluginsUtil.jsonToBeanList(jsonData, TouMiao.class);
     }
 }

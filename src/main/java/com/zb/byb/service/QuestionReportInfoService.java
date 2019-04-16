@@ -33,4 +33,12 @@ public interface QuestionReportInfoService
      * @throws Exception
      */
     QuestionReportInfo queryQuestionInfoById (String id) throws Exception;
+
+    /**
+     * 根据id删除问题信息
+     * @param id id
+     * @return
+     * @throws Exception
+     */
+    boolean deleteQuestionInfoById(String id) throws Exception;
 }

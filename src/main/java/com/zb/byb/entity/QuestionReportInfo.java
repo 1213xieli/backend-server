@@ -31,6 +31,8 @@ public class QuestionReportInfo implements Serializable {
     private Date freplydate;
     @ApiModelProperty("备注")
     private String remark;
-    @ApiModelProperty("问题")
-    private String question;
+    @ApiModelProperty("排序")
+    private String order;
+    @ApiModelProperty("扩展字段")
+    private String extendsOne;
 }
