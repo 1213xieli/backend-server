@@ -14,8 +14,9 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
     @Override
     public String deathApply(DeathApply deathApply, String userId) throws Exception {
         Map<String, Object> map = new HashMap<>();
+        map.put("custId",userId);//养户id
+        map.put("source","WECHAT");//微信
         map.put("data",deathApply);
-        map.put("userId",userId);
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_YZRHDEATH);
         return jsonStr;
@@ -24,9 +25,12 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
     @Override
     public String getDeathApplyRecord(String userId) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("userId",userId);
+        Map<String, Object> param = new HashMap<>();
+        map.put("custId",userId);//养户id
+        map.put("source","WECHAT");//微信
+        map.put("data",param);//参数
         String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_YZRHDEATH);
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_SUPPLIESBILL);
         return jsonStr;
     }
 }

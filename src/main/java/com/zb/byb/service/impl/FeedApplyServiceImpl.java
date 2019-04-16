@@ -1,32 +1,27 @@
 package com.zb.byb.service.impl;
 
+import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
+import com.zb.byb.service.FeedApplyService;
 import com.zb.byb.service.FeedRecordService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class FeedApplyServiceImpl implements FeedRecordService {
+@Service
+public class FeedApplyServiceImpl implements FeedApplyService {
+
     @Override
-    public String addFeedRecord(FeedRecord feedRecord, String userId) throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        map.put("data",feedRecord);
-        map.put("userId",userId);
-        String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PICKINGAPPLY);
-        return jsonStr;
+    public String feedApply(FeedApply feedApply, String userId) throws Exception {
+        return null;
     }
 
     @Override
-    public String queryFeedRecord(String userId) throws Exception {
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("userId",userId);
-        String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PICKINGAPPLY);
-        return jsonStr;
+    public String queryFeedApply(FeedApply feedApply, String userId) throws Exception {
+        return null;
     }
 }

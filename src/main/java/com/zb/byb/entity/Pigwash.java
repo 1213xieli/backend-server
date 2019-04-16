@@ -11,10 +11,12 @@ import java.io.Serializable;
 @Setter
 @ApiModel("饲料信息")
 public class Pigwash implements Serializable {
+    @ApiModelProperty("饲料id")
+    private String feedId;
     @ApiModelProperty("饲料品种")
-    private String bread;
+    private String feedName;
     @ApiModelProperty("数量（包数）")
-    private Integer amount;
+    private Integer consumeQty;
     @ApiModelProperty("单价")
     private Double price;
     @ApiModelProperty("金额")

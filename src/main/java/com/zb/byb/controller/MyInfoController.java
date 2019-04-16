@@ -32,10 +32,11 @@ public class MyInfoController {
         openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
         try {
 
-            /*JSONObject jsonObject1 = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
+            JSONObject jsonObject1 = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
             System.out.println(jsonObject1.toString());
             JSONObject jsonObject=JSONObject.fromObject(jsonObject1.getString("data"));
             //赋值
+            myInfo.setId(jsonObject.getString("id"));
             myInfo.setDept(jsonObject.getString("servicedep"));
             myInfo.setEntrustedIdentity("");//被委托人身份证
             myInfo.setEntrustedName("");//被委托人姓名
@@ -48,13 +49,11 @@ public class MyInfoController {
             myInfo.setStatus(jsonObject.getString("cfraisestate"));
             myInfo.setTelNum(jsonObject.getString("ftelno"));
             System.out.println(myInfo.getName());
-            */
-            System.out.println("json="+myInfoService.viewMyInfo(openId));
-           JSONObject result = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
-           String dataInfo = result.getString("data");
 
-            myInfo = objectMapper.readValue(dataInfo, MyInfo.class);
-
+           /* System.out.println("json="+myInfoService.viewMyInfo(openId));
+            JSONObject result = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
+            String dataInfo = result.getString("data");
+            myInfo = objectMapper.readValue(dataInfo, MyInfo.class);*/
             ResponseEntity<MyInfo> resp=new ResponseEntity<>();
             resp.setData(myInfo);
             return resp;

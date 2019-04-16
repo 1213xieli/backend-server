@@ -1,14 +1,7 @@
 package com.zb.byb.entity;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by zhengbang on 2017/6/12.
  */

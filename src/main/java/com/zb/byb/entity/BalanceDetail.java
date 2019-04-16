@@ -9,4 +9,5 @@ import lombok.Setter;
 @ApiModel("结算明细")
 public class BalanceDetail {
 
+
 }

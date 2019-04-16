@@ -2,6 +2,7 @@ package com.zb.byb.controller;
 
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.UserInfo;
+import com.zb.byb.service.LoginService;
 import com.zb.byb.service.MyInfoService;
 import com.zb.byb.util.JDService;
 import com.zb.byb.util.RequestUtils;
@@ -9,12 +10,10 @@ import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -23,17 +22,22 @@ import java.util.Random;
 @RequestMapping("/api/login")
 public class LoginController {
     @Autowired
+    private LoginService loginService;
+    @Autowired
     private MyInfoService myInfoService;
     @ApiOperation("登入")
-    @PostMapping("/login")
-    public ResponseEntity<?> login(HttpServletRequest request,UserInfo userInfo) {
+    @GetMapping("/login")
+    public ResponseEntity<?> login(HttpServletRequest request) {
+        HttpSession session=  request.getSession();
+
         //sessionId
         String sessionId="";
-        //openId
+        //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        //写死openId
+        //为测试方便，先写死openId="oIWY8wahhrID4MLw68Ks3zIb1fq0"
         openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
-        try {
+        session.setAttribute("openId",openId);
+        try {//获取操作业务权限的sessionId
             sessionId=JDService.login();
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,18 +55,45 @@ public class LoginController {
         }
         if (userId!=null && userId.length()>0){
             //养户id存入session
-            request.getSession().setAttribute("userId",userId);
-        }else {
-            return ResponseEntity.build(401,"该用户未注册");
+            session.setAttribute("userId",userId);
+        }else {//查不到说明用户没绑定微信，跳转到绑定页面
+            return ResponseEntity.build(401,"该用户未绑定微信");
         }
         if(sessionId!=null && sessionId.length()>0){//成功,将sessionId保存
-            request.getSession().setAttribute("sessionId",sessionId);
+            session.setAttribute("sessionId",sessionId);
         }
-        //失败
         return ResponseEntity.buildSuccess("登入成功");
     }
 
+    @ApiOperation("绑定")
+    @PostMapping("/bind")
+    public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
+        System.out.println("openId="+(String) request.getSession().getAttribute("openId"));
+        String openId="aaassz";
+        try {
+            //传人绑定信息,返回信息
+            //String data = loginService.bind(userInfo, (String) request.getSession().getAttribute("openId"));
+            String data = loginService.bind(userInfo,openId );
+            System.out.println("data="+data);
+            return ResponseEntity.buildSuccess(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(500,"服务器错误");
+        }
+    }
 
+    @ApiOperation("解除绑定")
+    @GetMapping("/unbind")
+    public ResponseEntity<?> unbind(HttpServletRequest request){
+        try {
+            //
+            String data = loginService.unBind((String) request.getSession().getAttribute("userId"));
+            return ResponseEntity.buildSuccess(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(500,"服务器错误");
+        }
+    }
     @ApiOperation("获取验证码")
     @PostMapping("/getCode")
     public ResponseEntity<?> getCode(@RequestBody UserInfo userInfo, HttpServletRequest request) {
