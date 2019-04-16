@@ -16,7 +16,7 @@ public interface QuestionReportInfoService
      * @param info 问题反馈
      * @throws Exception 异常
      */
-    void saveQuestionReport(QuestionReportInfo info)throws Exception;
+    String saveQuestionReport(QuestionReportInfo info)throws Exception;
 
     /**
      * 根据参数,进行常见问题获取

@@ -29,10 +29,10 @@ public class TestData {
     }
 
     public static void touMiaoController() throws Exception {
-        TouMiao info = new TouMiao();
-        info.setId("xieli");
-        info.setApplyDate(new Date());
-        info.setApplyAmount(333);
+//        TouMiao info = new TouMiao();
+//        info.setId("xieli");
+//        info.setApplyDate(new Date());
+//        info.setApplyAmount(333);
 //        BeanLocator.getT(TouMiaoService.class).saveInfo(info);
         BeanLocator.getT(TouMiaoService.class).queryListInitData("32");
     }

@@ -28,8 +28,19 @@ public class QuestionReportController {
     @PostMapping("/saveQuestionReport")
     public ResponseEntity<?> saveQuestionReport(QuestionReportInfo info) {
         try {
-            questionReportInfoService.saveQuestionReport(info);
+            return ResponseEntity.buildSuccess(questionReportInfoService.saveQuestionReport(info));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+        }
+    }
 
+    @ApiOperation("删除问题反馈信息")
+    @PostMapping("/deleteQuestionReportById")
+    public ResponseEntity<?> deleteQuestionReportById(String id) {
+        try {
+            questionReportInfoService.deleteQuestionInfoById(id);
             return ResponseEntity.buildSuccess(Commonconst.Back_Success);
         }
         catch (Exception e)
@@ -37,6 +48,7 @@ public class QuestionReportController {
             return ResponseEntity.build(0000, Commonconst.Back_Fail);
         }
     }
+
 
     @ApiOperation("常见问题查询列表，通过养户id")
     @GetMapping("/queryQuestionList")

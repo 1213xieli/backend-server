@@ -2,6 +2,7 @@ package com.zb.byb.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zb.byb.common.CommonFunc;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DataRecord;
 import com.zb.byb.entity.TouMiao;
@@ -32,8 +33,7 @@ public class TouMiaoController {
     @ResponseBody
     public ResponseEntity<?> saveToumiaoApply(TouMiao touMiao) {
         try{
-            boolean flag = touMiaoService.saveInfo(touMiao);
-            return ResponseEntity.buildSuccess(Commonconst.Back_Success);
+            return ResponseEntity.buildSuccess(touMiaoService.saveInfo(touMiao));
         }
         catch (Exception e)
         {
@@ -55,13 +55,16 @@ public class TouMiaoController {
         }
     }
 
-    @ApiOperation("根据用户id查询到投苗记录")
+    @ApiOperation("根据养户id查询到投苗记录")
     @GetMapping("/queryTouMiaoRecordList")
     @ResponseBody
-    public ResponseEntity<?> queryTouMiaoRecordList(String tokenid)
+    public ResponseEntity<?> queryTouMiaoRecordList(String custId)
     {
         try{
-            List list = touMiaoService.queryInfoRecordList(tokenid);
+            if (CommonFunc.checkNull(custId))
+                throw new Exception("未传入养户id.");
+
+            List list = touMiaoService.queryInfoRecordList(custId);
             PageInfo<TouMiao> info = new PageInfo(list);
 //            info.setSize(list.size());
 //            info.getList().add(list);

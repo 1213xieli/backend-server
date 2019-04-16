@@ -26,7 +26,7 @@ public interface TouMiaoService
      * @return
      * @throws Exception
      */
-    boolean saveInfo(TouMiao info) throws Exception;
+    String saveInfo(TouMiao info) throws Exception;
 
     /**
      * 根据前台传过来的tokenid，初始化数据

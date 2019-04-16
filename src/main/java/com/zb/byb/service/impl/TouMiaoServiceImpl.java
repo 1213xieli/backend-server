@@ -9,6 +9,7 @@ import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.MyInfoService;
 import com.zb.byb.service.TouMiaoService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.DateUtil;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
+ * 投苗
  * 作者：谢李
  */
 @Service
@@ -29,34 +31,14 @@ public class TouMiaoServiceImpl implements TouMiaoService {
     @Override
     public String queryListByUser(String openId) throws Exception {
         return null;
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("openId", openId);
-//
-//        // 要传入数据进行转化
-//        String data= JSONObject.fromObject(map).toString();
-//        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
-//        System.out.println(jsonStr);
-//        return jsonStr;
     }
 
     @Override
-    public boolean saveInfo(TouMiao info) throws Exception {
-
-//        TouMiao t = new TouMiao();
-//        t.setId("xieli-test");
-//        t.setApplyAmount(333);
-//        t.setApplyDate(new Date());
-//        t.setDisinfectFinished(true);
-//        t.setElectricGeneratorReadied(true);
-//        t.setActualAmount(333);
-//        t.setTroughReadied(true);
-//        t.setMaterialsReadied(true);
-//        t.setPigTableReadied(true);
-//        t.setActualAvgWeight(213.32);
-//        t.setBarrelReadied(true);
-//        t.setHeatLampReadied(true);
-//        t.setIncubatorReadied(true);
-//        t.setTemperatureControlReadied(true);
+    public String saveInfo(TouMiao info) throws Exception {
+        if (info == null)
+        {
+            throw new Exception("无法保存");
+        }
 
         Map<String, Object> map = new HashMap<>();
         map.put("openId", Commonconst.OpenId);
@@ -67,28 +49,20 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         String data = JSONObject.fromObject(map).toString();
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PIGINGAPPLY);
         System.out.println(jsonBackStr);
-        return true;
+
+        return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
     }
 
     @Override
     public TouMiao queryListInitData(String tokenId) throws Exception {
 
-//        Farmer farmer = new Farmer();
-//        farmer.setName("xieli");
-//        farmer.setSize("12");
-//        TouMiao t = new TouMiao();
-//        t.setFarmer(farmer);
-//        return t;
-
-//        String backData= myInfoService.viewMyInfo(Commonconst.OpenId);
-//        Map<String, String> map1 = JsonPluginsUtil.jsonToMap(backData);
-//
-//        String yhid = map1.get("id");
         Map<String, Object> map = new HashMap<>();
-        map.put("openId", Commonconst.OpenId);
-        map.put("custId", Commonconst.CustId);
+//        map.put("openId", Commonconst.OpenId);
+//        map.put("custId", Commonconst.CustId);
         map.put("source", Commonconst.WX_Flag);
-        map.put("data", new HashMap<>());
+        TouMiao queryInfo = new TouMiao();
+        queryInfo.setCustId(tokenId);
+        map.put("data", queryInfo);
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
@@ -100,38 +74,70 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         return info;
     }
 
+    /**
+     *  金碟软件传回的数据,, 此处进行一道 公共的转化。转化成对象传回到头台
+     * 				temp.put("rcordId",rs.getString("fid"));
+     * 				temp.put("applyDate", rs.getString("fbizdate"));
+     * 				temp.put("remark",rs.getString("fremark"));
+     * 				temp.put("custName",rs.getString("custName"));
+     * 				temp.put("custId",rs.getString("custId"));
+     * 				temp.put("villageName",rs.getString("villName"));
+     * 				temp.put("villId",rs.getString("villId"));
+     * 				temp.put("oneHandRent",rs.getString("fonehandrent"));
+     * 				temp.put("identityCards",rs.getString("fcardnumber"));
+     * 				temp.put("num",rs.getBigDecimal("fqty"));
+     * 				temp.put("billStatusIndex",rs.getString("fbillstatus"));
+     * 				temp.put("billStatus",BillStatesEnum.getEnum(rs.getString("fbillstatus")).getAlias());
+     * 				temp.put("balance",rs.getBigDecimal("fbalance"));
+     * @param jsonStr
+     * @return
+     */
+    private TouMiao convertInfoByJson(String jsonStr)
+    {
+        if (CommonFunc.checkNullOrEmpty(jsonStr))
+            return new TouMiao();
+
+        JSONObject jsonObject = JSONObject.fromObject(jsonStr);
+        String obj = jsonObject.getString(JsonPluginsUtil.Data);
+        if (CommonFunc.checkNullOrEmpty(obj))
+            return new TouMiao();
+
+        JSONObject backMap = JSONObject.fromObject(obj);
+        TouMiao result = new TouMiao();
+        result.setRcordId(backMap.getString("rcordId"));
+        if (null != backMap.getString("applyDate"))
+            result.setApplyDate(DateUtil.parseDateOnly(backMap.getString("applyDate")));
+        result.setRemark(backMap.getString("remark"));
+        result.setCustName(backMap.getString("custName"));
+        result.setCustId(backMap.getString("custId"));
+        result.setVillageName(backMap.getString("villageName"));
+        result.setVillId(backMap.getString("villId"));
+        result.setOneHandRent(CommonFunc.parseDbl(backMap.getString("oneHandRent")));
+        result.setIdentityCards(backMap.getString("identityCards"));
+        result.setNum(CommonFunc.parseInt(backMap.getString("num")));
+        result.setBillStatusIndex(CommonFunc.parseInt(backMap.getString("billStatusIndex")));
+        result.setBillStatus(backMap.getString("billStatus"));
+        result.setBalance(backMap.getString("balance"));
+
+        return result;
+    }
+
     @Override
     public TouMiao queryInfoById(String tmid) throws Exception {
-//        TouMiao t = new TouMiao();
-//        t.setId(tmid);
-//        t.setApplyAmount(333);
-//        t.setApplyDate(new Date());
-//        t.setDisinfectFinished(true);
-//        t.setElectricGeneratorReadied(true);
-//        t.setActualAmount(333);
-//        t.setTroughReadied(true);
-//        t.setMaterialsReadied(true);
-//        t.setPigTableReadied(true);
-//        t.setActualAvgWeight(213.32);
-//        t.setBarrelReadied(true);
-//        t.setHeatLampReadied(true);
-//        t.setIncubatorReadied(true);
-//        t.setTemperatureControlReadied(true);
-
         if (CommonFunc.checkNullOrEmpty(tmid))
             return new TouMiao();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("openId", Commonconst.OpenId);
-        map.put("custId", Commonconst.CustId);
+//        map.put("openId", Commonconst.OpenId);
+//        map.put("custId", Commonconst.CustId);
+        // 微信入口获取数据，统一标识
         map.put("source", Commonconst.WX_Flag);
-
         TouMiao  queryInfo = new TouMiao();
-        queryInfo.setId(tmid);
+        queryInfo.setRcordId(tmid);
         map.put("data", queryInfo);
 
         // 要传入数据进行转化
-        String data= JSONObject.fromObject(map).toString();
+        String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PIGINGAPPLY);
         return JsonPluginsUtil.jsonToBean(jsonData, TouMiao.class);
     }
@@ -139,23 +145,19 @@ public class TouMiaoServiceImpl implements TouMiaoService {
     @Override
     public List<TouMiao> queryInfoRecordList(String tokenId) throws Exception
     {
-//        DataRecord record = new DataRecord();
-//        record.setId("xieli");
-//        record.setUserName("xieli用户名称");
-//        record.setStartTime(new Date());
-//        record.setRecordStatus(Commonconst.Record_Stauts.已完成.toString());
-//
-//        List list = new ArrayList();
-//        list.add(record);
-//        return list;
+        if (CommonFunc.checkNullOrEmpty(tokenId))
+            return new ArrayList<>();
 
         Map<String, Object> map = new HashMap<>();
         TouMiao queryInfo = new TouMiao();
-        queryInfo.setId(tokenId);
-        map.put("openId", Commonconst.OpenId);
-        map.put("custId", Commonconst.CustId);
+//        queryInfo.setRcordId(tokenId);
+        queryInfo.setCustId(tokenId);
+//        map.put("openId", Commonconst.OpenId);
+//        map.put("custId", Commonconst.CustId);
         map.put("source", Commonconst.WX_Flag);
         map.put("data", queryInfo);
+//        map.put("pageNumber","1");
+//        map.put("pageSize","1000");
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();

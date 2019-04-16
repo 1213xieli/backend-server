@@ -17,6 +17,11 @@ public class JsonPluginsUtil
 {
     // 获取数据标识
     public static final String Data = "data";
+    // 返回编码
+    public static final String Code = "code";
+    // 返回id
+    public static final String Id = "id";
+
     /**
      * 从一个JSON 对象字符格式中得到一个java对象
      *
@@ -147,7 +152,6 @@ public class JsonPluginsUtil
     /**
      *
      * @param beans
-     * @param _no_changes
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -375,5 +379,41 @@ public class JsonPluginsUtil
 
         return doubleArray;
 
+    }
+
+    /**
+     * 判断是否返回成功
+     * @param jsonString
+     * @return
+     */
+    public static boolean isRequestSuccess(String jsonString)
+    {
+        JSONObject jsonObject = JSONObject.fromObject(jsonString);
+        String code = CommonFunc.parseStr(jsonObject.getString(Code ));
+        if (CommonFunc.checkNullOrEmpty(code))
+            return false;
+
+        if (code.equalsIgnoreCase("0000"))
+            return true;
+
+        return false;
+    }
+
+    /**
+     * 判断是否返回成功
+     * @param jsonString
+     * @return
+     */
+    public static String isRequestSuccessBackId(String jsonString)
+    {
+        if (CommonFunc.checkNullOrEmpty(jsonString))
+            return null;
+
+        JSONObject jsonObject = JSONObject.fromObject(jsonString);
+        String id = CommonFunc.parseStr(jsonObject.getString(Id ));
+        if (CommonFunc.checkNullOrEmpty(Id))
+            return "";
+
+        return id;
     }
 }
