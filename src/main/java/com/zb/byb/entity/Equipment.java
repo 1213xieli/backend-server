@@ -11,18 +11,21 @@ import java.io.Serializable;
 @Setter
 @ApiModel("设备信息")
 public class Equipment implements Serializable {
+    @ApiModelProperty("主键id")
+    private String id;
+    @ApiModelProperty("设备名称id")
+    private String materialId;
     @ApiModelProperty("设备名称")
-    private String name;
+    private String materialName;
     @ApiModelProperty("设备数量")
-    private String amount;
+    private String qty;
     @ApiModelProperty("计量单位")
     private String unit;
     @ApiModelProperty("规格")
-    private String spec;
+    private String model;
     @ApiModelProperty("单价")
     private Double price;
     @ApiModelProperty("金额")
-    private Double payment;
-
+    private Double amount;
 
 }

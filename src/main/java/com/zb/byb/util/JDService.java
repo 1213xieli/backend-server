@@ -5,6 +5,7 @@ import _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacade
 import _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxyServiceLocator;
 import _35._91._168._192.ormrpc.services.EASLogin.EASLoginSoapBindingStub;
 import client.WSContext;
+import com.zb.byb.common.CommonFunc;
 import org.apache.axis.AxisFault;
 import org.apache.axis.message.SOAPHeaderElement;
 
@@ -29,6 +30,9 @@ public class JDService {
         //获取sessionId
         WSContext ctx = soap.login("zengneng", "", "eas", "CS1116", "l2", 1);
         String sessionId = ctx.getSessionId();
+        if (CommonFunc.checkNullOrEmpty(sessionId))
+            throw new Exception("登录失败，未获取到sessionId");
+
         return sessionId;
     }
 

@@ -7,13 +7,6 @@ import com.zb.byb.entity.EquipmentApply;
  * 作者：谢李
  */
 public interface EquipmentApplyService {
-    /**
-     * 通过登入人id获取设备领用申请
-     * @param userId
-     * @return
-     * @throws Exception
-     */
-    String queryListByUser(String userId) throws Exception;
 
     /**
      * 设备领用申请数据保存
@@ -21,7 +14,7 @@ public interface EquipmentApplyService {
      * @return
      * @throws Exception
      */
-    boolean saveInfo(EquipmentApply info) throws Exception;
+    String saveInfo(EquipmentApply info) throws Exception;
 
     /**
      * 根据前台传过来的tokenid，初始化数据
@@ -46,4 +39,12 @@ public interface EquipmentApplyService {
      * @throws Exception
      */
     EquipmentApply queryInfoById(String id) throws Exception;
+
+    /**
+     * 删除信息通过id
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    String deleteInfoById(String id) throws Exception;
 }

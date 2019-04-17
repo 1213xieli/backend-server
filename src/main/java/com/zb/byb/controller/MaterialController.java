@@ -1,5 +1,6 @@
 package com.zb.byb.controller;
 
+import com.zb.byb.common.CommonFunc;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
@@ -60,20 +61,22 @@ public class MaterialController {
     @PostMapping("/saveDrugApply")
     public ResponseEntity<?> drugApply(DrugApply drugApply) {
         try{
-            boolean flag = drugApplyService.saveInfo(drugApply);
-            return ResponseEntity.buildSuccess(flag);
+            return ResponseEntity.buildSuccess(drugApplyService.saveInfo(drugApply));
         }
         catch (Exception e)
         {
             return ResponseEntity.build(100, "无法保存数据");
         }
     }
-    @ApiOperation("初始化我要领药数据")
+    @ApiOperation("初始化我要领药数据传入custId")
     @GetMapping("/queryDrugApplyInitData")
-    public ResponseEntity<DrugApply> queryDrugApplyInitData(String tokenid)
+    public ResponseEntity<DrugApply> queryDrugApplyInitData(String custId)
     {
         try{
-            return ResponseEntity.buildSuccess(drugApplyService.queryListInitData(tokenid));
+            if (CommonFunc.checkNull(custId))
+                throw new Exception("未传入养户id");
+
+            return ResponseEntity.buildSuccess(drugApplyService.queryListInitData(custId));
         }
         catch (Exception e)
         {
@@ -81,12 +84,15 @@ public class MaterialController {
         }
     }
 
-    @ApiOperation("根据用户id查询到记录")
-    @GetMapping("/queryTouMiaoRecordList")
-    public ResponseEntity<DrugApply> queryDrugApplyRecordList(String tokenid)
+    @ApiOperation("根据用户id查询到记录列表")
+    @GetMapping("/queryDrugApplyRecordList")
+    public ResponseEntity<?> queryDrugApplyRecordList(String custId)
     {
         try{
-            return ResponseEntity.buildSuccess(drugApplyService.queryInfoRecordList(tokenid));
+            if (CommonFunc.checkNull(custId))
+                throw new Exception("未传入养户id");
+
+            return ResponseEntity.buildSuccess(drugApplyService.queryInfoRecordList(custId));
         }
         catch (Exception e)
         {
@@ -95,12 +101,15 @@ public class MaterialController {
     }
 
     @ApiOperation("根据id查询到对象信息")
-    @GetMapping("/queryRugApplyInfoById")
+    @GetMapping("/queryDrugApplyInfoById")
     @ResponseBody
-    public ResponseEntity<DrugApply> queryRugApplyInfoById(String id)
+    public ResponseEntity<DrugApply> queryDrugApplyInfoById(String custId)
     {
         try{
-            return ResponseEntity.buildSuccess(drugApplyService.queryInfoById(id));
+            if (CommonFunc.checkNull(custId))
+                throw new Exception("未传入养户id");
+
+            return ResponseEntity.buildSuccess(drugApplyService.queryInfoById(custId));
         }
         catch (Exception e)
         {
@@ -108,22 +117,24 @@ public class MaterialController {
         }
     }
 
-//    /**
-//     * 前台传入，用户登录id
-//     * 返回 对象列表数据“TouMiao”
-//     * @return
-//     */
-//    @ApiOperation("获取领药申请记录")
-//    @GetMapping("/getDrugList")
-//    public ResponseEntity<List<DrugApply>> getDrugList(UserInfo userInfo){
-//        try{
-//            return ResponseEntity.buildSuccess(drugApplyService.queryListByUser(userInfo.getIdentity()));
-//        }
-//        catch (Exception e)
-//        {
-//            return ResponseEntity.build(100, "无法查询到数据");
-//        }
-//    }
+    @ApiOperation("删除领药对象信息通过id")
+    @GetMapping("/deleteDrugApplyInfoById")
+    @ResponseBody
+    public ResponseEntity<DrugApply> deleteDrugApplyInfoById(String recordId)
+    {
+        try{
+            if (CommonFunc.checkNull(recordId))
+                throw new Exception("未传入id");
+
+            return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(recordId));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+
     /**
      * 设备领用
      * @param
@@ -133,8 +144,8 @@ public class MaterialController {
     @PostMapping("/saveEquipmentApply")
     public ResponseEntity<?> saveEquipmentApply(EquipmentApply equipmentApply) {
         try{
-            boolean flag = equipmentApplyService.saveInfo(equipmentApply);
-            return ResponseEntity.buildSuccess(flag);
+
+            return ResponseEntity.buildSuccess(equipmentApplyService.saveInfo(equipmentApply));
         }
         catch (Exception e)
         {
@@ -143,10 +154,12 @@ public class MaterialController {
     }
     @ApiOperation("初始化设备申请数据")
     @GetMapping("/queryEquipmentApplyInitData")
-    public ResponseEntity queryEquipmentApplyInitData(String tokenid)
+    public ResponseEntity queryEquipmentApplyInitData(String custId)
     {
         try{
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryListInitData(tokenid));
+            if (CommonFunc.checkNull(custId))
+                throw new Exception("未传入id");
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryListInitData(custId));
         }
         catch (Exception e)
         {
@@ -154,12 +167,15 @@ public class MaterialController {
         }
     }
 
-    @ApiOperation("根据用户id查询到投苗记录")
+    @ApiOperation("根据养户id查询到投苗记录列表")
     @GetMapping("/queryEquipmentApplyRecordList")
-    public ResponseEntity<EquipmentApply> queryEquipmentApplyRecordList(String tokenid)
+    public ResponseEntity<?> queryEquipmentApplyRecordList(String custId)
     {
         try{
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoRecordList(tokenid));
+            if (CommonFunc.checkNull(custId))
+                throw new Exception("未传入id");
+
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoRecordList(custId));
         }
         catch (Exception e)
         {
@@ -170,10 +186,13 @@ public class MaterialController {
     @ApiOperation("根据id查询到对象信息")
     @GetMapping("/queryEquipmentApplyInfoById")
     @ResponseBody
-    public ResponseEntity<DrugApply> queryEquipmentApplyInfoById(String id)
+    public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String recordId)
     {
         try{
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(id));
+            if (CommonFunc.checkNull(recordId))
+                throw new Exception("未传入id");
+
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(recordId));
         }
         catch (Exception e)
         {
@@ -181,53 +200,21 @@ public class MaterialController {
         }
     }
 
-//    /**
-//     * 前台传入，用户登录id
-//     * 返回 对象列表数据“TouMiao”
-//     * @return
-//     */
-//    @ApiOperation("获取设备申请记录")
-//    @GetMapping("/getEquipmentApplyList")
-//    public ResponseEntity<List<EquipmentApply>> getEquipmentApplyList(UserInfo userInfo){
-//        try{
-//            return ResponseEntity.buildSuccess(equipmentApplyService.queryListByUser(userInfo.getIdentity()));
-//        }
-//        catch (Exception e)
-//        {
-//            return ResponseEntity.build(100, "无法查询到数据");
-//        }
-//    }
-
-
-/*    *//**
-     * 设备领用
-     * @param equipmentApply
-     * @return
-     *//*
-    @ApiOperation("保存设备领用申请")
-    @PostMapping("/saveEquipmentApply")
-    public ResponseEntity<?> equipmentApply(@RequestBody EquipmentApply equipmentApply) {
-        EquipmentApply e = new EquipmentApply();
-        e.setApplyDate(new Date());
-        e.setFarmerName("xieli");
-        e.setTotalPayment(13254.7);
-        e.setEntrustedName("xieli");
-        e.setEntrust(true);
-        return ResponseEntity.buildSuccess(e);
+    @ApiOperation("删除设备对象信息通过id")
+    @GetMapping("/deleteEquipmentApplyInfoById")
+    @ResponseBody
+    public ResponseEntity<?> deleteEquipmentApplyInfoById(String recordId)
+    {
+        try{
+            if (CommonFunc.checkNull(recordId))
+                throw new Exception("未传入id");
+            return ResponseEntity.buildSuccess(equipmentApplyService.deleteInfoById(recordId));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
     }
-    @ApiOperation("获取设备领用申请记录")
-    @GetMapping("/equipmentList")
-    public ResponseEntity<List<EquipmentApply>> getEquipmentList(){
-        List<EquipmentApply> list = new ArrayList<>();
-        EquipmentApply e = new EquipmentApply();
-        e.setApplyDate(new Date());
-        e.setFarmerName("xieli");
-        e.setTotalPayment(13254.7);
-        e.setEntrustedName("xieli");
-        e.setEntrust(true);
-        list.add(e);
-        return ResponseEntity.buildSuccess(list);
-    }*/
 
     /**
      * 我要结算

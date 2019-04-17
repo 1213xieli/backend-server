@@ -188,19 +188,26 @@ public class JsonPluginsUtil
      */
     @SuppressWarnings({ "unchecked" })
     public static Map jsonToMap(String jsonString) {
+        if (CommonFunc.checkNullOrEmpty(jsonString))
+            return new HashMap();
 
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        Iterator keyIter = jsonObject.keys();
+        String obj = jsonObject.getString(Data);
+        if (CommonFunc.checkNullOrEmpty(obj))
+            return new HashMap();
+
+        JSONObject mapJson = JSONObject.fromObject(obj);
+
+
+        JSONObject jsonMap = JSONObject.fromObject(mapJson);
+        Iterator keyIter = jsonMap.keys();
         String key;
         Object value;
         Map valueMap = new HashMap();
-
         while (keyIter.hasNext()) {
-
             key = (String) keyIter.next();
-            value = jsonObject.get(key).toString();
+            value = jsonMap.get(key).toString();
             valueMap.put(key, value);
-
         }
 
         return valueMap;
@@ -379,6 +386,20 @@ public class JsonPluginsUtil
 
         return doubleArray;
 
+    }
+
+    /**
+     * json数据通过Data获取数据
+     * @param jsonStr
+     * @return
+     */
+    public static String getSuccessData(String jsonStr)
+    {
+        if (CommonFunc.checkNullOrEmpty(jsonStr))
+            return null;
+
+        JSONObject jsonObject = JSONObject.fromObject(jsonStr);
+        return CommonFunc.parseStr(jsonObject.getString(Data ));
     }
 
     /**
