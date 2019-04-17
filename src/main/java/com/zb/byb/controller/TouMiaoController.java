@@ -41,33 +41,38 @@ public class TouMiaoController extends BaseController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法保存数据");
+            Message message = new Message();
+            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
     @ApiOperation("初始化投苗数据")
     @GetMapping("/queryTouMiaoInitData")
     @ResponseBody
-    public ResponseEntity<TouMiao> queryTouMiaoInitData(HttpServletRequest request, String custId)
+    public ResponseEntity<TouMiao> queryTouMiaoInitData(HttpServletRequest request)
     {
         try{
-
+            String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
             return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(custId));
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
     @ApiOperation("根据养户id查询到投苗记录")
     @GetMapping("/queryTouMiaoRecordList")
     @ResponseBody
-    public ResponseEntity<?> queryTouMiaoRecordList(HttpServletRequest request, String custId)
+    public ResponseEntity<?> queryTouMiaoRecordList(HttpServletRequest request)
     {
         try{
-            if (CommonFunc.checkNull(custId))
-                throw new Exception("未传入养户id.");
+            String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
 
             List list = touMiaoService.queryInfoRecordList(custId);
             PageInfo<TouMiao> info = new PageInfo(list);
@@ -75,21 +80,30 @@ public class TouMiaoController extends BaseController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
     @ApiOperation("根据id查询到对象信息")
     @GetMapping("/queryInfoById")
     @ResponseBody
-    public ResponseEntity<TouMiao> queryInfoById(String id)
+    public ResponseEntity<TouMiao> queryInfoById(String recordId)
     {
         try{
-            return ResponseEntity.buildSuccess(touMiaoService.queryInfoById(id));
+            if (CommonFunc.checkNullOrEmpty(recordId))
+                throw new Exception("未传入记录id");
+
+            return ResponseEntity.buildSuccess(touMiaoService.queryInfoById(recordId));
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 

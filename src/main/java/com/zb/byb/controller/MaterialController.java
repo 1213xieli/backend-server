@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,8 +71,9 @@ public class MaterialController {
     }
     @ApiOperation("初始化我要领药数据传入custId")
     @GetMapping("/queryDrugApplyInitData")
-    public ResponseEntity<DrugApply> queryDrugApplyInitData(String custId)
+    public ResponseEntity<DrugApply> queryDrugApplyInitData(HttpServletRequest request)
     {
+        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
         try{
             if (CommonFunc.checkNull(custId))
                 throw new Exception("未传入养户id");
@@ -86,8 +88,9 @@ public class MaterialController {
 
     @ApiOperation("根据用户id查询到记录列表")
     @GetMapping("/queryDrugApplyRecordList")
-    public ResponseEntity<?> queryDrugApplyRecordList(String custId)
+    public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request)
     {
+        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
         try{
             if (CommonFunc.checkNull(custId))
                 throw new Exception("未传入养户id");
@@ -103,13 +106,13 @@ public class MaterialController {
     @ApiOperation("根据id查询到对象信息")
     @GetMapping("/queryDrugApplyInfoById")
     @ResponseBody
-    public ResponseEntity<DrugApply> queryDrugApplyInfoById(String custId)
+    public ResponseEntity<DrugApply> queryDrugApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(custId))
-                throw new Exception("未传入养户id");
+            if (CommonFunc.checkNull(id))
+                throw new Exception("未传入id");
 
-            return ResponseEntity.buildSuccess(drugApplyService.queryInfoById(custId));
+            return ResponseEntity.buildSuccess(drugApplyService.queryInfoById(id));
         }
         catch (Exception e)
         {
@@ -120,13 +123,13 @@ public class MaterialController {
     @ApiOperation("删除领药对象信息通过id")
     @GetMapping("/deleteDrugApplyInfoById")
     @ResponseBody
-    public ResponseEntity<DrugApply> deleteDrugApplyInfoById(String recordId)
+    public ResponseEntity<DrugApply> deleteDrugApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(recordId))
+            if (CommonFunc.checkNull(id))
                 throw new Exception("未传入id");
 
-            return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(recordId));
+            return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(id));
         }
         catch (Exception e)
         {
@@ -154,8 +157,9 @@ public class MaterialController {
     }
     @ApiOperation("初始化设备申请数据")
     @GetMapping("/queryEquipmentApplyInitData")
-    public ResponseEntity queryEquipmentApplyInitData(String custId)
+    public ResponseEntity queryEquipmentApplyInitData(HttpServletRequest request)
     {
+        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
         try{
             if (CommonFunc.checkNull(custId))
                 throw new Exception("未传入id");
@@ -169,8 +173,9 @@ public class MaterialController {
 
     @ApiOperation("根据养户id查询到投苗记录列表")
     @GetMapping("/queryEquipmentApplyRecordList")
-    public ResponseEntity<?> queryEquipmentApplyRecordList(String custId)
+    public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request)
     {
+        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
         try{
             if (CommonFunc.checkNull(custId))
                 throw new Exception("未传入id");
@@ -186,13 +191,13 @@ public class MaterialController {
     @ApiOperation("根据id查询到对象信息")
     @GetMapping("/queryEquipmentApplyInfoById")
     @ResponseBody
-    public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String recordId)
+    public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(recordId))
+            if (CommonFunc.checkNull(id))
                 throw new Exception("未传入id");
 
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(recordId));
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(id));
         }
         catch (Exception e)
         {
@@ -203,12 +208,12 @@ public class MaterialController {
     @ApiOperation("删除设备对象信息通过id")
     @GetMapping("/deleteEquipmentApplyInfoById")
     @ResponseBody
-    public ResponseEntity<?> deleteEquipmentApplyInfoById(String recordId)
+    public ResponseEntity<?> deleteEquipmentApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(recordId))
+            if (CommonFunc.checkNull(id))
                 throw new Exception("未传入id");
-            return ResponseEntity.buildSuccess(equipmentApplyService.deleteInfoById(recordId));
+            return ResponseEntity.buildSuccess(equipmentApplyService.deleteInfoById(id));
         }
         catch (Exception e)
         {

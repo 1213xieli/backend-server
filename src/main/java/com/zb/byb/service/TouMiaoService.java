@@ -34,7 +34,7 @@ public interface TouMiaoService
      * @return 返回对象
      * @throws Exception 异常
      */
-    TouMiao queryListInitData(String tokenId) throws Exception;
+    TouMiao queryListInitData(String custId) throws Exception;
 
     /**
      * 根据前台tmid,查询到详细信息
