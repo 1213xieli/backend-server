@@ -1,6 +1,6 @@
 package com.zb.byb.util;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ public class RequestUtils {
      * @return
      */
     public static String getCookieByName(HttpServletRequest request, String name) {
-        if (CommonFunc.checkNullOrEmpty(name))
+        if (C.checkNullOrEmpty(name))
             return null;
 
         Cookie[] cookies = request.getCookies();

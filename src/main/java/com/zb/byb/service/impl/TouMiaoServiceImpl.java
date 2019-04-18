@@ -1,10 +1,7 @@
 package com.zb.byb.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.DataRecord;
-import com.zb.byb.entity.Farmer;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.MyInfoService;
 import com.zb.byb.service.TouMiaoService;
@@ -13,7 +10,6 @@ import com.zb.byb.util.DateUtil;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,12 +98,12 @@ public class TouMiaoServiceImpl implements TouMiaoService {
      */
     private TouMiao convertInfoByJson(String jsonStr)
     {
-        if (CommonFunc.checkNullOrEmpty(jsonStr))
+        if (C.checkNullOrEmpty(jsonStr))
             return new TouMiao();
 
         JSONObject jsonObject = JSONObject.fromObject(jsonStr);
         String obj = jsonObject.getString(JsonPluginsUtil.Data);
-        if (CommonFunc.checkNullOrEmpty(obj))
+        if (C.checkNullOrEmpty(obj))
             return new TouMiao();
 
         JSONObject backMap = JSONObject.fromObject(obj);
@@ -120,10 +116,10 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         result.setCustId(backMap.getString("custId"));
         result.setVillageName(backMap.getString("villageName"));
         result.setVillId(backMap.getString("villId"));
-        result.setOneHandRent(CommonFunc.parseDbl(backMap.getString("oneHandRent")));
+        result.setOneHandRent(C.parseDbl(backMap.getString("oneHandRent")));
         result.setIdentityCards(backMap.getString("identityCards"));
-        result.setNum(CommonFunc.parseInt(backMap.getString("num")));
-        result.setBillStatusIndex(CommonFunc.parseInt(backMap.getString("billStatusIndex")));
+        result.setNum(C.parseInt(backMap.getString("num")));
+        result.setBillStatusIndex(C.parseInt(backMap.getString("billStatusIndex")));
         result.setBillStatus(backMap.getString("billStatus"));
         result.setBalance(backMap.getString("balance"));
 
@@ -132,7 +128,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 
     @Override
     public TouMiao queryInfoById(String tmid) throws Exception {
-        if (CommonFunc.checkNullOrEmpty(tmid))
+        if (C.checkNullOrEmpty(tmid))
             return new TouMiao();
 
         Map<String, Object> map = new HashMap<>();
@@ -153,7 +149,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
     @Override
     public List<TouMiao> queryInfoRecordList(String tokenId) throws Exception
     {
-        if (CommonFunc.checkNullOrEmpty(tokenId))
+        if (C.checkNullOrEmpty(tokenId))
             return new ArrayList<>();
 
         Map<String, Object> map = new HashMap<>();

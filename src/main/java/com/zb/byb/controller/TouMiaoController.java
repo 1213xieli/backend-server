@@ -1,12 +1,9 @@
 package com.zb.byb.controller;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.DataRecord;
 import com.zb.byb.entity.TouMiao;
-import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.TouMiaoService;
 import com.zb.byb.util.BaseController;
 import com.zb.framework.common.entity.Message;
@@ -17,11 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 投苗申请
@@ -42,7 +35,7 @@ public class TouMiaoController extends BaseController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -54,13 +47,13 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<TouMiao> queryTouMiaoInitData(HttpServletRequest request)
     {
         try{
-            String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
             return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(custId));
         }
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -72,7 +65,7 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<?> queryTouMiaoRecordList(HttpServletRequest request)
     {
         try{
-            String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
 
             List list = touMiaoService.queryInfoRecordList(custId);
             PageInfo<TouMiao> info = new PageInfo(list);
@@ -81,7 +74,7 @@ public class TouMiaoController extends BaseController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -93,7 +86,7 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<TouMiao> queryInfoById(String recordId)
     {
         try{
-            if (CommonFunc.checkNullOrEmpty(recordId))
+            if (C.checkNullOrEmpty(recordId))
                 throw new Exception("未传入记录id");
 
             return ResponseEntity.buildSuccess(touMiaoService.queryInfoById(recordId));
@@ -101,7 +94,7 @@ public class TouMiaoController extends BaseController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

@@ -1,6 +1,6 @@
 package com.zb.byb.util;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Constants;
 import com.zb.byb.service.MyInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class BaseController {
 
     public Map<String, Object> getUserInfo(String openId)
     {
-        if (CommonFunc.checkNullOrEmpty(openId))
+        if (C.checkNullOrEmpty(openId))
             return new HashMap<String, Object>();
 
         try{

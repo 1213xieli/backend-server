@@ -1,6 +1,6 @@
 package com.zb.byb.controller;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
@@ -36,7 +36,7 @@ public class LoginController {
         String sessionId="";
         //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        if (CommonFunc.checkNullOrEmpty(openId))
+        if (C.checkNullOrEmpty(openId))
             openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";//为测试方便，先写死openId="oIWY8wahhrID4MLw68Ks3zIb1fq0"
         session.setAttribute("openId",openId);
 
@@ -44,14 +44,14 @@ public class LoginController {
             //获取操作业务权限的sessionId
             session.setAttribute("sessionId",JDService.login());
             String backData = JsonPluginsUtil.getSuccessData(myInfoService.viewMyInfo(openId));
-            if (CommonFunc.checkNullOrEmpty(backData))
+            if (C.checkNullOrEmpty(backData))
                 throw new Exception("登录失败，未获取个人信息");
 
             JSONObject jsonMap = JSONObject.fromObject(backData);
             String userId = jsonMap.getString("id");
             System.out.println("userId="+userId);
 
-            if (CommonFunc.checkNullOrEmpty(userId)){
+            if (C.checkNullOrEmpty(userId)){
                 throw new Exception("登录失败");
             }
             //养户id存入session

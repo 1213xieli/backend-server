@@ -1,6 +1,6 @@
 package com.zb.byb.controller;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
@@ -73,9 +73,9 @@ public class MaterialController {
     @GetMapping("/queryDrugApplyInitData")
     public ResponseEntity<DrugApply> queryDrugApplyInitData(HttpServletRequest request)
     {
-        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (CommonFunc.checkNull(custId))
+            if (C.checkNull(custId))
                 throw new Exception("未传入养户id");
 
             return ResponseEntity.buildSuccess(drugApplyService.queryListInitData(custId));
@@ -90,9 +90,9 @@ public class MaterialController {
     @GetMapping("/queryDrugApplyRecordList")
     public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request)
     {
-        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (CommonFunc.checkNull(custId))
+            if (C.checkNull(custId))
                 throw new Exception("未传入养户id");
 
             return ResponseEntity.buildSuccess(drugApplyService.queryInfoRecordList(custId));
@@ -109,7 +109,7 @@ public class MaterialController {
     public ResponseEntity<DrugApply> queryDrugApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(id))
+            if (C.checkNull(id))
                 throw new Exception("未传入id");
 
             return ResponseEntity.buildSuccess(drugApplyService.queryInfoById(id));
@@ -126,7 +126,7 @@ public class MaterialController {
     public ResponseEntity<DrugApply> deleteDrugApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(id))
+            if (C.checkNull(id))
                 throw new Exception("未传入id");
 
             return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(id));
@@ -159,9 +159,9 @@ public class MaterialController {
     @GetMapping("/queryEquipmentApplyInitData")
     public ResponseEntity queryEquipmentApplyInitData(HttpServletRequest request)
     {
-        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (CommonFunc.checkNull(custId))
+            if (C.checkNull(custId))
                 throw new Exception("未传入id");
             return ResponseEntity.buildSuccess(equipmentApplyService.queryListInitData(custId));
         }
@@ -175,9 +175,9 @@ public class MaterialController {
     @GetMapping("/queryEquipmentApplyRecordList")
     public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request)
     {
-        String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (CommonFunc.checkNull(custId))
+            if (C.checkNull(custId))
                 throw new Exception("未传入id");
 
             return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoRecordList(custId));
@@ -194,7 +194,7 @@ public class MaterialController {
     public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(id))
+            if (C.checkNull(id))
                 throw new Exception("未传入id");
 
             return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(id));
@@ -211,7 +211,7 @@ public class MaterialController {
     public ResponseEntity<?> deleteEquipmentApplyInfoById(String id)
     {
         try{
-            if (CommonFunc.checkNull(id))
+            if (C.checkNull(id))
                 throw new Exception("未传入id");
             return ResponseEntity.buildSuccess(equipmentApplyService.deleteInfoById(id));
         }

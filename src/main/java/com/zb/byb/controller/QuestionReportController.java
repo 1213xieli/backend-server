@@ -2,7 +2,7 @@ package com.zb.byb.controller;
 
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.QuestionReportInfo;
 import com.zb.byb.service.QuestionReportInfoService;
@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 问题反馈信息
@@ -36,7 +34,7 @@ public class QuestionReportController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -46,7 +44,7 @@ public class QuestionReportController {
     @GetMapping("/queryQuestionList")
     public ResponseEntity<?> queryQuestionList(HttpServletRequest request) {
         try {
-            String custId = CommonFunc.parseStr(request.getSession().getAttribute("custId"));
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
             List<QuestionReportInfo> list = questionReportInfoService.queryNormalQuestionList(custId);
             PageInfo page = new PageInfo(list);
             return ResponseEntity.buildSuccess(page);
@@ -54,7 +52,7 @@ public class QuestionReportController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -69,7 +67,7 @@ public class QuestionReportController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -84,7 +82,7 @@ public class QuestionReportController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(CommonFunc.parseStr(Commonconst.FailStatus));
+            message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
