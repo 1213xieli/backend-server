@@ -14,15 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 设备申请
  * 作者：谢李
  */
 @Service
-public class EquipmentApplyServiceImpl implements EquipmentApplyService
-{
+public class EquipmentApplyServiceImpl implements EquipmentApplyService {
     @Override
     public String saveInfo(EquipmentApply info) throws Exception {
-        if (info == null)
-        {
+        if (info == null) {
             throw new Exception("无法保存");
         }
 

@@ -29,7 +29,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
 
         Map<String, Object> map = new HashMap<>();
 //        map.put("openId", Commonconst.OpenId);
-        map.put("custId", info.getFcustid());
+        map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
 
         map.put("data", info);
@@ -45,7 +45,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
             return new ArrayList<>();
 
         QuestionReportInfo queryInfo = new QuestionReportInfo();
-        queryInfo.setFcustid(id);
+        queryInfo.setCustId(id);
         Map<String, Object> map = new HashMap<>();
 //        map.put("openId", Commonconst.OpenId);
         map.put("custId", id);

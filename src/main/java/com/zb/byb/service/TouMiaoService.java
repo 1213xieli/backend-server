@@ -30,8 +30,8 @@ public interface TouMiaoService
 
     /**
      * 根据前台传过来的tokenid，初始化数据
-     * @param tokenId
-     * @return 返回对象
+     * @param custId
+     * @return custId
      * @throws Exception 异常
      */
     TouMiao queryListInitData(String custId) throws Exception;
@@ -46,10 +46,10 @@ public interface TouMiaoService
 
     /**
      * 根据用户id查询到投苗记录
-     * @param tokenId
+     * @param custId
      * @return 返回对象
      * @throws Exception 异常
      */
-    List<TouMiao> queryInfoRecordList(String tokenId) throws Exception;
+    List<TouMiao> queryInfoRecordList(String custId, TouMiao info) throws Exception;
 
 }

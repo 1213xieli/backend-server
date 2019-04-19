@@ -30,6 +30,8 @@ public class TouMiaoController extends BaseController {
     @ResponseBody
     public ResponseEntity<?> saveToumiaoApply(HttpServletRequest request, HttpServletResponse response, TouMiao touMiao) {
         try{
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            touMiao.setCustId(custId);
             return ResponseEntity.buildSuccess(touMiaoService.saveInfo(touMiao));
         }
         catch (Exception e)
@@ -62,12 +64,13 @@ public class TouMiaoController extends BaseController {
     @ApiOperation("根据养户id查询到投苗记录")
     @GetMapping("/queryTouMiaoRecordList")
     @ResponseBody
-    public ResponseEntity<?> queryTouMiaoRecordList(HttpServletRequest request)
+    public ResponseEntity<?> queryTouMiaoRecordList(HttpServletRequest request, TouMiao touMiao)
     {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
+//            String startDate = C.parseStr(request);
 
-            List list = touMiaoService.queryInfoRecordList(custId);
+            List list = touMiaoService.queryInfoRecordList(custId, touMiao);
             PageInfo<TouMiao> info = new PageInfo(list);
             return ResponseEntity.build(200,new Message(), info);
         }

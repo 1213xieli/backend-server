@@ -6,27 +6,28 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @ApiModel("投苗申请")
 public class TouMiao {
-    @ApiModelProperty("申请投苗ID")
+    @ApiModelProperty("记录ID")
     private String rcordId;
-    @ApiModelProperty("管理员")
-    private String userName;
     @ApiModelProperty("养户id")
     private String custId;
     @ApiModelProperty("养户名称")
     private String custName;
     @ApiModelProperty("规模")
     private String scope;
-    @ApiModelProperty("养户信息")
-    private Farmer farmer;
     @ApiModelProperty("申请投苗日期")
-    private Date applyDate;
-    @ApiModelProperty("申请投苗数量")
-    private Integer applyAmount;
+    private String applyDate;
+    @ApiModelProperty("筛选开始时间")
+    private String starttime;
+    @ApiModelProperty("筛选结束时间")
+    private String endtime;
+
     @ApiModelProperty("身份证")
     private  String  identityCards;
     @ApiModelProperty("保证金余额")
@@ -39,9 +40,9 @@ public class TouMiao {
     private String villId;
     @ApiModelProperty("养户单头承担租赁费")
     private double oneHandRent;
-    @ApiModelProperty("赁栏舍名称")
+    @ApiModelProperty("billStatus")
     private String billStatus = "";
-    @ApiModelProperty("状态")
+    @ApiModelProperty("当前投苗状态")
     private int billStatusIndex = STATUS_KEEP;//1：表示待审核（10保存，20提交）  2：表示已审核（30审核）
     @ApiModelProperty("备注")
     private String remark = "";
@@ -49,7 +50,7 @@ public class TouMiao {
     private String sessionId;
 
     @ApiModelProperty("实际投苗日期")
-    private Date actualDate;
+    private String actualDate;
     @ApiModelProperty("实际投苗数量")
     private Integer actualAmount;
     @ApiModelProperty("实际投苗均重")
@@ -72,8 +73,9 @@ public class TouMiao {
     private Boolean pigTableReadied;
     @ApiModelProperty("加温/降温设施是否达到标准")
     private Boolean temperatureControlReadied;
+
     @ApiModelProperty("图片")
-    private Object pigpenInside;
+    private List<String> pigpenInside;
 
     //待审核
     public final static int STATUS_KEEP = 1;

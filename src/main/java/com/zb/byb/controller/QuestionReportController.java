@@ -27,8 +27,10 @@ public class QuestionReportController {
 
     @ApiOperation("保存问题反馈信息")
     @PostMapping("/saveQuestionReport")
-    public ResponseEntity<?> saveQuestionReport(QuestionReportInfo info) {
+    public ResponseEntity<?> saveQuestionReport(HttpServletRequest request,QuestionReportInfo info) {
         try {
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            info.setCustId(custId);
             return ResponseEntity.buildSuccess(questionReportInfoService.saveQuestionReport(info));
         }
         catch (Exception e)

@@ -13,22 +13,24 @@ import java.util.Date;
 public class QuestionReportInfo implements Serializable {
     @ApiModelProperty("主键id")
     private String id;
+    @ApiModelProperty("记录id")
+    private String recordId;
     @ApiModelProperty("反馈日期")
-    private Date fbizdate;
+    private String bizdate;
     @ApiModelProperty("养户id")
-    private String fcustid;
+    private String custId;
     @ApiModelProperty("养户名称")
-    private String fcustname;
+    private String custname;
     @ApiModelProperty("回复id")
-    private String freplypersonid;
+    private String replypersonid;
     @ApiModelProperty("回复名称")
-    private String freplyersonname;
+    private String replyersonname;
     @ApiModelProperty("问题")
-    private String fdetails;
+    private String details;
     @ApiModelProperty("问题答复")
-    private String freplydetails;
+    private String replydetails;
     @ApiModelProperty("答复时期")
-    private Date freplydate;
+    private String replydate;
     @ApiModelProperty("备注")
     private String remark;
     @ApiModelProperty("排序")
