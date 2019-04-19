@@ -58,6 +58,8 @@ public class LoginController {
             session.setAttribute("userId",userId);
             session.setAttribute("fname", jsonMap.getString("fname"));
             session.setAttribute("custId", userId);
+            session.setAttribute("cfwinternum", C.parseStr(jsonMap.getString("cfwinternum")));
+
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
             Message message = new Message();

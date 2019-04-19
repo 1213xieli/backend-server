@@ -1,5 +1,7 @@
 package com.zb.byb.common;
 
+import java.io.File;
+
 /**
  *  公共使用的常量类型
  * 作者：谢李
@@ -13,6 +15,8 @@ public class Commonconst
     public static final String OpenId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
     public static final String CustId = "Va4AAAA+/JHMns7U";
     public static final String WX_Flag = "WECHAT";
+    public static final String TempPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" +
+            File.separator + "resources" + File.separator + "static"+ File.separator + "static" + File.separator + "template"+ File.separator;
 
     public enum Record_Stauts
     {

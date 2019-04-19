@@ -248,7 +248,7 @@ public class MaterialController {
         ba.setAliveRate(0.8);
         ba.setAvgDayAge(12);
         ba.setAvgWeight(0.8);
-        ba.setId("xieliId");
+        ba.setId("xieliId") ;
         ba.setBatchId("batchid");
         ba.setGoodAmount(32);
         ba.setJinMiaoDate(new Date());
@@ -267,7 +267,7 @@ public class MaterialController {
         Financing info = new Financing();
         info.setApplyDate(new Date());
         info.setApplyType("谢李");
-        info.setAvaibleBalance(123.65);
+        info.setAvaibleBalance(123.65) ;
         info.setBuyKnow("323");
         info.setChooseBalance(32.43);
         return ResponseEntity.buildSuccess(info);

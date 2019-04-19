@@ -32,7 +32,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 
     @Override
     public String saveInfo(TouMiao info) throws Exception {
-        if (info == null || C.checkNullOrEmpty(info.getCustId()))
+        if (info == null || C.checkNullOrEmpty(info.getCustId()) || info.getApplyDate() == null)
         {
             throw new Exception("无法保存");
         }

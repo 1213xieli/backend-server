@@ -44,6 +44,8 @@ public class TouMiao {
     private String billStatus = "";
     @ApiModelProperty("当前投苗状态")
     private int billStatusIndex = STATUS_KEEP;//1：表示待审核（10保存，20提交）  2：表示已审核（30审核）
+    @ApiModelProperty("状态显示1、2、3")
+    private String state;
     @ApiModelProperty("备注")
     private String remark = "";
     @ApiModelProperty("sessionId")
