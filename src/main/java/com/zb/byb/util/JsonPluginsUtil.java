@@ -1,11 +1,10 @@
 package com.zb.byb.util;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -34,7 +33,7 @@ public class JsonPluginsUtil
 
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         String obj = jsonObject.getString(Data);
-        if (CommonFunc.checkNullOrEmpty(obj))
+        if (C.checkNullOrEmpty(obj))
             return null;
 
         JSONObject beanJson = JSONObject.fromObject(obj);
@@ -188,19 +187,26 @@ public class JsonPluginsUtil
      */
     @SuppressWarnings({ "unchecked" })
     public static Map jsonToMap(String jsonString) {
+        if (C.checkNullOrEmpty(jsonString))
+            return new HashMap();
 
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        Iterator keyIter = jsonObject.keys();
+        String obj = jsonObject.getString(Data);
+        if (C.checkNullOrEmpty(obj))
+            return new HashMap();
+
+        JSONObject mapJson = JSONObject.fromObject(obj);
+
+
+        JSONObject jsonMap = JSONObject.fromObject(mapJson);
+        Iterator keyIter = jsonMap.keys();
         String key;
         Object value;
         Map valueMap = new HashMap();
-
         while (keyIter.hasNext()) {
-
             key = (String) keyIter.next();
-            value = jsonObject.get(key).toString();
+            value = jsonMap.get(key).toString();
             valueMap.put(key, value);
-
         }
 
         return valueMap;
@@ -268,7 +274,7 @@ public class JsonPluginsUtil
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass) {
-        if (beanClass == null || CommonFunc.checkNullOrEmpty(jsonString))
+        if (beanClass == null || C.checkNullOrEmpty(jsonString))
             return new ArrayList<>();
         if(!"0000".equals(JSONObject.fromObject(jsonString).getString("code"))){
             return null;
@@ -276,7 +282,7 @@ public class JsonPluginsUtil
         // 通过Data 字段获取数据
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         String obj = jsonObject.getString(Data);
-        if (CommonFunc.checkNullOrEmpty(obj))
+        if (C.checkNullOrEmpty(obj))
             return null;
 
         // 进行数据转换，变成实体对象
@@ -384,6 +390,20 @@ public class JsonPluginsUtil
     }
 
     /**
+     * json数据通过Data获取数据
+     * @param jsonStr
+     * @return
+     */
+    public static String getSuccessData(String jsonStr)
+    {
+        if (C.checkNullOrEmpty(jsonStr))
+            return null;
+
+        JSONObject jsonObject = JSONObject.fromObject(jsonStr);
+        return C.parseStr(jsonObject.getString(Data ));
+    }
+
+    /**
      * 判断是否返回成功
      * @param jsonString
      * @return
@@ -391,8 +411,8 @@ public class JsonPluginsUtil
     public static boolean isRequestSuccess(String jsonString)
     {
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        String code = CommonFunc.parseStr(jsonObject.getString(Code ));
-        if (CommonFunc.checkNullOrEmpty(code))
+        String code = C.parseStr(jsonObject.getString(Code ));
+        if (C.checkNullOrEmpty(code))
             return false;
 
         if (code.equalsIgnoreCase("0000"))
@@ -408,12 +428,12 @@ public class JsonPluginsUtil
      */
     public static String isRequestSuccessBackId(String jsonString)
     {
-        if (CommonFunc.checkNullOrEmpty(jsonString))
+        if (C.checkNullOrEmpty(jsonString))
             return null;
 
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        String id = CommonFunc.parseStr(jsonObject.getString(Id ));
-        if (CommonFunc.checkNullOrEmpty(Id))
+        String id = C.parseStr(jsonObject.getString(Id ));
+        if (C.checkNullOrEmpty(Id))
             return "";
 
         return id;

@@ -1,6 +1,6 @@
 package com.zb.byb.util;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 
 import java.io.File;
 import java.text.ParseException;
@@ -212,7 +212,7 @@ public class DateUtil
 
         try
         {
-            if (CommonFunc.checkNullOrEmpty(dateStr))
+            if (C.checkNullOrEmpty(dateStr))
             {
                 return null;
             }
@@ -230,7 +230,7 @@ public class DateUtil
      */
     public static Date parseDateOnly(String dateStr)
     {
-        if (CommonFunc.checkNullOrEmpty(dateStr))
+        if (C.checkNullOrEmpty(dateStr))
         {
             return null;
         }
