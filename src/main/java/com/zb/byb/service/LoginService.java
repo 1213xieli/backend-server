@@ -1,6 +1,9 @@
 package com.zb.byb.service;
 
+import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.UserInfo;
+
+import java.util.List;
 
 public interface LoginService {
     /**
@@ -35,8 +38,8 @@ public interface LoginService {
 
     /**
      * 获取介绍人及所在服务部
-     * @param instroducer 介绍人姓名
+     * @param introducer 介绍人
      * @return
      */
-    String getIntroducer(String instroducer) throws Exception;
+    List<Introducer> getIntroducer(Introducer introducer) throws Exception;
 }

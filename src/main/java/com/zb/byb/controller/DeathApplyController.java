@@ -1,7 +1,10 @@
 package com.zb.byb.controller;
 
 
+import com.github.pagehelper.PageInfo;
+import com.zb.byb.common.CommonFunc;
 import com.zb.byb.entity.DeathApply;
+import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.service.DeathApplyService;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -25,37 +28,58 @@ public class DeathApplyController {
     private DeathApplyService deathApplyService;
     @ApiOperation("保存死亡申报")
     @PostMapping("/save")
-    public ResponseEntity<?> deathApply(@RequestBody DeathApply deathApply, HttpServletRequest request) {
+    public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        //userId="Va4AAAA+/JHMns7U";//测试方便写死
+        //
+        deathApply.setApplyDieCnt(10);
+        deathApply.setBatchId("QOKuwU+4Q5uVQ5msWQNUVEMbbjA=");
+        deathApply.setBatchNo("已删除薛昌宇001");
+        deathApply.setCustid(userId);
+        deathApply.setDieAvg(45.0);
+        deathApply.setDieDate("2018-10-24");
+        deathApply.setFreedDay(84);
+
+
+
         try {
             String backData= deathApplyService.deathApply(deathApply,userId);
+
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500,"服务器出错");
+            return ResponseEntity.build(500,"保存失败");
         }
     }
     @ApiOperation("获取死亡申报记录")
     @GetMapping("/list")
-    public ResponseEntity<List<DeathApply>> getList(HttpServletRequest request){
-
+    public ResponseEntity<List<DeathApply>> getList(DeathApply deathApply, HttpServletRequest request){
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        userId="Va4AAAA+/JHMns7U";//测试方便写死
         try {
-            String backData= deathApplyService.getDeathApplyRecord(userId);
-            String data=JSONObject.fromObject(backData).getString("data");
-            System.out.println("死亡记录data="+data);
-            //System.out.println("data="+data);
+            List<DeathApply> list= deathApplyService.getDeathApplyRecord(userId,deathApply);
+            PageInfo<FeedRecord> info = new PageInfo(list);
 
-            return ResponseEntity.buildSuccess(data);
+            return ResponseEntity.buildSuccess(info);
             //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500,"服务器出错");
+            return ResponseEntity.build(100,"无法查询到数据");
         }
 
+    }
+    @ApiOperation("查看死亡申报记录详情")
+    @GetMapping("/queryInfoById")
+    public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
+    {
+        try{
+            if (CommonFunc.checkNull(rcordId))
+                throw new Exception("未传入rcordId.");
+            return ResponseEntity.buildSuccess(deathApplyService.getDeathApplyRecordbyId(rcordId));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
     }
 }

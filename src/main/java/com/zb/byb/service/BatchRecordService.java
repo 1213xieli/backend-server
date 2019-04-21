@@ -1,5 +1,7 @@
 package com.zb.byb.service;
 
+import com.zb.byb.entity.BatchRecord;
+
 public interface BatchRecordService {
     /**
      * 批次记录查看
@@ -8,11 +10,11 @@ public interface BatchRecordService {
      * @return
      * @throws Exception
      */
-    String viewBatchRecord(String batchId,String userId) throws Exception;
+    BatchRecord viewBatchRecord(String batchId, String userId) throws Exception;
 
     /**
      * 获取批次列表
-     * @param batchId
+     * @param
      * @param userId
      * @return
      * @throws Exception

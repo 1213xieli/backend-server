@@ -12,22 +12,26 @@ import java.util.Date;
 @Data
 @ApiModel("批次记录")
 public class BatchRecord{
+    @ApiModelProperty("批次id")
+    private String rcordId;
+    @ApiModelProperty("批次id")
+    private String batchid;
     @ApiModelProperty("批次号")
-    private String batchId;
+    private String batchName;
     @ApiModelProperty("品种")
-    private String bread;
+    private String varietiesName;
     @ApiModelProperty("投苗数")
-    private String toumiaoAmount;
+    private String tmts;
     @ApiModelProperty("投苗时间")
-    private Date toumiaoDate;
+    private Date bizdate;
     @ApiModelProperty("日龄")
-    private Integer dayAge;
+    private Integer curday;
     @ApiModelProperty("管理员名称")
-    private String mangerName;
+    private String username;
     @ApiModelProperty("在养头数")
-    private Integer inNum;
+    private Integer curcnt;
     @ApiModelProperty("死亡头数")
-    private Integer dieNum;
+    private Integer diecnt;
 
 
 

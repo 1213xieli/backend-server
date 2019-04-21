@@ -1,58 +1,117 @@
 package com.zb.byb.service.impl;
 
+import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.FeedRecord;
+
+import com.zb.byb.entity.Pigwash;
 import com.zb.byb.service.FeedRecordService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
+import com.zb.byb.util.Resource;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Service
 public class FeedRecordServiceImpl implements FeedRecordService {
     @Override
     public String addFeedRecord(FeedRecord feedRecord, String userId) throws Exception{
+
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> param = new HashMap<>();
-        map.put("custId",userId);//养户id
-        map.put("source","WECHAT");//微信
-        map.put("data",feedRecord);//
+        //map.put("openId", Commonconst.OpenId);
+        map.put("custId", userId);
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data",feedRecord);
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_SUPPLIESBILL);
-        return jsonStr;
+        return JsonPluginsUtil.isRequestSuccessBackId(jsonStr);
     }
 
-    @Override
-    public String queryFeedRecord(String recordId,String userId)throws Exception {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> param = new HashMap<>();
-        param.put("rcordId",recordId);//批次记录id/单据id
-        //param.put("batchId",batchId);
-        map.put("custId",userId);//养户id
-        map.put("source","WECHAT");//微信
-        map.put("data",param);//参数
-        String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_SUPPLIESBILL);
-        return jsonStr;
-    }
 
     @Override
-    public String queryFeedRecordList(String recordId, String userId) {
+    public List<FeedRecord> queryFeedRecordList(String userId,FeedRecord feedRecord) throws Exception{
+        if (CommonFunc.checkNullOrEmpty(userId))
+            return new ArrayList<>();
+
         Map<String, Object> map = new HashMap<>();
-        Map<String, Object> param = new HashMap<>();
-        //param.put("recordId",recordId);
-        //param.put("batchId",batchId);
         map.put("custId",userId);//养户id
         map.put("source","WECHAT");//微信
-        map.put("data",param);//参数
+        map.put("data",feedRecord);//参数QUERY_
         String data=JSONObject.fromObject(map).toString();
-        try {
-            return BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SUPPLIESBILL);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
+        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SUPPLIESBILL);
+        if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
+            return null;
         }
-
+        JSONArray jsonObject=JSONObject.fromObject(jsonBack).getJSONArray("data");
+       // {"code":"0000","data":[{"billState":"保存","billStateIndex":"10","feedDate":"2019-04-19","feedList":[{"batchId":"QOKuwU+4Q5uVQ5msWQNUVEMbbjA=","batchName":"001","columnQty":0,"consumeQty":112,"feedId":"Va4AAAAJLFb1CZfS","feedName":"保育料","id":"Va4AAAib16PHfMLr"}],"rcordId":"Va4AAAib16Kzx1nH","state":1}],"msg":"查询成功!"}
+        //List<FeedRecord> list = JSONArray.toList(jsonObject, FeedRecord.class);
+        List<FeedRecord> list= com.alibaba.fastjson.JSONArray.parseArray(jsonObject.toString(),FeedRecord.class);
+        return list;
     }
+
+    @Override
+    public FeedRecord queryFeedRecordbyRcordId(String rcordId) throws Exception {
+        if (CommonFunc.checkNullOrEmpty(rcordId))
+            return new FeedRecord();
+        Map<String, Object> map = new HashMap<>();
+        map.put("source", Commonconst.WX_Flag);
+        FeedRecord  feedRecord = new FeedRecord();
+        feedRecord.setRcordId(rcordId);
+        map.put("data", feedRecord);
+        String data=JSONObject.fromObject(map).toString();
+        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_SUPPLIESBILL);
+        //{"code":"0000","data":[{"billState":"保存","billStateIndex":"10","feedDate":"2019-04-19","feedList":[{"batchId":"QOKuwU+4Q5uVQ5msWQNUVEMbbjA=","batchName":"001","columnQty":0,"consumeQty":112,"feedId":"Va4AAAAJLFb1CZfS","feedName":"保育料","id":"Va4AAAib16PHfMLr"}],"rcordId":"Va4AAAib16Kzx1nH","state":1}],"msg":"查询成功!"}
+        if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
+            return null;
+        }
+        JSONObject jsonObject=JSONObject.fromObject(jsonBack).getJSONObject("data");
+
+        /*FeedRecord feedRecord1 = (FeedRecord)JSONObject.toBean(jsonObject, FeedRecord.class);*/
+
+        /*赋值*/
+
+        FeedRecord feedRecord1=new FeedRecord();
+        feedRecord1.setBillState(jsonObject.getString("billState"));
+        feedRecord1.setBillStateIndex(jsonObject.getString("billStateIndex"));
+        feedRecord1.setFeedDate(jsonObject.getString("feedDate"));
+        feedRecord1.setRcordId(jsonObject.getString("rcordId"));
+        Object o =JSONObject.fromObject(jsonObject).get("feedList");
+        List<Pigwash> list = (List<Pigwash>) o;
+        feedRecord1.setFeedList(list);
+        return feedRecord1;
+    }
+
+    //{"code":"0000","data":{"billState":"save","billStateIndex":"10","feedDate":"2019-04-16","feedList":[{"consumeQty":30,"feedId":"Va4AAAiadCHHfMLr","id":"Va4AAAibjXHHfMLr"}],"rcordId":"Va4AAAibjXCzx1nH","state":1,"thePack":0},"msg":"查询成功!"}
+    @Override
+    public List<Pigwash> pigwashList(String batchId) throws Exception{
+        Map<String, Object> map = new HashMap<>();
+        JSONObject data=new JSONObject();
+        data.put("batchid",batchId);
+        map.put("data",data);
+        String dataStr=JSONObject.fromObject(map).toString();
+        System.out.println(dataStr);
+        String jsonBack= BackTransmitUtil.newInvokeFunc(dataStr, "selectFeedVarieties", Resource.URL_BATCH_TEST);
+        if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
+            return null;
+        }
+        JSONArray pigwashList=JSONObject.fromObject(jsonBack).getJSONObject("feeding").getJSONArray("data");//feeding->data数组
+        //Object[] objects = pigwashList.toArray();
+        return JSONArray.toList(pigwashList,Pigwash.class);
+    }
+
+    /*public static void main(String[] args)throws Exception {
+        FeedRecordServiceImpl f=new FeedRecordServiceImpl();
+        List s=f.pigwashList("Va4AAASJiBlSsdKc");
+        System.out.println(s.g);
+
+    }*/
+
+
 }

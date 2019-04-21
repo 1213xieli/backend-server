@@ -2,6 +2,7 @@ package com.zb.byb.controller;
 
 import com.zb.byb.common.Constants;
 
+import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.util.JDService;
@@ -40,18 +41,24 @@ public class RegisterController {
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(100, "注册失败");
+            return ResponseEntity.build(100, "开户失败");
         }
 
     }
 
 
-    /*@ApiOperation("获取注册信息")
-    @GetMapping("/list")
-    public ResponseEntity<List<UserInfo>> getList(){
-        ResponseEntity<List<UserInfo>>  ent=new ResponseEntity<>();
-        return ent;
-    }*/
+    @ApiOperation("获取注册信息")
+    @GetMapping("/getInstroduce")
+    public ResponseEntity<List<Introducer>> getInstroduce(Introducer introducer){
 
-
+        try {
+            List<Introducer> list=loginService.getIntroducer(introducer);
+            ResponseEntity<List<Introducer>>  ent=new ResponseEntity<>();
+            ent.setData(list);
+            return ent;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.build(100,"查询不到数据");
+        }
+    }
 }

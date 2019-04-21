@@ -270,7 +270,9 @@ public class JsonPluginsUtil
     public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass) {
         if (beanClass == null || CommonFunc.checkNullOrEmpty(jsonString))
             return new ArrayList<>();
-
+        if(!"0000".equals(JSONObject.fromObject(jsonString).getString("code"))){
+            return null;
+        }
         // 通过Data 字段获取数据
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         String obj = jsonObject.getString(Data);

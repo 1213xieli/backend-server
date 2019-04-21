@@ -28,8 +28,10 @@ public class MyInfoController {
     @GetMapping("/list")
     public ResponseEntity<MyInfo> queryMyInfo(MyInfo myInfo,HttpServletRequest request) {
         //获取openid
-        String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
+        //String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
+        //openId="oIWY8wW3wZp81jvTvvfdwSenfh40";
+        String openId=(String) request.getSession().getAttribute("openId");
+        System.out.println("openid="+openId);
         try {
 
             JSONObject jsonObject1 = JSONObject.fromObject(myInfoService.viewMyInfo(openId));

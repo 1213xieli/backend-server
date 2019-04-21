@@ -2,6 +2,8 @@ package com.zb.byb.service;
 
 import com.zb.byb.entity.DeathApply;
 
+import java.util.List;
+
 public interface DeathApplyService {
     /**
      *
@@ -12,12 +14,18 @@ public interface DeathApplyService {
     String deathApply(DeathApply deathApply,String userId) throws Exception;
 
     /**
-     * 死亡申报记录
+     * 死亡申报记录列表
      * @param userId
      * @return
      */
-    String getDeathApplyRecord(String userId)throws  Exception;
+    List<DeathApply> getDeathApplyRecord(String userId,DeathApply deathApply)throws  Exception;
 
-
+    /**
+     * 查看单条申报记录
+     * @param rcord
+     * @return
+     * @throws Exception
+     */
+    DeathApply getDeathApplyRecordbyId(String rcord)throws  Exception;
 
 }

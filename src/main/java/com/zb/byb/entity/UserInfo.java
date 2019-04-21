@@ -25,6 +25,7 @@ public class UserInfo {
     private String introducerDept;
     @ApiModelProperty("邀请码")
     private String invitationCode;
-
+    public int pageNumber = 1;
+    public int pageSize = 10;
 
 }

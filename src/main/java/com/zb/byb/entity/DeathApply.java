@@ -6,32 +6,51 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @ApiModel("死亡申报")
 public class DeathApply {
+    @ApiModelProperty(value = "开始时间")
+    private String starttime;
+    @ApiModelProperty(value = "结束时间")
+    private String endtime;
+    @ApiModelProperty(value = "状态")
+    private String billState;
+    @ApiModelProperty(value = "状态id")
+    private String billStateIndex;
+    @ApiModelProperty("养户id")
+    private String custid;
+    @ApiModelProperty("养户编号")
+    private String pigfarmerCode;
     @ApiModelProperty("死亡申报id")
-    private String id;
-    @ApiModelProperty("死亡申报批次号")
+    private String rcordId;
+    @ApiModelProperty("死亡申报批id")
     private String batchId;
+    @ApiModelProperty("死亡申报批次号")
+    private String batchNo;
     @ApiModelProperty("死亡日期")
-    private Date dieDate;
+    private String dieDate;
     @ApiModelProperty("死亡日龄")
-    private Integer dayAge;
-    @ApiModelProperty("申报死亡头数")
-    private Integer ApplyDieNum;
+    private Integer freedDay;
+   @ApiModelProperty("申报死亡头数")//
+   private Integer applyDieCnt;
     @ApiModelProperty("死亡均重")
-    private Double avgWeight;
+    private Double dieAvg;
     @ApiModelProperty("实际死亡头数")
-    private Integer actualDieNum;
+    private Integer dieCnt;
     @ApiModelProperty("经度")
-    private Double jing;
+    private Double longitude;
     @ApiModelProperty("维度")
-    private Double wei;
+    private Double latitude;
     @ApiModelProperty("死猪照片")
-    private String DiePic;
+    private List imgUrl;
     @ApiModelProperty("申请记录状态")
-    private String status;
-
+    private String billStatus;
+    @ApiModelProperty("当前页码")
+    public int pageNumber = 1;
+    @ApiModelProperty("每页大小")
+    public int pageSize = 5;
+    //Va4AAAib24NSz43W
 }

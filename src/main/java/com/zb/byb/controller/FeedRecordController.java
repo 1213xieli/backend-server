@@ -1,25 +1,21 @@
 package com.zb.byb.controller;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.PageInfo;
+import com.zb.byb.common.CommonFunc;
+import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.FeedRecord;
 
 import com.zb.byb.entity.Pigwash;
-import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.FeedRecordService;
 
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-
-import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,79 +25,88 @@ import java.util.List;
 @RequestMapping("/api/feedRecord")
 public class FeedRecordController {
     @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
     private FeedRecordService feedRecordService;
-    @Autowired
-    private BatchRecordService batchRecordService;
     @ApiOperation("保存饲喂记录")
     @PostMapping("/save")
-    public ResponseEntity<?> saveFeedRecord(@RequestBody FeedRecord feedRecord, HttpServletRequest request) {
-
+    public ResponseEntity<?> saveFeedRecord(@RequestBody(required = false) FeedRecord feedRecord, HttpServletRequest request) {
+        //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        userId="Va4AAAA+/JHMns7U";//测试方便写死
         try {
             return ResponseEntity.buildSuccess(feedRecordService.addFeedRecord(feedRecord,userId));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500,"服务器出现问题");
+            return ResponseEntity.build(100, "无法保存数据");
         }
     }
-    @ApiOperation("获取饲喂记录")
-    @GetMapping("/list")
-    public ResponseEntity<FeedRecord> getList(FeedRecord feedRecord,HttpServletRequest request){
-        //String batchId=feedRecord.getBatchId();
-        String recordId="";
-        System.out.println("饲喂batchId="+recordId);
-        //获取userId
-        String userId=(String) request.getSession().getAttribute("userId");
-        userId="Va4AAAA+/JHMns7U";//测试方便写死
-        recordId="Va4AAAiaeB+zx1nH";
+    @ApiOperation("获取饲料列表")
+    @GetMapping("/getPigwashList")
+    public ResponseEntity<?> getPigwashList(Batch batch, HttpServletRequest request) {
+        String sessionId=(String) request.getSession().getAttribute("sessionId");
+        String batchId=batch.getId();
+        System.out.println("batchId="+batchId);
+        System.out.println("sessionId="+sessionId);
         try {
-            String backData= feedRecordService.queryFeedRecord(recordId,userId);
-            //List<FeedRecord> list=objectMapper.readValue(backData,List.class);
-            System.out.println("backData="+backData);
-            JSONArray arr=JSONObject.fromObject(backData).getJSONObject("data").getJSONArray("feedList");
-
-            FeedRecord feedRecord1=new FeedRecord();
-            List<Pigwash> list=new LinkedList<>();
-            for(int i=0;i<arr.size();i++){
-                Pigwash pigwash=new Pigwash();
-                JSONObject json=arr.getJSONObject(i);
-                pigwash.setFeedName("");
-                pigwash.setFeedId(json.getString("id"));
-                list.add(pigwash);
-            }
-            feedRecord1.setFeedList(list);
-            ResponseEntity<FeedRecord> resp=new ResponseEntity<>();
-            resp.setData(feedRecord1);
-            return resp;
-
+            return ResponseEntity.buildSuccess(feedRecordService.pigwashList(batchId));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500,"服务器出错");
+           return ResponseEntity.build(100, "无法查询到数据");
         }
     }
-    @ApiOperation("饲喂记录下拉框列表")
-    @GetMapping("/siweiList")
-    public ResponseEntity<List<FeedRecord>> getList(HttpServletRequest request){
+
+    @ApiOperation("获取饲喂记录")
+    @GetMapping("/list")
+    public ResponseEntity<List<FeedRecord>> getList(FeedRecord feedRecord,HttpServletRequest request){
         //获取userId
-        String userId=(String) request.getSession().getAttribute("userId");
-        userId="Va4AAAA+/JHMns7U";//测试方便写死
-        String backData=feedRecordService.queryFeedRecordList(null,userId);
-        System.out.println("backData="+backData);
-        String data=JSONObject.fromObject(backData).getJSONArray("data").toString();
-        System.out.println(data);
-        ResponseEntity<List<FeedRecord>> resp=new ResponseEntity<>();
-        try {
-            List<FeedRecord> list=objectMapper.readValue(data,List.class);
-            resp.setData(list);
-            return  resp;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.buildSuccess(data);
-        }
 
+        String custId=(String) request.getSession().getAttribute("userId");
+        try {
+            if (CommonFunc.checkNull(custId))
+                throw new Exception("未传入养户id.");
+            List<FeedRecord> list = feedRecordService.queryFeedRecordList(custId,feedRecord);
+            //给外层批次赋值
+            for(int i=0;i<list.size();i++){
+                list.get(i).setBatchId(list.get(i).getFeedList().get(0).getBatchId());
+                list.get(i).setBatchName(list.get(i).getFeedList().get(0).getBatchName());
+            }
+            List<Pigwash> feedList = list.get(0).getFeedList();
+
+
+            PageInfo<FeedRecord> info = new PageInfo(list);
+
+            return ResponseEntity.build(100,new Message(),info);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
     }
 
+    @ApiOperation("根据id查询到对象信息")
+    @GetMapping("/queryInfoById")
+    @ResponseBody
+    public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
+    {
+        try{
+            if (CommonFunc.checkNull(rcordId))
+                throw new Exception("未传入rcordId.");
+            FeedRecord feedRecord = feedRecordService.queryFeedRecordbyRcordId(rcordId);
+            if (null==feedRecord){
+                return ResponseEntity.build(100, "无法查询到数据");
+            }
+            List<Pigwash> feedList = feedRecord.getFeedList();
+            ResponseEntity<FeedRecord> recordResponseEntity=new ResponseEntity<>();
+           /* for (Pigwash p :
+                    feedList) {
+                feedRecord.setBatchName(p.getBatchName()+"");
+                feedRecord.setBatchId(p.getBatchId()+"");
+                break;
+            }*/
+            recordResponseEntity.setData(feedRecord);
+            //System.out.println(feedRecord.getBatchName());;
+            return recordResponseEntity;
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
 }

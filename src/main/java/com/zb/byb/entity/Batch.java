@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @ApiModel("批次")
 public class Batch {
-    @ApiModelProperty("用户id")
+    @ApiModelProperty("批次id")
     private String id;
-    @ApiModelProperty("批次名")
+    @ApiModelProperty("批次名")//展示
     private String name;
     @ApiModelProperty("批次号")
     private String number;

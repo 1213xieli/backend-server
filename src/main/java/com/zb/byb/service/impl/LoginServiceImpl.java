@@ -1,13 +1,16 @@
 package com.zb.byb.service.impl;
 
+import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.MethodName;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -74,16 +77,21 @@ public class LoginServiceImpl implements LoginService {
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_CUSTSTART);
         return jsonStr;
     }
-
+    //
     @Override
-    public String getIntroducer(String instroducerName) throws Exception{
+    public List<Introducer> getIntroducer(Introducer introducer) throws Exception{
         Map<String, Object> map = new HashMap<>();
-        Map<String, Object> param = new HashMap<>();
-        param.put("instroducerName",instroducerName);//介绍人姓名
         map.put("source","WECHAT");//微信
-        map.put("data",param);//
+        map.put("data",introducer);//
         String data=JSONObject.fromObject(map).toString();
-        //String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_CUSTSTART);
-        return null;
+        String jsonBack = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_INTRODUCER_CUSTSTART);
+        if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
+            return null;
+        }
+        JSONArray jsonObject=JSONObject.fromObject(jsonBack).getJSONArray("data");
+        // {"code":"0000","data":[{"billState":"保存","billStateIndex":"10","feedDate":"2019-04-19","feedList":[{"batchId":"QOKuwU+4Q5uVQ5msWQNUVEMbbjA=","batchName":"001","columnQty":0,"consumeQty":112,"feedId":"Va4AAAAJLFb1CZfS","feedName":"保育料","id":"Va4AAAib16PHfMLr"}],"rcordId":"Va4AAAib16Kzx1nH","state":1}],"msg":"查询成功!"}
+        //List<FeedRecord> list = JSONArray.toList(jsonObject, FeedRecord.class);
+        List<Introducer> list= com.alibaba.fastjson.JSONArray.parseArray(jsonObject.toString(),Introducer.class);
+        return list;
     }
 }

@@ -5,6 +5,8 @@ import _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacade
 import _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxyServiceLocator;
 import _35._91._168._192.ormrpc.services.EASLogin.EASLoginSoapBindingStub;
 import client.WSContext;
+import client.WSWSAppDataDealFacadeSoapBindingStub;
+import client.WSWSAppDataDealFacadeSrvProxyServiceLocator;
 import org.apache.axis.message.SOAPHeaderElement;
 
 import java.net.URL;
@@ -41,5 +43,31 @@ public class BackTransmitUtil {
         //设置头部
         soap2.setHeader(new SOAPHeaderElement("http://login.webservice.bos.kingdee.com", "SessionId", sessionId));
         return soap2.bybHandler(methodName, jsonData);
+    }
+
+    /**
+     * 接口调用方法
+     * @param jsonData
+     * @param methodName
+     * @return
+     * @throws Exception
+     */
+    public static String newInvokeFunc(String jsonData,String methodName,String url1) throws Exception {
+        EASLoginProxyServiceLocator locator = new EASLoginProxyServiceLocator();
+        URL url = new URL(Resource.URL_LOGIN_TEST);
+        EASLoginSoapBindingStub soap = new EASLoginSoapBindingStub(url, locator);
+        //设置头部
+        soap.setHeader(new SOAPHeaderElement("http://login.webservice.bos.kingdee.com", "SessionId", ""));
+        //获取sessionId
+        WSContext ctx = soap.login("zengneng", "", "eas", "CS1116", "l2", 1);
+        String sessionId = ctx.getSessionId();
+        System.out.println(sessionId);
+
+        WSWSAppDataDealFacadeSrvProxyServiceLocator locator2 = new WSWSAppDataDealFacadeSrvProxyServiceLocator();
+        URL url2 = new URL(url1);
+        WSWSAppDataDealFacadeSoapBindingStub soap2 = new WSWSAppDataDealFacadeSoapBindingStub(url2, locator2);
+        //设置头部
+        soap2.setHeader(new SOAPHeaderElement("http://login.webservice.bos.kingdee.com", "SessionId", sessionId));
+        return soap2.getData(methodName,jsonData);
     }
 }

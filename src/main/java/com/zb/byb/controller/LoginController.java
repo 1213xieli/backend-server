@@ -29,13 +29,12 @@ public class LoginController {
     @GetMapping("/login")
     public ResponseEntity<?> login(HttpServletRequest request) {
         HttpSession session=  request.getSession();
-
         //sessionId
         String sessionId="";
         //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         //为测试方便，先写死openId="oIWY8wahhrID4MLw68Ks3zIb1fq0"
-        openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";
+        openId="oIWY8wW3wZp81jvTvvfdwSenfh40";
         session.setAttribute("openId",openId);
         try {//获取操作业务权限的sessionId
             sessionId=JDService.login();
@@ -56,6 +55,11 @@ public class LoginController {
         if (userId!=null && userId.length()>0){
             //养户id存入session
             session.setAttribute("userId",userId);
+            /*
+            在养养户
+             */
+            session.setAttribute("userId","mRkwGN6DQgGNsONd+yMkV8yeztQ=");
+
         }else {//查不到说明用户没绑定微信，跳转到绑定页面
             return ResponseEntity.build(401,"该用户未绑定微信");
         }
@@ -68,18 +72,16 @@ public class LoginController {
     @ApiOperation("绑定")
     @PostMapping("/bind")
     public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
-        System.out.println("openId="+(String) request.getSession().getAttribute("openId"));
-        String openId="aaassz";
-        try {
-            //传人绑定信息,返回信息
-            //String data = loginService.bind(userInfo, (String) request.getSession().getAttribute("openId"));
-            String data = loginService.bind(userInfo,openId );
-            System.out.println("data="+data);
-            return ResponseEntity.buildSuccess(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(500,"服务器错误");
-        }
+            try {
+                //传人绑定信息,返回信息
+                String data = loginService.bind(userInfo, (String) request.getSession().getAttribute("openId"));
+                System.out.println("data="+data);
+                return ResponseEntity.build(200,"绑定成功");
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.build(500,"服务器错误");
+            }
+
     }
 
     @ApiOperation("解除绑定")
@@ -91,7 +93,7 @@ public class LoginController {
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500,"服务器错误");
+            return ResponseEntity.build(100,"解绑定失败");
         }
     }
     @ApiOperation("获取验证码")
