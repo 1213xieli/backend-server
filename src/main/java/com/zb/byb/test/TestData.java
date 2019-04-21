@@ -26,7 +26,13 @@ public class TestData {
 
 
     public static void main(String[] args) throws Exception {
-        createImage("请在这里输入文字", new Font("微软雅黑", Font.PLAIN, 32), new File("d:/a.png"), 500, 64);
+        String proFilePath = System.getProperty("user.dir");
+        String newFilePath = proFilePath + File.separator + "src" + File.separator + "main" +
+                File.separator + "resources" + File.separator + "static"+ File.separator + "static" +
+                "img" + File.separator + "banner.6a3a9e5.jpg";
+        System.out.println(newFilePath);
+
+//        createImage("请在这里输入文字", new Font("微软雅黑", Font.PLAIN, 32), new File("d:/a.png"), 500, 64);
     }
 
     // 根据str,font的样式以及输出文件目录

@@ -1,16 +1,13 @@
 package com.zb.byb.service.impl;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.NormalQuestionInfo;
 import com.zb.byb.entity.QuestionReportInfo;
-import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.MyInfoService;
 import com.zb.byb.service.QuestionReportInfoService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
-import com.zb.framework.common.entity.User;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +29,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
 
         Map<String, Object> map = new HashMap<>();
 //        map.put("openId", Commonconst.OpenId);
-        map.put("custId", info.getFcustid());
+        map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
 
         map.put("data", info);
@@ -44,11 +41,11 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
 
     @Override
     public List<QuestionReportInfo> queryNormalQuestionList(String id) throws Exception {
-        if (CommonFunc.checkNullOrEmpty(id))
+        if (C.checkNullOrEmpty(id))
             return new ArrayList<>();
 
         QuestionReportInfo queryInfo = new QuestionReportInfo();
-        queryInfo.setFcustid(id);
+        queryInfo.setCustId(id);
         Map<String, Object> map = new HashMap<>();
 //        map.put("openId", Commonconst.OpenId);
         map.put("custId", id);
@@ -64,7 +61,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
 
     @Override
     public QuestionReportInfo queryQuestionInfoById(String id) throws Exception {
-        if (CommonFunc.checkNullOrEmpty(id))
+        if (C.checkNullOrEmpty(id))
             return new QuestionReportInfo();
 
         QuestionReportInfo queryInfo = new QuestionReportInfo();
@@ -83,7 +80,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
 
     @Override
     public boolean deleteQuestionInfoById(String id) throws Exception {
-        if (CommonFunc.checkNullOrEmpty(id))
+        if (C.checkNullOrEmpty(id))
             return false;
 
         QuestionReportInfo queryInfo = new QuestionReportInfo();

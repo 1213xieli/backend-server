@@ -8,13 +8,6 @@ import com.zb.byb.entity.EquipmentApply;
  * 作者：谢李
  */
 public interface DrugApplyService{
-    /**
-     * 通过登入人id获取投苗
-     * @param userId
-     * @return
-     * @throws Exception
-     */
-    String queryListByUser(String userId) throws Exception;
 
     /**
      * 投苗数据保存
@@ -22,29 +15,38 @@ public interface DrugApplyService{
      * @return
      * @throws Exception
      */
-    boolean saveInfo(DrugApply info) throws Exception;
+    String saveInfo(DrugApply info) throws Exception;
 
     /**
      * 根据前台传过来的tokenid，初始化数据
-     * @param tokenId
+     * @param custId
      * @return 返回对象
      * @throws Exception 异常
      */
-    DrugApply queryListInitData(String tokenId) throws Exception;
+    DrugApply queryListInitData(String custId) throws Exception;
 
     /**
      * 根据用户id查询到投苗记录
-     * @param tokenId
+     * @param custId
      * @return 返回对象
      * @throws Exception 异常
      */
-    DrugApply queryInfoRecordList(String tokenId) throws Exception;
+    DrugApply queryInfoRecordList(String custId) throws Exception;
 
     /**
      * 根据id查询对象信息
-     * @param id
+     * @param recordId
      * @return
      * @throws Exception
      */
-    DrugApply queryInfoById(String id) throws Exception;
+    DrugApply queryInfoById(String recordId) throws Exception;
+
+    /**
+     * 根据recordId删除对象信息
+     * @param recordId
+     * @return
+     * @throws Exception
+     */
+    DrugApply deleteInfoById(String recordId) throws Exception;
+
 }

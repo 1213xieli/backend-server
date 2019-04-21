@@ -2,18 +2,19 @@ package com.zb.byb.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.QuestionReportInfo;
 import com.zb.byb.service.QuestionReportInfoService;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 问题反馈信息
@@ -26,27 +27,36 @@ public class QuestionReportController {
 
     @ApiOperation("保存问题反馈信息")
     @PostMapping("/saveQuestionReport")
-    public ResponseEntity<?> saveQuestionReport(QuestionReportInfo info) {
+    public ResponseEntity<?> saveQuestionReport(HttpServletRequest request,QuestionReportInfo info) {
         try {
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            info.setCustId(custId);
             return ResponseEntity.buildSuccess(questionReportInfoService.saveQuestionReport(info));
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
     @ApiOperation("常见问题查询列表，通过养户id")
     @GetMapping("/queryQuestionList")
-    public ResponseEntity<?> queryQuestionList(String yhid) {
+    public ResponseEntity<?> queryQuestionList(HttpServletRequest request) {
         try {
-            List<QuestionReportInfo> list = questionReportInfoService.queryNormalQuestionList(yhid);
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            List<QuestionReportInfo> list = questionReportInfoService.queryNormalQuestionList(custId);
             PageInfo page = new PageInfo(list);
             return ResponseEntity.buildSuccess(page);
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -58,7 +68,10 @@ public class QuestionReportController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -70,7 +83,10 @@ public class QuestionReportController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(0000, Commonconst.Back_Fail);
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 }
