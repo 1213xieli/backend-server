@@ -72,15 +72,15 @@ public class LoginController {
     @ApiOperation("绑定")
     @PostMapping("/bind")
     public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
-            try {
-                //传人绑定信息,返回信息
-                String data = loginService.bind(userInfo, (String) request.getSession().getAttribute("openId"));
-                System.out.println("data="+data);
-                return ResponseEntity.build(200,"绑定成功");
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ResponseEntity.build(500,"服务器错误");
-            }
+        try {
+            //传人绑定信息,返回信息
+            String data = loginService.bind(userInfo, (String) request.getSession().getAttribute("openId"));
+            System.out.println("data="+data);
+            return ResponseEntity.build(200,"绑定成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(500,"服务器错误");
+        }
 
     }
 
