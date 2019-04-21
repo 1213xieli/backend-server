@@ -1,6 +1,11 @@
 package com.zb.byb.util;
 
+/**
+ * 金碟函数调用统一方法
+ * xieli
+ */
 public class MethodName {
+
     public  static final String METHOD_NAME_UNBIND_CUSTINFO="unBindCustInfo";//解绑
     public  static final String METHOD_NAME_BIND_CUSTINFO="bindCustInfo";//绑定
     public static final String METHOD_NAME_SAVE_CUSTSTART="saveCustStart";//开户申请保存
