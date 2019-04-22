@@ -1,6 +1,7 @@
 package com.zb.byb.service.impl;
 
-import com.zb.byb.common.CommonFunc;
+
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.FeedRecord;
@@ -41,7 +42,7 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
 
     @Override
     public DeathApply getDeathApplyRecordbyId(String rcordId) throws Exception {
-        if (CommonFunc.checkNullOrEmpty(rcordId))
+        if (C.checkNullOrEmpty(rcordId))
             return new DeathApply();
         Map<String, Object> map = new HashMap<>();
         map.put("source", Commonconst.WX_Flag);
