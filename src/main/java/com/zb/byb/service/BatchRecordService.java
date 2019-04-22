@@ -1,5 +1,6 @@
 package com.zb.byb.service;
 
+import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.BatchRecord;
 
 public interface BatchRecordService {
@@ -19,6 +20,6 @@ public interface BatchRecordService {
      * @return
      * @throws Exception
      */
-    String getBatchList(String userId, String bizType) throws Exception;
+    String getBatchList(String userId, Batch batch) throws Exception;
 
 }
