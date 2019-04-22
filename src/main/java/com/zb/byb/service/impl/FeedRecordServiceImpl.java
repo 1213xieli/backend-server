@@ -1,6 +1,6 @@
 package com.zb.byb.service.impl;
 
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.FeedRecord;
 
@@ -37,7 +37,7 @@ public class FeedRecordServiceImpl implements FeedRecordService {
 
     @Override
     public List<FeedRecord> queryFeedRecordList(String userId,FeedRecord feedRecord) throws Exception{
-        if (CommonFunc.checkNullOrEmpty(userId))
+        if (C.checkNullOrEmpty(userId))
             return new ArrayList<>();
 
         Map<String, Object> map = new HashMap<>();
@@ -58,7 +58,7 @@ public class FeedRecordServiceImpl implements FeedRecordService {
 
     @Override
     public FeedRecord queryFeedRecordbyRcordId(String rcordId) throws Exception {
-        if (CommonFunc.checkNullOrEmpty(rcordId))
+        if (C.checkNullOrEmpty(rcordId))
             return new FeedRecord();
         Map<String, Object> map = new HashMap<>();
         map.put("source", Commonconst.WX_Flag);

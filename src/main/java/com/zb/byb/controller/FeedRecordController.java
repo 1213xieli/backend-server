@@ -1,7 +1,7 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.FeedRecord;
 
@@ -60,7 +60,7 @@ public class FeedRecordController {
 
         String custId=(String) request.getSession().getAttribute("userId");
         try {
-            if (CommonFunc.checkNull(custId))
+            if (C.checkNull(custId))
                 throw new Exception("未传入养户id.");
             List<FeedRecord> list = feedRecordService.queryFeedRecordList(custId,feedRecord);
             //给外层批次赋值
@@ -86,7 +86,7 @@ public class FeedRecordController {
     public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
     {
         try{
-            if (CommonFunc.checkNull(rcordId))
+            if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             FeedRecord feedRecord = feedRecordService.queryFeedRecordbyRcordId(rcordId);
             if (null==feedRecord){

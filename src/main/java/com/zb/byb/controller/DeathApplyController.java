@@ -2,7 +2,7 @@ package com.zb.byb.controller;
 
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.CommonFunc;
+import com.zb.byb.common.C;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.service.DeathApplyService;
@@ -73,7 +73,7 @@ public class DeathApplyController {
     public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
     {
         try{
-            if (CommonFunc.checkNull(rcordId))
+            if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             return ResponseEntity.buildSuccess(deathApplyService.getDeathApplyRecordbyId(rcordId));
         }
