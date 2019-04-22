@@ -49,7 +49,7 @@ public class DrugApply {
     @ApiModelProperty("实际领药明细")
     private List<Drug> entrys;
     public int pageNumber = 1;
-    public int pageSize = 1000;
+    public int pageSize = 500;
 
     //待审核
     public final static int STATUS_KEEP = 1;

@@ -32,6 +32,10 @@ public class BatchRecord{
     private Integer curcnt;
     @ApiModelProperty("死亡头数")
     private Integer diecnt;
+    @ApiModelProperty("当前页码")
+    public int pageNumber = 1;
+    @ApiModelProperty("每页大小")
+    public int pageSize = 5;
 
 
 

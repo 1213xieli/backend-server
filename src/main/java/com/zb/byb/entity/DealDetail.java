@@ -19,5 +19,9 @@ public class DealDetail {
     private Double dealMoney;
     @ApiModelProperty("余额")
     private Double yuE;
+    @ApiModelProperty("当前页码")
+    public int pageNumber = 1;
+    @ApiModelProperty("每页大小")
+    public int pageSize = 5;
 
 }

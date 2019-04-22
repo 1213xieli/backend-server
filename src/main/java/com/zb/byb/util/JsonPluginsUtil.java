@@ -295,7 +295,8 @@ public class JsonPluginsUtil
 
         for (int i = 0; i < size; i++) {
             jsonObjectValue = jsonArray.getJSONObject(i);
-            bean = (T) JSONObject.toBean(jsonObjectValue, beanClass);
+//            bean = (T) JSONObject.toBean(jsonObjectValue, beanClass);
+             bean = (T) com.alibaba.fastjson.JSON.parseObject(obj, beanClass);
             list.add(bean);
         }
 

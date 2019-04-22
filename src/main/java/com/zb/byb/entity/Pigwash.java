@@ -19,12 +19,16 @@ public class Pigwash implements Serializable {
     private String feedName;
     @ApiModelProperty("数量（包数）")
     private Integer consumeQty;
-   /* @ApiModelProperty("单价")
+    @ApiModelProperty("单价")
     private Double price;
     @ApiModelProperty("金额")
-    private Double payment;
-    @ApiModelProperty("已领")
+    private Double amount;
+    /*@ApiModelProperty("已领")
     private Double received;
     @ApiModelProperty("定额")
     private Double quota;*/
+    @ApiModelProperty("已领")
+   public String sumReceve;//已领用数量
+    @ApiModelProperty("定额")
+    public String quotarecevenum;//定额领用数量
 }

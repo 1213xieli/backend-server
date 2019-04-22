@@ -28,6 +28,10 @@ public class BalanceRecord {
     private Double goodRate;
     @ApiModelProperty("结算明细")
     private BalanceDetail balanceDetail;
+    @ApiModelProperty("当前页码")
+    public int pageNumber = 1;
+    @ApiModelProperty("每页大小")
+    public int pageSize = 5;
 
     public String getId() {
         return id;

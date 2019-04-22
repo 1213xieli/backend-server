@@ -67,12 +67,12 @@ public class BatchRecordController {
     }
     @ApiOperation("获取批次列表下拉框")
     @GetMapping("/batchListList")
-    public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request){
+    public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){
         String userId=(String) request.getSession().getAttribute("userId");
         userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
         System.out.println("=="+userId);
         try {
-            String str=batchRecordService.getBatchList(userId,null);
+            String str=batchRecordService.getBatchList(userId,batch);
             System.out.println("str="+str);
             String batchIdlist=JSONObject.fromObject(str).getString("data");
             System.out.println("下拉batchIdlist="+batchIdlist);

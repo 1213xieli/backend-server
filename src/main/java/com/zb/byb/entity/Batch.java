@@ -15,6 +15,10 @@ public class Batch {
     private String name;
     @ApiModelProperty("批次号")
     private String number;
+    @ApiModelProperty("当前页码")
+    public int pageNumber = 1;
+    @ApiModelProperty("每页大小")
+    public int pageSize = 5;
 
 
 }
