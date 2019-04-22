@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,11 +27,12 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         }
 
         Map<String, Object> map = new HashMap<>();
-        map.put("custId", Commonconst.CustId);
+        map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
         map.put("data", info);
         String data = JSONObject.fromObject(map).toString();
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_EQUIPMENTRECBILL);
+        System.out.println("设备申请，保存方法----" + jsonBackStr);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
     }
 
@@ -45,11 +47,13 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
+        System.out.println("设备申请，查询view方法----" + jsonData);
+
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 
     @Override
-    public EquipmentApply queryInfoRecordList(String custId) throws Exception {
+    public List<EquipmentApply>  queryInfoRecordList(String custId) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("custId", custId);
         map.put("source", Commonconst.WX_Flag);
@@ -59,13 +63,14 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
-        return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
+        System.out.println("设备申请，查询query方法----" + jsonData);
+        return JsonPluginsUtil.jsonToBeanList(jsonData, EquipmentApply.class);
     }
 
     @Override
     public EquipmentApply queryInfoById(String rcordId) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("custId", Commonconst.CustId);
+//        map.put("custId", Commonconst.CustId);
         map.put("source", Commonconst.WX_Flag);
         EquipmentApply info = new EquipmentApply();
         info.setRcordId(rcordId);
@@ -74,13 +79,14 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
+        System.out.println("设备申请，查询query方法----" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 
     @Override
     public String deleteInfoById(String rcordId) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("custId", Commonconst.CustId);
+//        map.put("custId", Commonconst.CustId);
         map.put("source", Commonconst.WX_Flag);
         EquipmentApply info = new EquipmentApply();
         info.setRcordId(rcordId);

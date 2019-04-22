@@ -37,6 +37,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         String data = JSONObject.fromObject(map).toString();
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PROBLEMFEEDBACK);
         String id = JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
+        System.out.println("保存问题，反馈的记录id----" + id);
         return id;
     }
 
@@ -57,6 +58,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PROBLEMFEEDBACK);
+        System.out.println("问题反馈，查询列表---" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, QuestionReportInfo.class);
     }
 
@@ -66,7 +68,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
             return new QuestionReportInfo();
 
         QuestionReportInfo queryInfo = new QuestionReportInfo();
-        queryInfo.setId(id);
+        queryInfo.setRcordId(id);
         Map<String, Object> map = new HashMap<>();
 //        map.put("openId", Commonconst.OpenId);
 //        map.put("custId", Commonconst.CustId);
@@ -75,7 +77,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PROBLEMFEEDBACK);
-
+        System.out.println("问题反馈，查询view方法---" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, QuestionReportInfo.class);
     }
 
@@ -88,7 +90,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         queryInfo.setId(id);
         Map<String, Object> map = new HashMap<>();
         map.put("openId", Commonconst.OpenId);
-        map.put("custId", Commonconst.CustId);
+//        map.put("custId", Commonconst.CustId);
         map.put("data", queryInfo);
 
         // 要传入数据进行转化

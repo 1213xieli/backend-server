@@ -35,7 +35,7 @@ public class BackTransmitUtil {
         //获取sessionId
         WSContext ctx = soap.login("zengneng", "", "eas", "CS1116", "l2", 1);
         String sessionId = ctx.getSessionId();
-        System.out.println(sessionId);
+        System.out.println(DateUtil.getCurrentDateFolder());
 
         WSCustWechatAppFacadeSrvProxyServiceLocator locator2 = new WSCustWechatAppFacadeSrvProxyServiceLocator();
         URL url2 = new URL(Resource.URL_TASK_TEST);

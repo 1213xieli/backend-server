@@ -16,7 +16,7 @@ public class MyInfoServiceImpl implements MyInfoService {
     public String viewMyInfo(String openId) throws Exception {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> map1 = new HashMap<>();
-        map1.put("openId",openId);
+        map.put("openId",openId);
         map.put("data",map1);
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_CUSTINFO);

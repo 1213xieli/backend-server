@@ -15,7 +15,7 @@ public class Drug implements Serializable {
     @ApiModelProperty("主键id")
     private String id;
     @ApiModelProperty("物料id")
-    private String materialId;
+    private String materialid;
     @ApiModelProperty("物料编号")
     private String materialNo;
     @ApiModelProperty("物料名称")
@@ -24,6 +24,8 @@ public class Drug implements Serializable {
     private String batchId;
     @ApiModelProperty("批次")
     private String batchNo;
+    @ApiModelProperty("供应商id")
+    private String supplierId;
 
     @ApiModelProperty("数量")
     private Integer userQty;
@@ -31,7 +33,8 @@ public class Drug implements Serializable {
     private Double price;
     @ApiModelProperty("金额")
     private Double payment;
-
+    @ApiModelProperty("申请药品数量")
+    private Double num;
 
 
 }

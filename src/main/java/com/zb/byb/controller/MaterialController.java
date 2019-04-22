@@ -1,5 +1,6 @@
 package com.zb.byb.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
@@ -60,8 +61,10 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
-    public ResponseEntity<?> drugApply(DrugApply drugApply) {
+    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, DrugApply drugApply) {
         try{
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            drugApply.setCustId(custId);
             return ResponseEntity.buildSuccess(drugApplyService.saveInfo(drugApply));
         }
         catch (Exception e)
@@ -95,7 +98,9 @@ public class MaterialController {
             if (C.checkNull(custId))
                 throw new Exception("未传入养户id");
 
-            return ResponseEntity.buildSuccess(drugApplyService.queryInfoRecordList(custId));
+            List<DrugApply> list = drugApplyService.queryInfoRecordList(custId);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
         }
         catch (Exception e)
         {
@@ -106,8 +111,9 @@ public class MaterialController {
     @ApiOperation("根据id查询到对象信息")
     @GetMapping("/queryDrugApplyInfoById")
     @ResponseBody
-    public ResponseEntity<DrugApply> queryDrugApplyInfoById(String id)
+    public ResponseEntity<DrugApply> queryDrugApplyInfoById(HttpServletRequest request, String id)
     {
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
             if (C.checkNull(id))
                 throw new Exception("未传入id");
@@ -145,9 +151,10 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveEquipmentApply")
-    public ResponseEntity<?> saveEquipmentApply(EquipmentApply equipmentApply) {
+    public ResponseEntity<?> saveEquipmentApply(HttpServletRequest request, EquipmentApply equipmentApply) {
         try{
-
+            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            equipmentApply.setCustId(custId);
             return ResponseEntity.buildSuccess(equipmentApplyService.saveInfo(equipmentApply));
         }
         catch (Exception e)
@@ -180,7 +187,9 @@ public class MaterialController {
             if (C.checkNull(custId))
                 throw new Exception("未传入id");
 
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoRecordList(custId));
+            List<EquipmentApply> list = equipmentApplyService.queryInfoRecordList(custId);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
         }
         catch (Exception e)
         {

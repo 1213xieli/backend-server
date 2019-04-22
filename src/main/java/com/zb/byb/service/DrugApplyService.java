@@ -3,6 +3,8 @@ package com.zb.byb.service;
 import com.zb.byb.entity.DrugApply;
 import com.zb.byb.entity.EquipmentApply;
 
+import java.util.List;
+
 /**
  * 领药申请,业务接口
  * 作者：谢李
@@ -31,7 +33,7 @@ public interface DrugApplyService{
      * @return 返回对象
      * @throws Exception 异常
      */
-    DrugApply queryInfoRecordList(String custId) throws Exception;
+    List<DrugApply> queryInfoRecordList(String custId) throws Exception;
 
     /**
      * 根据id查询对象信息
@@ -47,6 +49,6 @@ public interface DrugApplyService{
      * @return
      * @throws Exception
      */
-    DrugApply deleteInfoById(String recordId) throws Exception;
+    boolean deleteInfoById(String recordId) throws Exception;
 
 }

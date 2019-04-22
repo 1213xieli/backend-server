@@ -14,7 +14,7 @@ public class QuestionReportInfo implements Serializable {
     @ApiModelProperty("主键id")
     private String id;
     @ApiModelProperty("记录id")
-    private String recordId;
+    private String rcordId;
     @ApiModelProperty("反馈日期")
     private String bizdate;
     @ApiModelProperty("养户id")
@@ -37,4 +37,7 @@ public class QuestionReportInfo implements Serializable {
     private String order;
     @ApiModelProperty("扩展字段")
     private String extendsOne;
+
+    public int pageNumber = 1;
+    public int pageSize = 1000;
 }

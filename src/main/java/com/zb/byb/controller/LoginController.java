@@ -1,8 +1,12 @@
 package com.zb.byb.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Constants;
+import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.UserInfo;
+import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.service.MyInfoService;
 import com.zb.byb.util.JDService;
@@ -11,13 +15,13 @@ import com.zb.byb.util.RequestUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,6 +32,12 @@ public class LoginController {
     private LoginService loginService;
     @Autowired
     private MyInfoService myInfoService;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private BatchRecordService batchRecordService;
+
+
     @ApiOperation("登入")
     @GetMapping("/login")
     public ResponseEntity<?> login(HttpServletRequest request) {
@@ -37,7 +47,7 @@ public class LoginController {
         //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         if (C.checkNullOrEmpty(openId))
-            openId="oIWY8wahhrID4MLw68Ks3zIb1fq0";//为测试方便，先写死openId="oIWY8wahhrID4MLw68Ks3zIb1fq0"
+            openId="123456";//为测试方便，先写死openId="oIWY8wahhrID4MLw68Ks3zIb1fq0"
         session.setAttribute("openId",openId);
 
         try {
@@ -47,7 +57,7 @@ public class LoginController {
             if (C.checkNullOrEmpty(backData))
                 throw new Exception("登录失败，未获取个人信息");
 
-            JSONObject jsonMap = JSONObject.fromObject(backData);
+            JSONObject jsonMap = JSONObject.parseObject(backData);
             String userId = jsonMap.getString("id");
             System.out.println("userId="+userId);
 
@@ -58,7 +68,14 @@ public class LoginController {
             session.setAttribute("userId",userId);
             session.setAttribute("fname", jsonMap.getString("fname"));
             session.setAttribute("custId", userId);
-            session.setAttribute("cfwinternum", C.parseStr(jsonMap.getString("cfwinternum")));
+            session.setAttribute("cfwinternum", jsonMap.getString("cfwinternum"));
+
+            //  批次
+            String str=batchRecordService.getBatchList(userId,null);
+            String batchIdlist=JSONObject.parseObject(str).getString("data");
+            System.out.println("登录初始化批次方法-------"+batchIdlist);
+            List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
+            session.setAttribute("pcList", list);
 
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
@@ -104,7 +121,7 @@ public class LoginController {
         //验证登入信息是否为养户
         Map map=new HashMap<>();
         map.put("data",userInfo);
-        String json= JSONObject.fromObject(map).toString();
+        String json= JSONObject.toJSONString(map);
         String result=null;
         try {
             sessionId=JDService.login();

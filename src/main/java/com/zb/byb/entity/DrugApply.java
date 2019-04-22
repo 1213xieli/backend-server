@@ -16,6 +16,8 @@ public class DrugApply {
     private String id;
     @ApiModelProperty("记录id")
     private String rcordId;
+    @ApiModelProperty("custId")
+    private String custId;
 
     @ApiModelProperty("领药申请批次号")
     private String batchId;

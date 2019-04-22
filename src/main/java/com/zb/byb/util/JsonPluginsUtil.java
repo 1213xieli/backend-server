@@ -37,8 +37,9 @@ public class JsonPluginsUtil
             return null;
 
         JSONObject beanJson = JSONObject.fromObject(obj);
-        T bean = (T) JSONObject.toBean(beanJson, beanCalss);
+//        T bean = (T) JSONObject.toBean(beanJson, beanCalss);
 
+        T bean = (T) com.alibaba.fastjson.JSON.parseObject(obj, beanCalss);
         return bean;
 
     }

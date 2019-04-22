@@ -35,6 +35,8 @@ public class BatchRecordServiceImpl implements BatchRecordService {
         map.put("custId",userId);//养户id
         map.put("source","WECHAT");//微信
         map.put("data",param);//参数
+        param.put("pageNumber", 1);
+        param.put("pageSize", 1000);
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data,MethodName.METHOD_NAME_QUERY_ALL_BATCHI);
         return jsonStr;
