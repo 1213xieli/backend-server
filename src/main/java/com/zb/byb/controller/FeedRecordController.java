@@ -2,7 +2,6 @@ package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
-
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.FeedRecord;
 
@@ -95,7 +94,12 @@ public class FeedRecordController {
             }
             List<Pigwash> feedList = feedRecord.getFeedList();
             ResponseEntity<FeedRecord> recordResponseEntity=new ResponseEntity<>();
-
+           /* for (Pigwash p :
+                    feedList) {
+                feedRecord.setBatchName(p.getBatchName()+"");
+                feedRecord.setBatchId(p.getBatchId()+"");
+                break;
+            }*/
             recordResponseEntity.setData(feedRecord);
             //System.out.println(feedRecord.getBatchName());;
             return recordResponseEntity;

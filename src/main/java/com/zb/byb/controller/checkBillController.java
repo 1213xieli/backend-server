@@ -11,9 +11,11 @@ import com.zb.byb.entity.BillInfo;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.BillService;
 import com.zb.byb.util.HtmlToImageUtil;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,64 +122,14 @@ public class checkBillController {
                     "    </table>";
             System.out.println(htmlTemplate);
             byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
-            String filePath =Commonconst.TempPath  + C.newGuid() + ".png";
+//            String pngStr = C.newGuid() + ".png";
+//            String filePath =Commonconst.TempPath  + pngStr;
 //            OutputStream out = new FileOutputStream(new File(filePath));
 //            out.write(bytes);
 //            out.close();
 
-            String base64str=new String(bytes);//log为实体 括号里面是图像的get方法 返回为Byte[]型
-            String newstr=new String("\"data:image/jpg;base64,"+base64str+"\"");//拼装Base64字符串头
-            return ResponseEntity.build(200,new Message(), newstr);
-//            response.getWriter().write(newstr);//将完整Base64字符串返回前台
-
-//            ByteArrayOutputStream os = new ByteArrayOutputStream();
-//            os.write(bytes);
-//            byte[] content = os.toByteArray();
-//            InputStream is = new ByteArrayInputStream(content);
-//// 设置response参数，可以打开下载页面
-//            response.reset();
-//            response.setContentType("application/vnd.ms-excel;charset=utf-8");
-//            ServletOutputStream out = null;
-//            BufferedInputStream bis = null;
-//            BufferedOutputStream bos = null;
-//            try
-//            {
-//                response.setHeader("Content-Disposition",
-//                        "attachment;filename="
-//                                + new String((C.newGuid() + ".png").getBytes("UTF-8"),
-//                                "iso-8859-1"));
-//                out = response.getOutputStream();
-//                bis = new BufferedInputStream(is);
-//                bos = new BufferedOutputStream(out);
-//                byte[] buff = new byte[2048];
-//                int bytesRead;
-//                // Simple read/write loop.
-//                while (-1 != (bytesRead = bis.read(buff, 0, buff.length)))
-//                {
-//                    bos.write(buff, 0, bytesRead);
-//                }
-//            } catch (final IOException e)
-//            {
-//
-//            } finally
-//            {
-//                try
-//                {
-//                    if (bis != null)
-//                    {
-//                        bis.close();
-//                    }
-//                    if (bos != null)
-//                    {
-//                        bos.close();
-//                    }
-//                } catch (IOException e)
-//                {
-//                    e.printStackTrace();
-//                }
-//            }
-//            return null;
-//            return ResponseEntity.build(200,new Message(), billService.queryBillRecordById(custId, info));
+            System.out.println("data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
+            return ResponseEntity.build(200,new Message(), "data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
         }
         catch (Exception e)
         {

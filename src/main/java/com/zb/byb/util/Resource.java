@@ -1,5 +1,8 @@
 package com.zb.byb.util;
 
+/**
+ * 金蝶系统
+ */
 public class Resource {
 
     /*金蝶系统登入接口地址*/
