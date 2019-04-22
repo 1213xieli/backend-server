@@ -4,6 +4,7 @@ import com.zb.byb.common.C;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
+import com.zb.byb.service.FeedApplyService;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class MaterialController {
     private DrugApplyService drugApplyService;
     @Autowired
     private EquipmentApplyService equipmentApplyService;
+    @Autowired
+    private FeedApplyService feedApplyService;
 
 
     /**
@@ -34,23 +37,41 @@ public class MaterialController {
      */
     @ApiOperation("保存领料申请")
     @PostMapping("/saveFeedApply")
-    public ResponseEntity<?> feedApply(@RequestBody FeedApply feedApply) {
-        FeedApply fee = new FeedApply();
-        fee.setId("xieli");
-        fee.setBatchId("xieli");
-        fee.setPlanDate(new Date());
-        return ResponseEntity.buildSuccess(fee);
+    public ResponseEntity<?> feedApply(@RequestBody FeedApply feedApply,HttpServletRequest request) {
+        String userId=(String) request.getSession().getAttribute("userId");
+        feedApply.setBatchId("QOKuwU+4Q5uVQ5msWQNUVEMbbjA=");
+        feedApply.setBatchName("已删除薛昌宇001");
+        feedApply.setDriverName("小王");
+        feedApply.setPlandate("2019-05-06");
+        feedApply.setDriverIdcard("360122199409090915");
+        Pigwash pigwash=new Pigwash();
+        pigwash.setPrice(2.0);
+        pigwash.setAmount(40.0);
+        List<Pigwash> list=new ArrayList();
+        list.add(pigwash);
+        feedApply.setPickDetail(list);
+        try {
+            System.out.println("userid="+userId);
+            String id= feedApplyService.feedApply(feedApply,userId);
+            return ResponseEntity.buildSuccess(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "无法保存数据");
+        }
+
     }
 
-    @ApiOperation("获取领料申请记录")
+    /*@ApiOperation("获取领料申请记录")
     @GetMapping("/feedList")
     public ResponseEntity<List<FeedApply>> getFeedList(){
-        FeedApply fee = new FeedApply();
-        fee.setId("xieli");
-        fee.setBatchId("xieli");
-        fee.setPlanDate(new Date());
-        return ResponseEntity.buildSuccess(fee);
-    }
+        String userId=(String) request.getSession().getAttribute("userId");
+        try {
+            return ResponseEntity.buildSuccess(feedRecordService.addFeedRecord(feedRecord,userId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "无法保存数据");
+        }
+    }*/
 
 
     /**
@@ -62,6 +83,7 @@ public class MaterialController {
     @PostMapping("/saveDrugApply")
     public ResponseEntity<?> drugApply(DrugApply drugApply) {
         try{
+
             return ResponseEntity.buildSuccess(drugApplyService.saveInfo(drugApply));
         }
         catch (Exception e)
