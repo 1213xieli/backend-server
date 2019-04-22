@@ -39,11 +39,10 @@ public class FeedApply {
     private String driverIdcard;
     @ApiModelProperty("拉料司机车牌号")//车牌号
     private String driverVehicleno;
-
-    @ApiModelProperty("申请类别：1：领料，0：退料")
-    private String applyType;
+    @ApiModelProperty("申请类别：0：领料，1：退料")
+    private String type;
     @ApiModelProperty("申请领料明细")
-    private List<Pigwash> pickDetail;
+    private List<LiLiaoInfo> pickDetail;
     /*@ApiModelProperty("实际领料明细")
     private List<Pigwash>  actualList;*/
 

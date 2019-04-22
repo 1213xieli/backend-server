@@ -26,6 +26,7 @@ public class FeedApplyServiceImpl implements FeedApplyService {
         String data=JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PICKINGAPPLY);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonStr);
+    //{"code":"0000","id":"Va4AAAicTNbq+f3A","msg":"生成成功!"}
     }
 
     @Override

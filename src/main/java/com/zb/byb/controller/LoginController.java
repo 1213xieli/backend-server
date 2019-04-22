@@ -90,7 +90,7 @@ public class LoginController {
     @ApiOperation("绑定")
     @PostMapping("/bind")
     public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
-       // session.setAttribute("userId","mRkwGN6DQgGNsONd+yMkV8yeztQ=");
+        // session.setAttribute("userId","mRkwGN6DQgGNsONd+yMkV8yeztQ=");
         request.getSession().setAttribute("userId","mRkwGN6DQgGNsONd+yMkV8yeztQ=");
         try {
             //传人绑定信息,返回信息
