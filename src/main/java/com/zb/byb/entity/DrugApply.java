@@ -26,7 +26,7 @@ public class DrugApply {
     @ApiModelProperty("天数")
     private String curday;
      @ApiModelProperty("领药申请日期")
-    private Date applydate;
+    private String applydate;
      @ApiModelProperty("领药申请原因")
     private String reason;
     @ApiModelProperty("curcnt")

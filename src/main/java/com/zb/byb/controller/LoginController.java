@@ -71,11 +71,19 @@ public class LoginController {
             session.setAttribute("cfwinternum", jsonMap.getString("cfwinternum"));
 
             //  批次
-            String str=batchRecordService.getBatchList(userId,null);
+            Batch batch = new Batch();
+            batch.setPageNumber(1);
+            batch.setPageSize(50);
+            String str=batchRecordService.getBatchList(userId,batch);
             String batchIdlist=JSONObject.parseObject(str).getString("data");
-            System.out.println("登录初始化批次方法-------"+batchIdlist);
-            List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
-            session.setAttribute("pcList", list);
+            if (!C.checkNullOrEmpty(batchIdlist))
+            {
+                System.out.println("登录初始化批次方法-------"+batchIdlist);
+                List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
+                session.setAttribute("pcList", list);
+            }
+
+
 
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {

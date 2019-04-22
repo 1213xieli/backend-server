@@ -170,7 +170,7 @@ public class MaterialController {
      * @param
      * @return
      */
-    @ApiOperation("保存领药申请")
+    @ApiOperation("保存设备申请")
     @PostMapping("/saveEquipmentApply")
     public ResponseEntity<?> saveEquipmentApply(HttpServletRequest request, EquipmentApply equipmentApply) {
         try{

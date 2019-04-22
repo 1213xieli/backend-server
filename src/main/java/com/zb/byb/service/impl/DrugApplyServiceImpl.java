@@ -25,7 +25,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
 
     @Override
     public String saveInfo(DrugApply info) throws Exception {
-        if (info == null)
+        if (info == null || info.getEntrys().size() <= 0)
         {
             throw new Exception("无法保存");
         }
@@ -33,19 +33,19 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
-        info.setBatchId("Wif1/wprT0+mqAaT1bq6T0MbbjA=");
-        Drug drug = new Drug();
-        drug.setMaterialid("Va4AAAAI+8FECefw");
-        drug.setSupplierId("Va4AAAAAPMg3xn38");
-        drug.setNum(2.0);
-        List list = new ArrayList();
-        list.add(drug);
-        info.setEntrys(list);
+//        info.setBatchId("Wif1/wprT0+mqAaT1bq6T0MbbjA=");
+//        Drug drug = new Drug();
+//        drug.setMaterialid("Va4AAAAI+8FECefw");
+//        drug.setSupplierId("Va4AAAAAPMg3xn38");
+//        drug.setNum(2.0);
+//        List list = new ArrayList();
+//        list.add(drug);
+//        info.setEntrys(list);
         map.put("data", info);
 //        Map paramMap = new HashMap();
 //        paramMap.put("batchId","Wif1/wprT0+mqAaT1bq6T0MbbjA=");
 //        paramMap.put("keyword", "");
-//        map.put("data", paramMap);
+////        map.put("data", paramMap);
         String data = JSONObject.fromObject(map).toString();
 
 //        String jsonBackStr = BackTransmitUtil.invokeFunc(data, "selectMaterialInfo");

@@ -17,24 +17,22 @@ public class EquipmentApply {
     private String rcordId;
     @ApiModelProperty("number")
     private String number;
-    @ApiModelProperty("状态")
+    @ApiModelProperty("状态int")
     private int billStatusIndex;
     @ApiModelProperty("状态")
     private String billStatus;
-    @ApiModelProperty("日期")
-    private Date bizDate;
+    @ApiModelProperty("申请日期")
+    private String bizDate;
     @ApiModelProperty("serviceId")
     private String serviceId;
     @ApiModelProperty("serviceName")
     private String serviceName;
     @ApiModelProperty("养户id")
     private String custId;
-    @ApiModelProperty("equipAmt")
+    @ApiModelProperty("金额")
     private String equipAmt;
     @ApiModelProperty("养户姓名")
     private String custName;
-    @ApiModelProperty("申请日期")
-    private Date applyDate;
     @ApiModelProperty("累计已领取设备金额")
     private Double totalPayment;
     @ApiModelProperty("设备申请明细")
@@ -48,8 +46,9 @@ public class EquipmentApply {
     private Boolean isEntrust;
     @ApiModelProperty("被委托领取人姓名")
     private String entrustorName;
-    @ApiModelProperty("被委托领取人身份证号")
+    @ApiModelProperty("被委托领取人id")
     private String entrustorId;
+    @ApiModelProperty("描述")
     private String description;
 
     public int pageNumber = 1;

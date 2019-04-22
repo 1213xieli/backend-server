@@ -20,5 +20,4 @@ public class Batch {
     @ApiModelProperty("每页大小")
     public int pageSize = 5;
 
-
 }

@@ -26,6 +26,12 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
             throw new Exception("无法保存");
         }
 
+        info.setEquipAmt("100");
+//        info.setIsEntrust(true);
+        info.setEntrustorId("vKYTT1wJTV+A7XdlVyduYMyeytQ=");
+//        info.setEntrustorName("测试");
+        info.setDescription("测试idcard");
+
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
@@ -34,6 +40,12 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_EQUIPMENTRECBILL);
         System.out.println("设备申请，保存方法----" + jsonBackStr);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
+
+//        String jsonBackStr = BackTransmitUtil.invokeFunc(data,"queryEntrust");
+//        //{"code":"0000","count":1,"data":[{"id":"vKYTT1wJTV+A7XdlVys=","idcard":"测试idcard","isDefault":true,"name":"测试","phone":"测试phone"}],"msg":"查询成功!"}
+//        System.out.println(jsonBackStr);
+//        return null;
+
     }
 
     @Override
