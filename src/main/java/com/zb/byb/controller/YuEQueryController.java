@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -29,18 +31,21 @@ public class YuEQueryController {
     private YuEService yuEService;
     @ApiOperation("获取余额信息")
     @GetMapping("/query")
-    public ResponseEntity<YuE> yuEQuery(HttpServletRequest request){
+    public ResponseEntity<YuE> yuEQuery(String starttime,String endtime,HttpServletRequest request){
+        YuE yuE=new YuE();
+        yuE.setStarttime(endtime);
+        yuE.setStarttime(starttime);
+        String userId=(String) request.getSession().getAttribute("userId");
         try {
-            String backData = yuEService.queryYuE((String) request.getSession().getAttribute("userId"));
+            String backData = yuEService.queryYuE(yuE,userId);
             String data=JSONObject.fromObject(backData).getString("data");
-            YuE yuE = objectMapper.readValue(data,YuE.class);
+            YuE yuE1 = objectMapper.readValue(data,YuE.class);
             ResponseEntity<YuE> resp=new ResponseEntity<>();
-
-            resp.setData(yuE);
+            resp.setData(yuE1);
             return resp;
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500);
+            return ResponseEntity.build(100,"查询不到数据");
         }
 
     }
