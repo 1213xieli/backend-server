@@ -1,8 +1,11 @@
 package com.zb.byb.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.Drug;
 import com.zb.byb.entity.DrugApply;
+import com.zb.byb.entity.MaterialInfo;
 import com.zb.byb.entity.QuestionReportInfo;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.util.BackTransmitUtil;
@@ -55,6 +58,26 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_MEDICINEAPPLY);
         System.out.println("领药申请,保存方法---" + jsonBackStr);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
+    }
+
+    @Override
+    public List<MaterialInfo> queryMaterialListByFuzzyKey(MaterialInfo queryInfo) throws Exception {
+        if (C.checkNullOrEmpty(queryInfo.getBatchId()) || C.checkNullOrEmpty(queryInfo.getCustId()))
+            throw  new Exception("未传入数据!");
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("custId", queryInfo.getCustId());
+        map.put("source", Commonconst.WX_Flag);
+        Map paramMap = new HashMap();
+        paramMap.put("batchId",queryInfo.getBatchId());
+        paramMap.put("keyword", queryInfo.getFuzzyKey());
+        map.put("data", paramMap);
+
+        String data = JSON.toJSONString(map);
+        String jsonBackStr = JsonPluginsUtil.getSuccessData(BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_queryMaterial));
+        jsonBackStr = JsonPluginsUtil.getSuccessData(jsonBackStr, "materialDetails");
+        System.out.println("根据关键字+批次id进行模糊查询药品列表-------------" + jsonBackStr);
+        return JSON.parseArray(jsonBackStr, MaterialInfo.class);
     }
 
     @Override

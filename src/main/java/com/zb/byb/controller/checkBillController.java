@@ -47,7 +47,8 @@ public class checkBillController {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
 
-            List list = billService.queryInfoRecordList(custId, info);
+            info.setCustId(custId);
+            List list = billService.queryInfoRecordList(info);
             PageInfo<BillInfo> pageInfo = new PageInfo(list);
             return ResponseEntity.build(200,new Message(), pageInfo);
         }
@@ -67,60 +68,8 @@ public class checkBillController {
     {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
-            String htmlTemplate = "    <table border=\"1\" width=\"60%\" bgcolor=\"#e9faff\" cellpadding=\"2\">\r\n" +
-                    "        <caption>课程表</caption>\r\n" +
-                    "        <tr align=\"center\">\r\n" +
-                    "            <td colspan=\"2\">时间\\日期</td>\r\n" +
-                    "            <td>一</td>\r\n" +
-                    "            <td>二</td>\r\n" +
-                    "            <td>三</td>\r\n" +
-                    "            <td>四</td>\r\n" +
-                    "            <td>五</td>\r\n" +
-                    "        </tr>\r\n" +
-                    "\r\n" +
-                    "        <tr align=\"center\">\r\n" +
-                    "            <td rowspan=\"2\">上午</td>\r\n" +
-                    "            <td>9:30-10:15</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "        </tr>\r\n" +
-                    "\r\n" +
-                    "        <tr align=\"center\">\r\n" +
-                    "            <td>10:25-11:10</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "        </tr>\r\n" +
-                    "\r\n" +
-                    "        <tr>\r\n" +
-                    "            <td colspan=\"7\">&nbsp;</td>\r\n" +
-                    "        </tr>\r\n" +
-                    "\r\n" +
-                    "        <tr align=\"center\">\r\n" +
-                    "            <td rowspan=\"2\">下午</td>\r\n" +
-                    "            <td>14:30-15:15</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "        </tr>\r\n" +
-                    "\r\n" +
-                    "        <tr align=\"center\">\r\n" +
-                    "            <td>15:25-16:10</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "            <td>语文</td>\r\n" +
-                    "        </tr>\r\n" +
-                    "    </table>";
-            System.out.println(htmlTemplate);
+            info.setCustId(custId);
+            String htmlTemplate = billService.queryBillRecordById(info);
             byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
 //            String pngStr = C.newGuid() + ".png";
 //            String filePath =Commonconst.TempPath  + pngStr;

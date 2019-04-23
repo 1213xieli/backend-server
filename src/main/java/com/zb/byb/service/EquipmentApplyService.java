@@ -1,5 +1,6 @@
 package com.zb.byb.service;
 
+import com.zb.byb.entity.EntrustInfo;
 import com.zb.byb.entity.EquipmentApply;
 
 import java.util.List;
@@ -17,6 +18,14 @@ public interface EquipmentApplyService {
      * @throws Exception
      */
     String saveInfo(EquipmentApply info) throws Exception;
+
+    /**
+     * 查询委托人列表
+     * @param info
+     * @return
+     * @throws Exception
+     */
+    List<EntrustInfo> queryEntrustList(EquipmentApply info) throws Exception;
 
     /**
      * 根据前台传过来的tokenid，初始化数据

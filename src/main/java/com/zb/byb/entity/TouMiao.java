@@ -52,11 +52,11 @@ public class TouMiao {
     private String sessionId;
 
     @ApiModelProperty("实际投苗日期")
-    private String actualDate;
+    private String actDate;
     @ApiModelProperty("实际投苗数量")
-    private Integer actualAmount;
+    private Integer actNum;
     @ApiModelProperty("实际投苗均重")
-    private Double actualAvgWeight;
+    private Double actAvgWg;
     @ApiModelProperty("清洗消毒工作是否完成")
     private Boolean disinfectFinished;
     @ApiModelProperty("保温箱、屋中屋是否准备")

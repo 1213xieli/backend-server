@@ -1,10 +1,15 @@
 package com.zb.byb.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.BillInfo;
+import com.zb.byb.entity.EquipmentApply;
 import com.zb.byb.service.BillService;
+import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.HtmlToImageUtil;
+import com.zb.byb.util.JsonPluginsUtil;
+import com.zb.byb.util.MethodName;
 import org.springframework.stereotype.Service;
 
 import javax.swing.border.EmptyBorder;
@@ -13,7 +18,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 作者：谢李
@@ -23,21 +30,31 @@ public class BillServiceImpl implements BillService {
 
 
     @Override
-    public List queryInfoRecordList(String custId, BillInfo info) throws Exception {
-        BillInfo test = new BillInfo();
-        test.setId("xieli");
-        test.setRecordId("recordId");
-        test.setCustName("谢李");
-        test.setBillDate("2019-04-19");
+    public List queryInfoRecordList(BillInfo info) throws Exception {
+//        BillInfo test = new BillInfo();
+//        test.setId("xieli");
+//        test.setRecordId("recordId");
+//        test.setCustName("谢李");
+//        test.setBillDate("2019-04-19");
+//
+//        List result = new ArrayList();
+//        result.add(test);
 
-        List result = new ArrayList();
-        result.add(test);
+        Map<String, Object> map = new HashMap<>();
+        map.put("custId", info.getCustId());
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data", info);
 
-        return result;
+        // 要传入数据进行转化
+        String data = JSONObject.toJSONString(map);
+        String jsonData = BackTransmitUtil.invokeFunc(data, "321321fdcsfs");
+        System.out.println("设备申请，查询query方法----" + jsonData);
+
+        return JsonPluginsUtil.jsonToBeanList(jsonData, BillInfo.class);
     }
 
     @Override
-    public String queryBillRecordById(String custId, BillInfo info) throws Exception {
+    public String queryBillRecordById( BillInfo info) throws Exception {
         String htmlTemplate = "    <table border=\"1\" width=\"60%\" bgcolor=\"#e9faff\" cellpadding=\"2\">\r\n" +
                 "        <caption>课程表</caption>\r\n" +
                 "        <tr align=\"center\">\r\n" +
@@ -92,12 +109,12 @@ public class BillServiceImpl implements BillService {
                 "        </tr>\r\n" +
                 "    </table>";
         System.out.println(htmlTemplate);
-        byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
-        String filePath =Commonconst.TempPath  + C.newGuid() + ".png";
-        OutputStream out = new FileOutputStream(new File(filePath));
-        out.write(bytes);
-        out.close();
+//        byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
+//        String filePath =Commonconst.TempPath  + C.newGuid() + ".png";
+//        OutputStream out = new FileOutputStream(new File(filePath));
+//        out.write(bytes);
+//        out.close();
 
-        return filePath;
+        return htmlTemplate;
     }
 }

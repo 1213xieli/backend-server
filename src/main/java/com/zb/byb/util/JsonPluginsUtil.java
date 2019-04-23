@@ -1,5 +1,6 @@
 package com.zb.byb.util;
 
+import com.alibaba.fastjson.JSON;
 import com.zb.byb.common.C;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -277,30 +278,30 @@ public class JsonPluginsUtil
     public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass) {
         if (beanClass == null || C.checkNullOrEmpty(jsonString))
             return new ArrayList<>();
-        if(!"0000".equals(JSONObject.fromObject(jsonString).getString("code"))){
+        if(!"0000".equals(com.alibaba.fastjson.JSONObject.parseObject(jsonString).getString("code"))){
             return null;
         }
         // 通过Data 字段获取数据
-        JSONObject jsonObject = JSONObject.fromObject(jsonString);
+        com.alibaba.fastjson.JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(jsonString);
         String obj = jsonObject.getString(Data);
         if (C.checkNullOrEmpty(obj))
             return null;
 
         // 进行数据转换，变成实体对象
-        JSONArray jsonArray = JSONArray.fromObject(obj);
-        JSONObject jsonObjectValue;
-        T bean;
-        int size = jsonArray.size();
-        List<T> list = new ArrayList<T>(size);
-
-        for (int i = 0; i < size; i++) {
-            jsonObjectValue = jsonArray.getJSONObject(i);
+//        JSONArray jsonArray = JSONArray.fromObject(obj);
+//        JSONObject jsonObjectValue;
+//        T bean;
+//        int size = jsonArray.size();
+//        List<T> list = new ArrayList<T>(size);
+//
+//        for (int i = 0; i < size; i++) {
+//            jsonObjectValue = jsonArray.getJSONObject(i);
 //            bean = (T) JSONObject.toBean(jsonObjectValue, beanClass);
-             bean = (T) com.alibaba.fastjson.JSON.parseObject(obj, beanClass);
-            list.add(bean);
-        }
+////             bean = (T) com.alibaba.fastjson.JSON.parseObject(obj, beanClass);
+//            list.add(bean);
+//        }
 
-        return list;
+        return JSON.parseArray(obj, beanClass);
 
     }
 
@@ -404,6 +405,24 @@ public class JsonPluginsUtil
         JSONObject jsonObject = JSONObject.fromObject(jsonStr);
         return C.parseStr(jsonObject.getString(Data ));
     }
+
+    /**
+     * json数据通过Data获取数据
+     * @param jsonStr
+     * @return
+     */
+    public static String getSuccessData(String jsonStr, String key)
+    {
+        if (C.checkNullOrEmpty(jsonStr))
+            return null;
+
+        if (C.checkNullOrEmpty(key))
+            key = Data;
+
+        com.alibaba.fastjson.JSONObject jsonObj = JSON.parseObject(jsonStr);
+        return jsonObj.getString(key);
+    }
+
 
     /**
      * 判断是否返回成功

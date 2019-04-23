@@ -25,5 +25,11 @@ public class BillInfo {
     @ApiModelProperty("账单日期")
     private String billDate;
 
+    @ApiModelProperty("开始时间")
+    private String starttime;
+    @ApiModelProperty("结束时间")
+    private String endtime;
+    public int pageNumber = 1;
+    public int pageSize = 100;
 
 }

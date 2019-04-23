@@ -2,6 +2,7 @@ package com.zb.byb.service;
 
 import com.zb.byb.entity.DrugApply;
 import com.zb.byb.entity.EquipmentApply;
+import com.zb.byb.entity.MaterialInfo;
 
 import java.util.List;
 
@@ -18,6 +19,11 @@ public interface DrugApplyService{
      * @throws Exception
      */
     String saveInfo(DrugApply info) throws Exception;
+
+    /**
+     * 根据关键字+批次id进行模糊查询药品列表
+     */
+    List<MaterialInfo> queryMaterialListByFuzzyKey(MaterialInfo queryInfo) throws Exception;
 
     /**
      * 根据前台传过来的tokenid，初始化数据

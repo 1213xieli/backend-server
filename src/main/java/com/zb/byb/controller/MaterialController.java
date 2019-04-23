@@ -81,6 +81,27 @@ public class MaterialController {
             return ResponseEntity.build(100, "无法保存数据");
         }
     }
+
+    @ApiOperation("根据批次id查询药品，支持模糊查询")
+    @GetMapping("/queryMaterialInfoByBatchId")
+    public ResponseEntity<MaterialInfo> queryMaterialInfoByBatchId(HttpServletRequest request, MaterialInfo queryInfo)
+    {
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        try{
+            if (C.checkNull(custId))
+                throw new Exception("未传入养户id");
+
+            queryInfo.setCustId(custId);
+            List<MaterialInfo> list = drugApplyService.queryMaterialListByFuzzyKey(queryInfo);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
     @ApiOperation("初始化我要领药数据传入custId")
     @GetMapping("/queryDrugApplyInitData")
     public ResponseEntity<DrugApply> queryDrugApplyInitData(HttpServletRequest request)
@@ -100,7 +121,7 @@ public class MaterialController {
 
     @ApiOperation("根据用户id查询到记录列表")
     @GetMapping("/queryDrugApplyRecordList")
-    public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request)
+    public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request, DrugApply queryInfo)
     {
         String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
@@ -171,6 +192,9 @@ public class MaterialController {
             return ResponseEntity.build(100, "无法保存数据");
         }
     }
+
+
+
     @ApiOperation("初始化设备申请数据")
     @GetMapping("/queryEquipmentApplyInitData")
     public ResponseEntity queryEquipmentApplyInitData(HttpServletRequest request)

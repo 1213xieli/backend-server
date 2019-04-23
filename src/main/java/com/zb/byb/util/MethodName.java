@@ -62,6 +62,11 @@ public class MethodName {
     public static final String METHOD_NAME_VIEW_PROBLEMFEEDBACK="viewProblemFeedback";//问题反馈查看
     public static final String METHOD_NAME_DELETE_PROBLEMFEEDBACK="deleteProblemFeedback";//问题反馈删除
 
-    public static final String METHOD_NAME_VIEW_CUSTINFO="viewCustInfo";//我的信息
-    public static final String METHOD_NAME_QUERY_ALL_BATCHI="queryBatch";//在养所有批次
+    public static final String METHOD_NAME_VIEW_CUSTINFO="viewCustInfo";// 我的信息
+    public static final String METHOD_NAME_QUERY_ALL_BATCHI="queryBatch";// 养户所有批次
+
+    public static final String Method_Name_queryMaterial = "selectMaterialInfo";// 查询药品列表
+    public static final String Method_Name_queryEntrust = "queryEntrust"; // 查询委托人列表
+
+
 }

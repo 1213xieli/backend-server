@@ -1,6 +1,8 @@
 package com.zb.byb.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.EntrustInfo;
 import com.zb.byb.entity.EquipmentApply;
 import com.zb.byb.entity.EquipmentApply;
 import com.zb.byb.service.EquipmentApplyService;
@@ -46,6 +48,23 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
 //        System.out.println(jsonBackStr);
 //        return null;
 
+    }
+
+    @Override
+    public List<EntrustInfo> queryEntrustList(EquipmentApply info) throws Exception {
+        if (info == null) {
+            throw new Exception("无法查询");
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("custId", info.getCustId());
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data", info);
+        String data = JSON.toJSONString(map);
+        String jsonBackStr = BackTransmitUtil.invokeFunc(data,MethodName.Method_Name_queryEntrust);
+        //{"code":"0000","count":1,"data":[{"id":"vKYTT1wJTV+A7XdlVys=","idcard":"测试idcard","isDefault":true,"name":"测试","phone":"测试phone"}],"msg":"查询成功!"}
+        System.out.println("查询委托人列表----" + jsonBackStr);
+        return JsonPluginsUtil.jsonToBeanList(jsonBackStr, EntrustInfo.class);
     }
 
     @Override
