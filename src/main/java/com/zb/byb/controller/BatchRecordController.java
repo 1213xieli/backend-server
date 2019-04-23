@@ -69,7 +69,7 @@ public class BatchRecordController {
     @GetMapping("/batchListList")
     public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){
         String userId=(String) request.getSession().getAttribute("userId");
-        userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
+        //userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
         System.out.println("=="+userId);
         try {
             String str=batchRecordService.getBatchList(userId,batch);
