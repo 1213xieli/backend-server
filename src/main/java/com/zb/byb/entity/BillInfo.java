@@ -41,10 +41,9 @@ public class BillInfo {
     private String endtime;
 
     private PigEntry pigEntry;
-//    private FeedEntry feedEntry;
-//    private DrugEntry drugEntry;
-//    private EquipEntry equipEntry;
-
+    private FeedEntry feedEntry;
+    private DrugEntry drugEntry;
+    private EquipEntry equipEntry;
 
 
     public int pageNumber = 1;
