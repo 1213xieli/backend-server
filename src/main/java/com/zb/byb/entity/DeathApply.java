@@ -17,9 +17,9 @@ public class DeathApply {
     @ApiModelProperty(value = "结束时间")
     private String endtime;
     @ApiModelProperty(value = "状态")
-    private String billState;
+    private String billStatus;
     @ApiModelProperty(value = "状态id")
-    private String billStateIndex;
+    private String billStatusIndex;
     @ApiModelProperty("养户id")
     private String custid;
     @ApiModelProperty("养户编号")
@@ -47,10 +47,10 @@ public class DeathApply {
     @ApiModelProperty("死猪照片")
     private List imgUrl;
     @ApiModelProperty("申请记录状态")
-    private String billStatus;
+    private String state;
     @ApiModelProperty("当前页码")
-    public int pageNumber = 1;
+    public Integer pageNumber = 1;
     @ApiModelProperty("每页大小")
-    public int pageSize = 5;
+    public Integer pageSize = 10;
     //Va4AAAib24NSz43W
 }

@@ -55,24 +55,29 @@ public class FeedRecordController {
 
     @ApiOperation("获取饲喂记录")
     @GetMapping("/list")
-    public ResponseEntity<List<FeedRecord>> getList(FeedRecord feedRecord,HttpServletRequest request){
+    public ResponseEntity<List<FeedRecord>> getList(String starttime,String endtime,String state,Integer pageNumber,Integer pageSize,HttpServletRequest request){
         //获取userId
-
         String custId=(String) request.getSession().getAttribute("userId");
+        FeedRecord feedRecord=new FeedRecord();
+        feedRecord.setStarttime(starttime);
+        feedRecord.setEndtime(endtime);
+        feedRecord.setPageNumber(pageNumber);
+        feedRecord.setPageSize(pageSize);
+        feedRecord.setState(state);
         try {
             if (C.checkNull(custId))
                 throw new Exception("未传入养户id.");
             List<FeedRecord> list = feedRecordService.queryFeedRecordList(custId,feedRecord);
             //给外层批次赋值
+            if(list.size()==0){
+                return ResponseEntity.build(100, "无记录");
+            }
             for(int i=0;i<list.size();i++){
                 list.get(i).setBatchId(list.get(i).getFeedList().get(0).getBatchId());
                 list.get(i).setBatchName(list.get(i).getFeedList().get(0).getBatchName());
             }
             List<Pigwash> feedList = list.get(0).getFeedList();
-
-
             PageInfo<FeedRecord> info = new PageInfo(list);
-
             return ResponseEntity.build(100,new Message(),info);
         } catch (Exception e) {
             e.printStackTrace();

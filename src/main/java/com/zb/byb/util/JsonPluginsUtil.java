@@ -306,6 +306,28 @@ public class JsonPluginsUtil
     }
 
     /**
+     * cqp
+     * @param jsonStr
+     * @param s
+     * @param <T>
+     * @return
+     */
+    public static <T>List<T> jsonTOList(String jsonStr,Class<T> s){
+        if (s == null || C.checkNullOrEmpty(jsonStr))
+            return new ArrayList<>();
+        if(!"0000".equals(JSONObject.fromObject(jsonStr).getString("code"))){
+            return null;
+        }
+        // 通过Data 字段获取数据
+        //JSONObject jsonObject = JSONObject.fromObject(jsonStr);
+        JSONArray jsonObject=JSONObject.fromObject(jsonStr).getJSONArray("data");
+        if (C.checkNullOrEmpty(jsonObject))
+            return null;
+        List<T> list =com.alibaba.fastjson.JSONArray.parseArray(jsonObject.toString(),s);
+        return list;
+    }
+
+    /**
      * 从json数组中解析出java字符串数组
      *
      * @param jsonString
@@ -451,12 +473,15 @@ public class JsonPluginsUtil
     {
         if (C.checkNullOrEmpty(jsonString))
             return null;
-
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
+        if(!"0000".equals(jsonObject.getString("code")))
+            return null;
         String id = C.parseStr(jsonObject.getString(Id ));
         if (C.checkNullOrEmpty(Id))
             return "";
 
         return id;
     }
+
+
 }

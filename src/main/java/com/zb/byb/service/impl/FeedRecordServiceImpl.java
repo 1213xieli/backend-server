@@ -78,8 +78,8 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         /*赋值*/
 
         FeedRecord feedRecord1=new FeedRecord();
-        feedRecord1.setBillState(jsonObject.getString("billState"));
-        feedRecord1.setBillStateIndex(jsonObject.getString("billStateIndex"));
+        feedRecord1.setBillStatus(jsonObject.getString("billStatus"));
+        feedRecord1.setBillStatusIndex(jsonObject.getString("billStatusIndex"));
         feedRecord1.setFeedDate(jsonObject.getString("feedDate"));
         feedRecord1.setRcordId(jsonObject.getString("rcordId"));
         Object o =JSONObject.fromObject(jsonObject).get("feedList");

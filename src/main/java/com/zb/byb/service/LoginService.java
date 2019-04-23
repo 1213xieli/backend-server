@@ -15,6 +15,8 @@ public interface LoginService {
      */
     String bind(UserInfo userInfo,String openId) throws Exception;
 
+    String getCheckCode();
+
     /**
      * 解除绑定
      * @param openId 唯一id
