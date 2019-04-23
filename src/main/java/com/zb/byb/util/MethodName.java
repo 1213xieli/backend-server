@@ -33,6 +33,7 @@ public class MethodName {
     public static final String METHOD_NAME_QUERY_PICKINGAPPLY="queryPickingApply";//领料申请查看序时簿
     public static final String METHOD_NAME_VIEW_PICKINGAPPLY="viewPickingApply";//领料申请查看
     public static final String METHOD_NAME_DELETE_PICKINGAPPLY="deletePickingApply";//领料申请删除
+    public static final String METHOD_NAME_SIGNER_PICKINGAPPLY="signerPickingApply";//领料签名提交
 
     public static final String METHOD_NAME_SAVE_MEDICINEAPPLY="saveMedicineApply";//领药申请保存
     public static final String METHOD_NAME_QUERY_MEDICINEAPPLY="queryMedicineApply";//领药申请查看序时簿

@@ -34,6 +34,18 @@ public class LoginServiceImpl implements LoginService {
         return jsonStr;
     }
 
+    @Override
+    public String getCheckCode() {
+
+        return null;
+    }
+
+    private String getToken(){
+
+    return "";
+    }
+
+
     /**
      * 解绑
      * @param openId 唯一id

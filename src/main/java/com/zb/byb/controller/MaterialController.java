@@ -10,6 +10,7 @@ import com.zb.byb.service.FeedApplyService;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,11 +40,12 @@ public class MaterialController {
      * @return
      */
     @ApiOperation("保存领料申请")
-    @PostMapping("/saveFeedApply")
-    public ResponseEntity<?> feedApply(@RequestBody(required = false) FeedApply feedApply,HttpServletRequest request) {
+    @PostMapping("/saveFeedApply")//@RequestBody(required = false)
+    public ResponseEntity<?> feedApply(FeedApply feedApply,HttpServletRequest request) {
         String userId=(String) request.getSession().getAttribute("userId");
-        System.out.println("userid="+userId);
         try {
+            if (C.checkNull(userId))
+                throw new Exception("未传入养户id");
             String id= feedApplyService.feedApply(feedApply,userId);
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
@@ -56,13 +58,58 @@ public class MaterialController {
     @GetMapping("/feedList")
     public ResponseEntity<List<FeedApply>> getFeedList(FeedApply feedApply,HttpServletRequest request){
         String userId=(String) request.getSession().getAttribute("userId");
+        System.out.println(userId);
         try {
+            if (C.checkNull(userId))
+                throw new Exception("未传入养户id");
             return ResponseEntity.buildSuccess(feedApplyService.queryFeedApply(feedApply,userId));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(100, "无法保存数据");
+            return ResponseEntity.build(100, "无法查询到数据");
         }
     }
+
+    @ApiOperation("查看领料申请信息")
+    @GetMapping("/viewInfoById")
+    public ResponseEntity<List<FeedApply>> viewInfobyId( String rcordId,HttpServletRequest request){
+        String userId=(String) request.getSession().getAttribute("userId");
+        System.out.println(userId);
+        rcordId=rcordId.trim().replace(" ","+");
+        System.out.println("rcordId="+rcordId);
+        try {
+            return ResponseEntity.buildSuccess(feedApplyService.viewFeedApply(rcordId));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+    @ApiOperation("提交签名")
+    @GetMapping("/signer")//@RequestBody(required = false)
+    public ResponseEntity<List<FeedApply>> signer(String rcordId,HttpServletRequest request){
+        FeedApply feedApply=new FeedApply() ;
+        String userId=(String) request.getSession().getAttribute("userId");
+        System.out.println(userId);
+        List list=new ArrayList();
+        FileEntry fileEntry=new FileEntry();
+        fileEntry.setImgContent("AAABBBAABBBA");
+        fileEntry.setImgType(".jpg");
+        list.add(fileEntry);
+        rcordId=rcordId.trim().replace(" ","+");
+        //feedApply.setRcordId("Va4AAAicaDrq+f3A");
+        feedApply.setSignerList(list);
+        feedApply.setRcordId(rcordId);
+        try {
+            String data=feedApplyService.singer(feedApply);
+            if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
+                return ResponseEntity.build(100, "签名失败");
+            return ResponseEntity.buildSuccess(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "签名失败");
+        }
+    }
+
 
 
     /**

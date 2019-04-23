@@ -16,9 +16,9 @@ public class FeedApply {
     @ApiModelProperty(value = "结束时间")
     private String endtime;
     @ApiModelProperty(value = "状态")
-    private String billState;
+    private String billStatus;
     @ApiModelProperty(value = "状态id")
-    private String billStateIndex;
+    private String billStatusIndex;
     @ApiModelProperty("当前页码")
     public int pageNumber = 1;
     @ApiModelProperty("每页大小")
@@ -27,7 +27,7 @@ public class FeedApply {
     private String rcordId;
     @ApiModelProperty("领料申请批次id")
     private String batchId;
-    @ApiModelProperty("领料申请批次id")
+    @ApiModelProperty("领料申请批次名")
     private String batchName;
     @ApiModelProperty("计划拉料日期")
     private String plandate;
@@ -43,7 +43,12 @@ public class FeedApply {
     private String type;
     @ApiModelProperty("申请领料明细")
     private List<LiLiaoInfo> pickDetail;
-    /*@ApiModelProperty("实际领料明细")
-    private List<Pigwash>  actualList;*/
+    @ApiModelProperty("实际领料明细")
+    private List<LiLiaoInfo>  actEntrys;
+    @ApiModelProperty("签名图片")
+    private List<FileEntry> signerList;
+    @ApiModelProperty("任务状态")
+    private String state;
+
 
 }

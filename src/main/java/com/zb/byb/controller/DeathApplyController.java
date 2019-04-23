@@ -4,6 +4,7 @@ package com.zb.byb.controller;
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.entity.DeathApply;
+import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.service.DeathApplyService;
 import com.zb.framework.common.entity.ResponseEntity;
@@ -31,17 +32,14 @@ public class DeathApplyController {
     public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        //
+        /*//
         deathApply.setApplyDieCnt(10);
         deathApply.setBatchId("QOKuwU+4Q5uVQ5msWQNUVEMbbjA=");
         deathApply.setBatchNo("已删除薛昌宇001");
         deathApply.setCustid(userId);
         deathApply.setDieAvg(45.0);
         deathApply.setDieDate("2018-10-24");
-        deathApply.setFreedDay(84);
-
-
-
+        deathApply.setFreedDay(84);*/
         try {
             String backData= deathApplyService.deathApply(deathApply,userId);
 
@@ -53,9 +51,15 @@ public class DeathApplyController {
     }
     @ApiOperation("获取死亡申报记录")
     @GetMapping("/list")
-    public ResponseEntity<List<DeathApply>> getList(DeathApply deathApply, HttpServletRequest request){
+    public ResponseEntity<List<DeathApply>> getList(String starttime,String endtime,String state,int pageNumber,int pageSize, HttpServletRequest request){
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
+        DeathApply deathApply=new DeathApply();
+        deathApply.setStarttime(starttime);
+        deathApply.setEndtime(endtime);
+        deathApply.setPageSize(pageSize);
+        deathApply.setState(state);
+        deathApply.setPageNumber(pageNumber);
         try {
             List<DeathApply> list= deathApplyService.getDeathApplyRecord(userId,deathApply);
             PageInfo<FeedRecord> info = new PageInfo(list);

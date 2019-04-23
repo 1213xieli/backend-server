@@ -19,10 +19,14 @@ public class FeedRecord {
     private String starttime;
     @ApiModelProperty(value = "结束时间")
     private String endtime;
-    @ApiModelProperty(value = "状态")
-    private String billState;
-    @ApiModelProperty(value = "状态id")
-    private String billStateIndex;
+    @ApiModelProperty(value = "单据状态")//保存
+    private String billStatus;
+    @ApiModelProperty(value = "状态id")//10
+    private String billStatusIndex;
+    @ApiModelProperty("当前页码")
+    public Integer pageNumber = 1;
+    @ApiModelProperty("每页大小")
+    public Integer pageSize = 10;
     //@JsonProperty(value = "bb")
     @ApiModelProperty("饲喂记录id")
     private String rcordId;
@@ -31,13 +35,14 @@ public class FeedRecord {
     @ApiModelProperty("饲喂批次id")
     private String batchId;//养猪批次id
     //private String batchName;//养猪批次号
-
      @ApiModelProperty("饲喂日期")
      private String feedDate;
      @ApiModelProperty("饲喂列表")
      private List<Pigwash>  feedList;
-     public int pageNumber = 1;
-     public int pageSize = 10;
+    @ApiModelProperty("任务状态")
+     public String state;
+
+
 
 
    /*public String userName;//用户id--
