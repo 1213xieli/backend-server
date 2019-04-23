@@ -37,11 +37,11 @@ public interface EquipmentApplyService {
 
     /**
      * 根据用户id查询到设备领用申请记录
-     * @param tokenId
+     * @param queryInfo
      * @return 返回对象
      * @throws Exception 异常
      */
-    List<EquipmentApply> queryInfoRecordList(String tokenId) throws Exception;
+    List<EquipmentApply> queryInfoRecordList(EquipmentApply queryInfo) throws Exception;
 
     /**
      * 根据id查询对象信息

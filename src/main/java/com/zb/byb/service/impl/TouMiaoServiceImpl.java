@@ -49,7 +49,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 
         String data = JSONObject.fromObject(map).toString();
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PIGINGAPPLY);
-        System.out.println(jsonBackStr);
+        System.out.println("投苗保存功能-----" + jsonBackStr);
 
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
     }
@@ -99,6 +99,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PIGINGAPPLY);
+        System.out.println("投苗记录查询VIEW----" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, TouMiao.class);
     }
 
@@ -124,7 +125,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 //        String jsonData2 = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_DRIVER);
 //        String jsonData3 = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_ENTRUST);
 
-
+        System.out.println("投苗记录列表查询Query----" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, TouMiao.class);
     }
 }

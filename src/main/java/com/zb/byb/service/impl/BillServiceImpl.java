@@ -36,9 +36,9 @@ public class BillServiceImpl implements BillService {
 //        test.setRecordId("recordId");
 //        test.setCustName("谢李");
 //        test.setBillDate("2019-04-19");
-//
-//        List result = new ArrayList();
-//        result.add(test);
+
+        if (C.checkNullOrEmpty(info.getCustId()))
+            throw new Exception("未传入养户id");
 
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
@@ -47,8 +47,8 @@ public class BillServiceImpl implements BillService {
 
         // 要传入数据进行转化
         String data = JSONObject.toJSONString(map);
-        String jsonData = BackTransmitUtil.invokeFunc(data, "321321fdcsfs");
-        System.out.println("设备申请，查询query方法----" + jsonData);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
+        System.out.println("对账单，查询query方法----" + jsonData);
 
         return JsonPluginsUtil.jsonToBeanList(jsonData, BillInfo.class);
     }

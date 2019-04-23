@@ -67,6 +67,8 @@ public class MethodName {
 
     public static final String Method_Name_queryMaterial = "selectMaterialInfo";// 查询药品列表
     public static final String Method_Name_queryEntrust = "queryEntrust"; // 查询委托人列表
+    public static final String Method_Name_checkBill = "checkBill"; // 对账单
+
 
 
 }

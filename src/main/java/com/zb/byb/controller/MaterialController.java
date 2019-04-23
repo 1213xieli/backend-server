@@ -2,10 +2,12 @@ package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +80,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法保存数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -98,7 +103,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -115,7 +123,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -134,7 +145,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -152,7 +166,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -169,7 +186,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -189,7 +209,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法保存数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -207,28 +230,58 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
-    @ApiOperation("根据养户id查询到投苗记录列表")
+    @ApiOperation("根据养户id查询到设备记录列表")
     @GetMapping("/queryEquipmentApplyRecordList")
-    public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request)
+    public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request, EquipmentApply info)
+    {
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        try{
+            if (C.checkNull(custId))
+                throw new Exception("未传入id");
+            info.setCustId(custId);
+            List<EquipmentApply> list = equipmentApplyService.queryInfoRecordList(info);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
+        }
+        catch (Exception e)
+        {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
+
+    @ApiOperation("查询委托人列表")
+    @GetMapping("/queryEntrustList")
+    public ResponseEntity<?> queryEntrustList(HttpServletRequest request, EquipmentApply info)
     {
         String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
             if (C.checkNull(custId))
                 throw new Exception("未传入id");
 
-            List<EquipmentApply> list = equipmentApplyService.queryInfoRecordList(custId);
+            info.setCustId(custId);
+            List<EntrustInfo> list = equipmentApplyService.queryEntrustList(info);
             PageInfo page = new PageInfo(list);
             return ResponseEntity.buildSuccess(page);
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
+
 
     @ApiOperation("根据id查询到对象信息")
     @GetMapping("/queryEquipmentApplyInfoById")
@@ -243,7 +296,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -259,7 +315,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 

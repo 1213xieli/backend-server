@@ -84,15 +84,14 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
     }
 
     @Override
-    public List<EquipmentApply>  queryInfoRecordList(String custId) throws Exception {
+    public List<EquipmentApply>  queryInfoRecordList(EquipmentApply info) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("custId", custId);
+        map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
-        EquipmentApply info = new EquipmentApply();
         map.put("data", info);
 
         // 要传入数据进行转化
-        String data = JSONObject.fromObject(map).toString();
+        String data = JSON.toJSONString(map);
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
         System.out.println("设备申请，查询query方法----" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, EquipmentApply.class);
@@ -110,7 +109,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
-        System.out.println("设备申请，查询query方法----" + jsonData);
+        System.out.println("设备申请，查询view方法----" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 

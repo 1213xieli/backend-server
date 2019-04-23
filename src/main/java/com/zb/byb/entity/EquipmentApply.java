@@ -3,14 +3,14 @@ package com.zb.byb.entity;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @ApiModel("设备领用申请")
 public class EquipmentApply {
     @ApiModelProperty("记录id")
@@ -50,6 +50,11 @@ public class EquipmentApply {
     private String entrustorId;
     @ApiModelProperty("描述")
     private String description;
+
+    @ApiModelProperty("开始时间")
+    private String starttime;
+    @ApiModelProperty("结束时间")
+    private String endtime;
 
     public int pageNumber = 1;
     public int pageSize = 1000;
