@@ -26,7 +26,7 @@ public class JDService {
         //设置头部
         soap.setHeader(new SOAPHeaderElement("http://login.webservice.bos.kingdee.com", "SessionId", ""));
         //获取sessionId
-        WSContext ctx = soap.login("zengneng", "", "eas", "CS1116", "l2", 1);
+        WSContext ctx = soap.login("zengneng", "", "eas", "CS0404", "l2", 1);
         String sessionId = ctx.getSessionId();
         if (C.checkNullOrEmpty(sessionId))
             throw new Exception("登录失败，未获取到sessionId");

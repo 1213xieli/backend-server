@@ -5,13 +5,24 @@ import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.MethodName;
+import com.zb.framework.common.constant.Global;
+import com.zb.framework.common.entity.Message;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -35,14 +46,57 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public String getCheckCode() {
-
-        return null;
+    public String getCheckCode(String mobile) {
+        String token = getToken();
+        if (token==null || token.length()==0){
+            return null;
+        }
+        mobile = "18070505443";
+        String url = "http://service.zhengbang.com/SERVICE/message/send-code/"+mobile;
+        RestTemplate template = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authentication",token);
+        HttpEntity<String> requestEntity = new HttpEntity<String>(null, headers);
+        try{
+            ResponseEntity<String> r = template.exchange(url, HttpMethod.GET, requestEntity, String.class);
+            return "ok";
+        }catch (HttpClientErrorException e){
+            e.printStackTrace();
+            return "ok";
+        }catch (Exception e1){
+            return "no";
+        }
     }
 
-    private String getToken(){
+    @Override
+    public boolean check(String phone, String code) {
+        String token = getToken();
+        if (token==null || token.length()==0){
+            return false;
+        }
+        StringBuffer url = new StringBuffer("http://service.zhengbang.com/SERVICE/message/validate-code?phone="+phone+"&code="+code);
+        RestTemplate restTemplate= new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authentication",token);
+        HttpEntity<String> requestEntity = new HttpEntity<String>(null, headers);
+        ResponseEntity<String> r= restTemplate.exchange(url.toString(), HttpMethod.POST, requestEntity, String.class);
+        String jsonback=r.getBody();
+        System.out.println("json="+jsonback);
+        String code1 = JSONObject.fromObject(jsonback).getString("code");
+        if("200".equals(code1)){
+            return true;
+        }
 
-    return "";
+        return false;
+    }
+
+    private  String getToken(){
+        RestTemplate restTemplate= new RestTemplate();
+        StringBuilder url = new StringBuilder("http://service.zhengbang.com/AUTH/login?userName=YHFWH_ADMIN&password=123456");
+        ResponseEntity<String> r= restTemplate.exchange(url.toString(), HttpMethod.POST, null, String.class);
+        String jsonback=r.getBody();
+        String token=JSONObject.fromObject(jsonback).getJSONObject("data").getString("Authentication");
+        return token;
     }
 
 

@@ -101,6 +101,11 @@ public class LoginController {
     public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
 
         //request.getSession().setAttribute("userId","mRkwGN6DQgGNsONd+yMkV8yeztQ=");
+        String code=userInfo.getInvitationCode();//验证码
+        String phone=userInfo.getTelNum();//电话号码
+        if (!loginService.check(phone,code)){
+            return ResponseEntity.build(100,"验证码错误");
+        };
         try {
             //传人绑定信息,返回信息
             String data = loginService.bind(userInfo, (String) request.getSession().getAttribute("openId"));
@@ -108,7 +113,7 @@ public class LoginController {
             return ResponseEntity.build(200,"绑定成功");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500,"服务器错误");
+            return ResponseEntity.build(100,"绑定失败");
         }
 
     }
@@ -126,27 +131,9 @@ public class LoginController {
         }
     }
     @ApiOperation("获取验证码")
-    @PostMapping("/getCode")
-    public ResponseEntity<?> getCode(@RequestBody UserInfo userInfo, HttpServletRequest request) {
-        String sessionId="";
-        //验证登入信息是否为养户
-        Map map=new HashMap<>();
-        map.put("data",userInfo);
-        String json= JSONObject.toJSONString(map);
-        String result=null;
-        try {
-            sessionId=JDService.login();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //失败
-        if(result==null){
-            return null;
-        }
-        //成功
-        Random random = new Random();
-        int checkCode = random.nextInt(9000)+1000;
-
-        return ResponseEntity.buildSuccess(checkCode);
+    @GetMapping("/getCode")
+    public ResponseEntity<?> getCode(String telNum, HttpServletRequest request) {
+        String status = loginService.getCheckCode(telNum);
+        return ResponseEntity.buildSuccess(status);
     }
 }

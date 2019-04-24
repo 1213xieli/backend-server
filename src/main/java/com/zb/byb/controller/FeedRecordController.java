@@ -31,6 +31,7 @@ public class FeedRecordController {
     public ResponseEntity<?> saveFeedRecord(@RequestBody(required = false) FeedRecord feedRecord, HttpServletRequest request) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
+
         try {
             return ResponseEntity.buildSuccess(feedRecordService.addFeedRecord(feedRecord,userId));
         } catch (Exception e) {
@@ -56,14 +57,19 @@ public class FeedRecordController {
     @ApiOperation("获取饲喂记录")
     @GetMapping("/list")
     public ResponseEntity<List<FeedRecord>> getList(String starttime,String endtime,String state,Integer pageNumber,Integer pageSize,HttpServletRequest request){
-        //获取userId
         String custId=(String) request.getSession().getAttribute("userId");
         FeedRecord feedRecord=new FeedRecord();
-        feedRecord.setStarttime(starttime);
-        feedRecord.setEndtime(endtime);
-        feedRecord.setPageNumber(pageNumber);
-        feedRecord.setPageSize(pageSize);
-        feedRecord.setState(state);
+        if (pageNumber==null){
+        }else{
+            feedRecord=new FeedRecord();
+            feedRecord.setStarttime(starttime);
+            feedRecord.setEndtime(endtime);
+            feedRecord.setPageNumber(pageNumber);
+            feedRecord.setPageSize(pageSize);
+            feedRecord.setState(state);
+        }
+        //获取userId
+
         try {
             if (C.checkNull(custId))
                 throw new Exception("未传入养户id.");

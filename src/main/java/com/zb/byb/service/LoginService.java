@@ -2,6 +2,7 @@ package com.zb.byb.service;
 
 import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.UserInfo;
+import com.zb.framework.common.entity.Message;
 
 import java.util.List;
 
@@ -15,7 +16,15 @@ public interface LoginService {
      */
     String bind(UserInfo userInfo,String openId) throws Exception;
 
-    String getCheckCode();
+    /**
+     *
+     * 发送验证码
+     * @param mobile 手机号码
+     * @return
+     */
+    String getCheckCode(String mobile);
+
+    boolean check(String phone, String code);
 
     /**
      * 解除绑定

@@ -19,4 +19,6 @@ public interface BalanceService {
      * @throws Exception
      */
     String getBalanceRecord(BalanceRecord balanceRecord, String userId)throws Exception;
+
+
 }

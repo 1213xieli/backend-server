@@ -23,7 +23,7 @@ public class UserInfo {
     private String introducer;
     @ApiModelProperty("介绍人所在服务部")
     private String introducerDept;
-    @ApiModelProperty("邀请码")
+    @ApiModelProperty("邀请码/验证码")
     private String invitationCode;
     public int pageNumber = 1;
     public int pageSize = 10;
