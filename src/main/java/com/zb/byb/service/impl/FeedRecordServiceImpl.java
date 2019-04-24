@@ -106,12 +106,18 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         return JSONArray.toList(pigwashList,Pigwash.class);
     }
 
-    /*public static void main(String[] args)throws Exception {
-        FeedRecordServiceImpl f=new FeedRecordServiceImpl();
-        List s=f.pigwashList("Va4AAASJiBlSsdKc");
-        System.out.println(s.g);
-
-    }*/
-
+    @Override
+    public String cancleFeedRecord(String rcordId) throws Exception {
+        if (C.checkNullOrEmpty(rcordId))
+            return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("source", Commonconst.WX_Flag);
+        FeedRecord  feedRecord = new FeedRecord();
+        feedRecord.setRcordId(rcordId);
+        map.put("data", feedRecord);
+        String data=JSONObject.fromObject(map).toString();
+        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_SUPPLIESBILL);
+        return  jsonBack;
+    }
 
 }

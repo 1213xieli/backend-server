@@ -86,4 +86,20 @@ public class DeathApplyController {
             return ResponseEntity.build(100, "无法查询到数据");
         }
     }
+
+    @ApiOperation("取消死亡申报")
+    @GetMapping("/cancleById")
+    public ResponseEntity<FeedRecord> cancleById(String rcordId)
+    {
+        try{
+            if (C.checkNull(rcordId))
+                throw new Exception("未传入rcordId.");
+            return ResponseEntity.buildSuccess(deathApplyService.cancleDeathApply(rcordId));
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
 }

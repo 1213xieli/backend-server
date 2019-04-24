@@ -4,6 +4,7 @@ import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import com.zb.framework.common.constant.Global;
 import com.zb.framework.common.entity.Message;
@@ -42,7 +43,7 @@ public class LoginServiceImpl implements LoginService {
         map.put("openId",openId);
         String data=JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
-        return jsonStr;
+        return JsonPluginsUtil.isRequestSuccessBackId(jsonStr);
     }
 
     @Override
@@ -51,7 +52,6 @@ public class LoginServiceImpl implements LoginService {
         if (token==null || token.length()==0){
             return null;
         }
-        mobile = "18070505443";
         String url = "http://service.zhengbang.com/SERVICE/message/send-code/"+mobile;
         RestTemplate template = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -82,11 +82,11 @@ public class LoginServiceImpl implements LoginService {
         ResponseEntity<String> r= restTemplate.exchange(url.toString(), HttpMethod.POST, requestEntity, String.class);
         String jsonback=r.getBody();
         System.out.println("json="+jsonback);
-        String code1 = JSONObject.fromObject(jsonback).getString("code");
-        if("200".equals(code1)){
+        int code1 = JSONObject.fromObject(jsonback).getInt("status");
+        System.out.println(code1);
+        if(200==code1){
             return true;
         }
-
         return false;
     }
 

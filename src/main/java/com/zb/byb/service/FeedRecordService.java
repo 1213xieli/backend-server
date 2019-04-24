@@ -42,4 +42,6 @@ public interface FeedRecordService {
      * @return
      */
     List<Pigwash> pigwashList(String batchId)throws Exception;
+
+    String cancleFeedRecord(String rcordId) throws Exception;
 }

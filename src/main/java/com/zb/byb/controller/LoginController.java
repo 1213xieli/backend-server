@@ -70,7 +70,6 @@ public class LoginController {
             session.setAttribute("custId", userId);
             session.setAttribute("cfwinternum", jsonMap.getString("cfwinternum"));
             session.setAttribute("servicedep", jsonMap.getString("servicedep"));
-
             //  批次
             Batch batch = new Batch();
             batch.setPageNumber(1);
@@ -83,9 +82,6 @@ public class LoginController {
                 List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
                 session.setAttribute("pcList", list);
             }
-
-
-
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
             Message message = new Message();
@@ -99,18 +95,22 @@ public class LoginController {
     @ApiOperation("绑定")
     @PostMapping("/bind")
     public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
-
+        String openId=(String) request.getSession().getAttribute("openId");
         //request.getSession().setAttribute("userId","mRkwGN6DQgGNsONd+yMkV8yeztQ=");
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
         if (!loginService.check(phone,code)){
-            return ResponseEntity.build(100,"验证码错误");
+           return ResponseEntity.build(100,"验证码错误");
         };
         try {
             //传人绑定信息,返回信息
-            String data = loginService.bind(userInfo, (String) request.getSession().getAttribute("openId"));
-            System.out.println("data="+data);
-            return ResponseEntity.build(200,"绑定成功");
+            String id = loginService.bind(userInfo, openId);
+
+            System.out.println("id="+id);
+            if(id!=null && id.length()>0){
+                return ResponseEntity.build(200,"绑定成功");
+            }
+            return ResponseEntity.build(100,"你还不是养户，请先开户");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.build(100,"绑定失败");

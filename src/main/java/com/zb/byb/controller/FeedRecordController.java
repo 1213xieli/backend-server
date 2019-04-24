@@ -68,14 +68,12 @@ public class FeedRecordController {
             feedRecord.setPageSize(pageSize);
             feedRecord.setState(state);
         }
-        //获取userId
-
         try {
-            if (C.checkNull(custId))
-                throw new Exception("未传入养户id.");
+            if (C.checkNull(custId)){
+                return ResponseEntity.build(100, "无养户id");
+            }
             List<FeedRecord> list = feedRecordService.queryFeedRecordList(custId,feedRecord);
-            //给外层批次赋值
-            if(list.size()==0){
+            if(list==null || list.size()==0) {
                 return ResponseEntity.build(100, "无记录");
             }
             for(int i=0;i<list.size();i++){
@@ -105,19 +103,29 @@ public class FeedRecordController {
             }
             List<Pigwash> feedList = feedRecord.getFeedList();
             ResponseEntity<FeedRecord> recordResponseEntity=new ResponseEntity<>();
-           /* for (Pigwash p :
-                    feedList) {
-                feedRecord.setBatchName(p.getBatchName()+"");
-                feedRecord.setBatchId(p.getBatchId()+"");
-                break;
-            }*/
             recordResponseEntity.setData(feedRecord);
-            //System.out.println(feedRecord.getBatchName());;
             return recordResponseEntity;
         }
         catch (Exception e)
         {
             return ResponseEntity.build(100, "无法查询到数据");
+        }
+    }
+
+    @ApiOperation("取消记录")
+    @GetMapping("/cancleById")
+    @ResponseBody
+    public ResponseEntity<FeedRecord> cancleById(String rcordId)
+    {
+        try{
+            if (C.checkNull(rcordId))
+                throw new Exception("未传入rcordId.");
+            String s = feedRecordService.cancleFeedRecord(rcordId);
+            return ResponseEntity.build(100, "取消成功");
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.build(100, "取消失败");
         }
     }
 }

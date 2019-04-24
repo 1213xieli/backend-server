@@ -50,6 +50,21 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
         map.put("data", deathApply);
         String data=JSONObject.fromObject(map).toString();
         String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_YZRHDEATH);
+
         return JsonPluginsUtil.jsonToBean(jsonBack, DeathApply.class);
+    }
+
+    @Override
+    public String cancleDeathApply(String rcordId) throws Exception {
+        if (C.checkNullOrEmpty(rcordId))
+           return null;
+        Map<String, Object> map = new HashMap<>();
+        map.put("source", Commonconst.WX_Flag);
+        DeathApply  deathApply = new DeathApply();
+        deathApply.setRcordId(rcordId);
+        map.put("data", deathApply);
+        String data=JSONObject.fromObject(map).toString();
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_YZRHDEATH);
+        return jsonStr;
     }
 }

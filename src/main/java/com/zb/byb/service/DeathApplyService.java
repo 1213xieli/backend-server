@@ -28,6 +28,6 @@ public interface DeathApplyService {
      */
     DeathApply getDeathApplyRecordbyId(String rcord)throws  Exception;
 
-    String cancleDeathApply() throws Exception;
+    String cancleDeathApply(String rcordId) throws Exception;
 
 }

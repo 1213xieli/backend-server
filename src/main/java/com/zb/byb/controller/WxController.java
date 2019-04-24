@@ -1,13 +1,14 @@
 package com.zb.byb.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.zb.byb.common.AccessToken;
-import com.zb.byb.common.Ticket;
-import com.zb.byb.common.WxCache;
+import com.zb.byb.common.*;
 import com.zb.byb.util.SignUtils;
+import com.zb.framework.common.entity.Message;
+import com.zb.framework.common.entity.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
@@ -28,17 +29,25 @@ public class WxController {
     private String wxToken;
 
     @PostMapping("/GetWXConfig")
-    public Map<String, String> getWXConfig(@RequestBody JsonNode request) {
+    public ResponseEntity<?> getWXConfig(@RequestBody JsonNode request) {
         String url = request.get("url").asText();
         AccessToken accessToken = WxCache.getInstance().getAccessToken();
         Ticket ticket = WxCache.getInstance().getTicket();
-        if (ticket != null && accessToken != null) {
-            Map<String, String> map = SignUtils.makeWXTicket(appId, ticket.getTicket(), url);
-            map.put("acesstoken", accessToken.getToken());
-            map.put("ticket", ticket.getTicket());
-            return map;
+        try {
+            if (ticket != null && accessToken != null) {
+                Map<String, String> map = SignUtils.makeWXTicket(appId, ticket.getTicket(), url);
+                map.put("acesstoken", accessToken.getToken());
+                map.put("ticket", ticket.getTicket());
+                return ResponseEntity.buildSuccess(map);
+            }else {
+                return null;
+            }
+        } catch (Exception e) {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
-        return null;
     }
 
     @PostMapping("/WxService")

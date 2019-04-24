@@ -86,18 +86,12 @@ public class MaterialController {
 
     @ApiOperation("提交签名")
     @GetMapping("/signer")//@RequestBody(required = false)
-    public ResponseEntity<List<FeedApply>> signer(String rcordId,HttpServletRequest request){
+    public ResponseEntity<List<FeedApply>> signer(String rcordId,List<FileEntry> signerList, HttpServletRequest request){
         FeedApply feedApply=new FeedApply() ;
         String userId=(String) request.getSession().getAttribute("userId");
-        System.out.println(userId);
-        List list=new ArrayList();
-        FileEntry fileEntry=new FileEntry();
-        fileEntry.setImgContent("AAABBBAABBBA");
-        fileEntry.setImgType(".jpg");
-        list.add(fileEntry);
+        feedApply.setSignerList(signerList);
+        //空格处理
         rcordId=rcordId.trim().replace(" ","+");
-        //feedApply.setRcordId("Va4AAAicaDrq+f3A");
-        feedApply.setSignerList(list);
         feedApply.setRcordId(rcordId);
         try {
             String data=feedApplyService.singer(feedApply);
@@ -109,6 +103,41 @@ public class MaterialController {
             return ResponseEntity.build(100, "签名失败");
         }
     }
+
+    @ApiOperation("获取司机列表")
+    @GetMapping("/getDriverList")//@RequestBody(required = false)
+    public ResponseEntity<List<Driver>> getDriverList(Integer pageNumber,Integer pageSize,HttpServletRequest request){
+        String custId=(String) request.getSession().getAttribute("userId");
+        FeedApply feedApply=new FeedApply();
+        feedApply.setPageNumber(pageNumber);
+        feedApply.setPageSize(pageSize);
+        try {
+            List <Driver> driverList= feedApplyService.getDriverList(feedApply,custId);
+            return ResponseEntity.buildSuccess(driverList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "签名失败");
+        }
+    }
+
+    @ApiOperation("获取饲料列表")
+    @GetMapping("/getFeedList")//@RequestBody(required = false)
+    public ResponseEntity<List<LiLiaoInfo>> getFeedList(String batchId ,Integer pageSize,Integer pageNumber,HttpServletRequest request){
+        String custId=(String) request.getSession().getAttribute("userId");
+        FeedApply feedApply=new FeedApply();
+        feedApply.setPageSize(pageSize);
+        feedApply.setPageNumber(pageNumber);
+        feedApply.setBatchId(batchId);
+        try {
+            List <LiLiaoInfo> driverList= feedApplyService.getFeedList(feedApply);
+            return ResponseEntity.buildSuccess(driverList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "签名失败");
+        }
+    }
+
+
 
 
 
