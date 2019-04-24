@@ -172,7 +172,7 @@ public class BillServiceImpl implements BillService {
                 "                （元)</td>\n" +
                 "        </tr>\n" );
         templateStr.append(this.zmlyData(info));
-        templateStr.append(this.userHasConfirm());
+//        templateStr.append(this.userHasConfirm());
 
         // 饲料领用--详情部分
         templateStr.append(
@@ -195,7 +195,7 @@ public class BillServiceImpl implements BillService {
                 "            <td>司机车牌</td>\n" +
                 "        </tr>\n" );
         templateStr.append(this.swlyData(info));
-        templateStr.append(this.userHasConfirm());
+//        templateStr.append(this.userHasConfirm());
 
         // 兽药领用--详情部分
         templateStr.append(
@@ -214,7 +214,7 @@ public class BillServiceImpl implements BillService {
                 "            <td>委托领取人</td>\n" +
                 "        </tr>\n" );
         templateStr.append(this.sylyData(info));
-        templateStr.append(this.userHasConfirm());
+//        templateStr.append(this.userHasConfirm());
 
         // 设备领用--详情部分
         templateStr.append(
@@ -233,7 +233,7 @@ public class BillServiceImpl implements BillService {
                 "            <td>委托领取人</td>\n" +
                 "        </tr>\n" );
         templateStr.append(this.sblyData(info));
-        templateStr.append(this.userHasConfirm());
+//        templateStr.append(this.userHasConfirm());
 
         templateStr.append("    </table>\n" + "</body>\n" + "\n" + "</html>" );
         return templateStr.toString();
