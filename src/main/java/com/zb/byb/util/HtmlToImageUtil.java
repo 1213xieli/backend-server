@@ -17,7 +17,7 @@ import javax.swing.plaf.basic.BasicEditorPaneUI;
 
 public class HtmlToImageUtil {
 
-    public static final int Height = 768;
+    public static final int Height = 1024;
     public static final int Width = 1024;
 
     /**

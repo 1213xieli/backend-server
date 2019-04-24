@@ -1,10 +1,12 @@
 package com.zb.byb.entity;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * 作者：谢李
  */
+@Data
 public class FeedEntry {
     @ApiModelProperty("id")
     private String id;

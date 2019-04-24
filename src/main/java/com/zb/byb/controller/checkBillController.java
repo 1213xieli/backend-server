@@ -69,7 +69,11 @@ public class checkBillController {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             info.setCustId(custId);
+            info.setDepartment(C.parseStr(request.getSession().getAttribute("servicedep")));
             String htmlTemplate = billService.queryBillRecordById(info);
+            if (C.checkNullOrEmpty(htmlTemplate))
+                throw new Exception("未获取账单数据");
+
             byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
 //            String pngStr = C.newGuid() + ".png";
 //            String filePath =Commonconst.TempPath  + pngStr;

@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 对账单实体类
  * 作者：谢李
@@ -39,11 +42,15 @@ public class BillInfo {
     private String starttime;
     @ApiModelProperty("结束时间")
     private String endtime;
+    @ApiModelProperty ("部门")
+    private String department;
+    @ApiModelProperty ("扩展字段")
+    private String extendsOne;
 
-    private PigEntry pigEntry;
-    private FeedEntry feedEntry;
-    private DrugEntry drugEntry;
-    private EquipEntry equipEntry;
+    private List<PigEntry> pigEntry = new ArrayList<>();
+    private List<FeedEntry> feedEntry = new ArrayList<>();
+    private List<DrugEntry> drugEntry = new ArrayList<>();
+    private List<EquipEntry> equipEntry = new ArrayList<>();
 
 
     public int pageNumber = 1;

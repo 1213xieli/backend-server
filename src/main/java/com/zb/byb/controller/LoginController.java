@@ -53,11 +53,11 @@ public class LoginController {
         try {
             //获取操作业务权限的sessionId
             session.setAttribute("sessionId",JDService.login());
-            String backData = JsonPluginsUtil.getSuccessData(myInfoService.viewMyInfo(openId));
-            if (C.checkNullOrEmpty(backData))
+            String myInfoStr = JsonPluginsUtil.getSuccessData(myInfoService.viewMyInfo(openId));
+            if (C.checkNullOrEmpty(myInfoStr))
                 throw new Exception("登录失败，未获取个人信息");
 
-            JSONObject jsonMap = JSONObject.parseObject(backData);
+            JSONObject jsonMap = JSONObject.parseObject(myInfoStr);
             String userId = jsonMap.getString("id");
             System.out.println("userId="+userId);
 
@@ -69,6 +69,7 @@ public class LoginController {
             session.setAttribute("fname", jsonMap.getString("fname"));
             session.setAttribute("custId", userId);
             session.setAttribute("cfwinternum", jsonMap.getString("cfwinternum"));
+            session.setAttribute("servicedep", jsonMap.getString("servicedep"));
 
             //  批次
             Batch batch = new Batch();

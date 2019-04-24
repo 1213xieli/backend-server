@@ -20,6 +20,8 @@ public class DrugEntry {
     private String qty;
     @ApiModelProperty("price")
     private String price;
+    @ApiModelProperty("单位")
+    private String unit;
     @ApiModelProperty("amount")
     private String amount;
     @ApiModelProperty("isSelf")
