@@ -3,10 +3,12 @@ package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.service.DeathApplyService;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONArray;
@@ -55,12 +57,13 @@ public class DeathApplyController {
         try {
             List<DeathApply> list= deathApplyService.getDeathApplyRecord(userId,deathApply);
             PageInfo<FeedRecord> info = new PageInfo(list);
-
             return ResponseEntity.buildSuccess(info);
             //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100,"无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
 
     }
@@ -75,7 +78,10 @@ public class DeathApplyController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -90,7 +96,10 @@ public class DeathApplyController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 

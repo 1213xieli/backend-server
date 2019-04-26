@@ -88,10 +88,10 @@ public class LoginController {
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode("400");
+            message.setCode("991");
             message.setMessage(e.getMessage());
             e.printStackTrace();
-            return ResponseEntity.build(400, message);
+            return ResponseEntity.build(Commonconst.LOGIN_FAIL, message);
         }
     }
 

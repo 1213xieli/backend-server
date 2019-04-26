@@ -49,6 +49,8 @@ public class FeedApply {
     private List<FileEntry> signerList;
     @ApiModelProperty("任务状态")
     private String state;
+    @ApiModelProperty("单据编号")
+    private String number;//
 
 
 }

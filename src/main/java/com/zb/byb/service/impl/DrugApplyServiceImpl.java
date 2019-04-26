@@ -96,11 +96,10 @@ public class DrugApplyServiceImpl implements DrugApplyService {
     }
 
     @Override
-    public List<DrugApply> queryInfoRecordList(String custId) throws Exception {
+    public List<DrugApply> queryInfoRecordList(String custId,DrugApply queryInfo ) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("custId", custId);
         map.put("source", Commonconst.WX_Flag);
-        DrugApply queryInfo = new DrugApply();
         queryInfo.setCustId(custId);
         map.put("data", queryInfo);
 

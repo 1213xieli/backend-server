@@ -77,7 +77,7 @@ public class TouMiao {
     private Boolean temperatureControlReadied;
 
     @ApiModelProperty("图片")
-    private List<String> pigpenInside;
+    private List<FileEntry> pigpenInside;
 
     //待审核
     public final static int STATUS_KEEP = 1;
@@ -86,5 +86,6 @@ public class TouMiao {
 
     public int pageNumber = 1;
     public int pageSize = 1000;
-
+    @ApiModelProperty("单据编号")
+    private String number;//
 }

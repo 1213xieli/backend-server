@@ -19,7 +19,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter implements WebMvcConfi
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //registry.addInterceptor(openIdInterceptor);
+        registry.addInterceptor(openIdInterceptor);
     }
 
     @Override

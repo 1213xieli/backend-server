@@ -19,16 +19,19 @@ public class MethodName {
     public static final String METHOD_NAME_QUERY_PIGINGAPPLY="queryPigingApply";//投苗申请查看序时簿
     public static final String METHOD_NAME_VIEW_PIGINGAPPLY="viewPigingApply";//投苗申请查看
     public static final String METHOD_NAME_DELETE_PIGINGAPPLY="deletePigingApply";//投苗申请删除
+    public static final String METHOD_NAME_SIGNER_PIGINGAPPLY="signerPigingApply";//投苗申请签名
 
     public static final String METHOD_NAME_SAVE_SUPPLIESBILL="saveSuppliesBill";//饲喂记录保存
     public static final String METHOD_NAME_QUERY_SUPPLIESBILL="querySuppliesBill";//饲喂记录查看序时簿
     public static final String METHOD_NAME_VIEW_SUPPLIESBILL="viewSuppliesBill";//饲喂记录查看
     public static final String METHOD_NAME_DELETE_SUPPLIESBILL="deleteSuppliesBill";//饲喂记录删除
+    public static final String METHOD_NAME_SIGNER_SUPPLIESBILL="signerSuppliesBill";//饲喂记录签名
 
     public static final String METHOD_NAME_SAVE_YZRHDEATH="saveYzRhDeath";//死亡记录保存
     public static final String METHOD_NAME_QUERY_YZRHDEATH="queryYzRhDeath";//死亡记录查看序时簿
     public static final String METHOD_NAME_VIEW_YZRHDEATH="viewYzRhDeath";//死亡记录查看
     public static final String METHOD_NAME_DELETE_YZRHDEATH="deleteYzRhDeath";//死亡记录删除
+    public static final String METHOD_NAME_SIGNER_YZRHDEATH="signerYzRhDeath";//死亡记录签名
 
     public static final String METHOD_NAME_SAVE_PICKINGAPPLY="savePickingApply";//领料申请保存
     public static final String METHOD_NAME_QUERY_PICKINGAPPLY="queryPickingApply";//领料申请查看序时簿
@@ -46,6 +49,7 @@ public class MethodName {
     public static final String METHOD_NAME_VIEW_EQUIPMENTRECBILL="viewEquipmentRecBill";//设备领用查看
     public static final String METHOD_NAME_DELETE_EQUIPMENTRECBILL="deleteEquipmentRecBill";//设备领用删除
     public static final String METHOD_NAME_COUNT_EQUIPMENTRECBILL="countEquipmentRecBill";//设备领用已领设备金额
+    public static final String METHOD_NAME_SIGNER_EQUIPMENTRECBILL="signerEquipmentRecBill";//设备领用签名
 
     public static final String METHOD_NAME_SAVE_SETTLEBILL="saveSettleBill";//结算申请保存
     public static final String METHOD_NAME_QUERY_SETTLEBILL="querySettleBill";//结算申请查看序时簿

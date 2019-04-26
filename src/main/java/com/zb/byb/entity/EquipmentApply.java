@@ -41,7 +41,6 @@ public class EquipmentApply {
     private List<Equipment>  actualList;
     @ApiModelProperty("设备领用明细")
     private List<Equipment> entrys;
-
     @ApiModelProperty("是否委托他人领取")
     private Boolean isEntrust;
     @ApiModelProperty("被委托领取人姓名")
@@ -58,4 +57,5 @@ public class EquipmentApply {
     private String state;
     public int pageNumber = 1;
     public int pageSize = 10;
+
 }

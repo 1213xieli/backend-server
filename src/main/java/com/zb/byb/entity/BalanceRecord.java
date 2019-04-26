@@ -16,6 +16,8 @@ public class BalanceRecord {
     private String batchId;
     @ApiModelProperty("结算批次名称")
     private String batchName;
+    @ApiModelProperty("结算日期")
+    private String bizdate;
     @ApiModelProperty("投苗均重")
     private Double avgWeight;
     @ApiModelProperty("上市均重")
@@ -44,5 +46,7 @@ public class BalanceRecord {
     public Integer pageNumber = 1;
     @ApiModelProperty("每页大小")
     public Integer pageSize = 10;
+    @ApiModelProperty("单据编号")
+    private String number;//
 
 }

@@ -27,7 +27,7 @@ public class BalanceRecordController {
     @GetMapping("/initInfoByBatchId")
     public ResponseEntity<?> initInfoByBatchId(String batchId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
-        userId="Va4AAABJzw/Mns7U";
+        //userId="Va4AAABJzw/Mns7U";
         try {
             Balance balance=balanceService.initInfoByBatchId(batchId,userId);
             return ResponseEntity.buildSuccess(balance);
@@ -43,7 +43,7 @@ public class BalanceRecordController {
     @PostMapping("/apply")
     public ResponseEntity<?> balanceApply(@RequestBody Balance balance,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
-        userId="Va4AAABJzw/Mns7U";
+        //userId="Va4AAABJzw/Mns7U";
 
         try {
             String id=balanceService.balanceApply(balance,userId);
@@ -56,11 +56,11 @@ public class BalanceRecordController {
         }
     }
 
-    @ApiOperation("获取结算记录")
+    @ApiOperation("获取结算申请记录")
     @GetMapping("/list")
     public ResponseEntity<List<BalanceRecord>> getList(String starttime,String endtime,String state,Integer pageNumber,Integer pageSize,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
-        userId="Va4AAABJzw/Mns7U";
+
         BalanceRecord balanceRecord=new BalanceRecord();
         balanceRecord.setStarttime(starttime);
         balanceRecord.setEndtime(endtime);
@@ -81,10 +81,11 @@ public class BalanceRecordController {
 
     @ApiOperation("查看结算申请详情")
     @GetMapping("/viewInfoById")
-    public ResponseEntity<List<BalanceRecord>> viewInfoById(String recordId,HttpServletRequest request){
+    public ResponseEntity<List<BalanceRecord>> viewInfoById(String batchId,String rcordId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
+
         try {
-            BalanceRecord balanceRecord=balanceService.viewBalanceRecord(recordId);
+            BalanceRecord balanceRecord=balanceService.viewBalanceRecord(batchId,rcordId);
             return ResponseEntity.buildSuccess(balanceRecord);
         } catch (Exception e) {
             Message message = new Message();
@@ -99,6 +100,7 @@ public class BalanceRecordController {
     @GetMapping("/cancleApply")
     public ResponseEntity<List<BalanceRecord>> cancleApply(String recordId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
+
         try {
             String id=balanceService.cancelApply(recordId);
             return ResponseEntity.buildSuccess(id);
@@ -118,6 +120,7 @@ public class BalanceRecordController {
         BalanceRecord balanceRecord=new BalanceRecord();
         balanceRecord.setFileEntry(fileEntry);
         balanceRecord.setRcordId(rcordId);
+        //userId="Va4AAABJzw/Mns7U";
         try {
             String id=balanceService.singer(balanceRecord );
             return ResponseEntity.buildSuccess(id);

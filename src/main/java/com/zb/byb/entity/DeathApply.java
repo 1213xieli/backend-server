@@ -52,5 +52,7 @@ public class DeathApply {
     public Integer pageNumber = 1;
     @ApiModelProperty("每页大小")
     public Integer pageSize = 10;
+    @ApiModelProperty("单据编号")
+    private String number;//
     //Va4AAAib24NSz43W
 }
