@@ -1,6 +1,7 @@
 package com.zb.byb.service.impl;
 
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.ReceivedRecord;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.ReceivedRecordService;
 import com.zb.byb.util.BackTransmitUtil;
@@ -17,15 +18,16 @@ import java.util.Map;
 public class ReceivedRecordServiceImpl implements ReceivedRecordService {
 
     @Override
-    public List getReceivedList(String custId, Object obj) throws Exception {
+    public ReceivedRecord getReceivedList( ReceivedRecord receivedRecord) throws Exception {
+
         Map<String, Object> map = new HashMap<>();
+        //map.put("custId",custId);
         map.put("source", Commonconst.WX_Flag);
-        map.put("data", obj);
-        map.put("custId",custId);
+        map.put("data", receivedRecord);
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PIGINGAPPLY);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_APPLYRECORD);
         System.out.println("领用记录查看----" + jsonData);
-        return JsonPluginsUtil.jsonTOList(jsonData,Object.class);
+        return JsonPluginsUtil.jsonToBean(jsonData,ReceivedRecord.class);
     }
 }

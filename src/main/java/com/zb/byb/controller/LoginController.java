@@ -18,6 +18,8 @@ import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +33,7 @@ import java.util.Random;
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private LoginService loginService;
     @Autowired
@@ -44,13 +47,14 @@ public class LoginController {
     @ApiOperation("登入")
     @GetMapping("/login")
     public ResponseEntity<?> login(HttpServletRequest request) {
+
         HttpSession session=  request.getSession();
 
         String sessionId="";
         //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         if (C.checkNullOrEmpty(openId))
-            openId="123456789";//为测试方便，先写死openId
+            openId="8838939";//为测试方便，先写死openId*/
         session.setAttribute("openId",openId);
 
         try {
@@ -81,6 +85,7 @@ public class LoginController {
             String batchIdlist=JSONObject.parseObject(str).getString("data");
             if (!C.checkNullOrEmpty(batchIdlist))
             {
+
                 System.out.println("登录初始化批次方法-------"+batchIdlist);
                 List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
                 session.setAttribute("pcList", list);
@@ -101,14 +106,20 @@ public class LoginController {
         String openId=(String) request.getSession().getAttribute("openId");
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
+        logger.info("---验证码---："+code);
+        logger.info("---电话号码---："+phone);
         if (!loginService.check(phone,code)){
            return ResponseEntity.build(100,"验证码错误");
         };
+        logger.info("-----验证success---");
+
         try {
             //传人绑定信息,返回信息
             boolean id = loginService.bind(userInfo, openId);
+            logger.info("-----绑定成功与否---："+id);
             System.out.println("id="+id);
             if(id){
+                logger.info("-------------绑定成功-----------------");
                 return ResponseEntity.build(200,"绑定成功");
             }
             return ResponseEntity.build(100,"不是养户,绑定失败");
@@ -116,6 +127,7 @@ public class LoginController {
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
+            logger.info("-----异常信息---："+e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
 
