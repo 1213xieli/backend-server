@@ -60,11 +60,11 @@ public class RegisterController {
 
     @ApiOperation("获取服务部列表")
     @GetMapping("/getDept")
-    public ResponseEntity<?> getServiceDept(Integer pageNumber,Integer pageSize,String keyword, HttpServletRequest request) {
+    public ResponseEntity<?> getServiceDept(Integer pageNumber,Integer pageSize,String name, HttpServletRequest request) {
         ServiceDept serviceDept=new ServiceDept();
         serviceDept.setPageNumber(pageNumber);
         serviceDept.setPageSize(pageSize);
-        serviceDept.setKeyword(keyword);
+        serviceDept.setName(name);
         try {
             List<ServiceDept> deptList = loginService.getServiceDept(serviceDept);
             return ResponseEntity.buildSuccess(deptList);

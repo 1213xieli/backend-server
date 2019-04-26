@@ -2,6 +2,8 @@ package com.zb.byb.controller;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.BatchRecord;
@@ -12,6 +14,7 @@ import com.zb.byb.util.HttpUtils;
 import com.zb.byb.util.JDService;
 import com.zb.byb.util.MethodName;
 import com.zb.byb.util.RequestUtils;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONArray;
@@ -42,26 +45,22 @@ public class BatchRecordController {
     @ApiOperation("查看批次记录")
     @GetMapping("/list")
     public ResponseEntity<BatchRecord> getList(HttpServletRequest request,BatchRecord batchRecord){
-        //获取openid
-        //String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        //获取userId
+
         String userId=(String) request.getSession().getAttribute("userId");
         //批次号
         String batchId=batchRecord.getBatchid();
         try {
             BatchRecord batchRecord1= batchRecordService.viewBatchRecord(batchId,userId);
-            //String data=JSONObject.fromObject(backData).getString("data");
-            //System.out.println("data="+data);
-            //转成list
-            //JSONArray fromObject = JSONArray.fromObject(backData);
-            //List<BatchRecord> list = fromObject.toList(fromObject,BatchRecord.class);
+
             ResponseEntity<BatchRecord> resp=new ResponseEntity<>();
             resp.setData(batchRecord1);
             return resp;
             //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100,"查询不到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
 
     }

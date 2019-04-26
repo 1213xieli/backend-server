@@ -15,7 +15,7 @@ public interface LoginService {
      * @return
      * @throws Exception
      */
-    String bind(UserInfo userInfo,String openId) throws Exception;
+    boolean bind(UserInfo userInfo,String openId) throws Exception;
 
     /**
      *

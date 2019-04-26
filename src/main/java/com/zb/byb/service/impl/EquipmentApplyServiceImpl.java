@@ -77,8 +77,8 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
 
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
-        System.out.println("设备申请，查询view方法----" + jsonData);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_COUNT_EQUIPMENTRECBILL);
+        System.out.println("设备申请，金额初始化----" + jsonData);
 
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
