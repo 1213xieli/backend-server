@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @ApiModel("领用记录")
 public class ReceivedRecord {
+    private String type;
     private String batchName;
     private String batchId;
     @ApiModelProperty("药品")

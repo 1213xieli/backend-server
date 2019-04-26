@@ -60,7 +60,10 @@ public class LoginController {
         try {
             //获取操作业务权限的sessionId
             session.setAttribute("sessionId",JDService.login());
-            String myInfoStr = JsonPluginsUtil.getSuccessData(myInfoService.viewMyInfo(openId));
+            String json=myInfoService.viewMyInfo(openId);
+            logger.info("-------通过openId获取的个人信息json串-------："+json);
+            String myInfoStr = JsonPluginsUtil.getSuccessData(json);
+
             if (C.checkNullOrEmpty(myInfoStr))
                 throw new Exception("登录失败，未获取个人信息");
 
@@ -103,7 +106,8 @@ public class LoginController {
     @ApiOperation("绑定")
     @PostMapping("/bind")
     public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
-        String openId=(String) request.getSession().getAttribute("openId");
+        String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
+        logger.info("-------openId-------："+openId);
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
         logger.info("---验证码---："+code);
