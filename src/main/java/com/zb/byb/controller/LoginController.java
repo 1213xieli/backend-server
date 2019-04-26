@@ -66,7 +66,7 @@ public class LoginController {
 
             if (C.checkNullOrEmpty(myInfoStr))
                 throw new Exception("登录失败，未获取个人信息");
-
+            
             JSONObject jsonMap = JSONObject.parseObject(myInfoStr);
             String userId = jsonMap.getString("id");
             System.out.println("userId="+userId);
