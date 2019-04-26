@@ -40,7 +40,7 @@ public class ReceiveRecordController {
 
     @ApiOperation("获取领用记录")
     @GetMapping("/receivedRecord")
-    public ResponseEntity<?> getReceivedRecordList(String batchId,Integer pageNumber,Integer pageSize,String state,String starttime,String endtime,HttpServletRequest request){
+    public ResponseEntity<?> getReceivedRecordList(String batchId,String type,Integer pageNumber,Integer pageSize,String state,String starttime,String endtime,HttpServletRequest request){
         String userId = (String)request.getSession().getAttribute("userId");
         //batchId="TsVQKmc6g4XgU5oBWApJqFKx0pw=";
         ReceivedRecord receivedRecord=new ReceivedRecord();
@@ -50,6 +50,7 @@ public class ReceiveRecordController {
         receivedRecord.setEndtime(endtime);
         receivedRecord.setStarttime(starttime);
         receivedRecord.setBatchId(batchId);
+        receivedRecord.setType(type);
 
         //receivedRecord.setBeastDrug();
         try {
