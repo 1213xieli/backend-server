@@ -1,6 +1,7 @@
 package com.zb.byb.service.impl;
 
 import com.zb.byb.controller.LoginController;
+import com.zb.byb.entity.BindInfo;
 import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
@@ -32,7 +33,6 @@ import org.springframework.web.client.RestTemplate;
 public class LoginServiceImpl implements LoginService {
     private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
-
     /**
      * 绑定用户
      * @param userInfo 用户信息
@@ -41,7 +41,7 @@ public class LoginServiceImpl implements LoginService {
      * @throws Exception
      */
     @Override
-    public boolean bind(UserInfo userInfo, String openId) throws Exception {
+    public boolean bind(BindInfo userInfo, String openId) throws Exception {
 
         if(openId==null || openId.length()==0){
             throw new Exception("未获取到openId");

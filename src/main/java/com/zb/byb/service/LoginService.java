@@ -1,5 +1,6 @@
 package com.zb.byb.service;
 
+import com.zb.byb.entity.BindInfo;
 import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
@@ -15,7 +16,7 @@ public interface LoginService {
      * @return
      * @throws Exception
      */
-    boolean bind(UserInfo userInfo,String openId) throws Exception;
+    boolean bind(BindInfo userInfo, String openId) throws Exception;
 
     /**
      *
