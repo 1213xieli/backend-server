@@ -2,10 +2,7 @@ package com.zb.byb.controller;
 
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.DeathApply;
-import com.zb.byb.entity.DrugRecord;
-import com.zb.byb.entity.Pigwash;
-import com.zb.byb.entity.PigwashRecord;
+import com.zb.byb.entity.*;
 import com.zb.byb.service.ReceivedRecordService;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
@@ -30,35 +27,34 @@ public class ReceiveRecordController {
     @ApiOperation("获取领料记录")
     @GetMapping("/pigwashRecordlist")
     public ResponseEntity<List<PigwashRecord>> getPigwashRecordList(){
-        List<PigwashRecord> list = new ArrayList<>();
-        PigwashRecord info = new PigwashRecord();
-        info.setAmount(5433);
-        info.setBread("ewexx");
-        info.setPrice(3232.4343);
-        info.setSpec("xieli");
-        list.add(info);
-        return ResponseEntity.buildSuccess(list);
+
+        return ResponseEntity.buildSuccess(null);
     }
 
     @ApiOperation("获取领药记录")
     @GetMapping("/drugRecordlist")
     public ResponseEntity<List<DrugRecord>> getDrugRecordList(){
-        List<DrugRecord> list = new ArrayList<>();
-        DrugRecord info = new DrugRecord();
-        info.setAmount(32);
-        info.setName("xieli");
-        list.add(info);
-        return ResponseEntity.buildSuccess(list);
+
+        return ResponseEntity.buildSuccess(null);
     }
 
     @ApiOperation("获取领用记录")
     @GetMapping("/receivedRecord")
-    public ResponseEntity<?> getReceivedRecordList(HttpServletRequest request){
+    public ResponseEntity<?> getReceivedRecordList(String batchId,Integer pageNumber,Integer pageSize,String state,String starttime,String endtime,HttpServletRequest request){
         String userId = (String)request.getSession().getAttribute("userId");
+        //batchId="TsVQKmc6g4XgU5oBWApJqFKx0pw=";
+        ReceivedRecord receivedRecord=new ReceivedRecord();
+        receivedRecord.setPageNumber(pageNumber);
+        receivedRecord.setPageSize(pageSize);
+        receivedRecord.setState(state);
+        receivedRecord.setEndtime(endtime);
+        receivedRecord.setStarttime(starttime);
+        receivedRecord.setBatchId(batchId);
 
+        //receivedRecord.setBeastDrug();
         try {
-            List list = receivedRecordService.getReceivedList(userId,new Object());
-            return ResponseEntity.buildSuccess(list);
+            ReceivedRecord received = receivedRecordService.getReceivedList(receivedRecord);
+            return ResponseEntity.buildSuccess(received);
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
