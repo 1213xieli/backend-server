@@ -6,6 +6,7 @@ import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.Batch;
+import com.zb.byb.entity.BindInfo;
 import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.BatchRecordService;
@@ -106,7 +107,7 @@ public class LoginController {
 
     @ApiOperation("绑定")
     @PostMapping("/bind")
-    public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
+    public ResponseEntity<?> bind(@RequestBody(required = false) BindInfo userInfo, HttpServletRequest request){
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         logger.info("-------openId-------："+openId);
         String code=userInfo.getInvitationCode();//验证码
@@ -121,7 +122,6 @@ public class LoginController {
         try {
             //传人绑定信息,返回信息
             boolean id = loginService.bind(userInfo, openId);
-            logger.info("-----绑定成功与否---："+id);
             System.out.println("id="+id);
             if(id){
                 logger.info("-------------绑定成功-----------------");
