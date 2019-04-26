@@ -94,6 +94,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         String data = JSON.toJSONString(map);
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
         System.out.println("设备申请，查询query方法----" + jsonData);
+        //{"code":"0000","count":2,"data":[{"billStatus":"保存","billStatusIndex":"10","bizDate":"2019-04-23","custId":"vKYTT1wJTV+A7XdlVyduYMyeztQ=","custName":"严春明","description":"测试idcard","entrys":[],"equipAmt":100,"isEntrust":true,"rcordId":"Va4AAAiccBCZvJQc","serviceId":"Va4AAAAZLk/4nGYi","serviceName":"龙湾服务部","state":1},{"billStatus":"保存","billStatusIndex":"10","bizDate":"2019-04-22","custId":"vKYTT1wJTV+A7XdlVyduYMyeztQ=","custName":"严春明","description":"测试idcard","entrys":[],"equipAmt":100,"isEntrust":false,"rcordId":"Va4AAAicYFaZvJQc","serviceId":"Va4AAAAZLk/4nGYi","serviceName":"龙湾服务部","state":1}],"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBeanList(jsonData, EquipmentApply.class);
     }
 

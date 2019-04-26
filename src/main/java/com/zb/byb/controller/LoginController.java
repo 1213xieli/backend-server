@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.Batch;
+import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.LoginService;
@@ -15,6 +16,7 @@ import com.zb.byb.util.RequestUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,9 +107,8 @@ public class LoginController {
         try {
             //传人绑定信息,返回信息
             String id = loginService.bind(userInfo, openId);
-
             System.out.println("id="+id);
-            if(id!=null && id.length()>0){
+            if(id!=null && id.length()==0){
                 return ResponseEntity.build(200,"绑定成功");
             }
             return ResponseEntity.build(100,"你还不是养户，请先开户");
@@ -136,4 +137,5 @@ public class LoginController {
         String status = loginService.getCheckCode(telNum);
         return ResponseEntity.buildSuccess(status);
     }
+
 }

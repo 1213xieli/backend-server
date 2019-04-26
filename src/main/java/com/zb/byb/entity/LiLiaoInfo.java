@@ -23,4 +23,5 @@ public class LiLiaoInfo {
     public String sumReceve;//已领用数量
     @ApiModelProperty("定额")
     public String quotarecevenum;//定额领用数量
+    public String isShow;
 }

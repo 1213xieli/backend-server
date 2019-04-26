@@ -1,15 +1,21 @@
 package com.zb.byb.controller;
 
+import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.DrugRecord;
 import com.zb.byb.entity.Pigwash;
 import com.zb.byb.entity.PigwashRecord;
+import com.zb.byb.service.ReceivedRecordService;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +25,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/receiveRecord")
 public class ReceiveRecordController {
+    @Autowired
+    private ReceivedRecordService receivedRecordService;
     @ApiOperation("获取领料记录")
     @GetMapping("/pigwashRecordlist")
     public ResponseEntity<List<PigwashRecord>> getPigwashRecordList(){
@@ -41,5 +49,22 @@ public class ReceiveRecordController {
         info.setName("xieli");
         list.add(info);
         return ResponseEntity.buildSuccess(list);
+    }
+
+    @ApiOperation("获取领用记录")
+    @GetMapping("/receivedRecord")
+    public ResponseEntity<?> getReceivedRecordList(HttpServletRequest request){
+        String userId = (String)request.getSession().getAttribute("userId");
+
+        try {
+            List list = receivedRecordService.getReceivedList(userId,new Object());
+            return ResponseEntity.buildSuccess(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
     }
 }

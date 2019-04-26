@@ -32,14 +32,6 @@ public class DeathApplyController {
     public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        /*//
-        deathApply.setApplyDieCnt(10);
-        deathApply.setBatchId("QOKuwU+4Q5uVQ5msWQNUVEMbbjA=");
-        deathApply.setBatchNo("已删除薛昌宇001");
-        deathApply.setCustid(userId);
-        deathApply.setDieAvg(45.0);
-        deathApply.setDieDate("2018-10-24");
-        deathApply.setFreedDay(84);*/
         try {
             String backData= deathApplyService.deathApply(deathApply,userId);
 
@@ -51,7 +43,7 @@ public class DeathApplyController {
     }
     @ApiOperation("获取死亡申报记录")
     @GetMapping("/list")
-    public ResponseEntity<List<DeathApply>> getList(String starttime,String endtime,String state,int pageNumber,int pageSize, HttpServletRequest request){
+    public ResponseEntity<List<DeathApply>> getList(String starttime,String endtime,String state,Integer pageNumber,Integer pageSize, HttpServletRequest request){
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
         DeathApply deathApply=new DeathApply();
@@ -89,7 +81,7 @@ public class DeathApplyController {
 
     @ApiOperation("取消死亡申报")
     @GetMapping("/cancleById")
-    public ResponseEntity<FeedRecord> cancleById(String rcordId)
+    public ResponseEntity<DeathApply> cancleById(String rcordId)
     {
         try{
             if (C.checkNull(rcordId))

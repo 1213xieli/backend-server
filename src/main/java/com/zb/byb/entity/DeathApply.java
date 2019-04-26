@@ -45,7 +45,7 @@ public class DeathApply {
     @ApiModelProperty("维度")
     private Double latitude;
     @ApiModelProperty("死猪照片")
-    private List imgUrl;
+    private List<FileEntry> imgUrl;
     @ApiModelProperty("申请记录状态")
     private String state;
     @ApiModelProperty("当前页码")
