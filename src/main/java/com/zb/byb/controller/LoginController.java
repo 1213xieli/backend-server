@@ -3,6 +3,7 @@ package com.zb.byb.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.common.Constants;
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.ServiceDept;
@@ -49,7 +50,7 @@ public class LoginController {
         //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         if (C.checkNullOrEmpty(openId))
-            openId="123456";//为测试方便，先写死openId="oIWY8wahhrID4MLw68Ks3zIb1fq0"
+            openId="123456789";//为测试方便，先写死openId
         session.setAttribute("openId",openId);
 
         try {
@@ -98,7 +99,6 @@ public class LoginController {
     @PostMapping("/bind")
     public ResponseEntity<?> bind(@RequestBody(required = false) UserInfo userInfo,HttpServletRequest request){
         String openId=(String) request.getSession().getAttribute("openId");
-        //request.getSession().setAttribute("userId","mRkwGN6DQgGNsONd+yMkV8yeztQ=");
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
         if (!loginService.check(phone,code)){
@@ -106,15 +106,17 @@ public class LoginController {
         };
         try {
             //传人绑定信息,返回信息
-            String id = loginService.bind(userInfo, openId);
+            boolean id = loginService.bind(userInfo, openId);
             System.out.println("id="+id);
-            if(id!=null && id.length()==0){
+            if(id){
                 return ResponseEntity.build(200,"绑定成功");
             }
-            return ResponseEntity.build(100,"你还不是养户，请先开户");
+            return ResponseEntity.build(100,"不是养户,绑定失败");
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100,"绑定失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
 
     }
@@ -123,7 +125,6 @@ public class LoginController {
     @GetMapping("/unbind")
     public ResponseEntity<?> unbind(HttpServletRequest request){
         try {
-            //
             String data = loginService.unBind((String) request.getSession().getAttribute("userId"));
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {

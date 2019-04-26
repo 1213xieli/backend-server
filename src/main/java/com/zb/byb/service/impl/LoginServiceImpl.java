@@ -37,7 +37,7 @@ public class LoginServiceImpl implements LoginService {
      * @throws Exception
      */
     @Override
-    public String bind(UserInfo userInfo, String openId) throws Exception {
+    public boolean bind(UserInfo userInfo, String openId) throws Exception {
         if(openId==null || openId.length()==0){
             throw new Exception("未获取到openId");
         }
@@ -45,8 +45,9 @@ public class LoginServiceImpl implements LoginService {
         map.put("data",userInfo);
         map.put("openId",openId);
         String data=JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SALEREQUISITION);
-        return jsonStr;
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
+        String status=JSONObject.fromObject(jsonStr).getString("code");
+        return "0000".equals(status)? true:false;
     }
 
     @Override

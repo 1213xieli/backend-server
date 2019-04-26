@@ -407,55 +407,5 @@ public class MaterialController {
         }
     }
 
-    /**
-     * 我要结算
-     * @param balance
-     * @return
-     *//*
-    @ApiOperation("保存结算申请")
-    @PostMapping("/saveBalanceApply")
-    public ResponseEntity<?> balanceApply(@RequestBody Balance balance) {
-
-        return ResponseEntity.buildSuccess(null);
-    }
-
-    @ApiOperation("获取结算申请记录")
-    @GetMapping("/balanceList")
-    public ResponseEntity<List<Balance>> getBalanceList(){
-
-        return ResponseEntity.buildSuccess(null);
-    }*/
-
-    /**
-     * 我要理财
-     * @param financing
-     * @return
-     */
-    @ApiOperation("保存理财申请")
-    @PostMapping("/saveFinancingApply")
-    public ResponseEntity<?> financingApply(@RequestBody Financing financing) {
-        Financing info = new Financing();
-        info.setApplyDate(new Date());
-        info.setApplyType("谢李");
-        info.setAvaibleBalance(123.65) ;
-        info.setBuyKnow("323");
-        info.setChooseBalance(32.43);
-        return ResponseEntity.buildSuccess(info);
-    }
-    @ApiOperation("获取理财申请记录")
-    @GetMapping("/financingList")
-    public ResponseEntity<List<Financing>> getFinancingList(){
-        Financing info = new Financing();
-        info.setApplyDate(new Date());
-        info.setApplyType("谢李");
-        info.setAvaibleBalance(123.65);
-        info.setBuyKnow("323");
-        info.setChooseBalance(32.43);
-        List<Financing> list = new ArrayList<>();
-        list.add(info);
-        return ResponseEntity.buildSuccess(list);
-
-
-    }
 
 }

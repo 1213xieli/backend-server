@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @ApiModel("批次记录")
 public class BatchRecord{
-    @ApiModelProperty("批次id")
+    @ApiModelProperty("单据id")
     private String rcordId;
     @ApiModelProperty("批次id")
     private String batchid;
