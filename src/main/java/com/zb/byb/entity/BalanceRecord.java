@@ -10,98 +10,39 @@ import lombok.Setter;
 @Setter
 @ApiModel("结算记录")
 public class BalanceRecord {
-    @ApiModelProperty("结算记录id")
-    private String id;
-    @ApiModelProperty("结算批次号")
+    @ApiModelProperty("结算申请id")
+    private String rcordId;
+    @ApiModelProperty("结算批次id")
     private String batchId;
-    @ApiModelProperty("品种")
-    private String bread;
+    @ApiModelProperty("结算批次名称")
+    private String batchName;
     @ApiModelProperty("投苗均重")
-    private Double touMiaoAvgWeight;
+    private Double avgWeight;
     @ApiModelProperty("上市均重")
-    private Double AvgWeight;
+    private Double listedverWeight;
     @ApiModelProperty("成活率")
-    private Double aliveRate;
+    private Double aliveRate;//缺少
     @ApiModelProperty("料肉比")
-    private Double meatRate;
+    private Double meatrate;
     @ApiModelProperty("正品率")
-    private Double goodRate;
+    private Double realrate;
     @ApiModelProperty("结算明细")
     private BalanceDetail balanceDetail;
+    @ApiModelProperty("状态")
+    private String state;
+    //文件
+    private FileEntry fileEntry;
+    @ApiModelProperty(value = "开始时间")
+    private String starttime;
+    @ApiModelProperty(value = "结束时间")
+    private String endtime;
+    @ApiModelProperty(value = "单据状态")//保存
+    private String billStatus;
+    @ApiModelProperty(value = "状态id")//10
+    private String billStatusIndex;
     @ApiModelProperty("当前页码")
-    public int pageNumber = 1;
+    public Integer pageNumber = 1;
     @ApiModelProperty("每页大小")
-    public int pageSize = 5;
+    public Integer pageSize = 10;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getBatchId() {
-        return batchId;
-    }
-
-    public void setBatchId(String batchId) {
-        this.batchId = batchId;
-    }
-
-    public String getBread() {
-        return bread;
-    }
-
-    public void setBread(String bread) {
-        this.bread = bread;
-    }
-
-    public Double getTouMiaoAvgWeight() {
-        return touMiaoAvgWeight;
-    }
-
-    public void setTouMiaoAvgWeight(Double touMiaoAvgWeight) {
-        this.touMiaoAvgWeight = touMiaoAvgWeight;
-    }
-
-    public Double getAvgWeight() {
-        return AvgWeight;
-    }
-
-    public void setAvgWeight(Double avgWeight) {
-        AvgWeight = avgWeight;
-    }
-
-    public Double getAliveRate() {
-        return aliveRate;
-    }
-
-    public void setAliveRate(Double aliveRate) {
-        this.aliveRate = aliveRate;
-    }
-
-    public Double getMeatRate() {
-        return meatRate;
-    }
-
-    public void setMeatRate(Double meatRate) {
-        this.meatRate = meatRate;
-    }
-
-    public Double getGoodRate() {
-        return goodRate;
-    }
-
-    public void setGoodRate(Double goodRate) {
-        this.goodRate = goodRate;
-    }
-
-    public BalanceDetail getBalanceDetail() {
-        return balanceDetail;
-    }
-
-    public void setBalanceDetail(BalanceDetail balanceDetail) {
-        this.balanceDetail = balanceDetail;
-    }
 }

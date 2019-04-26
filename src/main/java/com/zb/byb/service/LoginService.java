@@ -1,6 +1,7 @@
 package com.zb.byb.service;
 
 import com.zb.byb.entity.Introducer;
+import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
 import com.zb.framework.common.entity.Message;
 
@@ -24,6 +25,12 @@ public interface LoginService {
      */
     String getCheckCode(String mobile);
 
+    /**
+     * 验证
+     * @param phone
+     * @param code
+     * @return
+     */
     boolean check(String phone, String code);
 
     /**
@@ -53,4 +60,12 @@ public interface LoginService {
      * @return
      */
     List<Introducer> getIntroducer(Introducer introducer) throws Exception;
+
+    /**
+     * 获取服务部列表
+     * @param serviceDept
+     * @return
+     * @throws Exception
+     */
+    List<ServiceDept> getServiceDept(ServiceDept serviceDept)throws Exception;
 }

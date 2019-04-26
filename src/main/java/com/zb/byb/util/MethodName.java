@@ -13,6 +13,7 @@ public class MethodName {
     public static final String METHOD_NAME_VIEW_CUSTSTART="viewCustStart";//开户申请查看
     public static final String METHOD_NAME_DELETE_CUSTSTART="deleteCustStart";//开户申请删除
     public static final String METHOD_NAME_INTRODUCER_CUSTSTART="queryCust";//查看介绍人信息
+    public static final String METHOD_NAME_QUERY_SERVICE="queryService";//服务部查询
 
     public static final String METHOD_NAME_SAVE_PIGINGAPPLY="savePigingApply";//投苗申请保存
     public static final String METHOD_NAME_QUERY_PIGINGAPPLY="queryPigingApply";//投苗申请查看序时簿
@@ -45,10 +46,12 @@ public class MethodName {
     public static final String METHOD_NAME_VIEW_EQUIPMENTRECBILL="viewEquipmentRecBill";//设备领用查看
     public static final String METHOD_NAME_DELETE_EQUIPMENTRECBILL="deleteEquipmentRecBill";//设备领用删除
 
-    public static final String METHOD_NAME_SAVE_SETTLEBILL="saveSettleBill";//设备领用保存
-    public static final String METHOD_NAME_QUERY_SETTLEBILL="querySettleBill";//设备领用查看序时簿
-    public static final String METHOD_NAME_VIEW_SETTLEBILL="viewSettleBill";//设备领用查看
-    public static final String METHOD_NAME_DELETE_SETTLEBILL="deleteSettleBill";//设备领用删除
+    public static final String METHOD_NAME_SAVE_SETTLEBILL="saveSettleBill";//结算申请保存
+    public static final String METHOD_NAME_QUERY_SETTLEBILL="querySettleBill";//结算申请查看序时簿
+    public static final String METHOD_NAME_VIEW_SETTLEBILL="viewSettleBill";//结算申请查看
+    public static final String METHOD_NAME_DELETE_SETTLEBILL="deleteSettleBill";//结算申请删除
+    public static final String METHOD_NAME_SIGNER_SETTLEBILL="signerSettleBill";//结算申请签名
+    public static final String METHOD_NAME_APPLY_SETTLEBILL="applySettleBill";//结算申请申请
 
     public static final String METHOD_NAME_QUERY_SALEREQUISITION="querySaleRequisition";//销售通知
 
@@ -144,7 +147,7 @@ public class MethodName {
     private static final String METHOD_NAME_QUERY_EQUIPMENT="queryEquipment";//设备查询
     private static final String METHOD_NAME_QUERY_CUST="queryCust";//养户查询
     private static final String METHOD_NAME_QUERY_PEND="queryPend";//查询未处理记录
-    private static final String METHOD_NAME_QUERY_SERVICE="queryService";//服务部查询
+
     private static final String METHOD_NAME_QUERY_FEED="queryFeed";//饲料查询
 
     private static final String METHOD_NAME_SELECT_MATERIAL="selectMaterialInfo";//药品模糊查询*/

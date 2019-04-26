@@ -51,7 +51,7 @@ public interface FeedApplyService {
 
     /**
      * 查询饲料信息列表
-     * @param liLiaoInfo
+     * @param feedApply
      * @return
      * @throws Exception
      */

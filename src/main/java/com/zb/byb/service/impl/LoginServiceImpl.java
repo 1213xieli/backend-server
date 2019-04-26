@@ -1,6 +1,7 @@
 package com.zb.byb.service.impl;
 
 import com.zb.byb.entity.Introducer;
+import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.util.BackTransmitUtil;
@@ -37,20 +38,22 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public String bind(UserInfo userInfo, String openId) throws Exception {
+        if(openId==null || openId.length()==0){
+            throw new Exception("未获取到openId");
+        }
         Map<String, Object> map = new HashMap<>();
-
         map.put("data",userInfo);
         map.put("openId",openId);
         String data=JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
-        return JsonPluginsUtil.isRequestSuccessBackId(jsonStr);
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SALEREQUISITION);
+        return jsonStr;
     }
 
     @Override
     public String getCheckCode(String mobile) {
         String token = getToken();
-        if (token==null || token.length()==0){
-            return null;
+        if (token==null || token.length()==0 ||mobile==null ||mobile.length()==0 ){
+            return "no";
         }
         String url = "http://service.zhengbang.com/SERVICE/message/send-code/"+mobile;
         RestTemplate template = new RestTemplate();
@@ -59,11 +62,10 @@ public class LoginServiceImpl implements LoginService {
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, headers);
         try{
             ResponseEntity<String> r = template.exchange(url, HttpMethod.GET, requestEntity, String.class);
+            //<200,{"status":401,"message":[{"code":"401","message":"用户今天获取验证码超过5次！"}],"data":null,"date":1556191674470},{Server=[nginx/1.9.9], Date=[Thu, 25 Apr 2019 11:27:54 GMT], Content-Type=[application/json;charset=UTF-8], Transfer-Encoding=[chunked], Connection=[keep-alive], Vary=[Accept-Encoding]}>
+            //<200,{"status":200,"message":null,"data":"4247","date":1556192780776},{Server=[nginx/1.9.9], Date=[Thu, 25 Apr 2019 11:46:21 GMT], Content-Type=[application/json;charset=UTF-8], Transfer-Encoding=[chunked], Connection=[keep-alive], Vary=[Accept-Encoding]}>
             return "ok";
-        }catch (HttpClientErrorException e){
-            e.printStackTrace();
-            return "ok";
-        }catch (Exception e1){
+        } catch (Exception e1){
             return "no";
         }
     }
@@ -159,5 +161,15 @@ public class LoginServiceImpl implements LoginService {
         //List<FeedRecord> list = JSONArray.toList(jsonObject, FeedRecord.class);
         List<Introducer> list= com.alibaba.fastjson.JSONArray.parseArray(jsonObject.toString(),Introducer.class);
         return list;
+    }
+
+    @Override
+    public List<ServiceDept> getServiceDept(ServiceDept serviceDept) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("source","WECHAT");//微信
+        map.put("data",serviceDept);//
+        String data=JSONObject.fromObject(map).toString();
+        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SERVICE);
+        return JsonPluginsUtil.jsonTOList(jsonBack,ServiceDept.class);
     }
 }

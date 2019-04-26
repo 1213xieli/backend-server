@@ -55,7 +55,7 @@ public class EquipmentApply {
     private String starttime;
     @ApiModelProperty("结束时间")
     private String endtime;
-
+    private String state;
     public int pageNumber = 1;
-    public int pageSize = 1000;
+    public int pageSize = 10;
 }

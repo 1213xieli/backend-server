@@ -50,7 +50,7 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
         map.put("data", deathApply);
         String data=JSONObject.fromObject(map).toString();
         String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_YZRHDEATH);
-
+        //{"code":"0000","data":{"Curcnt":0,"applyDieCnt":0,"billStatus":"保存","billStatusIndex":"10","custid":"vKYTT1wJTV+A7XdlVyduYMyeztQ=","dieAvg":11,"dieCnt":1111111,"dieDate":"2019-04-21","freedDay":111,"imgUrl":[],"latitude":0,"longitude":0,"number":"SWJL1904230004","pigfarmerCode":"SYLWYH009","rcordId":"Va4AAAicc9tSz43W","state":1},"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBean(jsonBack, DeathApply.class);
     }
 

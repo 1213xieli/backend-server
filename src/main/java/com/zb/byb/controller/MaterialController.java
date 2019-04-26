@@ -84,7 +84,7 @@ public class MaterialController {
         }
     }
 
-    @ApiOperation("提交签名")
+    @ApiOperation("提交领料签名")
     @GetMapping("/signer")//@RequestBody(required = false)
     public ResponseEntity<List<FeedApply>> signer(String rcordId,List<FileEntry> signerList, HttpServletRequest request){
         FeedApply feedApply=new FeedApply() ;
@@ -97,6 +97,21 @@ public class MaterialController {
             String data=feedApplyService.singer(feedApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
                 return ResponseEntity.build(100, "签名失败");
+            return ResponseEntity.buildSuccess(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "签名失败");
+        }
+    }
+
+    @ApiOperation("取消领料申请")
+    @GetMapping("/canclefeedApply")//@RequestBody(required = false)
+    public ResponseEntity<List<FeedApply>> canclefeedApply(String rcordId, HttpServletRequest request){
+
+        String userId=(String) request.getSession().getAttribute("userId");
+        //空格处理
+        try {
+            String data=feedApplyService.cancleFeedApply(rcordId);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,23 +137,18 @@ public class MaterialController {
 
     @ApiOperation("获取饲料列表")
     @GetMapping("/getFeedList")//@RequestBody(required = false)
-    public ResponseEntity<List<LiLiaoInfo>> getFeedList(String batchId ,Integer pageSize,Integer pageNumber,HttpServletRequest request){
+    public ResponseEntity<List<LiLiaoInfo>> getFeedList(String batchId ,HttpServletRequest request){
         String custId=(String) request.getSession().getAttribute("userId");
         FeedApply feedApply=new FeedApply();
-        feedApply.setPageSize(pageSize);
-        feedApply.setPageNumber(pageNumber);
         feedApply.setBatchId(batchId);
         try {
-            List <LiLiaoInfo> driverList= feedApplyService.getFeedList(feedApply);
-            return ResponseEntity.buildSuccess(driverList);
+            List <LiLiaoInfo> liLiaoInfoList= feedApplyService.getFeedList(feedApply);
+            return ResponseEntity.buildSuccess(liLiaoInfoList);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(100, "签名失败");
+            return ResponseEntity.build(100, "无法查询到数据");
         }
     }
-
-
-
 
 
     /**
@@ -171,7 +181,6 @@ public class MaterialController {
         try{
             if (C.checkNull(custId))
                 throw new Exception("未传入养户id");
-
             queryInfo.setCustId(custId);
             List<MaterialInfo> list = drugApplyService.queryMaterialListByFuzzyKey(queryInfo);
             PageInfo page = new PageInfo(list);
@@ -359,7 +368,7 @@ public class MaterialController {
     }
 
 
-    @ApiOperation("根据id查询到对象信息")
+    @ApiOperation("根据id查询到设备领用详情")
     @GetMapping("/queryEquipmentApplyInfoById")
     @ResponseBody
     public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String id)
@@ -402,36 +411,20 @@ public class MaterialController {
      * 我要结算
      * @param balance
      * @return
-     */
+     *//*
     @ApiOperation("保存结算申请")
     @PostMapping("/saveBalanceApply")
     public ResponseEntity<?> balanceApply(@RequestBody Balance balance) {
-        Balance ba = new Balance();
-        ba.setAliveRate(0.8);
-        ba.setAvgDayAge(12);
-        ba.setAvgWeight(0.8);
-        ba.setId("xieliId");
-        ba.setBatchId("batchid");
-        ba.setGoodAmount(32);
-        ba.setJinMiaoDate(new Date());
-        return ResponseEntity.buildSuccess(ba);
+
+        return ResponseEntity.buildSuccess(null);
     }
 
     @ApiOperation("获取结算申请记录")
     @GetMapping("/balanceList")
     public ResponseEntity<List<Balance>> getBalanceList(){
-        List<Balance> list = new ArrayList<Balance>();
-        Balance ba = new Balance();
-        ba.setAliveRate(0.8);
-        ba.setAvgDayAge(12);
-        ba.setAvgWeight(0.8);
-        ba.setId("xieliId") ;
-        ba.setBatchId("batchid");
-        ba.setGoodAmount(32);
-        ba.setJinMiaoDate(new Date());
-        list.add(ba);
-        return ResponseEntity.buildSuccess(list);
-    }
+
+        return ResponseEntity.buildSuccess(null);
+    }*/
 
     /**
      * 我要理财

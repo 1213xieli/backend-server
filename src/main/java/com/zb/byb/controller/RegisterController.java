@@ -3,6 +3,7 @@ package com.zb.byb.controller;
 import com.zb.byb.common.Constants;
 
 import com.zb.byb.entity.Introducer;
+import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.util.JDService;
@@ -29,11 +30,6 @@ public class RegisterController {
     @PostMapping("/save")
     public ResponseEntity<?> register(@RequestBody UserInfo userInfo, HttpServletRequest request) {
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        /*userInfo.setName("cqp");
-        userInfo.setTelNum("18070505443");
-        userInfo.setTelNum("新建区");
-        userInfo.setIdentity("360122199311090914");
-        openId="oIWY8wahhrID4MLw68Ks3zIb12cqptest";*/
         System.out.println("openId="+openId);
         try {
             String backData=loginService.register(userInfo,openId);
@@ -47,7 +43,7 @@ public class RegisterController {
     }
 
 
-    @ApiOperation("获取注册信息")
+    @ApiOperation("介绍人获取")
     @GetMapping("/getInstroduce")
     public ResponseEntity<List<Introducer>> getInstroduce(Introducer introducer){
 
@@ -60,5 +56,22 @@ public class RegisterController {
             e.printStackTrace();
             return ResponseEntity.build(100,"查询不到数据");
         }
+    }
+
+    @ApiOperation("获取服务部列表")
+    @GetMapping("/getDept")
+    public ResponseEntity<?> getServiceDept(Integer pageNumber,Integer pageSize,String keyword, HttpServletRequest request) {
+        ServiceDept serviceDept=new ServiceDept();
+        serviceDept.setPageNumber(pageNumber);
+        serviceDept.setPageSize(pageSize);
+        serviceDept.setKeyword(keyword);
+        try {
+            List<ServiceDept> deptList = loginService.getServiceDept(serviceDept);
+            return ResponseEntity.buildSuccess(deptList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100,"无数据");
+        }
+
     }
 }
