@@ -52,4 +52,5 @@ public interface TouMiaoService
      */
     List<TouMiao> queryInfoRecordList(String custId, TouMiao info) throws Exception;
 
+    String singerTouMiao(TouMiao touMiao) throws Exception;
 }

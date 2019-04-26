@@ -3,6 +3,7 @@ package com.zb.byb.controller;
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.FileEntry;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.TouMiaoService;
 import com.zb.byb.util.BaseController;
@@ -93,6 +94,26 @@ public class TouMiaoController extends BaseController {
                 throw new Exception("未传入记录id");
 
             return ResponseEntity.buildSuccess(touMiaoService.queryInfoById(recordId));
+        }
+        catch (Exception e)
+        {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
+
+    @ApiOperation("根据id查询到对象信息")
+    @GetMapping("/signerTouMiao")
+    @ResponseBody
+    public ResponseEntity<TouMiao> signerTouMiao(List<FileEntry> fileEntry,String recordId)
+    {
+        TouMiao touMiao =new TouMiao();
+        touMiao.setRcordId(recordId);
+        touMiao.setPigpenInside(fileEntry);
+        try{
+            return ResponseEntity.buildSuccess(touMiaoService.singerTouMiao(touMiao));
         }
         catch (Exception e)
         {

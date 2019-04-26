@@ -25,6 +25,8 @@ public class Financing {
     private Double chooseBalance;
     @ApiModelProperty("购买需知")
     private String buyKnow;
+    @ApiModelProperty("单据编号")
+    private String number;//
 
 
 

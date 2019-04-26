@@ -1,7 +1,9 @@
 package com.zb.byb.service.impl;
 
+import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.Balance;
+import com.zb.byb.entity.BalanceDetail;
 import com.zb.byb.entity.BalanceRecord;
 import com.zb.byb.service.BalanceService;
 import com.zb.byb.util.BackTransmitUtil;
@@ -17,6 +19,8 @@ import java.util.Map;
 public class BalanceServiceImpl implements BalanceService {
     @Override
     public Balance initInfoByBatchId(String batchId, String userId) throws Exception {
+        if (C.checkNullOrEmpty(batchId) || C.checkNullOrEmpty(userId))
+            throw  new Exception("未传入数据!");
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> param = new HashMap<>();
         param.put("batchId",batchId);
@@ -31,6 +35,8 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public String balanceApply(Balance balance, String userId) throws Exception {
+        if (C.checkNullOrEmpty(balance) || C.checkNullOrEmpty(userId))
+            throw  new Exception("未传入数据!");
         Map<String, Object> map = new HashMap<>();
         map.put("source",Commonconst.WX_Flag);//微信
         map.put("custId",userId);
@@ -42,6 +48,8 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public List<BalanceRecord> getBalanceRecord(BalanceRecord balanceRecord, String userId) throws Exception {
+        if (C.checkNullOrEmpty(balanceRecord) || C.checkNullOrEmpty(userId))
+            throw  new Exception("未传入id!");
         Map<String, Object> map = new HashMap<>();
         map.put("source", Commonconst.WX_Flag);//微信
         map.put("custId",userId);
@@ -54,20 +62,28 @@ public class BalanceServiceImpl implements BalanceService {
     }
 
     @Override
-    public BalanceRecord viewBalanceRecord(String rcordId) throws Exception {
+    public BalanceRecord viewBalanceRecord(String batchId,String rcordId) throws Exception {
+        if ( C.checkNullOrEmpty(rcordId) && C.checkNullOrEmpty(batchId))
+            throw  new Exception("未传入条件Id!");
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> param = new HashMap<>();
         param.put("rcordId",rcordId);
+        param.put("batchId",batchId);
         map.put("source",Commonconst.WX_Flag);//微信
         map.put("data",param);
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_SETTLEBILL);
-        //{"code":"0000","data":{"avgWeight":7.72,"batchId":"Va4AAAWIE6dSsdKc","batchName":"叶飞004","billStatus":"保存","billStatusIndex":"10","bizdate":"2019-04-25","feedsettamount":408612,"lrbamount":0,"material":"断奶苗","materialId":"Va4AAAAKl5TqXG71","meatrate":"-13.53","payableamount":63245.16,"payforcustamount":0,"payment":0,"pigamount":404688,"rcordId":"Va4AAAidCMwuefsF","realrate":0,"settamount":63245.16,"state":1,"subsidies":905573.54,"veterdurgsettamt":29773.54},"msg":"查询成功!"}
-        return JsonPluginsUtil.jsonToBean(jsonStr,BalanceRecord.class);
+        //{"code":"0000","data":{"avgWeight":7.72,"batchId":"Va4AAAWIE6dSsdKc","batchName":"叶飞004","billStatus":"已删除","billStatusIndex":"90","bizdate":"2019-04-25","feedsettamount":408612,"lrbamount":0,"material":"断奶苗","materialId":"Va4AAAAKl5TqXG71","meatrate":"-13.53","number":"JSD1904250001","payableamount":63245.16,"payforcustamount":0,"payment":0,"pigamount":404688,"rcordId":"Va4AAAidCMwuefsF","realrate":0,"settamount":63245.16,"state":3,"subsidies":905573.54,"veterdurgsettamt":29773.54},"msg":"查询成功!"}
+        BalanceDetail balanceDetail = JsonPluginsUtil.jsonToBean(jsonStr, BalanceDetail.class);
+        BalanceRecord balanceRecord=JsonPluginsUtil.jsonToBean(jsonStr,BalanceRecord.class);
+        balanceRecord.setBalanceDetail(balanceDetail);
+        return balanceRecord;
     }
 
     @Override
     public String singer(BalanceRecord BalanceRecord) throws Exception {
+        if ( C.checkNullOrEmpty(BalanceRecord.getFileEntry().getImgContent()))
+            throw  new Exception("未传入签名图片");
         Map<String, Object> map = new HashMap<>();
         //map.put("userId",userId);
         map.put("source",Commonconst.WX_Flag);//微信
@@ -79,6 +95,8 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public String cancelApply(String rcordId) throws Exception {
+        if ( C.checkNullOrEmpty(rcordId))
+            throw  new Exception("未传入rcordId!");
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> param = new HashMap<>();
         param.put("rcordId",rcordId);

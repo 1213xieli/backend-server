@@ -35,7 +35,7 @@ public interface BalanceService {
      * @param rcordId 单据id
      * @return
      */
-    BalanceRecord viewBalanceRecord(String rcordId)throws Exception;
+    BalanceRecord viewBalanceRecord(String batchId,String rcordId)throws Exception;
 
     /**
      * 签名提交

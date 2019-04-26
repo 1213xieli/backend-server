@@ -40,7 +40,9 @@ public class FeedRecord {
      @ApiModelProperty("饲喂列表")
      private List<Pigwash>  feedList;
     @ApiModelProperty("任务状态")
-     public String state;
+    private String state;
+    @ApiModelProperty("单据编号")
+    private String number;//
 
 
 

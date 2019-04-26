@@ -128,4 +128,16 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         System.out.println("投苗记录列表查询Query----" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, TouMiao.class);
     }
+
+    @Override
+    public String singerTouMiao(TouMiao touMiao) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("source","WECHAT");//微信
+        map.put("data",touMiao);
+        String data=JSONObject.fromObject(map).toString();
+        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_PIGINGAPPLY);
+        return jsonBack;
+    }
+
+
 }

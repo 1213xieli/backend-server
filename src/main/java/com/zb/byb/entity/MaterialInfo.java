@@ -37,6 +37,8 @@ public class MaterialInfo {
     @ApiModelProperty("批次id")
     private String batchId;
 
+    private String number;
+
     public int pageNumber = 1;
     public int pageSize = 100;
 }

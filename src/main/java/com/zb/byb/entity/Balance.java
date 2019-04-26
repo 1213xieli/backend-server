@@ -37,6 +37,8 @@ public class Balance {
     private Double lrb;
     @ApiModelProperty("平均上市日龄")
     private Integer ssrl;
+    @ApiModelProperty("单据编号")
+    private String number;//
 
     //{"code":"0000","data":{"avgKg":7.72,"batchId":"Va4AAAWIE6dSsdKc","batchName":"叶飞004","bizdate":"2018-10-11","bthcnt":1000,"cfsscps":0,"cfsszps":0,"chl":0,"cpjz":0,"ssrl":0,"zpjz":0},"msg":"获取成功!"}
 

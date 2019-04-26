@@ -8,6 +8,7 @@ import java.io.File;
  */
 public class Commonconst
 {
+    public static final int LOGIN_FAIL=991;
     public static final String Back_Success = "成功";
     public static final String Back_Fail = "失败";
     public static final int FailStatus = 400;

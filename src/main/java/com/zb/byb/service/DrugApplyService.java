@@ -39,7 +39,7 @@ public interface DrugApplyService{
      * @return 返回对象
      * @throws Exception 异常
      */
-    List<DrugApply> queryInfoRecordList(String custId) throws Exception;
+    List<DrugApply> queryInfoRecordList(String custId,DrugApply drugApply) throws Exception;
 
     /**
      * 根据id查询对象信息

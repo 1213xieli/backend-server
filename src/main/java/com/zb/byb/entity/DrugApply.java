@@ -50,6 +50,7 @@ public class DrugApply {
     private List<Drug> entrys;
     public int pageNumber = 1;
     public int pageSize = 500;
+    private String number;
 
     //待审核
     public final static int STATUS_KEEP = 1;

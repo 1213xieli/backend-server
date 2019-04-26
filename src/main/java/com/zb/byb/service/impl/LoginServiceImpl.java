@@ -128,6 +128,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String login(UserInfo userInfo,String openId) throws Exception {
         Map<String, Object> map = new HashMap<>();
+        map.put("source","WECHAT");//微信
         map.put("data",userInfo);
         map.put("openId",openId);
         String data=JSONObject.fromObject(map).toString();
@@ -140,6 +141,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String register(UserInfo userInfo,String openId) throws Exception {
         Map<String, Object> map = new HashMap<>();
+        map.put("source","WECHAT");//微信
         map.put("openId",openId);//微信id
         map.put("data",userInfo);//开户信息
         String data=JSONObject.fromObject(map).toString();

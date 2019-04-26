@@ -44,25 +44,21 @@ public class BatchRecordController {
 
     @ApiOperation("查看批次记录")
     @GetMapping("/list")
-    public ResponseEntity<BatchRecord> getList(HttpServletRequest request,BatchRecord batchRecord){
-
+    public ResponseEntity<BatchRecord> getList(HttpServletRequest request,String batchid){
         String userId=(String) request.getSession().getAttribute("userId");
         //批次号
-        String batchId=batchRecord.getBatchid();
         try {
-            BatchRecord batchRecord1= batchRecordService.viewBatchRecord(batchId,userId);
+            BatchRecord batchRecord1= batchRecordService.viewBatchRecord(batchid,userId);
 
             ResponseEntity<BatchRecord> resp=new ResponseEntity<>();
             resp.setData(batchRecord1);
             return resp;
-            //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
-
     }
     @ApiOperation("获取批次列表下拉框")
     @GetMapping("/batchListList")
@@ -80,8 +76,10 @@ public class BatchRecordController {
             resp.setData(list);
             return resp;
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(500);
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 

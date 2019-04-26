@@ -1,5 +1,7 @@
 package com.zb.byb.controller;
 
+import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.common.Constants;
 
 import com.zb.byb.entity.Introducer;
@@ -9,6 +11,7 @@ import com.zb.byb.service.LoginService;
 import com.zb.byb.util.JDService;
 import com.zb.byb.util.MethodName;
 import com.zb.byb.util.RequestUtils;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
@@ -31,7 +34,19 @@ public class RegisterController {
     public ResponseEntity<?> register(@RequestBody UserInfo userInfo, HttpServletRequest request) {
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         System.out.println("openId="+openId);
+        String phone=userInfo.getTelNum();
+        String code=userInfo.getInvitationCode();
+        //openId="12345687";
+        if (!loginService.check(phone,code)){
+            return ResponseEntity.build(100,"验证码错误");
+        };
         try {
+            if(userInfo.getIdno()==null || userInfo.getIdno().length()==0){
+                throw new Exception("身份证号不能为空");
+            }
+            if(userInfo.getCustName()==null || userInfo.getCustName().length()==0){
+                throw new Exception("名字不能为空");
+            }
             String backData=loginService.register(userInfo,openId);
             System.out.println("data="+backData);
             return ResponseEntity.buildSuccess(backData);
@@ -49,12 +64,17 @@ public class RegisterController {
 
         try {
             List<Introducer> list=loginService.getIntroducer(introducer);
+            for (int i=0;i<list.size();i++){
+                list.get(i);
+            }
             ResponseEntity<List<Introducer>>  ent=new ResponseEntity<>();
             ent.setData(list);
             return ent;
         }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.build(100,"查询不到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -69,8 +89,10 @@ public class RegisterController {
             List<ServiceDept> deptList = loginService.getServiceDept(serviceDept);
             return ResponseEntity.buildSuccess(deptList);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100,"无数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
 
     }

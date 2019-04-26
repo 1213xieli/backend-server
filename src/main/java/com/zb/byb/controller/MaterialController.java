@@ -224,7 +224,7 @@ public class MaterialController {
             if (C.checkNull(custId))
                 throw new Exception("未传入养户id");
 
-            List<DrugApply> list = drugApplyService.queryInfoRecordList(custId);
+            List<DrugApply> list = drugApplyService.queryInfoRecordList(custId,queryInfo);
             PageInfo page = new PageInfo(list);
             return ResponseEntity.buildSuccess(page);
         }
