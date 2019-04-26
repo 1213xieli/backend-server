@@ -1,5 +1,6 @@
 package com.zb.byb.service.impl;
 
+import com.zb.byb.controller.LoginController;
 import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
@@ -13,6 +14,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -27,6 +30,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 @Service
 public class LoginServiceImpl implements LoginService {
+    private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 
 
     /**
@@ -38,6 +42,7 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public boolean bind(UserInfo userInfo, String openId) throws Exception {
+
         if(openId==null || openId.length()==0){
             throw new Exception("未获取到openId");
         }
@@ -45,7 +50,9 @@ public class LoginServiceImpl implements LoginService {
         map.put("data",userInfo);
         map.put("openId",openId);
         String data=JSONObject.fromObject(map).toString();
+        logger.info("----dataStr----"+data);
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
+        logger.info("----jsonStr----"+jsonStr);
         String status=JSONObject.fromObject(jsonStr).getString("code");
         return "0000".equals(status)? true:false;
     }
