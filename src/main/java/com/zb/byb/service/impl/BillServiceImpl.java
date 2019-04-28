@@ -29,11 +29,6 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public List queryInfoRecordList(BillInfo info) throws Exception {
-//        BillInfo test = new BillInfo();
-//        test.setId("xieli");
-//        test.setRecordId("recordId");
-//        test.setCustName("谢李");
-//        test.setBillDate("2019-04-19");
 
         if (C.checkNullOrEmpty(info.getCustId()))
             throw new Exception("未传入养户id");

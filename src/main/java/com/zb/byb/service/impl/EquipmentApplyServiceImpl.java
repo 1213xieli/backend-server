@@ -3,6 +3,7 @@ package com.zb.byb.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.EntrustInfo;
+import com.zb.byb.entity.Equipment;
 import com.zb.byb.entity.EquipmentApply;
 import com.zb.byb.entity.EquipmentApply;
 import com.zb.byb.service.EquipmentApplyService;
@@ -28,12 +29,11 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
             throw new Exception("无法保存");
         }
 
-        info.setEquipAmt("100");
+        //info.setEquipAmt("100");
 //        info.setIsEntrust(true);
-        info.setEntrustorId("vKYTT1wJTV+A7XdlVyduYMyeytQ=");
+        //info.setEntrustorId("vKYTT1wJTV+A7XdlVyduYMyeytQ=");
 //        info.setEntrustorName("测试");
-        info.setDescription("测试idcard");
-
+        //info.setDescription("测试idcard");
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
@@ -79,8 +79,13 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_COUNT_EQUIPMENTRECBILL);
         System.out.println("设备申请，金额初始化----" + jsonData);
-
-        return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
+        //{"code":"0000","data":0,"msg":"查询成功!"}
+        JSONObject jsonObject=JSONObject.fromObject(jsonData);
+        if(!"0000".equals(jsonObject.getString("code"))){
+            throw new Exception("后台查询出错");
+        }
+        info.setEquipAmt((Double)jsonObject.getDouble("data"));
+        return info;
     }
 
     @Override
@@ -94,14 +99,12 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         String data = JSON.toJSONString(map);
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
         System.out.println("设备申请，查询query方法----" + jsonData);
-        //{"code":"0000","count":2,"data":[{"billStatus":"保存","billStatusIndex":"10","bizDate":"2019-04-23","custId":"vKYTT1wJTV+A7XdlVyduYMyeztQ=","custName":"严春明","description":"测试idcard","entrys":[],"equipAmt":100,"isEntrust":true,"rcordId":"Va4AAAiccBCZvJQc","serviceId":"Va4AAAAZLk/4nGYi","serviceName":"龙湾服务部","state":1},{"billStatus":"保存","billStatusIndex":"10","bizDate":"2019-04-22","custId":"vKYTT1wJTV+A7XdlVyduYMyeztQ=","custName":"严春明","description":"测试idcard","entrys":[],"equipAmt":100,"isEntrust":false,"rcordId":"Va4AAAicYFaZvJQc","serviceId":"Va4AAAAZLk/4nGYi","serviceName":"龙湾服务部","state":1}],"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBeanList(jsonData, EquipmentApply.class);
     }
 
     @Override
     public EquipmentApply queryInfoById(String rcordId) throws Exception {
         Map<String, Object> map = new HashMap<>();
-//        map.put("custId", Commonconst.CustId);
         map.put("source", Commonconst.WX_Flag);
         EquipmentApply info = new EquipmentApply();
         info.setRcordId(rcordId);
@@ -110,7 +113,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
-        System.out.println("设备申请，查询view方法----" + jsonData);
+        System.out.println("设备查询view方法----" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 
@@ -127,5 +130,31 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_EQUIPMENTRECBILL);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonData);
+    }
+
+    @Override
+    public List<Equipment> searchEquipment(String keyword) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> param = new HashMap<>();
+        param.put("keyword",keyword);
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data", param);
+        // 要传入数据进行转化
+        String data = JSON.toJSONString(map);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENT);
+        System.out.println("搜索设备----" + jsonData);
+        return JsonPluginsUtil.jsonTOList(jsonData, Equipment.class);
+    }
+
+    @Override
+    public String signerEquipApply(EquipmentApply equipmentApply) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data", equipmentApply);
+        // 要传入数据进行转化
+        String data = JSON.toJSONString(map);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_EQUIPMENTRECBILL);
+        System.out.println("签名----" + jsonData);
+        return jsonData;
     }
 }

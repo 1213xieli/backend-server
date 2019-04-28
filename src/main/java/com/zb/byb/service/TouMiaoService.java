@@ -52,5 +52,19 @@ public interface TouMiaoService
      */
     List<TouMiao> queryInfoRecordList(String custId, TouMiao info) throws Exception;
 
+    /**
+     * 取消偷瞄申请
+     * @param touMiao
+     * @return
+     * @throws Exception
+     */
     String singerTouMiao(TouMiao touMiao) throws Exception;
+
+    /**
+     * 取消投苗申请
+     * @param touMiao
+     * @return
+     * @throws Exception
+     */
+    String cancleTouMiao(String rcordId) throws Exception;
 }

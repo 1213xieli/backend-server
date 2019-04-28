@@ -50,6 +50,7 @@ public class MethodName {
     public static final String METHOD_NAME_DELETE_EQUIPMENTRECBILL="deleteEquipmentRecBill";//设备领用删除
     public static final String METHOD_NAME_COUNT_EQUIPMENTRECBILL="countEquipmentRecBill";//设备领用已领设备金额
     public static final String METHOD_NAME_SIGNER_EQUIPMENTRECBILL="signerEquipmentRecBill";//设备领用签名
+    public static final String METHOD_NAME_QUERY_EQUIPMENT="queryEquipment";//设备查询
 
     public static final String METHOD_NAME_SAVE_SETTLEBILL="saveSettleBill";//结算申请保存
     public static final String METHOD_NAME_QUERY_SETTLEBILL="querySettleBill";//结算申请查看序时簿

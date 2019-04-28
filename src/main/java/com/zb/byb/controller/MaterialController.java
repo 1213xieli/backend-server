@@ -327,6 +327,7 @@ public class MaterialController {
     public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request, EquipmentApply info)
     {
         String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        custId="Va4AAACPobTMns7U";//
         try{
             if (C.checkNull(custId))
                 throw new Exception("未传入id");
@@ -371,13 +372,13 @@ public class MaterialController {
     @ApiOperation("根据id查询到设备领用详情")
     @GetMapping("/queryEquipmentApplyInfoById")
     @ResponseBody
-    public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String id)
+    public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String rcordId)
     {
         try{
-            if (C.checkNull(id))
+            if (C.checkNull(rcordId))
                 throw new Exception("未传入id");
 
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(id));
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(rcordId));
         }
         catch (Exception e)
         {
@@ -408,4 +409,41 @@ public class MaterialController {
     }
 
 
+    @ApiOperation("搜索设备列表")
+    @GetMapping("/searchEquimp")
+    public ResponseEntity<?> searchEquimp(HttpServletRequest request, String keyword)
+    {
+        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        try{
+            if (C.checkNull(custId))
+                throw new Exception("未传入id");
+            List<Equipment> list = equipmentApplyService.searchEquipment(keyword);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
+        }
+        catch (Exception e)
+        {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
+
+    @ApiOperation("设备领用签名")
+    @GetMapping("/signerEquipApply")
+    public ResponseEntity<?> signerEquipApply(String rcordId,List<FileEntry> signerList, HttpServletRequest request){
+
+        String userId=(String) request.getSession().getAttribute("userId");
+        EquipmentApply equipmentApply=new EquipmentApply();
+        equipmentApply.setSignerList(signerList);
+        equipmentApply.setRcordId(rcordId);
+        try {
+            String data=equipmentApplyService.signerEquipApply(equipmentApply);
+            return ResponseEntity.buildSuccess(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "签名失败");
+        }
+    }
 }

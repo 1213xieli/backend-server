@@ -14,8 +14,6 @@ public class YuEServiceImpl implements YuEService {
     @Override
     public String queryYuE(YuE yuE,String userId) throws Exception{
         Map<String, Object> map = new HashMap<>();
-        //Map<String, Object> param = new HashMap<>();
-        //param.put("batchId",batchId);
         map.put("custId",userId);//养户id
         map.put("source","WECHART");//微信
         map.put("data",yuE);//参数

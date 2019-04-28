@@ -30,15 +30,15 @@ public class EquipmentApply {
     @ApiModelProperty("养户id")
     private String custId;
     @ApiModelProperty("金额")
-    private String equipAmt;
+    private Double equipAmt;
     @ApiModelProperty("养户姓名")
     private String custName;
     @ApiModelProperty("累计已领取设备金额")
     private Double totalPayment;
-    @ApiModelProperty("设备申请明细")
-    private List<Equipment> applyList;
+    //@ApiModelProperty("设备申请明细")
+    //private List<Equipment> applyList;
     @ApiModelProperty("设备实际领用明细")
-    private List<Equipment>  actualList;
+    private List<Equipment>  actEntrys;
     @ApiModelProperty("设备领用明细")
     private List<Equipment> entrys;
     @ApiModelProperty("是否委托他人领取")
@@ -47,6 +47,8 @@ public class EquipmentApply {
     private String entrustorName;
     @ApiModelProperty("被委托领取人id")
     private String entrustorId;
+    @ApiModelProperty("被委托领取人身份证号")
+    private String entrustorIdCard;
     @ApiModelProperty("描述")
     private String description;
 
@@ -57,5 +59,8 @@ public class EquipmentApply {
     private String state;
     public int pageNumber = 1;
     public int pageSize = 10;
+
+    @ApiModelProperty("签名图片")
+    private List<FileEntry> signerList;
 
 }

@@ -21,6 +21,10 @@ public class Balance {
     private Double avgKg;
     @ApiModelProperty("进苗日期")//缺少
     private String bizdate;
+    @ApiModelProperty("清栏日期")//缺少
+    private String listdate;
+    @ApiModelProperty("申请结算日期")
+    private String applyDate;//
     @ApiModelProperty("上市正品数")//缺少
     private Integer cfsszps;
     @ApiModelProperty("上市正品均重")//缺少

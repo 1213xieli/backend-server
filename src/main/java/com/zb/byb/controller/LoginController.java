@@ -55,7 +55,7 @@ public class LoginController {
         //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         if (C.checkNullOrEmpty(openId))
-            openId="8838939";//为测试方便，先写死openId*/
+            openId="123456789";//为测试方便，先写死openId*/
         session.setAttribute("openId",openId);
 
         try {
@@ -112,19 +112,15 @@ public class LoginController {
         logger.info("-------openId-------："+openId);
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
-        logger.info("---验证码---："+code);
-        logger.info("---电话号码---："+phone);
         if (!loginService.check(phone,code)){
            return ResponseEntity.build(100,"验证码错误");
         };
         logger.info("-----验证success---");
-
         try {
             //传人绑定信息,返回信息
             boolean id = loginService.bind(userInfo, openId);
             System.out.println("id="+id);
             if(id){
-                logger.info("-------------绑定成功-----------------");
                 return ResponseEntity.build(200,"绑定成功");
             }
             return ResponseEntity.build(100,"不是养户,绑定失败");
@@ -141,8 +137,12 @@ public class LoginController {
     @ApiOperation("解除绑定")
     @GetMapping("/unbind")
     public ResponseEntity<?> unbind(HttpServletRequest request){
+        String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
+        if (C.checkNullOrEmpty(openId)) {
+            openId=(String)request.getSession().getAttribute("openId");
+        }
         try {
-            String data = loginService.unBind((String) request.getSession().getAttribute("userId"));
+            String data = loginService.unBind(openId);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
