@@ -104,16 +104,39 @@ public class TouMiaoController extends BaseController {
         }
     }
 
-    @ApiOperation("根据id查询到对象信息")
+    @ApiOperation("投苗签名")
     @GetMapping("/signerTouMiao")
     @ResponseBody
-    public ResponseEntity<TouMiao> signerTouMiao(List<FileEntry> fileEntry,String recordId)
+    public ResponseEntity<TouMiao> signerTouMiao(List<FileEntry> fileEntry,String rcordId,HttpServletRequest request)
     {
+        String userId=(String)request.getSession().getAttribute("userId");
         TouMiao touMiao =new TouMiao();
-        touMiao.setRcordId(recordId);
+        touMiao.setRcordId(rcordId);
         touMiao.setPigpenInside(fileEntry);
         try{
+            if (C.checkNullOrEmpty(userId))
+                throw new Exception("未登入");
             return ResponseEntity.buildSuccess(touMiaoService.singerTouMiao(touMiao));
+        }
+        catch (Exception e)
+        {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
+
+    @ApiOperation("取消投苗申请")
+    @GetMapping("/cancleTouMiao")
+    @ResponseBody
+    public ResponseEntity<TouMiao> cancleTouMiao(String rcordId,HttpServletRequest request)
+    {
+        String userid=(String)request.getSession().getAttribute("userId");
+        try{
+            if (C.checkNullOrEmpty(userid))
+                throw new Exception("未登入");
+            return ResponseEntity.buildSuccess(touMiaoService.cancleTouMiao(rcordId));
         }
         catch (Exception e)
         {

@@ -1,6 +1,7 @@
 package com.zb.byb.service.impl;
 
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.ReceivedDetail;
 import com.zb.byb.entity.ReceivedRecord;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.ReceivedRecordService;
@@ -28,6 +29,9 @@ public class ReceivedRecordServiceImpl implements ReceivedRecordService {
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_APPLYRECORD);
         System.out.println("领用记录查看----" + jsonData);
-        return JsonPluginsUtil.jsonToBean(jsonData,ReceivedRecord.class);
+        //获取数据明细
+        List<ReceivedDetail> details=JsonPluginsUtil.jsonTOList(jsonData, ReceivedDetail.class);
+        receivedRecord.setDetails(details);
+        return receivedRecord;
     }
 }

@@ -96,8 +96,6 @@ public class FeedApplyServiceImpl implements FeedApplyService {
     public List<Driver> getDriverList(FeedApply feedApply, String custId) throws Exception {
         Map<String, Object> map = new HashMap<>();
        // Map<String, Object> param = new HashMap<>();
-
-        custId="Va4AAAL/iSHMns7U";
         map.put("custId",custId);//养户id
         map.put("source","WECHAT");//微信
         map.put("data",feedApply);

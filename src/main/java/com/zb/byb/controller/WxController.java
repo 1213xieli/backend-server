@@ -29,25 +29,20 @@ public class WxController {
     private String wxToken;
 
     @PostMapping("/GetWXConfig")
-    public ResponseEntity<?> getWXConfig(@RequestBody JsonNode request) {
+    public Map<String,String> getWXConfig(@RequestBody JsonNode request) {
         String url = request.get("url").asText();
+        //url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
         AccessToken accessToken = WxCache.getInstance().getAccessToken();
         Ticket ticket = WxCache.getInstance().getTicket();
-        try {
+
             if (ticket != null && accessToken != null) {
                 Map<String, String> map = SignUtils.makeWXTicket(appId, ticket.getTicket(), url);
                 map.put("acesstoken", accessToken.getToken());
                 map.put("ticket", ticket.getTicket());
-                return ResponseEntity.buildSuccess(map);
+                return map;
             }else {
                 return null;
             }
-        } catch (Exception e) {
-            Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
-            message.setMessage(e.getMessage());
-            return ResponseEntity.build(Commonconst.FailStatus, message);
-        }
     }
 
     @PostMapping("/WxService")

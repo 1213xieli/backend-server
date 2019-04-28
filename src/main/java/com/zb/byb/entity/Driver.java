@@ -21,4 +21,5 @@ public class Driver {
     private String name;//名字
     private String number;//身份证号
     private String phone;//号码
+    private String vehicleno;//车牌号
 }

@@ -9,17 +9,18 @@ import java.util.List;
 @Data
 @ApiModel("领用记录")
 public class ReceivedRecord {
+
     private String type;
     private String batchName;
     private String batchId;
-    @ApiModelProperty("药品")
-    private List<ReceivedDetail> beastDrug;
-    @ApiModelProperty("设备")
+    @ApiModelProperty("明细")
+    private List<ReceivedDetail> details;
+    /*@ApiModelProperty("设备")
     private List<ReceivedDetail>equipment;
     @ApiModelProperty("饲料")
     private List<ReceivedDetail> feed;
     @ApiModelProperty("种猪")
-    private List<ReceivedDetail> pig;
+    private List<ReceivedDetail> pig;*/
 
     @ApiModelProperty(value = "开始时间")
     private String starttime;

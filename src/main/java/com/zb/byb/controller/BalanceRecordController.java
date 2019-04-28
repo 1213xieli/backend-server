@@ -44,7 +44,6 @@ public class BalanceRecordController {
     public ResponseEntity<?> balanceApply(@RequestBody Balance balance,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         //userId="Va4AAABJzw/Mns7U";
-
         try {
             String id=balanceService.balanceApply(balance,userId);
             return ResponseEntity.buildSuccess(id);
@@ -83,7 +82,6 @@ public class BalanceRecordController {
     @GetMapping("/viewInfoById")
     public ResponseEntity<List<BalanceRecord>> viewInfoById(String batchId,String rcordId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
-
         try {
             BalanceRecord balanceRecord=balanceService.viewBalanceRecord(batchId,rcordId);
             return ResponseEntity.buildSuccess(balanceRecord);
@@ -98,11 +96,11 @@ public class BalanceRecordController {
 
     @ApiOperation("取消结算申请")
     @GetMapping("/cancleApply")
-    public ResponseEntity<List<BalanceRecord>> cancleApply(String recordId,HttpServletRequest request){
+    public ResponseEntity<List<BalanceRecord>> cancleApply(String rcordId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
 
         try {
-            String id=balanceService.cancelApply(recordId);
+            String id=balanceService.cancelApply(rcordId);
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
             Message message = new Message();

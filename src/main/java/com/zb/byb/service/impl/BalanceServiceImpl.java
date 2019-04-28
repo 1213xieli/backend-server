@@ -96,7 +96,7 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public String cancelApply(String rcordId) throws Exception {
         if ( C.checkNullOrEmpty(rcordId))
-            throw  new Exception("未传入rcordId!");
+        throw  new Exception("未传入rcordId!");
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> param = new HashMap<>();
         param.put("rcordId",rcordId);

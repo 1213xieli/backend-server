@@ -88,8 +88,6 @@ public class TouMiaoServiceImpl implements TouMiaoService {
             return new TouMiao();
 
         Map<String, Object> map = new HashMap<>();
-//        map.put("openId", Commonconst.OpenId);
-//        map.put("custId", custId);
         // 微信入口获取数据，统一标识
         map.put("source", Commonconst.WX_Flag);
         TouMiao  queryInfo = new TouMiao();
@@ -108,22 +106,13 @@ public class TouMiaoServiceImpl implements TouMiaoService {
     {
         if (C.checkNullOrEmpty(custId))
             return new ArrayList<>();
-
         Map<String, Object> map = new HashMap<>();
-        TouMiao queryInfo = new TouMiao();
-        queryInfo.setCustId(custId);
         map.put("custId", custId);
         map.put("source", Commonconst.WX_Flag);
-        map.put("data", queryInfo);
-        map.put("pageNumber","1");
-        map.put("pageSize","1000");
-
+        map.put("data", info);
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
-//        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_BATCH);
-//        String jsonData2 = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_DRIVER);
-//        String jsonData3 = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_ENTRUST);
 
         System.out.println("投苗记录列表查询Query----" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, TouMiao.class);
@@ -136,6 +125,18 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         map.put("data",touMiao);
         String data=JSONObject.fromObject(map).toString();
         String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_PIGINGAPPLY);
+        return jsonBack;
+    }
+
+    @Override
+    public String cancleTouMiao(String rcordId) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> param = new HashMap<>();
+        param.put("rcordId",rcordId);
+        map.put("source","WECHAT");//微信
+        map.put("data",param);
+        String data=JSONObject.fromObject(map).toString();
+        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_PIGINGAPPLY);
         return jsonBack;
     }
 

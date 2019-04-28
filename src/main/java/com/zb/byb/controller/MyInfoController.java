@@ -31,7 +31,7 @@ public class MyInfoController {
         //String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         //openId="oIWY8wW3wZp81jvTvvfdwSenfh40";
         String openId=(String) request.getSession().getAttribute("openId");
-        System.out.println("openid="+openId);
+        System.out.println("openId="+openId);
         try {
 
             JSONObject jsonObject1 = JSONObject.fromObject(myInfoService.viewMyInfo(openId));

@@ -36,25 +36,8 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
-//        info.setBatchId("Wif1/wprT0+mqAaT1bq6T0MbbjA=");
-//        Drug drug = new Drug();
-//        drug.setMaterialid("Va4AAAAI+8FECefw");
-//        drug.setSupplierId("Va4AAAAAPMg3xn38");
-//        drug.setNum(2.0);
-//        List list = new ArrayList();
-//        list.add(drug);
-//        info.setEntrys(list);
         map.put("data", info);
-//        Map paramMap = new HashMap();
-//        paramMap.put("batchId","Wif1/wprT0+mqAaT1bq6T0MbbjA=");
-//        paramMap.put("keyword", "");
-////        map.put("data", paramMap);
         String data = JSONObject.fromObject(map).toString();
-
-//        String jsonBackStr = BackTransmitUtil.invokeFunc(data, "selectMaterialInfo");
-//        System.out.println(jsonBackStr);
-//        return null;
-
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_MEDICINEAPPLY);
         System.out.println("领药申请,保存方法---" + jsonBackStr);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);

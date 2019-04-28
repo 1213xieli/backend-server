@@ -1,7 +1,9 @@
 package com.zb.byb.service;
 
 import com.zb.byb.entity.EntrustInfo;
+import com.zb.byb.entity.Equipment;
 import com.zb.byb.entity.EquipmentApply;
+import com.zb.byb.entity.FileEntry;
 
 import java.util.List;
 
@@ -58,4 +60,14 @@ public interface EquipmentApplyService {
      * @throws Exception
      */
     String deleteInfoById(String id) throws Exception;
+
+    /**
+     * 设备查询列表
+     * @param keyword
+     * @return
+     * @throws Exception
+     */
+    List<Equipment> searchEquipment(String keyword)throws Exception;
+
+    String signerEquipApply(EquipmentApply equipmentApply) throws Exception;
 }
