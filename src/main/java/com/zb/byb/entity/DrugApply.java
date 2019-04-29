@@ -46,11 +46,18 @@ public class DrugApply {
     private String entrustNameId;
     @ApiModelProperty("被委托人身份证号")
     private String entrustIdcard;
-    @ApiModelProperty("实际领药明细")
+    @ApiModelProperty("申请领药明细")
     private List<Drug> entrys;
+    @ApiModelProperty("实际领药明细")
+    private List<Drug> actEntrys;
     public int pageNumber = 1;
-    public int pageSize = 500;
+    public int pageSize = 10;
+    @ApiModelProperty("领药申请编号")
     private String number;
+    @ApiModelProperty("签名图片")
+    private List<FileEntry> signerList;
+    @ApiModelProperty("记录状态")
+    private String state;
 
     //待审核
     public final static int STATUS_KEEP = 1;

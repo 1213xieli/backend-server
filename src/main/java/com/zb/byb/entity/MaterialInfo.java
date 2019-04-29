@@ -40,5 +40,5 @@ public class MaterialInfo {
     private String number;
 
     public int pageNumber = 1;
-    public int pageSize = 100;
+    public int pageSize = 10;
 }

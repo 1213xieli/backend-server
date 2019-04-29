@@ -26,7 +26,7 @@ public class PigwashRecord {
     @ApiModelProperty("当前页码")
     public int pageNumber = 1;
     @ApiModelProperty("每页大小")
-    public int pageSize = 5;
+    public int pageSize = 10;
     @ApiModelProperty("单据编号")
     private String number;//
 }

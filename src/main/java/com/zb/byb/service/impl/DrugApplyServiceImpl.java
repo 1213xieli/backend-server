@@ -122,6 +122,18 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_MEDICINEAPPLY);
         System.out.println("领药申请,删除单个view方法---" + jsonData);
-        return true;
+        return "0000".equals(JSONObject.fromObject(jsonData).getString("code")) ? true : false;
+    }
+
+    @Override
+    public String singer(DrugApply drugApply) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data", drugApply);
+        // 要传入数据进行转化
+        String data = JSONObject.fromObject(map).toString();
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_MEDICINEAPPLY);
+        System.out.println("领药申请,删除单个view方法---" + jsonData);
+        return jsonData;
     }
 }

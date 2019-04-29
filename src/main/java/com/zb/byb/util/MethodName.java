@@ -43,6 +43,7 @@ public class MethodName {
     public static final String METHOD_NAME_QUERY_MEDICINEAPPLY="queryMedicineApply";//领药申请查看序时簿
     public static final String METHOD_NAME_VIEW_MEDICINEAPPLY="viewMedicineApply";//领药申请查看
     public static final String METHOD_NAME_DELETE_MEDICINEAPPLY="deleteMedicineApply";//领药申请删除
+    public static final String METHOD_NAME_SIGNER_MEDICINEAPPLY="signerMedicineApply";//领药申请签名
 
     public static final String METHOD_NAME_SAVE_EQUIPMENTRECBILL="saveEquipmentRecBill";//设备领用保存
     public static final String METHOD_NAME_QUERY_EQUIPMENTRECBILL="queryEquipmentRecBill";//设备领用查看序时簿

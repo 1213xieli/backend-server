@@ -67,4 +67,16 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_YZRHDEATH);
         return jsonStr;
     }
+
+    @Override
+    public String signerDeathApply(DeathApply deathApply) throws Exception {
+        if (C.checkNullOrEmpty(deathApply)||C.checkNullOrEmpty(deathApply.getSignerList()))
+            throw new Exception("未传入签名");
+        Map<String, Object> map = new HashMap<>();
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data", deathApply);
+        String data=JSONObject.fromObject(map).toString();
+        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_YZRHDEATH);
+        return jsonStr;
+    }
 }

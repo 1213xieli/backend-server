@@ -28,6 +28,14 @@ public interface DeathApplyService {
      */
     DeathApply getDeathApplyRecordbyId(String rcord)throws  Exception;
 
+    /**
+     * 取消死亡申报
+     * @param rcordId
+     * @return
+     * @throws Exception
+     */
     String cancleDeathApply(String rcordId) throws Exception;
+
+    String signerDeathApply(DeathApply deathApply)throws Exception;
 
 }

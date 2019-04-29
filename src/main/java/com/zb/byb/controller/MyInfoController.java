@@ -42,7 +42,6 @@ public class MyInfoController {
             myInfo.setDept(jsonObject.getString("servicedep"));
             myInfo.setEntrustedIdentity("");//被委托人身份证
             myInfo.setEntrustedName("");//被委托人姓名
-            myInfo.setGrowUp("");//我的成长
             myInfo.setManager(jsonObject.getString("manager"));
             myInfo.setManagerTelNum(jsonObject.getString("fcell"));
             myInfo.setName(jsonObject.getString("fname"));
@@ -50,18 +49,20 @@ public class MyInfoController {
             myInfo.setRegisterDate(jsonObject.getString("fkhsj"));
             myInfo.setStatus(jsonObject.getString("cfraisestate"));
             myInfo.setTelNum(jsonObject.getString("ftelno"));
+            myInfo.setGrowUp(jsonObject.getString("cflevel"));
             System.out.println(myInfo.getName());
-
+            ResponseEntity responseEntity=new ResponseEntity();
+            responseEntity.setData(myInfo);
            /* System.out.println("json="+myInfoService.viewMyInfo(openId));
             JSONObject result = JSONObject.fromObject(myInfoService.viewMyInfo(openId));
             String dataInfo = result.getString("data");
-            myInfo = objectMapper.readValue(dataInfo, MyInfo.class);*/
+            myInfo = objectMapper.readValue(dataInfo, MyInfo.class);*//*
             ResponseEntity<MyInfo> resp=new ResponseEntity<>();
-            resp.setData(myInfo);
-            return resp;
+            resp.setData(myInfo);*/
+            return responseEntity;
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.build(500, "内部服务器错误");
+            return ResponseEntity.build(100, "查询不到数据");
         }
 
     }

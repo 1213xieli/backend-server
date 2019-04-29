@@ -54,5 +54,6 @@ public class DeathApply {
     public Integer pageSize = 10;
     @ApiModelProperty("单据编号")
     private String number;//
+    private List<FileEntry> signerList;
     //Va4AAAib24NSz43W
 }
