@@ -28,8 +28,9 @@ public class WxController {
     @Value("${wx.token}")
     private String wxToken;
 
-    @GetMapping("/GetWXConfig")
-    public Map<String,String> getWXConfig(@RequestParam("url")String url) {
+    @PostMapping("/GetWXConfig")
+    public Map<String,String> getWXConfig(@RequestBody JsonNode request) {
+        String url = request.get("url").asText();
         AccessToken accessToken = WxCache.getInstance().getAccessToken();
         Ticket ticket = WxCache.getInstance().getTicket();
 
