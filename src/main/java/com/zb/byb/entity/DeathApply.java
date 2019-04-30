@@ -33,6 +33,8 @@ public class DeathApply {
     @ApiModelProperty("死亡日期")
     private String dieDate;
     @ApiModelProperty("死亡日龄")
+    private Integer dieDay;
+    @ApiModelProperty("喂养天数")
     private Integer freedDay;
    @ApiModelProperty("申报死亡头数")//
    private Integer applyDieCnt;

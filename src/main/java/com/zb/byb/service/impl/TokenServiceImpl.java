@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class TokenServiceImpl implements TokenService {
     @Autowired
     private WxAppTokenMapper tokenMapper;
+
     @Override
     public void updateWxAccessToken(String appId, String token, String appSecret) {
         String fid = tokenMapper.getAppConfig(appId);

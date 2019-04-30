@@ -122,4 +122,13 @@ public class WxController {
         return "";
     }
 
+
+
+   /* @RequestMapping(value = "/checkServer", method = RequestMethod.GET)
+    public String checkServer(String signature, String timestamp, String nonce,
+                              String echostr) {
+
+        return echostr;
+    }*/
+
 }

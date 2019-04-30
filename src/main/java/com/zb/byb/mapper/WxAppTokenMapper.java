@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+
+
 @Mapper
 public interface WxAppTokenMapper {
     @Update("update T_APP_WeiXinToken set FTokenId = #{token} where FAPPID = #{appId}")

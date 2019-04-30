@@ -36,12 +36,16 @@ public class DeathApplyController {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
         try {
+            if(C.checkNullOrEmpty(userId)){
+                throw new Exception("未传人养户id");
+            }
             String backData= deathApplyService.deathApply(deathApply,userId);
-
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(500,"保存失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
     @ApiOperation("获取死亡申报记录")
@@ -70,7 +74,7 @@ public class DeathApplyController {
     }
     @ApiOperation("查看死亡申报记录详情")
     @GetMapping("/queryInfoById")
-    public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
+    public ResponseEntity<DeathApply> queryInfoById(String rcordId)
     {
         try{
             if (C.checkNull(rcordId))

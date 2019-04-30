@@ -20,6 +20,11 @@ public class YuEServiceImpl implements YuEService {
 
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_BALANCE);
+
+        if(!"0000".equals(JSONObject.fromObject(jsonStr).get("code"))){
+            //捕获异常信息
+            throw new Exception((String) JSONObject.fromObject(jsonStr).get("msg"));
+        }
         return jsonStr;
     }
 }

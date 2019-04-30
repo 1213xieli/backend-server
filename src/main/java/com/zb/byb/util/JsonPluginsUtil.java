@@ -30,17 +30,15 @@ public class JsonPluginsUtil
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T jsonToBean(String jsonString, Class<T> beanCalss) {
-
-        JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        String obj = jsonObject.getString(Data);
-        if (C.checkNullOrEmpty(obj))
+    public static <T> T jsonToBean(String jsonString, Class<T> beanCalss)throws Exception {
+        String data = getData(jsonString);//处理数据
+        if (C.checkNullOrEmpty(data))
             return null;
 
-        JSONObject beanJson = JSONObject.fromObject(obj);
+        JSONObject beanJson = JSONObject.fromObject(data);
 //        T bean = (T) JSONObject.toBean(beanJson, beanCalss);
 
-        T bean = (T) com.alibaba.fastjson.JSON.parseObject(obj, beanCalss);
+        T bean = (T) JSON.parseObject(data, beanCalss);
         return bean;
 
     }
@@ -312,18 +310,12 @@ public class JsonPluginsUtil
      * @param <T>
      * @return
      */
-    public static <T>List<T> jsonTOList(String jsonStr,Class<T> s){
-        if (s == null || C.checkNullOrEmpty(jsonStr))
-            return new ArrayList<>();
-        if(!"0000".equals(JSONObject.fromObject(jsonStr).getString("code"))){
+    public static <T>List<T> jsonTOList(String jsonStr,Class<T> s)throws Exception{
+
+        JSONArray listdata = getListData(jsonStr);//处理数据
+        if (C.checkNullOrEmpty(listdata))
             return null;
-        }
-        // 通过Data 字段获取数据
-        //JSONObject jsonObject = JSONObject.fromObject(jsonStr);
-        JSONArray jsonObject=JSONObject.fromObject(jsonStr).getJSONArray("data");
-        if (C.checkNullOrEmpty(jsonObject))
-            return null;
-        List<T> list =com.alibaba.fastjson.JSONArray.parseArray(jsonObject.toString(),s);
+        List<T> list =com.alibaba.fastjson.JSONArray.parseArray(listdata.toString(),s);
         return list;
     }
 
@@ -469,18 +461,34 @@ public class JsonPluginsUtil
      * @param jsonString
      * @return
      */
-    public static String isRequestSuccessBackId(String jsonString)
+    public static String isRequestSuccessBackId(String jsonString)throws Exception
     {
         if (C.checkNullOrEmpty(jsonString))
             return null;
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code")))
-            return null;
+            throw new Exception("保存失败信息："+jsonObject.getString("msg"));
         String id = C.parseStr(jsonObject.getString(Id ));
         if (C.checkNullOrEmpty(Id))
             return "";
-
         return id;
+    }
+
+    private static String getData(String jsonString)throws Exception{
+        JSONObject jsonObject = JSONObject.fromObject(jsonString);
+        if(!"0000".equals(jsonObject.getString("code"))){
+            throw new Exception(jsonObject.getString("msg"));
+        }
+        return jsonObject.getString("data");
+    }
+
+
+    private static JSONArray getListData(String jsonString)throws Exception{
+        JSONObject jsonObject = JSONObject.fromObject(jsonString);
+        if(!"0000".equals(jsonObject.getString("code"))){
+            throw new Exception(jsonObject.getString("msg"));
+        }
+        return jsonObject.getJSONArray("data");
     }
 
 

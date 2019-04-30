@@ -11,14 +11,14 @@ public interface DeathApplyService {
      * @param userId 用户id
      * @return
      */
-    String deathApply(DeathApply deathApply,String userId) throws Exception;
+    String deathApply(DeathApply deathApply, String userId) throws Exception;
 
     /**
      * 死亡申报记录列表
      * @param userId
      * @return
      */
-    List<DeathApply> getDeathApplyRecord(String userId,DeathApply deathApply)throws  Exception;
+    List<DeathApply> getDeathApplyRecord(String userId, DeathApply deathApply)throws  Exception;
 
     /**
      * 查看单条申报记录
