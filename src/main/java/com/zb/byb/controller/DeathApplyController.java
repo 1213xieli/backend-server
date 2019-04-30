@@ -70,7 +70,7 @@ public class DeathApplyController {
     }
     @ApiOperation("查看死亡申报记录详情")
     @GetMapping("/queryInfoById")
-    public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
+    public ResponseEntity<DeathApply> queryInfoById(String rcordId)
     {
         try{
             if (C.checkNull(rcordId))
