@@ -9,5 +9,5 @@ public class FileEntry {
 
     private String imgContent;//图片字符串
 
-    private String imgType;//文件后
+    private String imgType;//文件类型
 }

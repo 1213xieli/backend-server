@@ -57,4 +57,12 @@ public interface DrugApplyService{
      */
     boolean deleteInfoById(String recordId) throws Exception;
 
+    /**
+     * 签名提交
+     * @param drugApply
+     * @return
+     * @throws Exception
+     */
+    String singer(DrugApply drugApply) throws Exception;
+
 }

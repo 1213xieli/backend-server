@@ -7,6 +7,7 @@ import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
+import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.DeathApplyService;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
@@ -35,12 +36,16 @@ public class DeathApplyController {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
         try {
+            if(C.checkNullOrEmpty(userId)){
+                throw new Exception("未传人养户id");
+            }
             String backData= deathApplyService.deathApply(deathApply,userId);
-
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(500,"保存失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
     @ApiOperation("获取死亡申报记录")
@@ -69,7 +74,7 @@ public class DeathApplyController {
     }
     @ApiOperation("查看死亡申报记录详情")
     @GetMapping("/queryInfoById")
-    public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
+    public ResponseEntity<DeathApply> queryInfoById(String rcordId)
     {
         try{
             if (C.checkNull(rcordId))
@@ -102,5 +107,33 @@ public class DeathApplyController {
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
+
+    @ApiOperation("死亡签名")
+    @GetMapping("/singer")
+    public ResponseEntity<DeathApply> singer(String rcordId, FileEntry fileEntry)
+    {
+        List<FileEntry> signerList=new ArrayList<>();
+        signerList.add(fileEntry);
+
+        DeathApply deathApply=new DeathApply();
+        deathApply.setRcordId(rcordId);
+        deathApply.setSignerList(signerList);
+        try{
+            if (C.checkNull(rcordId))
+                throw new Exception("未传入rcordId.");
+            String s = deathApplyService.signerDeathApply(deathApply);
+            if ("0000".equals(JSONObject.fromObject(s).getString("code")))
+                return ResponseEntity.buildSuccess(s);
+            return ResponseEntity.build(100,"签名保存失败");
+        }
+        catch (Exception e)
+        {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
+
 
 }

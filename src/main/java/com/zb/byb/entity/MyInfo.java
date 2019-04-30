@@ -15,6 +15,8 @@ public class MyInfo {
     //@JsonProperty("id")
     @ApiModelProperty("养户id")
     private String id;
+    @ApiModelProperty("养户规模")
+    private String cfwinternum;
     //@JsonProperty("fname")
     @ApiModelProperty("姓名")
     private String name;
@@ -40,7 +42,7 @@ public class MyInfo {
     @ApiModelProperty("饲养状态")
     private String status;
     //@JsonProperty("growUp")
-    @ApiModelProperty("我的成长")
+    @ApiModelProperty("我的星级")
     private String growUp;
     //@JsonProperty("entrustedName")
     @ApiModelProperty("被委托人姓名")

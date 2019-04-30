@@ -20,7 +20,7 @@ public class BalanceServiceImpl implements BalanceService {
     @Override
     public Balance initInfoByBatchId(String batchId, String userId) throws Exception {
         if (C.checkNullOrEmpty(batchId) || C.checkNullOrEmpty(userId))
-            throw  new Exception("未传入数据!");
+            throw  new Exception("未传入id!");
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> param = new HashMap<>();
         param.put("batchId",batchId);

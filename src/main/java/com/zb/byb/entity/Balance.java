@@ -39,7 +39,7 @@ public class Balance {
     private Double chl;
     @ApiModelProperty("料肉比")//缺少
     private Double lrb;
-    @ApiModelProperty("平均上市日龄")
+    @ApiModelProperty(value = "平均上市日龄",example = "123")
     private Integer ssrl;
     @ApiModelProperty("单据编号")
     private String number;//

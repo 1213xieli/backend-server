@@ -85,10 +85,12 @@ public class MaterialController {
     }
 
     @ApiOperation("提交领料签名")
-    @GetMapping("/signer")//@RequestBody(required = false)
-    public ResponseEntity<List<FeedApply>> signer(String rcordId,List<FileEntry> signerList, HttpServletRequest request){
+    @PostMapping("/signerFeedApply")//@RequestBody(required = false)
+    public ResponseEntity<List<FeedApply>> signer(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
         FeedApply feedApply=new FeedApply() ;
         String userId=(String) request.getSession().getAttribute("userId");
+        List<FileEntry> signerList=new ArrayList<>();
+        signerList.add(fileEntry);//存入实体
         feedApply.setSignerList(signerList);
         //空格处理
         rcordId=rcordId.trim().replace(" ","+");
@@ -173,7 +175,7 @@ public class MaterialController {
         }
     }
 
-    @ApiOperation("根据批次id查询药品，支持模糊查询")
+    @ApiOperation("根据批次id查询药品选择列表，支持模糊查询")
     @GetMapping("/queryMaterialInfoByBatchId")
     public ResponseEntity<MaterialInfo> queryMaterialInfoByBatchId(HttpServletRequest request, MaterialInfo queryInfo)
     {
@@ -215,7 +217,7 @@ public class MaterialController {
         }
     }
 
-    @ApiOperation("根据用户id查询到记录列表")
+    @ApiOperation("领药申请记录列表")
     @GetMapping("/queryDrugApplyRecordList")
     public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request, DrugApply queryInfo)
     {
@@ -237,17 +239,17 @@ public class MaterialController {
         }
     }
 
-    @ApiOperation("根据id查询到对象信息")
+    @ApiOperation("查看领药申请详情")
     @GetMapping("/queryDrugApplyInfoById")
     @ResponseBody
-    public ResponseEntity<DrugApply> queryDrugApplyInfoById(HttpServletRequest request, String id)
+    public ResponseEntity<DrugApply> queryDrugApplyInfoById(HttpServletRequest request, String rcordId)
     {
         String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(id))
+            if (C.checkNull(rcordId))
                 throw new Exception("未传入id");
-
-            return ResponseEntity.buildSuccess(drugApplyService.queryInfoById(id));
+            DrugApply drugApply = drugApplyService.queryInfoById(rcordId);
+            return ResponseEntity.buildSuccess(drugApply);
         }
         catch (Exception e)
         {
@@ -255,6 +257,28 @@ public class MaterialController {
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
+
+    @ApiOperation("提交领药签名")
+    @PostMapping("/signerDrugApply")//@RequestBody(required = false)
+    public ResponseEntity<?> signerDrugApply(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
+        DrugApply drugApply=new DrugApply() ;
+        String userId=(String) request.getSession().getAttribute("userId");
+        List<FileEntry> signerList=new ArrayList<>();
+        signerList.add(fileEntry);//存入实体
+        drugApply.setSignerList(signerList);
+        //空格处理
+        rcordId=rcordId.trim().replace(" ","+");
+        drugApply.setRcordId(rcordId);
+        try {
+            String data=drugApplyService.singer(drugApply);
+            if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
+                return ResponseEntity.build(100, "签名失败");
+            return ResponseEntity.buildSuccess(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.build(100, "签名失败");
         }
     }
 
@@ -327,7 +351,7 @@ public class MaterialController {
     public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request, EquipmentApply info)
     {
         String custId = C.parseStr(request.getSession().getAttribute("custId"));
-        custId="Va4AAACPobTMns7U";//
+        custId="Va4AAACPobTMns7U";
         try{
             if (C.checkNull(custId))
                 throw new Exception("未传入id");
@@ -377,7 +401,6 @@ public class MaterialController {
         try{
             if (C.checkNull(rcordId))
                 throw new Exception("未传入id");
-
             return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(rcordId));
         }
         catch (Exception e)
@@ -431,19 +454,24 @@ public class MaterialController {
     }
 
     @ApiOperation("设备领用签名")
-    @GetMapping("/signerEquipApply")
-    public ResponseEntity<?> signerEquipApply(String rcordId,List<FileEntry> signerList, HttpServletRequest request){
-
+    @PostMapping("/signerEquipApply")
+    public ResponseEntity<?> signerEquipApply(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
         String userId=(String) request.getSession().getAttribute("userId");
         EquipmentApply equipmentApply=new EquipmentApply();
+        List<FileEntry> signerList=new ArrayList<>();
+        signerList.add(fileEntry);//存入实体
         equipmentApply.setSignerList(signerList);
         equipmentApply.setRcordId(rcordId);
         try {
             String data=equipmentApplyService.signerEquipApply(equipmentApply);
+            if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
+                return ResponseEntity.build(100, "签名失败");
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "签名失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 }

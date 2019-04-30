@@ -59,7 +59,6 @@ public class EquipmentApply {
     private String state;
     public int pageNumber = 1;
     public int pageSize = 10;
-
     @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
 

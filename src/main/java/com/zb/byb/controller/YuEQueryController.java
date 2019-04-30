@@ -33,7 +33,7 @@ public class YuEQueryController {
     @GetMapping("/query")
     public ResponseEntity<YuE> yuEQuery(String starttime,String endtime,HttpServletRequest request){
         YuE yuE=new YuE();
-        yuE.setStarttime(endtime);
+        yuE.setEndtime(endtime);
         yuE.setStarttime(starttime);
         String userId=(String) request.getSession().getAttribute("userId");
         try {

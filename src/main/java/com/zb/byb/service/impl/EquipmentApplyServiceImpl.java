@@ -98,6 +98,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSON.toJSONString(map);
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
+        //{"code":"0000","count":1,"data":[{"billStatus":"审核","billStatusIndex":"30","bizDate":"2019-04-28","custId":"Va4AAACPobTMns7U","custName":"陈帮平","entrys":[{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","model":"臭氧消毒机","price":836,"qty":1,"unit":"台"}],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAieujeZvJQc","serviceId":"Va4AAAAbxwL4nGYi","serviceName":"弋阳服务部","state":1}],"msg":"查询成功!"}
         System.out.println("设备申请，查询query方法----" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, EquipmentApply.class);
     }
@@ -113,7 +114,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
-        System.out.println("设备查询view方法----" + jsonData);
+        System.out.println("设备查询view方法----" + jsonData);//{"code":"0000","data":{"actEntrys":[],"billStatus":"审核","billStatusIndex":"30","bizDate":"2019-04-28","custId":"Va4AAACPobTMns7U","custName":"陈帮平","entrys":[{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","model":"臭氧消毒机","price":836,"qty":1,"unit":"台"},{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","price":836,"qty":1}],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAieujeZvJQc","serviceId":"Va4AAAAbxwL4nGYi","serviceName":"弋阳服务部","state":2},"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 

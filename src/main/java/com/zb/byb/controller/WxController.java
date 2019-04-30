@@ -31,7 +31,6 @@ public class WxController {
     @PostMapping("/GetWXConfig")
     public Map<String,String> getWXConfig(@RequestBody JsonNode request) {
         String url = request.get("url").asText();
-        //url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
         AccessToken accessToken = WxCache.getInstance().getAccessToken();
         Ticket ticket = WxCache.getInstance().getTicket();
 
@@ -123,5 +122,14 @@ public class WxController {
         }
         return "";
     }
+
+
+
+   /* @RequestMapping(value = "/checkServer", method = RequestMethod.GET)
+    public String checkServer(String signature, String timestamp, String nonce,
+                              String echostr) {
+
+        return echostr;
+    }*/
 
 }
