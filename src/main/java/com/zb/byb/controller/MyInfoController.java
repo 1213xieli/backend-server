@@ -47,7 +47,7 @@ public class MyInfoController {
             myInfo.setName(jsonObject.getString("fname"));
             myInfo.setPiggeryAddress(jsonObject.getString("cfpigpen"));//猪舍地址
             myInfo.setRegisterDate(jsonObject.getString("fkhsj"));
-            myInfo.setStatus(jsonObject.getString("cfraisestate"));
+            myInfo.setStatus(jsonObject.getString("cfraisestateText"));
             myInfo.setTelNum(jsonObject.getString("ftelno"));
             myInfo.setGrowUp(jsonObject.getString("cflevel"));
             System.out.println(myInfo.getName());

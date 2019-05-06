@@ -60,7 +60,10 @@ public class MethodName {
     public static final String METHOD_NAME_SIGNER_SETTLEBILL="signerSettleBill";//结算申请签名
     public static final String METHOD_NAME_APPLY_SETTLEBILL="applySettleBill";//结算申请申请
 
-    public static final String METHOD_NAME_QUERY_SALEREQUISITION="querySaleRequisition";//销售通知
+    //public static final String METHOD_NAME_QUERY_SALEREQUISITION="querySaleRequisition";//销售通知
+
+    public static final String METHOD_NAME_QUERY_VIEW_SALE = "viewSale";  //销售列表
+    public static final String METHOD_NAME_QUERY_QUERY_SALE = "querySale";  //单个销售列表
 
     public static final String METHOD_NAME_QUERY_APPLYRECORD="queryApplyRecord";//领用记录
 
