@@ -30,16 +30,16 @@ public class SaleNoticeServiceImpl implements SaleNoticeService {
         SaleNotice saleNotice = new SaleNotice();
         saleNotice.setCustId(id);
         Map<String, Object> map = new HashMap<>();
-//        map.put("openId", Commonconst.OpenId);
-        map.put("custId", id);
-        map.put("data", saleNotice);
+        map.put("custId",id);
+        map.put("data",saleNotice);
+        map.put("source", Commonconst.WX_Flag);
         map.put("pageNumber","1");
         map.put("pageSize","1000");
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_VIEW_SALE);
-        System.out.println("销售列表，查询列表---" + jsonData + "1111111111111111111");
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_QUERY_SALE);
+        System.out.println("销售列表，查询列表---" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, SaleNotice.class);
     }
 
@@ -52,9 +52,10 @@ public class SaleNoticeServiceImpl implements SaleNoticeService {
         saleNotice.setRcordId(id);
         Map<String, Object> map = new HashMap<>();
         map.put("data", saleNotice);
+        map.put("source", Commonconst.WX_Flag);
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_QUERY_SALE);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_VIEW_SALE);
         System.out.println("单个销售,查询列表---" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, SaleNotice.class);
     }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+//String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
+//openId="oIWY8w
 @RestController
 @RequestMapping("/api/myInfo")
 public class MyInfoController {
@@ -27,9 +29,7 @@ public class MyInfoController {
     @ApiOperation("查看我的信息")
     @GetMapping("/list")
     public ResponseEntity<MyInfo> queryMyInfo(MyInfo myInfo,HttpServletRequest request) {
-        //获取openid
-        //String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        //openId="oIWY8wW3wZp81jvTvvfdwSenfh40";
+        //获取openidW3wZp81jvTvvfdwSenfh40";
         String openId=(String) request.getSession().getAttribute("openId");
         System.out.println("openId="+openId);
         try {
