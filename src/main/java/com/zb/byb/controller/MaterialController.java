@@ -41,7 +41,7 @@ public class MaterialController {
      */
     @ApiOperation("保存领料申请")
     @PostMapping("/saveFeedApply")//@RequestBody(required = false)
-    public ResponseEntity<?> feedApply(FeedApply feedApply,HttpServletRequest request) {
+    public ResponseEntity<?> feedApply(@RequestBody FeedApply feedApply,HttpServletRequest request) {
         String userId=(String) request.getSession().getAttribute("userId");
         try {
             if (C.checkNull(userId))
@@ -168,7 +168,7 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
-    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, DrugApply drugApply) {
+    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply) {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             drugApply.setCustId(custId);
@@ -176,10 +176,10 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
-            message.setMessage(e.getMessage());
-            return ResponseEntity.build(Commonconst.FailStatus, message);
+            message.setMessage("保存失败");
+            return ResponseEntity.build(Commonconst.FailStatus,message,null);
         }
     }
 

@@ -61,5 +61,7 @@ public class EquipmentApply {
     public int pageSize = 10;
     @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
+    @ApiModelProperty("签名图片路径")
+    private List<FileEntry> imgsUrl;
 
 }

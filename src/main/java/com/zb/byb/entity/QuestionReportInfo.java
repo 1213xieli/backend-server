@@ -24,7 +24,7 @@ public class QuestionReportInfo implements Serializable {
     @ApiModelProperty("回复id")
     private String replypersonid;
     @ApiModelProperty("回复名称")
-    private String replyersonname;
+    private String replypersonname;
     @ApiModelProperty("问题")
     private String details;
     @ApiModelProperty("问题答复")

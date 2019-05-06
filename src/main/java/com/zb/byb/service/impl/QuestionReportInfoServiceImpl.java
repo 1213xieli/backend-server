@@ -78,6 +78,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PROBLEMFEEDBACK);
         System.out.println("问题反馈，查询view方法---" + jsonData);
+       //{"code":"0000","data":{"bizdate":"2019-05-06","custid":"Va4AAAO6drnMns7U","custname":"胡亿龙","details":"思考dont","rcordId":"Va4AAAiiQDt/YF2u","replydate":"2019-05-06","replydetails":"666","replypersonid":"IkE9MNuvTZ2/OleSqVTYJxO33n8=","replypersonname":"冯常耀"},"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBean(jsonData, QuestionReportInfo.class);
     }
 
