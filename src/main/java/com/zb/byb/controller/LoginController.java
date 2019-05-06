@@ -114,7 +114,7 @@ public class LoginController {
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
         if (!loginService.check(phone,code)){
-           return ResponseEntity.build(100,"验证码错误");
+           return ResponseEntity.build(400,"验证码错误");
         };
         logger.info("-----验证success---");
         try {
@@ -146,15 +146,23 @@ public class LoginController {
             String data = loginService.unBind(openId);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100,"解绑定失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
     @ApiOperation("获取验证码")
     @GetMapping("/getCode")
     public ResponseEntity<?> getCode(String telNum, HttpServletRequest request) {
-        String status = loginService.getCheckCode(telNum);
-        return ResponseEntity.buildSuccess(status);
+        try {
+            String status = loginService.getCheckCode(telNum);
+            return ResponseEntity.buildSuccess(status);
+        } catch (Exception e) {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
     }
-
 }

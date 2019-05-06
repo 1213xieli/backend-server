@@ -19,37 +19,42 @@ public class MyInfo {
     private String cfwinternum;
     //@JsonProperty("fname")
     @ApiModelProperty("姓名")
-    private String name;
+    private String fname;
     //@JsonProperty("ftelno")
     @ApiModelProperty("手机号")
-    private String telNum;
+    private String ftelno;
     //@JsonProperty(value = "cfpigpen")
     @ApiModelProperty("猪舍地址")
-    private String piggeryAddress;
+    private String cfpigpen;
     //@JsonProperty(value = "fkhsj")
     @ApiModelProperty("开户时间")
-    private String registerDate;
+    private String fkhsj;
     //@JsonProperty(value = "servicedep")
     @ApiModelProperty("所属服务部")
-    private String dept;
+    private String servicedep;
     //@JsonProperty(value = "manager")
     @ApiModelProperty("管理员")
     private String manager;
     //@JsonProperty(value = "fcell")
     @ApiModelProperty("管理员电话")
-    private String managerTelNum;
+    private String fcell;
     //@JsonProperty(value = "cfraisestate")
     @ApiModelProperty("饲养状态")
-    private String status;
-    //@JsonProperty("growUp")
+    private String cfraisestateText;
+    //@JsonProperty("cflevel")
     @ApiModelProperty("我的星级")
-    private String growUp;
+    private String cflevel;
     //@JsonProperty("entrustedName")
     @ApiModelProperty("被委托人姓名")
-    private String entrustedName;
+    private String entrustName;
     //@JsonProperty("entrustedIdentity")
     @ApiModelProperty("被委托人身份证号")
-    private String entrustedIdentity;
+    private String entrustIdcard;
+    @ApiModelProperty("委托人电话")
+    private String entrustPhone;
+
+   /*@ApiModelProperty("被委托信息")
+   private Entruster entruster;*/
 
 
 
