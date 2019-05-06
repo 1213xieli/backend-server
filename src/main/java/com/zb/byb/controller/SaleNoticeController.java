@@ -1,7 +1,13 @@
 package com.zb.byb.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DeathApply;
+import com.zb.byb.entity.FeedRecord;
+import com.zb.byb.entity.SaleNotice;
 import com.zb.byb.service.SaleNoticeService;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +26,37 @@ import java.util.List;
 public class SaleNoticeController {
     @Autowired
     private SaleNoticeService saleNoticeService;
-    @ApiOperation("销售通知")
-    @GetMapping("/list")
-    public ResponseEntity<?> unbind(HttpServletRequest request){
+
+    @ApiOperation("销售列表")
+    @GetMapping("/viewSale")
+    public ResponseEntity<?> viewSale(HttpServletRequest request) {
         try {
-            //
-            String data = saleNoticeService.getSaleNotice((String) request.getSession().getAttribute("userId"));
-            return ResponseEntity.buildSuccess(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100,"失败");
+//            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = "Va4AAABL9PPMns7U";
+            List<SaleNotice> list = saleNoticeService.getSaleRecordList(custId);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
+        }
+        catch (Exception e)
+        {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
+    @ApiOperation("通过id查询销售通知")
+    @GetMapping("/querySale")
+    public ResponseEntity<?> querySale(String id) {
+        try {
+            return ResponseEntity.buildSuccess(saleNoticeService.getQuerySale(id));
+        }
+        catch (Exception e)
+        {
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 }

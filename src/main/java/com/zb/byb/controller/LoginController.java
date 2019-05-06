@@ -55,7 +55,8 @@ public class LoginController {
         //获取openId,并存入session
         String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
         if (C.checkNullOrEmpty(openId))
-            openId="123456789";//为测试方便，先写死openId*/
+//            openId="123456789";//为测试方便，先写死openId*/
+        openId = "oNwsZuKKiWmFOTufWZEgKHVlBFsQ";
         session.setAttribute("openId",openId);
 
         try {
