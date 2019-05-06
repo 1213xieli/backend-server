@@ -2,9 +2,12 @@ package com.zb.byb.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DealDetail;
 import com.zb.byb.entity.YuE;
 import com.zb.byb.service.YuEService;
+import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
@@ -44,9 +47,10 @@ public class YuEQueryController {
             resp.setData(yuE1);
             return resp;
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100,"查询不到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
-
     }
 }

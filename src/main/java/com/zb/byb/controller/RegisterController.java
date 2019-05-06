@@ -51,8 +51,10 @@ public class RegisterController {
             System.out.println("data="+backData);
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "开户失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
 
     }
@@ -60,22 +62,36 @@ public class RegisterController {
 
     @ApiOperation("介绍人获取")
     @GetMapping("/getInstroduce")
-    public ResponseEntity<List<Introducer>> getInstroduce(Introducer introducer){
-
+    public ResponseEntity<List<Introducer>> getInstroduce(String name){
+        Introducer introducer=new Introducer();
+        introducer.setName(name);
         try {
             List<Introducer> list=loginService.getIntroducer(introducer);
             for (int i=0;i<list.size();i++){
-                list.get(i);
+                String idno=list.get(i).getIdno();
+                list.get(i).setIdno(subIdno(idno));
             }
-            ResponseEntity<List<Introducer>>  ent=new ResponseEntity<>();
-            ent.setData(list);
-            return ent;
+            return ResponseEntity.buildSuccess(list);
         }catch (Exception e){
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
+    }
+
+    /**
+     * 截取身份证号码
+     * @return
+     */
+    private String subIdno(String idno){
+        String idnoShow="";
+        if(idno.trim().length()==18){
+            idnoShow=idno.substring(1,5)+"***"+idno.substring(12,18);
+        }else {
+            idnoShow =idno.substring(1,5)+"***"+idno.substring(9,15);
+        }
+        return idnoShow;
     }
 
     @ApiOperation("获取服务部列表")

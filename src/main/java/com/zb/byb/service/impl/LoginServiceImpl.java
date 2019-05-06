@@ -72,9 +72,13 @@ public class LoginServiceImpl implements LoginService {
             ResponseEntity<String> r = template.exchange(url, HttpMethod.GET, requestEntity, String.class);
             //<200,{"status":401,"message":[{"code":"401","message":"用户今天获取验证码超过5次！"}],"data":null,"date":1556191674470},{Server=[nginx/1.9.9], Date=[Thu, 25 Apr 2019 11:27:54 GMT], Content-Type=[application/json;charset=UTF-8], Transfer-Encoding=[chunked], Connection=[keep-alive], Vary=[Accept-Encoding]}>
             //<200,{"status":200,"message":null,"data":"4247","date":1556192780776},{Server=[nginx/1.9.9], Date=[Thu, 25 Apr 2019 11:46:21 GMT], Content-Type=[application/json;charset=UTF-8], Transfer-Encoding=[chunked], Connection=[keep-alive], Vary=[Accept-Encoding]}>
+            String body = r.getBody();
+            if(200!=JSONObject.fromObject(body).getInt("status") ){
+                throw new Exception("获取验证码失败："+JSONObject.fromObject(body).getString("message"));
+            }
             return "ok";
         } catch (Exception e1){
-            return "no";
+            return "noo";
         }
     }
 

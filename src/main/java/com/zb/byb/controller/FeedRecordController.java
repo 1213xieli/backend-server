@@ -2,6 +2,7 @@ package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
+import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.FeedRecord;
 
@@ -35,8 +36,10 @@ public class FeedRecordController {
         try {
             return ResponseEntity.buildSuccess(feedRecordService.addFeedRecord(feedRecord,userId));
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "无法保存数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
     @ApiOperation("获取饲料列表")
@@ -49,8 +52,10 @@ public class FeedRecordController {
         try {
             return ResponseEntity.buildSuccess(feedRecordService.pigwashList(batchId));
         } catch (Exception e) {
-            e.printStackTrace();
-           return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -84,8 +89,10 @@ public class FeedRecordController {
             PageInfo<FeedRecord> info = new PageInfo(list);
             return ResponseEntity.build(100,new Message(),info);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -108,7 +115,10 @@ public class FeedRecordController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -125,7 +135,10 @@ public class FeedRecordController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.build(100, "取消失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 }

@@ -101,8 +101,10 @@ public class MaterialController {
                 return ResponseEntity.build(100, "签名失败");
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "签名失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -116,8 +118,10 @@ public class MaterialController {
             String data=feedApplyService.cancleFeedApply(rcordId);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "签名失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -132,8 +136,10 @@ public class MaterialController {
             List <Driver> driverList= feedApplyService.getDriverList(feedApply,custId);
             return ResponseEntity.buildSuccess(driverList);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "签名失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -147,8 +153,10 @@ public class MaterialController {
             List <LiLiaoInfo> liLiaoInfoList= feedApplyService.getFeedList(feedApply);
             return ResponseEntity.buildSuccess(liLiaoInfoList);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "无法查询到数据");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
@@ -277,8 +285,10 @@ public class MaterialController {
                 return ResponseEntity.build(100, "签名失败");
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.build(100, "签名失败");
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
 
