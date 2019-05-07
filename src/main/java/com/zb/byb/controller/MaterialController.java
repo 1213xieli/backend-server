@@ -1,16 +1,12 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.AccessToken;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.common.WxCache;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
-import com.zb.byb.util.Image2Base64Util;
-import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -19,14 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
-import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStream;
 
 /**
  * 物资申请
