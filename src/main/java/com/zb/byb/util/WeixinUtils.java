@@ -237,7 +237,7 @@ public class WeixinUtils {
 		AccessToken accessToken = WxCache.getInstance().getAccessToken();
 		InputStream is = null;
 		try {
-                String URL_DOWNLOAD_TEMP_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+			String URL_DOWNLOAD_TEMP_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
 			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN", accessToken.getToken()).replace("MEDIA_ID", mediaId);
 			URL urlGet = new URL(url);
 			HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
