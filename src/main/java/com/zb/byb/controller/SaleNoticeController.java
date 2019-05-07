@@ -27,15 +27,11 @@ public class SaleNoticeController {
     @Autowired
     private SaleNoticeService saleNoticeService;
 
-    @ApiOperation("销售列表")
+    @ApiOperation("单个销售详情")
     @GetMapping("/viewSale")
-    public ResponseEntity<?> viewSale(HttpServletRequest request) {
+    public ResponseEntity<?> querySale(String id) {
         try {
-//            String custId = C.parseStr(request.getSession().getAttribute("custId"));
-            String custId = "Va4AAABL9PPMns7U";
-            List<SaleNotice> list = saleNoticeService.getSaleRecordList(custId);
-            PageInfo page = new PageInfo(list);
-            return ResponseEntity.buildSuccess(page);
+            return ResponseEntity.buildSuccess(saleNoticeService.getQuerySale(id));
         }
         catch (Exception e)
         {
@@ -45,14 +41,16 @@ public class SaleNoticeController {
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
-    @ApiOperation("通过id查询销售通知")
+    @ApiOperation("查询销售列表")
     @GetMapping("/querySale")
-    public ResponseEntity<?> querySale(String id) {
+    public ResponseEntity<?> viewSale(HttpServletRequest request) {
         try {
-            return ResponseEntity.buildSuccess(saleNoticeService.getQuerySale(id));
-        }
-        catch (Exception e)
-        {
+//            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = "Va4AAABL9PPMns7U";
+            List<SaleNotice> list = saleNoticeService.getSaleRecordList(custId);
+            PageInfo page = new PageInfo(list);
+            return ResponseEntity.buildSuccess(page);
+        } catch (Exception e) {
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
