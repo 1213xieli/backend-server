@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class ActFileEntry {
     private String img;
+    private String voice;
 }

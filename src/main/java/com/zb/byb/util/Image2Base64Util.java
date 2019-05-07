@@ -2,6 +2,7 @@ package com.zb.byb.util;
 
 
 import com.zb.byb.common.C;
+import com.zb.byb.entity.FileEntry;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.*;

@@ -1,12 +1,16 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zb.byb.common.AccessToken;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.common.WxCache;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
+import com.zb.byb.util.Image2Base64Util;
+import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -15,9 +19,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStream;
 
 /**
  * 物资申请
@@ -169,7 +178,7 @@ public class MaterialController {
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
     public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply,String mediaId) {
-        String base64FromInputStream = getInputStream(mediaId);
+        String base64FromInputStream = WeixinUtils.getInputStream(mediaId);
         FileEntry fileEntry=new FileEntry();
         fileEntry.setImgContent(base64FromInputStream);
         fileEntry.setImgType(".amr");
@@ -472,9 +481,10 @@ public class MaterialController {
 
     @ApiOperation("设备领用签名")
     @PostMapping("/signerEquipApply")
-    public ResponseEntity<?> signerEquipApply(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request,HttpServletResponse response){
+    public ResponseEntity<?> signerEquipApply(String rcordId, @RequestBody FileEntry fileEntry,
+                                              HttpServletRequest request, HttpServletResponse response){
         String userId=(String) request.getSession().getAttribute("userId");
-        fileEntry=Image2Base64Util.subBase64(fileEntry);
+        fileEntry= Image2Base64Util.subBase64(fileEntry);
          EquipmentApply equipmentApply=new EquipmentApply();
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);//存入实体
