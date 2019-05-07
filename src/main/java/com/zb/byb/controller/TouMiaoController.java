@@ -7,6 +7,7 @@ import com.zb.byb.entity.FileEntry;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.TouMiaoService;
 import com.zb.byb.util.BaseController;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -105,14 +107,18 @@ public class TouMiaoController extends BaseController {
     }
 
     @ApiOperation("投苗签名")
-    @GetMapping("/signerTouMiao")
+    @PostMapping("/signerTouMiao")
     @ResponseBody
-    public ResponseEntity<TouMiao> signerTouMiao(List<FileEntry> fileEntry,String rcordId,HttpServletRequest request)
+    public ResponseEntity<TouMiao> signerTouMiao(@RequestBody FileEntry fileEntry,String rcordId,HttpServletRequest request)
     {
         String userId=(String)request.getSession().getAttribute("userId");
+        //处理投苗签名base64
+        fileEntry= Image2Base64Util.subBase64(fileEntry);
+        List<FileEntry> signerList=new ArrayList<>();
+        signerList.add(fileEntry);
         TouMiao touMiao =new TouMiao();
         touMiao.setRcordId(rcordId);
-        touMiao.setPigpenInside(fileEntry);
+        touMiao.setSignerList(signerList);
         try{
             if (C.checkNullOrEmpty(userId))
                 throw new Exception("未登入");

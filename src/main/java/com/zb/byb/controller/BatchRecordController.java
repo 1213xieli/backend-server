@@ -54,6 +54,7 @@ public class BatchRecordController {
             resp.setData(batchRecord1);
             return resp;
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -76,6 +77,7 @@ public class BatchRecordController {
             resp.setData(list);
             return resp;
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());

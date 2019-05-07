@@ -9,6 +9,7 @@ import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.DeathApplyService;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
@@ -50,6 +51,7 @@ public class DeathApplyController {
             String backData= deathApplyService.deathApply(deathApply,userId);
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -73,6 +75,7 @@ public class DeathApplyController {
             return ResponseEntity.buildSuccess(info);
             //return ResponseEntity.buildSuccess(batchRecordService.viewBatchRecord(batchId,openId));
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -91,6 +94,7 @@ public class DeathApplyController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -109,6 +113,7 @@ public class DeathApplyController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -117,12 +122,12 @@ public class DeathApplyController {
     }
 
     @ApiOperation("死亡签名")
-    @GetMapping("/singer")
-    public ResponseEntity<DeathApply> singer(String rcordId, FileEntry fileEntry)
+    @PostMapping("/singer")
+    public ResponseEntity<DeathApply> singer(String rcordId, @RequestBody FileEntry fileEntry)
     {
+        fileEntry= Image2Base64Util.subBase64(fileEntry);
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);
-
         DeathApply deathApply=new DeathApply();
         deathApply.setRcordId(rcordId);
         deathApply.setSignerList(signerList);
@@ -136,6 +141,7 @@ public class DeathApplyController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());

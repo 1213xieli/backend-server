@@ -67,7 +67,7 @@ public interface EquipmentApplyService {
      * @return
      * @throws Exception
      */
-    List<Equipment> searchEquipment(String keyword)throws Exception;
+    List<Equipment> searchEquipment(String keyword,String custId)throws Exception;
 
     String signerEquipApply(EquipmentApply equipmentApply) throws Exception;
 

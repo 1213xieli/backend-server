@@ -7,6 +7,7 @@ import com.zb.byb.entity.BalanceRecord;
 
 import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.BalanceService;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,6 +34,7 @@ public class BalanceRecordController {
             Balance balance=balanceService.initInfoByBatchId(batchId,userId);
             return ResponseEntity.buildSuccess(balance);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -48,6 +51,7 @@ public class BalanceRecordController {
             String id=balanceService.balanceApply(balance,userId);
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -70,6 +74,7 @@ public class BalanceRecordController {
             List<BalanceRecord> list=balanceService.getBalanceRecord(balanceRecord,userId);
             return ResponseEntity.buildSuccess(list);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -86,6 +91,7 @@ public class BalanceRecordController {
             BalanceRecord balanceRecord=balanceService.viewBalanceRecord(batchId,rcordId);
             return ResponseEntity.buildSuccess(balanceRecord);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -103,6 +109,7 @@ public class BalanceRecordController {
             String id=balanceService.cancelApply(rcordId);
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -112,17 +119,21 @@ public class BalanceRecordController {
     }
 
     @ApiOperation("签名提交")
-    @GetMapping("/signer")
-    public ResponseEntity<List<BalanceRecord>> signer(String rcordId,FileEntry fileEntry, HttpServletRequest request){
+    @PostMapping("/signer")
+    public ResponseEntity<List<BalanceRecord>> signer(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
+        fileEntry= Image2Base64Util.subBase64(fileEntry);
+        List<FileEntry> signerList=new ArrayList<>();
+        signerList.add(fileEntry);
         BalanceRecord balanceRecord=new BalanceRecord();
-        balanceRecord.setFileEntry(fileEntry);
+        balanceRecord.setFileEntry(signerList);
         balanceRecord.setRcordId(rcordId);
         //userId="Va4AAABJzw/Mns7U";
         try {
             String id=balanceService.singer(balanceRecord );
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());

@@ -71,8 +71,10 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
     public EquipmentApply queryListInitData(String custId) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("custId", custId);
+
         map.put("source", Commonconst.WX_Flag);
         EquipmentApply info = new EquipmentApply();
+        info.setCustId(custId);
         map.put("data", info);
 
         // 要传入数据进行转化
@@ -116,6 +118,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
         System.out.println("设备查询view方法----" + jsonData);
        // {"code":"0000","data":{"actEntrys":[],"billStatus":"审核","billStatusIndex":"30","bizDate":"2019-04-28","custId":"Va4AAACPobTMns7U","custName":"陈帮平","entrys":[{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","model":"臭氧消毒机","price":836,"qty":1,"unit":"台"},{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","price":836,"qty":1}],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAieujeZvJQc","serviceId":"Va4AAAAbxwL4nGYi","serviceName":"弋阳服务部","signerImgs":[{"img":"http://10.88.1.10:8080/share.cgi/201904291447053050zengneng_20190429144705726.base64?ssid=03x0LOR&fid=03x0LOR&path=%2F99BC941C%2F20190429&filename=201904291447053050zengneng_20190429144705726.base64&openfolder=normal&ep="}],"state":2},"msg":"查询成功!"}
+        //设备查询view方法----{"code":"0000","data":{"actEntrys":[],"billStatus":"保存","billStatusIndex":"10","bizDate":"2019-05-07","custId":"Va4AAAO6drnMns7U","custName":"胡亿龙","entrys":[],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAiiofiZvJQc","serviceId":"Va4AAAAZJeX4nGYi","serviceName":"洋河服务部","signerUrl":[{"img":"http://10.88.1.10:8080/share.cgi/201905071859250210zengnengSIGNER_20190507185925489.jpg?ssid=03x0LOR&fid=03x0LOR&path=%2F99BC941C%2F20190506&filename=201905071859250210zengnengSIGNER_20190507185925489.jpg&openfolder=normal&ep="}],"state":2},"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
     }
 
@@ -135,10 +138,11 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
     }
 
     @Override
-    public List<Equipment> searchEquipment(String keyword) throws Exception {
+    public List<Equipment> searchEquipment(String keyword,String custId) throws Exception {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> param = new HashMap<>();
         param.put("keyword",keyword);
+        param.put("custId",custId);
         map.put("source", Commonconst.WX_Flag);
         map.put("data", param);
         // 要传入数据进行转化

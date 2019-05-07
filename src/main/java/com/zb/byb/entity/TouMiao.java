@@ -78,7 +78,11 @@ public class TouMiao {
 
     @ApiModelProperty("图片")
     private List<FileEntry> pigpenInside;
-
+    @ApiModelProperty("签名图片")
+    private List<FileEntry> signerList;
+    @ApiModelProperty("签名图片路径")
+    private List<ActFileEntry> signerUrl;
+    private Boolean isSigner ;//是否已签名
     //待审核
     public final static int STATUS_KEEP = 1;
     //表示已审核（30审核）

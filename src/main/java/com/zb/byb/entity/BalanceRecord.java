@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -32,8 +34,8 @@ public class BalanceRecord {
     private BalanceDetail balanceDetail;
     @ApiModelProperty("状态")
     private String state;
-    //文件
-    private FileEntry fileEntry;
+    //签名
+    private List<FileEntry> fileEntry;
     @ApiModelProperty(value = "开始时间")
     private String starttime;
     @ApiModelProperty(value = "结束时间")
@@ -48,5 +50,13 @@ public class BalanceRecord {
     public Integer pageSize = 10;
     @ApiModelProperty("单据编号")
     private String number;//
+    @ApiModelProperty("签名图片")
+    private List<FileEntry> signerList;
+    @ApiModelProperty("是否已签名")
+    private Boolean isSigner;
+
+    @ApiModelProperty("签名图片路径")
+    private List<ActFileEntry> signerUrl;
+
 
 }
