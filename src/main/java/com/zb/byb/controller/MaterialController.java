@@ -7,7 +7,6 @@ import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
-import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -16,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -171,7 +168,14 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
-    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply) {
+    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply,String mediaId) {
+        String base64FromInputStream = getInputStream(mediaId);
+        FileEntry fileEntry=new FileEntry();
+        fileEntry.setImgContent(base64FromInputStream);
+        fileEntry.setImgType(".amr");
+        List<FileEntry> list=new ArrayList<>();
+        list.add(fileEntry);
+        drugApply.setWxRecordList(list);
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             drugApply.setCustId(custId);

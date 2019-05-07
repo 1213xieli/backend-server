@@ -1,16 +1,16 @@
 package com.zb.byb.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.zb.byb.common.*;
 import com.zb.byb.util.SignUtils;
-import com.zb.framework.common.entity.Message;
-import com.zb.framework.common.entity.ResponseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -121,5 +121,6 @@ public class WxController {
         }
         return "";
     }
+
 
 }
