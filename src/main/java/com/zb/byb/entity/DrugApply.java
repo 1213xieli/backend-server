@@ -58,6 +58,12 @@ public class DrugApply {
     private List<FileEntry> signerList;
     @ApiModelProperty("记录状态")
     private String state;
+    @ApiModelProperty(value = "开始时间")
+    private String starttime;
+    @ApiModelProperty(value = "结束时间")
+    private String endtime;
+    @ApiModelProperty(value = "状态")
+    private String billStatus;
 
     //待审核
     public final static int STATUS_KEEP = 1;

@@ -28,11 +28,10 @@ public class DrugApplyServiceImpl implements DrugApplyService {
 
     @Override
     public String saveInfo(DrugApply info) throws Exception {
-        if (info == null || info.getEntrys().size() <= 0)
+        if (info == null)
         {
-            throw new Exception("无法保存");
+            throw new Exception("药品未选择");
         }
-
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
@@ -47,7 +46,6 @@ public class DrugApplyServiceImpl implements DrugApplyService {
     public List<MaterialInfo> queryMaterialListByFuzzyKey(MaterialInfo queryInfo) throws Exception {
         if (C.checkNullOrEmpty(queryInfo.getBatchId()) || C.checkNullOrEmpty(queryInfo.getCustId()))
             throw  new Exception("未传入数据!");
-
         Map<String, Object> map = new HashMap<>();
         map.put("custId", queryInfo.getCustId());
         map.put("source", Commonconst.WX_Flag);
