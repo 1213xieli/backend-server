@@ -178,7 +178,7 @@ public class MaterialController {
         fileEntry.setImgType(".amr");
         List<FileEntry> list=new ArrayList<>();
         list.add(fileEntry);
-        drugApply.setWxRecordList(list);
+        drugApply.setVoiceList(list);
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             drugApply.setCustId(custId);

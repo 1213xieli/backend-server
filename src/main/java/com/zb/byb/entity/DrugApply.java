@@ -56,7 +56,7 @@ public class DrugApply {
     private List<FileEntry> signerList;
 
     @ApiModelProperty("微信录音")
-    private List<FileEntry> wxRecordList;
+    private List<FileEntry> voiceList;
     @ApiModelProperty("微信录音路径")
     private List<ActFileEntry> voiceUrl;
 
