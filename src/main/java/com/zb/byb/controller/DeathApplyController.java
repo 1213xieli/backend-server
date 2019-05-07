@@ -9,6 +9,7 @@ import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.DeathApplyService;
+import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -32,9 +33,16 @@ public class DeathApplyController {
     private DeathApplyService deathApplyService;
     @ApiOperation("保存死亡申报")
     @PostMapping("/save")
-    public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) {
+    public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request,String mediaId) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
+        String base64FromInputStream = WeixinUtils.getInputStream(mediaId);
+        FileEntry fileEntry=new FileEntry();
+        fileEntry.setImgContent(base64FromInputStream);
+        fileEntry.setImgType(".jpg");
+        List<FileEntry> list=new ArrayList<>();
+        list.add(fileEntry);
+        deathApply.setImgUrl(list);
         try {
             if(C.checkNullOrEmpty(userId)){
                 throw new Exception("未传人养户id");
