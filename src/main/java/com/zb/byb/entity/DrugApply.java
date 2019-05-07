@@ -56,6 +56,10 @@ public class DrugApply {
     private String number;
     @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
+    @ApiModelProperty("微信录音")
+    private List<FileEntry> wxRecordList;
+//    @ApiModelProperty("信录音路径")
+//    private List<> voiceUrl;
     @ApiModelProperty("记录状态")
     private String state;
     @ApiModelProperty(value = "开始时间")

@@ -70,4 +70,5 @@ public interface EquipmentApplyService {
     List<Equipment> searchEquipment(String keyword)throws Exception;
 
     String signerEquipApply(EquipmentApply equipmentApply) throws Exception;
+
 }

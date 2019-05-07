@@ -1,8 +1,10 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zb.byb.common.AccessToken;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.common.WxCache;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
@@ -15,9 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStream;
 
 /**
  * 物资申请
@@ -168,7 +175,14 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
-    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply) {
+    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply,String mediaId) {
+        String base64FromInputStream = getInputStream(mediaId);
+        FileEntry fileEntry=new FileEntry();
+        fileEntry.setImgContent(base64FromInputStream);
+        fileEntry.setImgType(".amr");
+        List<FileEntry> list=new ArrayList<>();
+        list.add(fileEntry);
+        drugApply.setWxRecordList(list);
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             drugApply.setCustId(custId);
@@ -484,4 +498,30 @@ public class MaterialController {
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
+        //去腾讯下载音频
+        public static String getInputStream(String mediaId) {
+            AccessToken accessToken = WxCache.getInstance().getAccessToken();
+            InputStream is = null;
+            try {
+                String URL_DOWNLOAD_TEMP_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+                String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN", accessToken.getToken()).replace("MEDIA_ID", mediaId);
+                URL urlGet = new URL(url);
+                HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
+                http.setRequestMethod("GET"); // 必须是get方式请求
+                http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                http.setDoOutput(true);
+                http.setDoInput(true);
+                System.setProperty("sun.net.client.defaultConnectTimeout", "30000");// 连接超时30秒
+                System.setProperty("sun.net.client.defaultReadTimeout", "30000"); // 读取超时30秒
+                http.connect();
+                // 获取文件转化为byte流
+                is = http.getInputStream();
+                String base64FromInputStream = getBase64FromInputStream(is);
+                System.out.println(base64FromInputStream);
+                return base64FromInputStream;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 }

@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
+import java.util.spi.LocaleServiceProvider;
 
 @Data
 @ApiModel("设备领用申请")
@@ -63,5 +64,4 @@ public class EquipmentApply {
     private List<FileEntry> signerList;
     @ApiModelProperty("签名图片路径")
     private List<FileEntry> imgsUrl;
-
 }
