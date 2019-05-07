@@ -3,10 +3,7 @@ package com.zb.byb.util;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zb.byb.common.AccessToken;
-import com.zb.byb.common.Menu;
-import com.zb.byb.common.MyX509TrustManager;
-import com.zb.byb.common.Ticket;
+import com.zb.byb.common.*;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -14,7 +11,10 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import java.io.*;
 import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.URL;
+
+import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStream;
 
 /**
  * 公众平台通用接口工具类
@@ -226,5 +226,36 @@ public class WeixinUtils {
 			}
 		}
 		return userId;
+	}
+	/**
+	 * @Function:
+	 * @Author: shaoys
+	 * @Date: Created in 15:07 2019/5/7
+	 **/
+	//去腾讯下载音频
+	public static String getInputStream(String mediaId) {
+		AccessToken accessToken = WxCache.getInstance().getAccessToken();
+		InputStream is = null;
+		try {
+			String URL_DOWNLOAD_TEMP_MEDIA = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
+			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN", accessToken.getToken()).replace("MEDIA_ID", mediaId);
+			URL urlGet = new URL(url);
+			HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
+			http.setRequestMethod("GET"); // 必须是get方式请求
+			http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			http.setDoOutput(true);
+			http.setDoInput(true);
+			System.setProperty("sun.net.client.defaultConnectTimeout", "30000");// 连接超时30秒
+			System.setProperty("sun.net.client.defaultReadTimeout", "30000"); // 读取超时30秒
+			http.connect();
+			// 获取文件转化为byte流
+			is = http.getInputStream();
+			String base64FromInputStream = getBase64FromInputStream(is);
+			System.out.println(base64FromInputStream);
+			return base64FromInputStream;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

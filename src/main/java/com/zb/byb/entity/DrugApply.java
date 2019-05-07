@@ -36,8 +36,6 @@ public class DrugApply {
     @ApiModelProperty("状态")
     private int billStatusIndex = STATUS_KEEP;//1：表示待审核（10保存，20提交）  2：表示已审核（30审核）
 
-    @ApiModelProperty("语言说话")
-    private String voice;
     @ApiModelProperty("是否委托他人领取")
     private Boolean isEntrust;
     @ApiModelProperty("被委托人姓名")
@@ -56,10 +54,12 @@ public class DrugApply {
     private String number;
     @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
+
     @ApiModelProperty("微信录音")
-    private List<FileEntry> wxRecordList;
-//    @ApiModelProperty("信录音路径")
-//    private List<> voiceUrl;
+    private List<FileEntry> voiceList;
+    @ApiModelProperty("微信录音路径")
+    private List<ActFileEntry> voiceUrl;
+
     @ApiModelProperty("记录状态")
     private String state;
     @ApiModelProperty(value = "开始时间")
