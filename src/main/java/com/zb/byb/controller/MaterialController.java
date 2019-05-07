@@ -334,7 +334,7 @@ public class MaterialController {
      */
     @ApiOperation("保存设备申请")
     @PostMapping("/saveEquipmentApply")
-    public ResponseEntity<?> saveEquipmentApply(HttpServletRequest request, EquipmentApply equipmentApply) {
+    public ResponseEntity<?> saveEquipmentApply(HttpServletRequest request, @RequestBody EquipmentApply equipmentApply) {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             equipmentApply.setCustId(custId);

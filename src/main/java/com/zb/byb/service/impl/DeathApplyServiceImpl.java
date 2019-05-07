@@ -25,6 +25,7 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_YZRHDEATH);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonStr);
+        //{"code":"0000","data":{"actEntrys":[],"applydate":"2019-05-07","batchId":"vZksPXqEQaeWlNnOX/o5V1Kx0pw=","batchName":"胡亿龙002","billStatus":"保存","billStatusIndex":"10","curcnt":"0","curday":"0","custid":"Va4AAAO6drnMns7U","number":"SLSQ1905070009","pickDetail":[{"bclybs":3,"id":"Va4AAAiivUcOXrKS","kg":120,"quotadiff":480,"quotarecevenum":600,"sumreceve":0}],"pigfarmerCode":"YHDA180717001","plandate":"2019-05-11","rcordId":"Va4AAAiivUbq+f3A","signerUrl":[],"state":1,"type":0},"msg":"查询成功!"}
     }
 
     @Override

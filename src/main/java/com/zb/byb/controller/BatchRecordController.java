@@ -63,7 +63,7 @@ public class BatchRecordController {
     }
     @ApiOperation("获取批次列表下拉框")
     @GetMapping("/batchListList")
-    public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){
+    public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){//
         String userId=(String) request.getSession().getAttribute("userId");
         //userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
         System.out.println("=="+userId);

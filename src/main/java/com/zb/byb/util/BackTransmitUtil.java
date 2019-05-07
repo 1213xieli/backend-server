@@ -33,7 +33,7 @@ public class BackTransmitUtil {
         //设置头部
         soap.setHeader(new SOAPHeaderElement("http://login.webservice.bos.kingdee.com", "SessionId", ""));
         //获取sessionId
-        WSContext ctx = soap.login("zengneng", "", "eas", "CS1116", "l2", 1);
+        WSContext ctx = soap.login("zengneng", "", "eas", Resource.DC_NAME, "l2", 1);
         String sessionId = ctx.getSessionId();
         System.out.println(DateUtil.getCurrentDateFolder());
 
