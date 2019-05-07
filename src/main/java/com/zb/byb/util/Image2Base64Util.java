@@ -2,6 +2,7 @@ package com.zb.byb.util;
 
 
 import com.zb.byb.common.C;
+import com.zb.byb.entity.FileEntry;
 import org.apache.commons.codec.binary.Base64;
 
 import java.io.*;
@@ -73,6 +74,12 @@ public class Image2Base64Util {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static FileEntry subBase64(FileEntry fileEntry){
+        String base64Str=fileEntry.getImgContent().split(",")[1];
+         fileEntry.setImgContent(base64Str);
+         return fileEntry;
     }
 
 }

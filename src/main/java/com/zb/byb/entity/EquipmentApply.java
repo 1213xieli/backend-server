@@ -62,6 +62,7 @@ public class EquipmentApply {
     @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
     @ApiModelProperty("签名图片路径")
-    private List<FileEntry> imgsUrl;
+    private List<ActFileEntry> signerImgs;
+    private Boolean isSigner ;//是否已签名
 
 }

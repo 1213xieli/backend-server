@@ -7,6 +7,7 @@ import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -465,9 +468,10 @@ public class MaterialController {
 
     @ApiOperation("设备领用签名")
     @PostMapping("/signerEquipApply")
-    public ResponseEntity<?> signerEquipApply(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
+    public ResponseEntity<?> signerEquipApply(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request,HttpServletResponse response){
         String userId=(String) request.getSession().getAttribute("userId");
-        EquipmentApply equipmentApply=new EquipmentApply();
+        fileEntry=Image2Base64Util.subBase64(fileEntry);
+         EquipmentApply equipmentApply=new EquipmentApply();
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);//存入实体
         equipmentApply.setSignerList(signerList);
@@ -481,7 +485,7 @@ public class MaterialController {
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
-            return ResponseEntity.build(Commonconst.FailStatus, message);
+            return ResponseEntity.build(Commonconst.FailStatus, message,null);
         }
     }
 }
