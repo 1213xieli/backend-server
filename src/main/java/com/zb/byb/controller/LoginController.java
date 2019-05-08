@@ -69,7 +69,7 @@ public class LoginController {
             JSONObject jsonMap = JSONObject.parseObject(myInfoStr);
 
             String userId = jsonMap.getString("id");
-            userId="Va4AAAVyFHXMns7U";
+            //userId="Va4AAAVyFHXMns7U";//甘建国
             System.out.println("userId="+userId);
 
             if (C.checkNullOrEmpty(userId)){
@@ -96,6 +96,7 @@ public class LoginController {
             }
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode("991");
             message.setMessage(e.getMessage());
@@ -124,6 +125,7 @@ public class LoginController {
             }
             return ResponseEntity.build(100,"不是养户,绑定失败");
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -144,6 +146,7 @@ public class LoginController {
             String data = loginService.unBind(openId);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -157,6 +160,7 @@ public class LoginController {
             String status = loginService.getCheckCode(telNum);
             return ResponseEntity.buildSuccess(status);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
