@@ -47,10 +47,14 @@ public class FeedApply {
     private List<LiLiaoInfo>  actEntrys;
     @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
+    @ApiModelProperty("签名图片路径")
+    private List<ActFileEntry> signerUrl;
+    private Boolean isSigner ;//是否已签名
     @ApiModelProperty("任务状态")
     private String state;
     @ApiModelProperty("单据编号")
     private String number;//
+    private  String dsStatus;//状态
 
 
 }

@@ -19,5 +19,9 @@ public class Batch {
     public int pageNumber = 1;
     @ApiModelProperty("每页大小")
     public int pageSize = 5;
+    @ApiModelProperty("状态")
+    private String status;//10保存，20提交，30审核
+    @ApiModelProperty("传1代表已结算批次,2代表可结算批次，不传表示在养批次")
+    private String flag;//
 
 }

@@ -55,9 +55,11 @@ public class DeathApply {
     @ApiModelProperty("每页大小")
     public Integer pageSize = 10;
     @ApiModelProperty("单据编号")
-    private String number;//
+    private String number;
+    @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
-    @ApiModelProperty("签名url")
-    private String singerUrl;
-    //Va4AAAib24NSz43W
+    @ApiModelProperty("签名图片路径")
+    private List<ActFileEntry> signerUrl;
+    @ApiModelProperty("是否签名")
+    private Boolean isSigner ;
 }

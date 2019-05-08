@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.common.Constants;
-import com.zb.byb.entity.Batch;
-import com.zb.byb.entity.BindInfo;
-import com.zb.byb.entity.ServiceDept;
-import com.zb.byb.entity.UserInfo;
+import com.zb.byb.entity.*;
 import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.service.MyInfoService;
@@ -26,10 +23,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/login")
@@ -74,6 +69,7 @@ public class LoginController {
             JSONObject jsonMap = JSONObject.parseObject(myInfoStr);
 
             String userId = jsonMap.getString("id");
+            userId="Va4AAAVyFHXMns7U";
             System.out.println("userId="+userId);
 
             if (C.checkNullOrEmpty(userId)){
@@ -167,4 +163,19 @@ public class LoginController {
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
     }
+
+    @ApiOperation("判断session 是否存在")
+    @GetMapping("/isSessionAlive")
+    public ResponseEntity<?> isSessionAlive(HttpServletRequest request) {
+        if(request.getSession(false)==null){
+            System.out.println("Session has been invalidated!");
+            return ResponseEntity.build(200,"Session has been invalidated!");
+        }
+        else{
+            System.out.println("Session is active!");
+            return ResponseEntity.build(201, "Session is active!");
+        }
+
+    }
+
 }

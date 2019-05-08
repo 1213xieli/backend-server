@@ -96,6 +96,7 @@ public class MaterialController {
     public ResponseEntity<List<FeedApply>> signer(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
         FeedApply feedApply=new FeedApply() ;
         String userId=(String) request.getSession().getAttribute("userId");
+        fileEntry= Image2Base64Util.subBase64(fileEntry);
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);//存入实体
         feedApply.setSignerList(signerList);
@@ -287,6 +288,7 @@ public class MaterialController {
     public ResponseEntity<?> signerDrugApply(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
         DrugApply drugApply=new DrugApply() ;
         String userId=(String) request.getSession().getAttribute("userId");
+        fileEntry= Image2Base64Util.subBase64(fileEntry);
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);//存入实体
         drugApply.setSignerList(signerList);
@@ -299,6 +301,7 @@ public class MaterialController {
                 return ResponseEntity.build(100, "签名失败");
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -319,6 +322,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -334,7 +338,7 @@ public class MaterialController {
      */
     @ApiOperation("保存设备申请")
     @PostMapping("/saveEquipmentApply")
-    public ResponseEntity<?> saveEquipmentApply(HttpServletRequest request, EquipmentApply equipmentApply) {
+    public ResponseEntity<?> saveEquipmentApply(HttpServletRequest request, @RequestBody EquipmentApply equipmentApply) {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             equipmentApply.setCustId(custId);
@@ -342,6 +346,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -363,6 +368,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -375,7 +381,6 @@ public class MaterialController {
     public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request, EquipmentApply info)
     {
         String custId = C.parseStr(request.getSession().getAttribute("custId"));
-        custId="Va4AAACPobTMns7U";
         try{
             if (C.checkNull(custId))
                 throw new Exception("未传入id");
@@ -386,6 +391,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -409,6 +415,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -429,6 +436,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -448,6 +456,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -464,12 +473,13 @@ public class MaterialController {
         try{
             if (C.checkNull(custId))
                 throw new Exception("未传入id");
-            List<Equipment> list = equipmentApplyService.searchEquipment(keyword);
+            List<Equipment> list = equipmentApplyService.searchEquipment(keyword,custId);
             PageInfo page = new PageInfo(list);
             return ResponseEntity.buildSuccess(page);
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -494,6 +504,7 @@ public class MaterialController {
                 return ResponseEntity.build(100, "签名失败");
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());

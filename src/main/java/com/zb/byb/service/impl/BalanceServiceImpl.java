@@ -82,8 +82,7 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public String singer(BalanceRecord BalanceRecord) throws Exception {
-        if ( C.checkNullOrEmpty(BalanceRecord.getFileEntry().getImgContent()))
-            throw  new Exception("未传入签名图片");
+
         Map<String, Object> map = new HashMap<>();
         //map.put("userId",userId);
         map.put("source",Commonconst.WX_Flag);//微信

@@ -54,6 +54,7 @@ public class checkBillController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());

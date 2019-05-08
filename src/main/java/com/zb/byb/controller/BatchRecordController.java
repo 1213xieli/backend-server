@@ -54,6 +54,7 @@ public class BatchRecordController {
             resp.setData(batchRecord1);
             return resp;
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -62,7 +63,7 @@ public class BatchRecordController {
     }
     @ApiOperation("获取批次列表下拉框")
     @GetMapping("/batchListList")
-    public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){
+    public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){//
         String userId=(String) request.getSession().getAttribute("userId");
         //userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
         System.out.println("=="+userId);
@@ -76,6 +77,7 @@ public class BatchRecordController {
             resp.setData(list);
             return resp;
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
