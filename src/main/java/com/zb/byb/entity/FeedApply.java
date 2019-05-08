@@ -54,6 +54,7 @@ public class FeedApply {
     private String state;
     @ApiModelProperty("单据编号")
     private String number;//
+    private  String dsStatus;//状态
 
 
 }

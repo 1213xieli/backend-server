@@ -57,7 +57,7 @@ public class FeedApplyServiceImpl implements FeedApplyService {
         String data=JSONObject.fromObject(map).toString();
         String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PICKINGAPPLY);
         return JsonPluginsUtil.jsonToBean(jsonBack, FeedApply.class);
-        //{"code":"0000","data":{"actEntrys":[],"applydate":"2019-04-23","batchId":"QOKuwU+4Q5uVQ5msWQNUVEMbbjA=","batchName":"001","billStatus":"保存","billStatusIndex":"10","curcnt":"0","curday":"0","custid":"vKYTT1wJTV+A7XdlVyduYMyeztQ=","number":"SLSQ1904230014","pickDetail":[{"bclybs":49,"id":"Va4AAAic0bkOXrKS","kg":1960}],"pigfarmerCode":"SYLWYH009","plandate":"2019-05-06","rcordId":"Va4AAAic0bjq+f3A","state":1,"type":0},"msg":"查询成功!"}
+        //{"code":"0000","data":{"actEntrys":[],"applydate":"2019-05-08","batchId":"vZksPXqEQaeWlNnOX/o5V1Kx0pw=","batchName":"胡亿龙002","billStatus":"保存","billStatusIndex":"10","curcnt":"0","curday":"0","custid":"Va4AAAO6drnMns7U","number":"SLSQ1905080006","pickDetail":[{"bclybs":3,"feedId":"Va4AAAAJLFP1CZfS","feedName":"代奶粉","id":"Va4AAAijA6MOXrKS","kg":120,"quotadiff":0,"quotarecevenum":3.00,"sumreceve":0.00}],"pigfarmerCode":"YHDA180717001","plandate":"2019-05-16","rcordId":"Va4AAAijA6Lq+f3A","signerUrl":[],"state":1,"type":0},"msg":"查询成功!"}
     }
 
     @Override

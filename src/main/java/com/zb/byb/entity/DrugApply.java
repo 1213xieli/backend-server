@@ -27,8 +27,8 @@ public class DrugApply {
     private String curday;
      @ApiModelProperty("领药申请日期")
     private String applydate;
-     @ApiModelProperty("领药申请原因")
-    private String reason;
+     @ApiModelProperty("领药申请原因/枚举值")
+    private Integer recipientReason;//改动
     @ApiModelProperty("curcnt")
     private String curcnt;
     @ApiModelProperty("备注")
@@ -77,5 +77,7 @@ public class DrugApply {
     public final static int STATUS_KEEP = 1;
     //表示已审核（30审核）
     public final static  int STATUS_APPROVE = 2;
+
+    private  String dsStatus;//状态
 
 }
