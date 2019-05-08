@@ -114,12 +114,11 @@ public class Image2Base64Util {
         return new String(Base64.encodeBase64(data));
     }
     public static String getBase64FromInputStreamImg(InputStream in) {
-        InputStream is = null;
         byte[] bytes = null;
         int i;
         try {
             ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-            while ((i = is.read(bytes)) != -1) {
+            while ((i = in.read(bytes)) != -1) {
                 swapStream.write(bytes, 0, i);
                 System.out.println(swapStream);
             }
