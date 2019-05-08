@@ -48,7 +48,7 @@ public class DeathApplyController {
             if(C.checkNullOrEmpty(userId)){
                 throw new Exception("未传人养户id");
             }
-            String backData= deathApplyService.deathApply(deathApply,"Va4AAAL/iSHMns7U");
+            String backData= deathApplyService.deathApply(deathApply,userId);
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
             e.printStackTrace();
