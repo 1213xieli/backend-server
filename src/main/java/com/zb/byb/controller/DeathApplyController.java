@@ -37,10 +37,10 @@ public class DeathApplyController {
     public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request,String mediaId) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        String base64FromInputStream = WeixinUtils.getInputStreamImg(mediaId);
+        String base64FromInputStream = WeixinUtils.getInputStream(mediaId);
         FileEntry fileEntry = new FileEntry();
         fileEntry.setImgContent(base64FromInputStream);
-        fileEntry.setImgType(".jpg");
+        fileEntry.setImgType("jpg");
         List<FileEntry> list=new ArrayList<>();
         list.add(fileEntry);
         deathApply.setImgUrl(list);

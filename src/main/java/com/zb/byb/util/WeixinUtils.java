@@ -15,8 +15,6 @@ import java.io.*;
 import java.net.*;
 
 import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStream;
-import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStreamImg;
-import static it.sauronsoftware.jave.AudioUtils.amrToMp3;
 
 /**
  * 公众平台通用接口工具类
@@ -239,10 +237,10 @@ public class WeixinUtils {
 		AccessToken accessToken = WxCache.getInstance().getAccessToken();
 		InputStream is = null;
 		try {
-//			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN", accessToken.getToken()).replace("MEDIA_ID", mediaId);
-			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN",
-					"21_-GOZGmnfax2_ENdrqBmMP6cPDirx1Z5skqzhs1S9IhWpCKLAH7E7zAjXkDWGAZtIgJpo6cmrQsQdqcBss6lyfBdqkHW7bFPiScvpp_JE8wqITMY5yMzq4IF4AZEYCKhAIAHLT")
-					.replace("MEDIA_ID", "1237378768e7q8e7r8qwesafdasdfasdfaxss111");
+			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN", accessToken.getToken()).replace("MEDIA_ID", mediaId);
+//			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN",
+//					"21_-GOZGmnfax2_ENdrqBmMP6cPDirx1Z5skqzhs1S9IhWpCKLAH7E7zAjXkDWGAZtIgJpo6cmrQsQdqcBss6lyfBdqkHW7bFPiScvpp_JE8wqITMY5yMzq4IF4AZEYCKhAIAHLT")
+//					.replace("MEDIA_ID", "1237378768e7q8e7r8qwesafdasdfasdfaxss111");
 			URL urlGet = new URL(url);
 			HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
 			http.setRequestMethod("GET"); // 必须是get方式请求
@@ -264,41 +262,6 @@ public class WeixinUtils {
 		}
 		return null;
 	}
-	/**
-	* @Function: 去腾讯下载图片
-	* @Author: shaoys
-	* @Date: Created in 19:19 2019/5/8
-	**/
-	public static String getInputStreamImg(String mediaId) {
-		AccessToken accessToken = WxCache.getInstance().getAccessToken();
-		InputStream is = null;
-		try {
-//			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN", accessToken.getToken()).replace("MEDIA_ID", mediaId);
-			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN",
-					"21_-GOZGmnfax2_ENdrqBmMP6cPDirx1Z5skqzhs1S9IhWpCKLAH7E7zAjXkDWGAZtIgJpo6cmrQsQdqcBss6lyfBdqkHW7bFPiScvpp_JE8wqITMY5yMzq4IF4AZEYCKhAIAHLT")
-					.replace("MEDIA_ID", "1237378768e7q8e7r8qwesafdasdfasdfaxss111");
-			URL urlGet = new URL(url);
-			HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
-			http.setRequestMethod("GET"); // 必须是get方式请求
-			http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			http.setDoOutput(true);
-			http.setDoInput(true);
-			System.setProperty("sun.net.client.defaultConnectTimeout", "30000");// 连接超时30秒
-			System.setProperty("sun.net.client.defaultReadTimeout", "30000"); // 读取超时30秒
-			http.connect();
-			// 获取文件转化为byte流
-			is = http.getInputStream();
-
-			System.out.println(is);
-			String base64FromInputStream = getBase64FromInputStreamImg(is);
-			System.out.println(base64FromInputStream);
-			return base64FromInputStream;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 
 	public static void main(String[] args) throws IOException {
 //		InputStream is = null;
