@@ -118,8 +118,9 @@ public class Image2Base64Util {
         int i;
         try {
             ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-            while ((i = in.read(bytes)) != -1) {
-                swapStream.write(bytes, 0, i);
+            byte[] buff = new byte[100];
+            while ((i = in.read(buff)) != -1) {
+                swapStream.write(buff, 0, i);
                 System.out.println(swapStream);
             }
             bytes = swapStream.toByteArray();
