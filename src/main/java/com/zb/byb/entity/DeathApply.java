@@ -57,5 +57,7 @@ public class DeathApply {
     @ApiModelProperty("单据编号")
     private String number;//
     private List<FileEntry> signerList;
+    @ApiModelProperty("签名url")
+    private String singerUrl;
     //Va4AAAib24NSz43W
 }

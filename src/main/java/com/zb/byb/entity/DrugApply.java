@@ -54,6 +54,8 @@ public class DrugApply {
     private String number;
     @ApiModelProperty("签名图片")
     private List<FileEntry> signerList;
+    @ApiModelProperty("签名Url")
+    private String singerUrl;
 
     @ApiModelProperty("微信录音")
     private List<FileEntry> voiceList;

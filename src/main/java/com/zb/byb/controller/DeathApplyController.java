@@ -36,8 +36,8 @@ public class DeathApplyController {
     public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request,String mediaId) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        String base64FromInputStream = WeixinUtils.getInputStream(mediaId);
-        FileEntry fileEntry=new FileEntry();
+        String base64FromInputStream = WeixinUtils.getInputStreamImg(mediaId);
+        FileEntry fileEntry = new FileEntry();
         fileEntry.setImgContent(base64FromInputStream);
         fileEntry.setImgType(".jpg");
         List<FileEntry> list=new ArrayList<>();
@@ -47,7 +47,7 @@ public class DeathApplyController {
             if(C.checkNullOrEmpty(userId)){
                 throw new Exception("未传人养户id");
             }
-            String backData= deathApplyService.deathApply(deathApply,userId);
+            String backData= deathApplyService.deathApply(deathApply,"Va4AAAL/iSHMns7U");
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
             Message message = new Message();

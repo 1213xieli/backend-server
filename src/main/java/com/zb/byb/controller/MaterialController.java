@@ -13,11 +13,15 @@ import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -171,11 +175,11 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
-    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply,String mediaId) {
+    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply,String mediaId) throws IOException {
         String base64FromInputStream = WeixinUtils.getInputStream(mediaId);
         FileEntry fileEntry=new FileEntry();
         fileEntry.setImgContent(base64FromInputStream);
-        fileEntry.setImgType(".amr");
+        fileEntry.setImgType("mp3");
         List<FileEntry> list=new ArrayList<>();
         list.add(fileEntry);
         drugApply.setVoiceList(list);
@@ -237,8 +241,8 @@ public class MaterialController {
 
     @ApiOperation("领药申请记录列表")
     @GetMapping("/queryDrugApplyRecordList")
-    public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request, DrugApply queryInfo)
-    {
+    public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request, DrugApply queryInfo,HttpServletResponse response) {
+        response.setHeader("Access-Control-Allow-Origin", "*");
         String custId = C.parseStr(request.getSession().getAttribute("custId"));
         try{
             if (C.checkNull(custId))
