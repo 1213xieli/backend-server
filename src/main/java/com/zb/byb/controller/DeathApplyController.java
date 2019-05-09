@@ -36,18 +36,23 @@ public class DeathApplyController {
     private DeathApplyService deathApplyService;
     @ApiOperation("保存死亡申报")
     @PostMapping("/save")
-    public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request,String mediaId) {
+    public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        File file = HttpConnectionUtil.downloadWxImg(mediaId);
-        String path1 = file.getPath();
-        String base64Img = Image2Base64Util.getImgStr(path1);
-        FileEntry fileEntry = new FileEntry();
-        fileEntry.setImgContent(base64Img);
-        fileEntry.setImgType("jpg");
-        List<FileEntry> list=new ArrayList<>();
-        list.add(fileEntry);
-        deathApply.setImgUrl(list);
+        if (deathApply.getServerIds() != null && deathApply.getServerIds().size() > 0 )
+        {
+            List<FileEntry> list=new ArrayList<>();
+            for (String serverId : deathApply.getServerIds()) {
+                File file = HttpConnectionUtil.downloadWxImg(serverId);
+                String path1 = file.getPath();
+                String base64Img = Image2Base64Util.getImgStr(path1);
+                FileEntry fileEntry = new FileEntry();
+                fileEntry.setImgContent(base64Img);
+                fileEntry.setImgType("jpg");
+                list.add(fileEntry);
+            }
+            deathApply.setImgUrl(list);
+        }
         try {
             if(C.checkNullOrEmpty(userId)){
                 throw new Exception("未传人养户id");
