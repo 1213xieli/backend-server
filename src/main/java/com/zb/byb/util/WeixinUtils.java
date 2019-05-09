@@ -263,38 +263,9 @@ public class WeixinUtils {
 		return null;
 	}
 
-	public static void main(String[] args) throws IOException {
-//		InputStream is = null;
-//		String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN",
-//				"21_-GOZGmnfax2_ENdrqBmMP6cPDirx1Z5skqzhs1S9IhWpCKLAH7E7zAjXkDWGAZtIgJpo6cmrQsQdqcBss6lyfBdqkHW7bFPiScvpp_JE8wqITMY5yMzq4IF4AZEYCKhAIAHLT")
-//				.replace("MEDIA_ID", "1237378768e7q8e7r8qwesafdasdfasdfaxss111");
-//		URL urlGet = new URL(url);
-//		HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
-//		http.setRequestMethod("GET"); // 必须是get方式请求
-//		http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-//		http.setDoOutput(true);
-//		http.setDoInput(true);
-//		System.setProperty("sun.net.client.defaultConnectTimeout", "30000");// 连接超时30秒
-//		System.setProperty("sun.net.client.defaultReadTimeout", "30000"); // 读取超时30秒
-//		http.connect();
-//		// 获取文件转化为byte流
-//		is = http.getInputStream();
-//		FileOutputStream outputStream = null;
-//		try {
-//			File file = new File("C:\\Users\\pc2\\Desktop\\3.amr");
-//			file.createNewFile();
-//			byte[] bytes = new byte[1024];
-//			outputStream = new FileOutputStream("C:\\Users\\pc2\\Desktop\\4.amr");
-//			int i;
-//			while ((i = is.read(bytes)) != -1) {
-//				outputStream.write(bytes, 0, i);
-//				System.out.println(outputStream	);
-//			}
-//		}catch (IOException e){
-//			e.printStackTrace();
-//		}finally {
-//			is.close();
-//			outputStream.close();
-//		}
-	}
+//	public static void main(String[] args) {
+//		String accessToken = "21_BC8sW8znnzwzT5furk59tsY5yINpXXmon8RSgEgv02R84HoFCsvfD0hCUwm41acdqz5gyELEfCZxEp2C4muRyBKrCgQMWCsvbzV_w-WtE5rkG6hkfnrCj3VLsvgiH9Ce8vy1hNrZzZE_OEl9FVGcAEARHS";
+//		System.out.println(accessToken);
+//		HttpConnectionUtil.downloadWxFile("G1i5ed0ryKciyuJanEy8iLLyXbJPvrK88ei_S1IAizSDS-B7IUSEcZqSOZOgyNLB",accessToken);
+//	}
 }

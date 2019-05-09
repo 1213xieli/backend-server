@@ -18,15 +18,11 @@ import java.io.*;
 public class Image2Base64Util {
 
     public static void main(String[] args) throws IOException {
-//        String imgFile = "d:\\3.jpg";//待处理的图片
+//        String imgFile = "C:\\Users\\pc2\\Desktop\\2.jpg";//待处理的图片
 //        String imgbese = getImgStr(imgFile);
 //        System.out.println(imgbese.length());
 //        System.out.println(imgbese);
-//        String imgFilePath = "d:\\332.jpg";//新生成的图片
-//        generateImage(imgbese, imgFilePath);
-//        getImageStr("C:\\Users\\pc2\\Desktop\\11.mp3");
-//        String base64Encode = getBase64Encode("Va4AAAijjEB/YF2u");
-
+////
     }
 
     /**
