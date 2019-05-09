@@ -190,18 +190,16 @@ public class MaterialController {
      */
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
-    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply,String mediaId) throws IOException {
-        String userId=(String) request.getSession().getAttribute("userId");
-        File file = HttpConnectionUtil.downloadWxFile(mediaId);
-        String path1 = file.getPath();
-        String base64Amr = Image2Base64Util.getImgStr(path1);
-        FileEntry fileEntry=new FileEntry();
-        fileEntry.setImgContent(base64Amr);
-        fileEntry.setImgType("mp3");
-        List<FileEntry> list=new ArrayList<>();
-        list.add(fileEntry);
-        drugApply.setVoiceList(list);
+    public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply) throws IOException {
         try{
+            File file = HttpConnectionUtil.downloadWxFile(drugApply.getServerId());
+            String base64Amr = Image2Base64Util.getImgStr(file);
+            FileEntry fileEntry=new FileEntry();
+            fileEntry.setImgContent(base64Amr);
+            fileEntry.setImgType("mp3");
+            List<FileEntry> list=new ArrayList<>();
+            list.add(fileEntry);
+            drugApply.setVoiceList(list);
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             drugApply.setCustId(custId);
             return ResponseEntity.buildSuccess(drugApplyService.saveInfo(drugApply));

@@ -1,6 +1,5 @@
 package com.zb.byb.util;
 
-import com.zb.byb.common.AccessToken;
 import com.zb.byb.common.WxCache;
 import it.sauronsoftware.jave.AudioUtils;
 
@@ -9,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
 public class HttpConnectionUtil {
 
 
@@ -31,32 +31,16 @@ public class HttpConnectionUtil {
             httpURLConnection.setRequestProperty("Charset", "UTF-8");
             // 打开到此 URL 引用的资源的通信链接（如果尚未建立这样的连接）。
             httpURLConnection.connect();
-
-            // 文件大小
-            int fileLength = httpURLConnection.getContentLength();
-
-            // 文件名
-            String filePathUrl = httpURLConnection.getURL().getFile();
-            String fileFullName = filePathUrl.substring(filePathUrl.lastIndexOf(File.separatorChar) + 1);
-
-            System.out.println("file length---->" + fileLength);
-
             URLConnection con = url.openConnection();
 
             BufferedInputStream bin = new BufferedInputStream(httpURLConnection.getInputStream());
-
-            String path = File.separatorChar + mediaId + ".amr";
+            String folder = System.getProperty("java.io.tmpdir");
+            String path = folder + File.separatorChar + mediaId + ".amr";
             file = new File(path);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
             }
-            String path2 = File.separator + mediaId + ".mp3";
-            file2 = new File(path2);
-            if (!file2.getParentFile().exists()){
-                file2.getParentFile().mkdirs();
-            }
-            AudioUtils.amrToMp3(file,file2);
-            OutputStream out = new FileOutputStream(file2);
+            OutputStream out = new FileOutputStream(file);
             int size = 0;
             int len = 0;
             byte[] buf = new byte[1024];
@@ -66,6 +50,13 @@ public class HttpConnectionUtil {
             }
             bin.close();
             out.close();
+
+            String path2 = folder + File.separator + mediaId + ".mp3";
+            file2 = new File(path2);
+            if (!file2.getParentFile().exists()) {
+                file2.getParentFile().mkdirs();
+            }
+            AudioUtils.amrToMp3(file, file2);
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -77,6 +68,7 @@ public class HttpConnectionUtil {
         }
 
     }
+
     public static File downloadWxImg(String mediaId) {
         String accessToken = WxCache.getInstance().getAccessToken().getToken();
         String downloadUrl = "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
@@ -96,21 +88,10 @@ public class HttpConnectionUtil {
             httpURLConnection.setRequestProperty("Charset", "UTF-8");
             // 打开到此 URL 引用的资源的通信链接（如果尚未建立这样的连接）。
             httpURLConnection.connect();
-
-            // 文件大小
-            int fileLength = httpURLConnection.getContentLength();
-
-            // 文件名
-            String filePathUrl = httpURLConnection.getURL().getFile();
-            String fileFullName = filePathUrl.substring(filePathUrl.lastIndexOf(File.separatorChar) + 1);
-
-            System.out.println("file length---->" + fileLength);
-
             URLConnection con = url.openConnection();
-
             BufferedInputStream bin = new BufferedInputStream(httpURLConnection.getInputStream());
-
-            String path = File.separatorChar + mediaId + ".jpg";
+            String folder = System.getProperty("java.io.tmpdir");
+            String path = folder + File.separatorChar + mediaId + ".jpg";
             file = new File(path);
             if (!file.getParentFile().exists()) {
                 file.getParentFile().mkdirs();
