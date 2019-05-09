@@ -7,6 +7,7 @@ import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
+import com.zb.byb.util.HttpConnectionUtil;
 import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
@@ -177,9 +178,12 @@ public class MaterialController {
     @ApiOperation("保存领药申请")
     @PostMapping("/saveDrugApply")
     public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply,String mediaId) throws IOException {
-        String base64FromInputStream = WeixinUtils.getInputStream(mediaId);
+        String userId=(String) request.getSession().getAttribute("userId");
+        File file = HttpConnectionUtil.downloadWxFile(mediaId);
+        String path1 = file.getPath();
+        String base64Amr = Image2Base64Util.getImgStr(path1);
         FileEntry fileEntry=new FileEntry();
-        fileEntry.setImgContent(base64FromInputStream);
+        fileEntry.setImgContent(base64Amr);
         fileEntry.setImgType("mp3");
         List<FileEntry> list=new ArrayList<>();
         list.add(fileEntry);

@@ -9,6 +9,7 @@ import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.DeathApplyService;
+import com.zb.byb.util.HttpConnectionUtil;
 import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
@@ -20,6 +21,7 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,9 +39,11 @@ public class DeathApplyController {
     public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request,String mediaId) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-        String base64FromInputStream = WeixinUtils.getInputStream(mediaId);
+        File file = HttpConnectionUtil.downloadWxImg(mediaId);
+        String path1 = file.getPath();
+        String base64Img = Image2Base64Util.getImgStr(path1);
         FileEntry fileEntry = new FileEntry();
-        fileEntry.setImgContent(base64FromInputStream);
+        fileEntry.setImgContent(base64Img);
         fileEntry.setImgType("jpg");
         List<FileEntry> list=new ArrayList<>();
         list.add(fileEntry);
