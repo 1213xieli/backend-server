@@ -4,6 +4,8 @@ package com.zb.byb.util;
 import com.zb.byb.common.C;
 import com.zb.byb.entity.FileEntry;
 import org.apache.commons.codec.binary.Base64;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import java.io.*;
 
@@ -15,7 +17,7 @@ import java.io.*;
  */
 public class Image2Base64Util {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        String imgFile = "d:\\3.jpg";//待处理的图片
 //        String imgbese = getImgStr(imgFile);
 //        System.out.println(imgbese.length());
@@ -23,6 +25,8 @@ public class Image2Base64Util {
 //        String imgFilePath = "d:\\332.jpg";//新生成的图片
 //        generateImage(imgbese, imgFilePath);
 //        getImageStr("C:\\Users\\pc2\\Desktop\\11.mp3");
+//        String base64Encode = getBase64Encode("Va4AAAijjEB/YF2u");
+
     }
 
     /**
@@ -113,4 +117,18 @@ public class Image2Base64Util {
         }
         return new String(Base64.encodeBase64(data));
     }
+
+
+    //字符串加密
+    public static String getBase64Encoder(String str) throws IOException {
+        String encode = new BASE64Encoder().encode(str.getBytes());
+        return encode;
+    }
+
+    //字符串解密
+    public static String getBase64Decoder(String str) throws IOException {
+        String s = new String(new BASE64Decoder().decodeBuffer(str));
+        return s;
+    }
+
 }
