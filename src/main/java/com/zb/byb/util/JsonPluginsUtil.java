@@ -2,6 +2,7 @@ package com.zb.byb.util;
 
 import com.alibaba.fastjson.JSON;
 import com.zb.byb.common.C;
+import com.zb.byb.entity.RcordIdEcode;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -298,8 +299,9 @@ public class JsonPluginsUtil
 ////             bean = (T) com.alibaba.fastjson.JSON.parseObject(obj, beanClass);
 //            list.add(bean);
 //        }
+        List<T> list=JSON.parseArray(obj, beanClass);
 
-        return JSON.parseArray(obj, beanClass);
+        return list;
 
     }
 

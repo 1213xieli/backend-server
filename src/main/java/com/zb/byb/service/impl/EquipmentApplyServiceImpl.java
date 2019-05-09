@@ -2,12 +2,11 @@ package com.zb.byb.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.EntrustInfo;
-import com.zb.byb.entity.Equipment;
-import com.zb.byb.entity.EquipmentApply;
+import com.zb.byb.entity.*;
 import com.zb.byb.entity.EquipmentApply;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
@@ -102,7 +101,13 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
         //{"code":"0000","count":1,"data":[{"billStatus":"审核","billStatusIndex":"30","bizDate":"2019-04-28","custId":"Va4AAACPobTMns7U","custName":"陈帮平","entrys":[{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","model":"臭氧消毒机","price":836,"qty":1,"unit":"台"}],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAieujeZvJQc","serviceId":"Va4AAAAbxwL4nGYi","serviceName":"弋阳服务部","state":1}],"msg":"查询成功!"}
         System.out.println("设备申请，查询query方法----" + jsonData);
-        return JsonPluginsUtil.jsonToBeanList(jsonData, EquipmentApply.class);
+        List<EquipmentApply> equipmentApplies=JsonPluginsUtil.jsonToBeanList(jsonData,EquipmentApply.class);
+        //设备领用rcordid进行base64加密
+        for (int i=0;i<equipmentApplies.size();i++){
+            EquipmentApply equipmentApply=equipmentApplies.get(i);
+            equipmentApply.setRcordId(Image2Base64Util.getBase64Encoder(equipmentApply.getRcordId()));
+        }
+        return equipmentApplies;
     }
 
     @Override

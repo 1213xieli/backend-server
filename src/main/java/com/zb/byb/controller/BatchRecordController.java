@@ -70,6 +70,9 @@ public class BatchRecordController {
         try {
             String str=batchRecordService.getBatchList(userId,batch);
             System.out.println("str="+str);
+            if(!"0000".equals(JSONObject.fromObject(str).getString("code"))){
+                throw new Exception("批次查询失败");
+            }
             String batchIdlist=JSONObject.fromObject(str).getString("data");
             System.out.println("下拉batchIdlist="+batchIdlist);
             List<Batch> list=objectMapper.readValue(batchIdlist,List.class);

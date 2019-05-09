@@ -1,12 +1,10 @@
 package com.zb.byb.service.impl;
 
 import com.zb.byb.common.C;
-import com.zb.byb.entity.DeathApply;
-import com.zb.byb.entity.Driver;
-import com.zb.byb.entity.FeedApply;
-import com.zb.byb.entity.LiLiaoInfo;
+import com.zb.byb.entity.*;
 import com.zb.byb.service.FeedApplyService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONArray;
@@ -43,7 +41,13 @@ public class FeedApplyServiceImpl implements FeedApplyService {
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PICKINGAPPLY);
         System.out.println("领料申请,查询query方法---" + jsonStr);
 
-        return JsonPluginsUtil.jsonTOList(jsonStr, FeedApply.class);
+        List<FeedApply> feedApplies=JsonPluginsUtil.jsonTOList(jsonStr, FeedApply.class);
+        //对领料rcordId进行base64加密
+        for (int i=0;i<feedApplies.size();i++){
+            FeedApply feedApply1=feedApplies.get(i);
+            feedApply1.setRcordId(Image2Base64Util.getBase64Encoder(feedApply1.getRcordId()));
+        }
+        return feedApplies;
     }
 
     @Override

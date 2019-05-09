@@ -2,14 +2,11 @@ package com.zb.byb.service.impl;
 
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.Farmer;
+
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.MyInfoService;
 import com.zb.byb.service.TouMiaoService;
-import com.zb.byb.util.BackTransmitUtil;
-import com.zb.byb.util.DateUtil;
-import com.zb.byb.util.JsonPluginsUtil;
-import com.zb.byb.util.MethodName;
+import com.zb.byb.util.*;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,10 +72,6 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         info.setCustName(custInfoStr.getString("fname"));
         info.setScope(custInfoStr.getString("cfwinternum"));
 
-//        TouMiao info = JsonPluginsUtil.jsonToBean(jsonData, TouMiao.class);
-//        if (info == null)
-//            info = new TouMiao();
-
         return info;
     }
 
@@ -115,7 +108,13 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
 
         System.out.println("投苗记录列表查询Query----" + jsonData);
-        return JsonPluginsUtil.jsonToBeanList(jsonData, TouMiao.class);
+        List<TouMiao> toumiaoList=JsonPluginsUtil.jsonToBeanList(jsonData, TouMiao.class);
+        //对投苗rcordId进行base64加密
+        for (int i=0;i<toumiaoList.size();i++){
+            TouMiao toumiao=toumiaoList.get(i);
+            toumiao.setRcordId(Image2Base64Util.getBase64Encoder(toumiao.getRcordId()));
+        }
+        return toumiaoList;
     }
 
     @Override

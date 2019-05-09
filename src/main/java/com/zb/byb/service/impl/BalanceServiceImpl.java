@@ -5,8 +5,10 @@ import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.Balance;
 import com.zb.byb.entity.BalanceDetail;
 import com.zb.byb.entity.BalanceRecord;
+import com.zb.byb.entity.EquipmentApply;
 import com.zb.byb.service.BalanceService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
@@ -58,7 +60,13 @@ public class BalanceServiceImpl implements BalanceService {
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SETTLEBILL);
         System.out.println("jsonStr="+jsonStr);
         //{"code":"0000","count":28483,"data":[{"avgWeight":13.79,"batchId":"TsVQKmbGg4XgU5oBWApJqFKx0pw=","batchName":"曾广生020","billStatus":"已删除","billStatusIndex":"90","feedsettamount":450068,"listedverWeight":"115.52","material":"保育苗","materialId":"Va4AAAAKl5XqXG71","meatrate":"2.82","payment":8200,"pigamount":279384,"rcordId":"Va4AAAATxu4uefsF","realrate":94.87,"recycleamount":806360.000512,"settamount":57552.5726075492,"state":3,"subsidies":0,"veterdurgsettamt":17234.4779044508},{"avgWeight":10.06,"batchId":"Va4AAAH/EaRSsdKc","batchName":"秦友亮002","billStatus":"已删除","billStatusIndex":"90","feedsettamount":610964,"listedverWeight":"106.81","material":"断奶苗","materialId":"Va4AAAAKl5TqXG71","meatrate":"2.71","payableamount":60945,"payment":0,"pigamount":332040,"rcordId":"Va4AAAV7BzEuefsF","realrate":90.4,"recycleamount":991528.4,"settamount":60945,"state":3,"subsidies":0,"veterdurgsettamt":34747.97}],"msg":"查询成功!"}
-        return JsonPluginsUtil.jsonTOList(jsonStr,BalanceRecord.class);
+        //结算记录rcordid进行base64加密
+        List<BalanceRecord> balanceRecords =JsonPluginsUtil.jsonTOList(jsonStr,BalanceRecord.class);
+        for (int i=0;i<balanceRecords.size();i++){
+            BalanceRecord balanceRecord1=balanceRecords.get(i);
+            balanceRecord1.setRcordId(Image2Base64Util.getBase64Encoder(balanceRecord1.getRcordId()));
+        }
+        return balanceRecords;
     }
 
     @Override

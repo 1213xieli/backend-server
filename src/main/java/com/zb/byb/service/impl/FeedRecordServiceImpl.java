@@ -2,14 +2,12 @@ package com.zb.byb.service.impl;
 
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
 
 import com.zb.byb.entity.Pigwash;
 import com.zb.byb.service.FeedRecordService;
-import com.zb.byb.util.BackTransmitUtil;
-import com.zb.byb.util.JsonPluginsUtil;
-import com.zb.byb.util.MethodName;
-import com.zb.byb.util.Resource;
+import com.zb.byb.util.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -53,6 +51,12 @@ public class FeedRecordServiceImpl implements FeedRecordService {
        // {"code":"0000","data":[{"billState":"保存","billStateIndex":"10","feedDate":"2019-04-19","feedList":[{"batchId":"QOKuwU+4Q5uVQ5msWQNUVEMbbjA=","batchName":"001","columnQty":0,"consumeQty":112,"feedId":"Va4AAAAJLFb1CZfS","feedName":"保育料","id":"Va4AAAib16PHfMLr"}],"rcordId":"Va4AAAib16Kzx1nH","state":1}],"msg":"查询成功!"}
         //List<FeedRecord> list = JSONArray.toList(jsonObject, FeedRecord.class);
         List<FeedRecord> list= com.alibaba.fastjson.JSONArray.parseArray(jsonObject.toString(),FeedRecord.class);
+
+        //对饲喂记录rcordId进行base64加密
+        for (int i=0;i<list.size();i++){
+            FeedRecord feedRecord1=list.get(i);
+            feedRecord1.setRcordId(Image2Base64Util.getBase64Encoder(feedRecord1.getRcordId()));
+        }
         return list;
     }
 

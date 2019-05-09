@@ -1,9 +1,11 @@
 package com.zb.byb.service.impl;
 
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.BalanceRecord;
 import com.zb.byb.entity.SaleNotice;
 import com.zb.byb.service.SaleNoticeService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
@@ -40,7 +42,13 @@ public class SaleNoticeServiceImpl implements SaleNoticeService {
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_QUERY_SALE);
         System.out.println("销售列表，查询列表---" + jsonData);
-        return JsonPluginsUtil.jsonToBeanList(jsonData, SaleNotice.class);
+        //销售通知base64加密
+        List<SaleNotice> saleNotices=JsonPluginsUtil.jsonToBeanList(jsonData, SaleNotice.class);
+        for (int i=0;i<saleNotices.size();i++){
+            SaleNotice saleNotice1=saleNotices.get(i);
+            saleNotice1.setRcordId(Image2Base64Util.getBase64Encoder(saleNotice1.getRcordId()));
+        }
+        return saleNotices;
     }
 
     @Override

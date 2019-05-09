@@ -119,13 +119,19 @@ public class Image2Base64Util {
     }
 
 
-    //字符串加密
+    /**
+     * 字符串加密
+     */
+
     public static String getBase64Encoder(String str) throws IOException {
         String encode = new BASE64Encoder().encode(str.getBytes());
         return encode;
     }
 
-    //字符串解密
+    /**
+     * 字符串解密
+     */
+
     public static String getBase64Decoder(String str) throws IOException {
         String s = new String(new BASE64Decoder().decodeBuffer(str));
         return s;

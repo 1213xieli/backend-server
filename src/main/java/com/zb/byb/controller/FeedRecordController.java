@@ -75,11 +75,11 @@ public class FeedRecordController {
         }
         try {
             if (C.checkNull(custId)){
-                return ResponseEntity.build(100, "无养户id");
+                throw new Exception("无养户id");
             }
             List<FeedRecord> list = feedRecordService.queryFeedRecordList(custId,feedRecord);
             if(list==null || list.size()==0) {
-                return ResponseEntity.build(100, "无记录");
+                return ResponseEntity.build(200, "无记录");
             }
             for(int i=0;i<list.size();i++){
                 list.get(i).setBatchId(list.get(i).getFeedList().get(0).getBatchId());
@@ -87,8 +87,9 @@ public class FeedRecordController {
             }
             List<Pigwash> feedList = list.get(0).getFeedList();
             PageInfo<FeedRecord> info = new PageInfo(list);
-            return ResponseEntity.build(100,new Message(),info);
+            return ResponseEntity.build(200,new Message(),info);
         } catch (Exception e) {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -115,6 +116,7 @@ public class FeedRecordController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -135,6 +137,7 @@ public class FeedRecordController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());

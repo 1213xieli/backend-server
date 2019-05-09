@@ -3,12 +3,10 @@ package com.zb.byb.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.Drug;
-import com.zb.byb.entity.DrugApply;
-import com.zb.byb.entity.MaterialInfo;
-import com.zb.byb.entity.QuestionReportInfo;
+import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
@@ -88,7 +86,13 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_MEDICINEAPPLY);
         System.out.println("领药申请,查询query方法---" + jsonData);
-        return JsonPluginsUtil.jsonToBeanList(jsonData, DrugApply.class);
+        List<DrugApply> drugApplies=JsonPluginsUtil.jsonToBeanList(jsonData, DrugApply.class);
+        //领药rcordid进行base64加密
+        for (int i=0;i<drugApplies.size();i++){
+            DrugApply drugApply=drugApplies.get(i);
+            drugApply.setRcordId(Image2Base64Util.getBase64Encoder(drugApply.getRcordId()));
+        }
+        return drugApplies;
     }
 
     @Override

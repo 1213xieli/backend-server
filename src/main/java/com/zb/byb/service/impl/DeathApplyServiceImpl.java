@@ -3,9 +3,11 @@ package com.zb.byb.service.impl;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DeathApply;
+import com.zb.byb.entity.DrugApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.service.DeathApplyService;
 import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
@@ -36,7 +38,13 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
         map.put("data",deathApply);//参数
         String data= JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_YZRHDEATH);
-        return JsonPluginsUtil.jsonToBeanList(jsonStr,DeathApply.class);
+        List<DeathApply> deathApplies=JsonPluginsUtil.jsonToBeanList(jsonStr,DeathApply.class);
+        //死亡记录rcordid进行base64加密
+        for (int i=0;i<deathApplies.size();i++){
+            DeathApply deathApply1=deathApplies.get(i);
+            deathApply1.setRcordId(Image2Base64Util.getBase64Encoder(deathApply1.getRcordId()));
+        }
+        return deathApplies;
 
     }
 

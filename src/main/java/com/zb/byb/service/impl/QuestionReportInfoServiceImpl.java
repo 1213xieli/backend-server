@@ -57,6 +57,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
+        //{"pageNumber":"1","data":{"bizdate":"","custId":"Va4AAAdGxznMns7U","custname":"","details":"","extendsOne":"","id":"","order":"","pageNumber":1,"pageSize":1000,"rcordId":"","remark":"","replydate":"","replydetails":"","replypersonid":"","replypersonname":""},"custId":"Va4AAAdGxznMns7U","pageSize":"1000"}
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PROBLEMFEEDBACK);
         System.out.println("问题反馈，查询列表---" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, QuestionReportInfo.class);
