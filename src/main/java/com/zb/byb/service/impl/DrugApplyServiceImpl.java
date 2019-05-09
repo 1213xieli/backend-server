@@ -26,8 +26,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
 
     @Override
     public String saveInfo(DrugApply info) throws Exception {
-        if (info == null)
-        {
+        if (info == null) {
             throw new Exception("药品未选择");
         }
         Map<String, Object> map = new HashMap<>();
@@ -43,12 +42,12 @@ public class DrugApplyServiceImpl implements DrugApplyService {
     @Override
     public List<MaterialInfo> queryMaterialListByFuzzyKey(MaterialInfo queryInfo) throws Exception {
         if (C.checkNullOrEmpty(queryInfo.getBatchId()) || C.checkNullOrEmpty(queryInfo.getCustId()))
-            throw  new Exception("未传入数据!");
+            throw new Exception("未传入数据!");
         Map<String, Object> map = new HashMap<>();
         map.put("custId", queryInfo.getCustId());
         map.put("source", Commonconst.WX_Flag);
         Map paramMap = new HashMap();
-        paramMap.put("batchId",queryInfo.getBatchId());
+        paramMap.put("batchId", queryInfo.getBatchId());
         paramMap.put("keyword", queryInfo.getFuzzyKey());
         map.put("data", paramMap);
 
@@ -75,7 +74,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
     }
 
     @Override
-    public List<DrugApply> queryInfoRecordList(String custId,DrugApply queryInfo ) throws Exception {
+    public List<DrugApply> queryInfoRecordList(String custId, DrugApply queryInfo) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("custId", custId);
         map.put("source", Commonconst.WX_Flag);
@@ -86,10 +85,10 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_MEDICINEAPPLY);
         System.out.println("领药申请,查询query方法---" + jsonData);
-        List<DrugApply> drugApplies=JsonPluginsUtil.jsonToBeanList(jsonData, DrugApply.class);
+        List<DrugApply> drugApplies = JsonPluginsUtil.jsonToBeanList(jsonData, DrugApply.class);
         //领药rcordid进行base64加密
-        for (int i=0;i<drugApplies.size();i++){
-            DrugApply drugApply=drugApplies.get(i);
+        for (int i = 0; i < drugApplies.size(); i++) {
+            DrugApply drugApply = drugApplies.get(i);
             drugApply.setRcordId(Image2Base64Util.getBase64Encoder(drugApply.getRcordId()));
         }
         return drugApplies;
