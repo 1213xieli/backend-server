@@ -17,13 +17,12 @@ import java.io.*;
  */
 public class Image2Base64Util {
 
-    public static void main(String[] args) throws IOException {
-//        String imgFile = "C:\\Users\\pc2\\Desktop\\2.jpg";//待处理的图片
-//        String imgbese = getImgStr(imgFile);
+//    public static void main(String[] args) throws IOException {
+//        File imgFile = new File("C:\\Users\\pc2\\Desktop\\3.jpg");//待处理的图片
+//        String imgbese = BaseSys(imgFile);
 //        System.out.println(imgbese.length());
 //        System.out.println(imgbese);
-////
-    }
+//    }
 
     /**
      * 将图片转换成Base64编码
@@ -153,6 +152,21 @@ public class Image2Base64Util {
     public static String getBase64Decoder(String str) throws IOException {
         String s = new String(new BASE64Decoder().decodeBuffer(str));
         return s;
+    }
+    /**
+    * @Function: 文件转base64
+    * @Author: shaoys
+    * @Date: Created in 11:30 2019/5/10
+    **/
+    public static String BaseSys(File file) throws IOException {
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+        byte[] b = new byte[1000];
+        int n;
+        while ((n = fis.read(b)) != -1){
+            bos.write(b,0,n);
+        }
+        return new BASE64Encoder().encode(b);
     }
 
 }

@@ -5,25 +5,22 @@ import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.DeathApply;
-import com.zb.byb.entity.FeedApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.DeathApplyService;
 import com.zb.byb.util.HttpConnectionUtil;
 import com.zb.byb.util.Image2Base64Util;
-import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,16 +33,16 @@ public class DeathApplyController {
     private DeathApplyService deathApplyService;
     @ApiOperation("保存死亡申报")
     @PostMapping("/save")
-    public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) {
+    public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) throws IOException {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
+//        userId = "Va4AAAdGxznMns7U";
         if (deathApply.getServerIds() != null && deathApply.getServerIds().size() > 0 )
         {
             List<FileEntry> list=new ArrayList<>();
             for (String serverId : deathApply.getServerIds()) {
                 File file = HttpConnectionUtil.downloadWxImg(serverId);
-                String path1 = file.getPath();
-                String base64Img = Image2Base64Util.getImgStr(path1);
+                String base64Img = Image2Base64Util.BaseSys(file);
                 FileEntry fileEntry = new FileEntry();
                 fileEntry.setImgContent(base64Img);
                 fileEntry.setImgType("jpg");

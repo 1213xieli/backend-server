@@ -9,13 +9,10 @@ import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
 import com.zb.byb.util.HttpConnectionUtil;
 import com.zb.byb.util.Image2Base64Util;
-import com.zb.byb.util.WeixinUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -193,7 +189,7 @@ public class MaterialController {
     public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply) throws IOException {
         try{
             File file = HttpConnectionUtil.downloadWxFile(drugApply.getServerId());
-            String base64Amr = Image2Base64Util.getImgStr(file);
+            String base64Amr = Image2Base64Util.BaseSys(file);
             FileEntry fileEntry=new FileEntry();
             fileEntry.setImgContent(base64Amr);
             fileEntry.setImgType("mp3");
