@@ -160,13 +160,14 @@ public class Image2Base64Util {
     **/
     public static String BaseSys(File file) throws IOException {
         FileInputStream fis = new FileInputStream(file);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         byte[] b = new byte[1000];
         int n;
         while ((n = fis.read(b)) != -1){
             bos.write(b,0,n);
         }
-        return new BASE64Encoder().encode(b);
+        fis.close();
+        return new BASE64Encoder().encode(bos.toByteArray());
     }
 
 }
