@@ -59,8 +59,8 @@ public class DrugApply {
 
     @ApiModelProperty("微信录音")
     private List<FileEntry> voiceList;
-    @ApiModelProperty("微信录音路径")
-    private List<ActFileEntry> voiceUrl;
+    @ApiModelProperty("微信Url")
+    private String voiceUrl;
 
     @ApiModelProperty("记录状态")
     private String state;
