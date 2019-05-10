@@ -71,6 +71,9 @@ public class DrugApply {
     @ApiModelProperty(value = "状态")
     private String billStatus;
 
+    @ApiModelProperty(value = "微信录音serverId")
+    private String serverId;
+
     @ApiModelProperty("签名图片路径")
     private List<ActFileEntry> signerUrl;
     private Boolean isSigner ;//是否已签名
