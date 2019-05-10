@@ -87,11 +87,8 @@ public class MaterialController {
     @GetMapping("/viewInfoById")
     public ResponseEntity<List<FeedApply>> viewInfobyId( String rcordId,HttpServletRequest request){
         String userId=(String) request.getSession().getAttribute("userId");
-        System.out.println(userId);
-        rcordId=rcordId.trim().replace(" ","+");
-        System.out.println("rcordId="+rcordId);
         try {
-            return ResponseEntity.buildSuccess(feedApplyService.viewFeedApply(rcordId));
+            return ResponseEntity.buildSuccess(feedApplyService.viewFeedApply(Image2Base64Util.getBase64Decoder(rcordId)));
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
@@ -110,10 +107,9 @@ public class MaterialController {
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);//存入实体
         feedApply.setSignerList(signerList);
-        //空格处理
-        rcordId=rcordId.trim().replace(" ","+");
-        feedApply.setRcordId(rcordId);
+
         try {
+            feedApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String data=feedApplyService.singer(feedApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
                 throw new Exception("签名失败");
@@ -134,7 +130,7 @@ public class MaterialController {
         String userId=(String) request.getSession().getAttribute("userId");
         //空格处理
         try {
-            String data=feedApplyService.cancleFeedApply(rcordId);
+            String data=feedApplyService.cancleFeedApply(Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -291,7 +287,7 @@ public class MaterialController {
         try{
             if (C.checkNull(rcordId))
                 throw new Exception("未传入id");
-            DrugApply drugApply = drugApplyService.queryInfoById(rcordId);
+            DrugApply drugApply = drugApplyService.queryInfoById(Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.buildSuccess(drugApply);
         }
         catch (Exception e)
@@ -313,10 +309,8 @@ public class MaterialController {
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);//存入实体
         drugApply.setSignerList(signerList);
-        //空格处理
-        rcordId=rcordId.trim().replace(" ","+");
-        drugApply.setRcordId(rcordId);
         try {
+            drugApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String data=drugApplyService.singer(drugApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
                 return ResponseEntity.build(100, "签名失败");
@@ -335,11 +329,13 @@ public class MaterialController {
     @ResponseBody
     public ResponseEntity<DrugApply> deleteDrugApplyInfoById(String id)
     {
+
         try{
+            ;
             if (C.checkNull(id))
                 throw new Exception("未传入id");
 
-            return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(id));
+            return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(Image2Base64Util.getBase64Decoder(id)));
         }
         catch (Exception e)
         {
@@ -453,7 +449,7 @@ public class MaterialController {
         try{
             if (C.checkNull(rcordId))
                 throw new Exception("未传入id");
-            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(rcordId));
+            return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(Image2Base64Util.getBase64Decoder(rcordId)));
         }
         catch (Exception e)
         {
@@ -473,7 +469,7 @@ public class MaterialController {
         try{
             if (C.checkNull(id))
                 throw new Exception("未传入id");
-            return ResponseEntity.buildSuccess(equipmentApplyService.deleteInfoById(id));
+            return ResponseEntity.buildSuccess(equipmentApplyService.deleteInfoById(Image2Base64Util.getBase64Decoder(id)));
         }
         catch (Exception e)
         {
@@ -518,8 +514,8 @@ public class MaterialController {
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);//存入实体
         equipmentApply.setSignerList(signerList);
-        equipmentApply.setRcordId(rcordId);
         try {
+            equipmentApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String data=equipmentApplyService.signerEquipApply(equipmentApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
                 return ResponseEntity.build(100, "签名失败");

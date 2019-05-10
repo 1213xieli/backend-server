@@ -63,7 +63,6 @@ public class BalanceRecordController {
     @GetMapping("/list")
     public ResponseEntity<List<BalanceRecord>> getList(String starttime,String endtime,String state,Integer pageNumber,Integer pageSize,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
-
         BalanceRecord balanceRecord=new BalanceRecord();
         balanceRecord.setStarttime(starttime);
         balanceRecord.setEndtime(endtime);
@@ -88,7 +87,7 @@ public class BalanceRecordController {
     public ResponseEntity<List<BalanceRecord>> viewInfoById(String batchId,String rcordId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         try {
-            BalanceRecord balanceRecord=balanceService.viewBalanceRecord(batchId,rcordId);
+            BalanceRecord balanceRecord=balanceService.viewBalanceRecord(batchId,Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.buildSuccess(balanceRecord);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +105,7 @@ public class BalanceRecordController {
         String userId = (String) request.getSession().getAttribute("userId");
 
         try {
-            String id=balanceService.cancelApply(rcordId);
+            String id=balanceService.cancelApply(Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,9 +126,10 @@ public class BalanceRecordController {
         signerList.add(fileEntry);
         BalanceRecord balanceRecord=new BalanceRecord();
         balanceRecord.setFileEntry(signerList);
-        balanceRecord.setRcordId(rcordId);
+
         //userId="Va4AAABJzw/Mns7U";
         try {
+            balanceRecord.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String id=balanceService.singer(balanceRecord );
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {

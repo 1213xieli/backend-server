@@ -93,6 +93,8 @@ public class FeedApplyServiceImpl implements FeedApplyService {
         map.put("data", feedApply);
         String data = JSONObject.fromObject(map).toString();
         String jsonBack = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_FEED);
+        JSONObject jsonstr=JSONObject.fromObject(jsonBack);
+
         return toFeedList(jsonBack);
     }
 
@@ -116,13 +118,14 @@ public class FeedApplyServiceImpl implements FeedApplyService {
      * @param jsonStr json字符串
      * @return
      */
-    private List<LiLiaoInfo> toFeedList(String jsonStr) {
+    private List<LiLiaoInfo> toFeedList(String jsonStr){
         // 通过Data 字段获取数据
         //JSONObject jsonObject = JSONObject.fromObject(jsonStr);
-        JSONArray jsonObject = JSONObject.fromObject(jsonStr).getJSONArray("data");
-        if (C.checkNullOrEmpty(jsonObject))
+        JSONObject jsonObject=JSONObject.fromObject(jsonStr);
+        JSONArray jsonArray = jsonObject.getJSONArray("data");
+        if (C.checkNullOrEmpty(jsonArray))
             return null;
-        List<LiLiaoInfo> list = com.alibaba.fastjson.JSONArray.parseArray(jsonObject.toString(), LiLiaoInfo.class);
+        List<LiLiaoInfo> list = com.alibaba.fastjson.JSONArray.parseArray(jsonArray.toString(), LiLiaoInfo.class);
         return list;
     }
 

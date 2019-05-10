@@ -93,8 +93,8 @@ public class DeathApplyController {
     {
         try{
             if (C.checkNull(rcordId))
-                throw new Exception("未传入rcordId.");
-            return ResponseEntity.buildSuccess(deathApplyService.getDeathApplyRecordbyId(rcordId));
+                throw new Exception("未传入rcordId");
+            return ResponseEntity.buildSuccess(deathApplyService.getDeathApplyRecordbyId(Image2Base64Util.getBase64Decoder(rcordId)));
         }
         catch (Exception e)
         {
@@ -113,7 +113,7 @@ public class DeathApplyController {
         try{
             if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
-            return ResponseEntity.buildSuccess(deathApplyService.cancleDeathApply(rcordId));
+            return ResponseEntity.buildSuccess(deathApplyService.cancleDeathApply(Image2Base64Util.getBase64Decoder(rcordId)));
         }
         catch (Exception e)
         {
@@ -129,13 +129,14 @@ public class DeathApplyController {
     @PostMapping("/singer")
     public ResponseEntity<DeathApply> singer(String rcordId, @RequestBody FileEntry fileEntry)
     {
+        try{
         fileEntry= Image2Base64Util.subBase64(fileEntry);
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);
         DeathApply deathApply=new DeathApply();
-        deathApply.setRcordId(rcordId);
+        deathApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
         deathApply.setSignerList(signerList);
-        try{
+
             if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             String s = deathApplyService.signerDeathApply(deathApply);

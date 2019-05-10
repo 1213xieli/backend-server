@@ -55,8 +55,12 @@ public class LoginServiceImpl implements LoginService {
         logger.info("----dataStr----" + data);
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
         logger.info("----jsonStr----" + jsonStr);
-        String status = JSONObject.fromObject(jsonStr).getString("code");
-        return "0000".equals(status) ? true : false;
+        JSONObject jsonObject=JSONObject.fromObject(jsonStr);
+        String status = jsonObject.getString("code");
+        if(!"0000".equals(status)){
+            throw new Exception(jsonObject.getString(jsonObject.getString("msg")));
+        }
+        return true;
     }
 
     @Override

@@ -32,6 +32,7 @@ public class TouMiaoController extends BaseController {
     @PostMapping("/saveToumiaoApply")
     @ResponseBody
     public ResponseEntity<?> saveToumiaoApply(HttpServletRequest request, HttpServletResponse response, TouMiao touMiao) {
+
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             touMiao.setCustId(custId);
@@ -70,6 +71,7 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<?> queryTouMiaoRecordList(HttpServletRequest request, TouMiao touMiao)
     {
         try{
+
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
 //            String startDate = C.parseStr(request);
 
@@ -79,6 +81,7 @@ public class TouMiaoController extends BaseController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -95,7 +98,7 @@ public class TouMiaoController extends BaseController {
             if (C.checkNullOrEmpty(recordId))
                 throw new Exception("未传入记录id");
 
-            return ResponseEntity.buildSuccess(touMiaoService.queryInfoById(recordId));
+            return ResponseEntity.buildSuccess(touMiaoService.queryInfoById(Image2Base64Util.getBase64Decoder(recordId)));
         }
         catch (Exception e)
         {
@@ -117,9 +120,9 @@ public class TouMiaoController extends BaseController {
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);
         TouMiao touMiao =new TouMiao();
-        touMiao.setRcordId(rcordId);
         touMiao.setSignerList(signerList);
         try{
+            touMiao.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             if (C.checkNullOrEmpty(userId))
                 throw new Exception("未登入");
             return ResponseEntity.buildSuccess(touMiaoService.singerTouMiao(touMiao));
@@ -142,7 +145,7 @@ public class TouMiaoController extends BaseController {
         try{
             if (C.checkNullOrEmpty(userid))
                 throw new Exception("未登入");
-            return ResponseEntity.buildSuccess(touMiaoService.cancleTouMiao(rcordId));
+            return ResponseEntity.buildSuccess(touMiaoService.cancleTouMiao(Image2Base64Util.getBase64Decoder(rcordId)));
         }
         catch (Exception e)
         {

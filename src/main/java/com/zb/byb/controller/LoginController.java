@@ -118,12 +118,8 @@ public class LoginController {
         logger.info("-----验证success---");
         try {
             //传人绑定信息,返回信息
-            boolean id = loginService.bind(userInfo, openId);
-            System.out.println("id="+id);
-            if(id){
-                return ResponseEntity.build(200,"绑定成功");
-            }
-            return ResponseEntity.build(100,"不是养户,绑定失败");
+            boolean id = loginService.bind(userInfo, openId);//true表示绑定成功
+            return ResponseEntity.build(200,"绑定成功");
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();

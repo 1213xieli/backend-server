@@ -9,6 +9,7 @@ import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.Pigwash;
 import com.zb.byb.service.FeedRecordService;
 
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -105,7 +106,7 @@ public class FeedRecordController {
         try{
             if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
-            FeedRecord feedRecord = feedRecordService.queryFeedRecordbyRcordId(rcordId);
+            FeedRecord feedRecord = feedRecordService.queryFeedRecordbyRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             if (null==feedRecord){
                 return ResponseEntity.build(100, "无法查询到数据");
             }
@@ -132,7 +133,7 @@ public class FeedRecordController {
         try{
             if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
-            String s = feedRecordService.cancleFeedRecord(rcordId);
+            String s = feedRecordService.cancleFeedRecord(Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.build(100, "取消成功");
         }
         catch (Exception e)

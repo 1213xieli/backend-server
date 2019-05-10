@@ -7,6 +7,7 @@ import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.SaleNotice;
 import com.zb.byb.service.SaleNoticeService;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -30,8 +31,10 @@ public class SaleNoticeController {
     @ApiOperation("单个销售详情")
     @GetMapping("/viewSale")
     public ResponseEntity<?> querySale(String id) {
+
         try {
-            return ResponseEntity.buildSuccess(saleNoticeService.getQuerySale(id));
+
+            return ResponseEntity.buildSuccess(saleNoticeService.getQuerySale(Image2Base64Util.getBase64Decoder(id)));
         }
         catch (Exception e)
         {
