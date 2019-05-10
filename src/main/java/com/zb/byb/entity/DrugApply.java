@@ -59,7 +59,7 @@ public class DrugApply {
 
     @ApiModelProperty("微信录音")
     private List<FileEntry> voiceList;
-    @ApiModelProperty("微信Url")
+    @ApiModelProperty("微信录音Url")
     private String voiceUrl;
 
     @ApiModelProperty("记录状态")
