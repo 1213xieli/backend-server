@@ -8,12 +8,10 @@ import com.zb.byb.common.Constants;
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.BatchRecord;
 import com.zb.byb.entity.DeathApply;
+import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.TouMiaoService;
-import com.zb.byb.util.HttpUtils;
-import com.zb.byb.util.JDService;
-import com.zb.byb.util.MethodName;
-import com.zb.byb.util.RequestUtils;
+import com.zb.byb.util.*;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -47,8 +45,9 @@ public class BatchRecordController {
     public ResponseEntity<BatchRecord> getList(HttpServletRequest request,String batchid){
         String userId=(String) request.getSession().getAttribute("userId");
         //批次号
+
         try {
-            BatchRecord batchRecord1= batchRecordService.viewBatchRecord(batchid,userId);
+            BatchRecord batchRecord1= batchRecordService.viewBatchRecord(Image2Base64Util.getBase64Decoder(batchid),userId);
 
             ResponseEntity<BatchRecord> resp=new ResponseEntity<>();
             resp.setData(batchRecord1);
@@ -68,14 +67,7 @@ public class BatchRecordController {
         //userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
         System.out.println("=="+userId);
         try {
-            String str=batchRecordService.getBatchList(userId,batch);
-            System.out.println("str="+str);
-            if(!"0000".equals(JSONObject.fromObject(str).getString("code"))){
-                throw new Exception("批次查询失败");
-            }
-            String batchIdlist=JSONObject.fromObject(str).getString("data");
-            System.out.println("下拉batchIdlist="+batchIdlist);
-            List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
+            List<Batch> list=batchRecordService.getBatchList(userId,batch);
             ResponseEntity<List<Batch>> resp=new ResponseEntity<>();
             resp.setData(list);
             return resp;

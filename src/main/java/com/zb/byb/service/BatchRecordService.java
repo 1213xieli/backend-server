@@ -3,6 +3,8 @@ package com.zb.byb.service;
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.BatchRecord;
 
+import java.util.List;
+
 public interface BatchRecordService {
     /**
      * 批次记录查看
@@ -20,6 +22,6 @@ public interface BatchRecordService {
      * @return
      * @throws Exception
      */
-    String getBatchList(String userId, Batch batch) throws Exception;
+    List<Batch> getBatchList(String userId, Batch batch) throws Exception;
 
 }

@@ -4,6 +4,7 @@ import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.ReceivedRecordService;
+import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -49,11 +50,12 @@ public class ReceiveRecordController {
         receivedRecord.setState(state);
         receivedRecord.setEndtime(endtime);
         receivedRecord.setStarttime(starttime);
-        receivedRecord.setBatchId(batchId);
+
         receivedRecord.setType(type);
 
         //receivedRecord.setBeastDrug();
         try {
+            receivedRecord.setBatchId(Image2Base64Util.getBase64Decoder(batchId));
             ReceivedRecord received = receivedRecordService.getReceivedList(receivedRecord);
             return ResponseEntity.buildSuccess(received);
         } catch (Exception e) {

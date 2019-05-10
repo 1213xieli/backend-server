@@ -141,6 +141,9 @@ public class Image2Base64Util {
      */
 
     public static String getBase64Encoder(String str) throws IOException {
+        if(str==null ){
+            return null;
+        };
         String encode = new BASE64Encoder().encode(str.getBytes());
         return encode;
     }
@@ -150,6 +153,9 @@ public class Image2Base64Util {
      */
 
     public static String getBase64Decoder(String str) throws IOException {
+        if(str==null ){
+            return null;
+        };
         String s = new String(new BASE64Decoder().decodeBuffer(str));
         return s;
     }
@@ -169,4 +175,38 @@ public class Image2Base64Util {
         return new BASE64Encoder().encode(b);
     }
 
+    /**
+     * @Description： 图片转化成base64字符串
+     * @param:    path
+     * @Return:
+     */
+    public static String GetImageStr(String path)
+    {
+        //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+        //待处理的图片
+        String imgFile = path;
+        InputStream in = null;
+        byte[] data = null;
+        //读取图片字节数组
+        try
+        {
+            in = new FileInputStream(imgFile);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        //对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+        //返回Base64编码过的字节数组字符串
+        return encoder.encode(data);
+    }
+
+    public static void main(String[] args) {
+        String abc=GetImageStr("C:\\fakepath\\企业微信截图_1557473165743.png");
+        System.out.println(abc);
+    }
 }

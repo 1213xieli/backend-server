@@ -82,6 +82,7 @@ public class MethodName {
     public static final String Method_Name_queryMaterial = "selectMaterialInfo";// 查询药品列表
     public static final String Method_Name_queryEntrust = "queryEntrust"; // 查询委托人列表
     public static final String Method_Name_checkBill = "checkBill"; // 对账单
+    public static final String Method_Name_viewkBill="viewBill";
 
     public static final String METHOD_NAME_QUERY_DRIVER="queryDriver";//拉料司机列表
     public static final String METHOD_NAME_QUERY_FEED="queryFeed";//饲料查询

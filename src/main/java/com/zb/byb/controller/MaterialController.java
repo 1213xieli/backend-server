@@ -50,6 +50,8 @@ public class MaterialController {
         try {
             if (C.checkNull(userId))
                 throw new Exception("未传入养户id");
+            String batchId=Image2Base64Util.getBase64Decoder(feedApply.getBatchId());
+            feedApply.setBatchId(batchId);
             String id= feedApplyService.feedApply(feedApply,userId);
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
@@ -161,8 +163,9 @@ public class MaterialController {
     public ResponseEntity<List<LiLiaoInfo>> getFeedList(String batchId ,HttpServletRequest request){
         String custId=(String) request.getSession().getAttribute("userId");
         FeedApply feedApply=new FeedApply();
-        feedApply.setBatchId(batchId);
         try {
+            batchId=Image2Base64Util.getBase64Decoder(batchId);
+            feedApply.setBatchId(batchId);
             List <LiLiaoInfo> liLiaoInfoList= feedApplyService.getFeedList(feedApply);
             return ResponseEntity.buildSuccess(liLiaoInfoList);
         } catch (Exception e) {
@@ -194,6 +197,8 @@ public class MaterialController {
             drugApply.setVoiceList(list);
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             drugApply.setCustId(custId);
+            String batchId=Image2Base64Util.getBase64Decoder(drugApply.getBatchId());
+            drugApply.setBatchId(batchId);
             return ResponseEntity.buildSuccess(drugApplyService.saveInfo(drugApply));
         }
         catch (Exception e)
@@ -213,6 +218,7 @@ public class MaterialController {
         try{
             if (C.checkNull(custId))
                 throw new Exception("未传入养户id");
+            queryInfo.setBatchId(Image2Base64Util.getBase64Decoder(queryInfo.getBatchId()));
             queryInfo.setCustId(custId);
             List<MaterialInfo> list = drugApplyService.queryMaterialListByFuzzyKey(queryInfo);
             PageInfo page = new PageInfo(list);

@@ -35,6 +35,8 @@ public class FeedRecordController {
         String userId=(String) request.getSession().getAttribute("userId");
 
         try {
+            //解密
+            feedRecord.setBatchId(Image2Base64Util.getBase64Decoder(feedRecord.getBatchId()));
             return ResponseEntity.buildSuccess(feedRecordService.addFeedRecord(feedRecord,userId));
         } catch (Exception e) {
             Message message = new Message();
@@ -47,10 +49,11 @@ public class FeedRecordController {
     @GetMapping("/getPigwashList")
     public ResponseEntity<?> getPigwashList(Batch batch, HttpServletRequest request) {
         String sessionId=(String) request.getSession().getAttribute("sessionId");
-        String batchId=batch.getId();
-        System.out.println("batchId="+batchId);
+
+
         System.out.println("sessionId="+sessionId);
         try {
+            String batchId=Image2Base64Util.getBase64Decoder(batch.getId());
             return ResponseEntity.buildSuccess(feedRecordService.pigwashList(batchId));
         } catch (Exception e) {
             Message message = new Message();

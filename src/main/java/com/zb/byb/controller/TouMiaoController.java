@@ -36,6 +36,7 @@ public class TouMiaoController extends BaseController {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             touMiao.setCustId(custId);
+
             return ResponseEntity.buildSuccess(touMiaoService.saveInfo(touMiao));
         }
         catch (Exception e)
@@ -53,6 +54,7 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<TouMiao> queryTouMiaoInitData(HttpServletRequest request)
     {
         try{
+
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
             return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(custId));
         }

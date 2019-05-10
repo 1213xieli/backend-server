@@ -4,10 +4,10 @@ package com.zb.byb.controller;
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.DeathApply;
-import com.zb.byb.entity.FeedRecord;
-import com.zb.byb.entity.FileEntry;
+import com.zb.byb.entity.*;
+import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.DeathApplyService;
+import com.zb.byb.util.DateUtil;
 import com.zb.byb.util.HttpConnectionUtil;
 import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
@@ -29,6 +29,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/deathApply")
 public class DeathApplyController {
+    @Autowired
+    private BatchRecordService batchRecordService;
     @Autowired
     private DeathApplyService deathApplyService;
     @ApiOperation("保存死亡申报")
@@ -54,6 +56,9 @@ public class DeathApplyController {
             if(C.checkNullOrEmpty(userId)){
                 throw new Exception("未传人养户id");
             }
+            //解密成功
+            String batchId=Image2Base64Util.getBase64Decoder(deathApply.getBatchId());
+            deathApply.setBatchId(batchId);
             String backData= deathApplyService.deathApply(deathApply,userId);
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
@@ -138,13 +143,12 @@ public class DeathApplyController {
         DeathApply deathApply=new DeathApply();
         deathApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
         deathApply.setSignerList(signerList);
-
             if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             String s = deathApplyService.signerDeathApply(deathApply);
-            if ("0000".equals(JSONObject.fromObject(s).getString("code")))
-                return ResponseEntity.buildSuccess(s);
-            return ResponseEntity.build(100,"签名保存失败",null);
+            if (!"0000".equals(JSONObject.fromObject(s).getString("code")))
+            throw new Exception("签名失败");
+            return ResponseEntity.buildSuccess(s);
         }
         catch (Exception e)
         {
@@ -156,5 +160,22 @@ public class DeathApplyController {
         }
     }
 
+
+    @ApiOperation("初始化死亡日龄")
+    @GetMapping("/initDieDay")
+    public ResponseEntity<?> initDieDay(String dieDate,String birthday)
+    {
+        try{
+            return ResponseEntity.buildSuccess(DateUtil.getBetweenDay(DateUtil.parseDate(dieDate,"yyyy-MM-dd"),DateUtil.parseDate(birthday,"yyyy-MM-dd")));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Message message = new Message();
+            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setMessage(e.getMessage());
+            return ResponseEntity.build(Commonconst.FailStatus, message);
+        }
+    }
 
 }

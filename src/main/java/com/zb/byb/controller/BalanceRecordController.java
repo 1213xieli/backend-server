@@ -30,8 +30,10 @@ public class BalanceRecordController {
     public ResponseEntity<?> initInfoByBatchId(String batchId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         //userId="Va4AAABJzw/Mns7U";
+
         try {
-            Balance balance=balanceService.initInfoByBatchId(batchId,userId);
+            ;//解密
+            Balance balance=balanceService.initInfoByBatchId(Image2Base64Util.getBase64Decoder(batchId),userId);
             return ResponseEntity.buildSuccess(balance);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,9 +47,11 @@ public class BalanceRecordController {
     @ApiOperation("保存结算申请")
     @PostMapping("/apply")
     public ResponseEntity<?> balanceApply(@RequestBody Balance balance,HttpServletRequest request){
+
         String userId = (String) request.getSession().getAttribute("userId");
-        //userId="Va4AAABJzw/Mns7U";
         try {
+            String batchId=balance.getBatchId();
+            balance.setBatchId(Image2Base64Util.getBase64Decoder(batchId));
             String id=balanceService.balanceApply(balance,userId);
             return ResponseEntity.buildSuccess(id);
         } catch (Exception e) {
@@ -82,12 +86,13 @@ public class BalanceRecordController {
 
     }
 
-    @ApiOperation("查看结算申请详情")
+    @ApiOperation("查看结算申请详情(结算记录传批次，申请详情传单据id)")
     @GetMapping("/viewInfoById")
     public ResponseEntity<List<BalanceRecord>> viewInfoById(String batchId,String rcordId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
         try {
-            BalanceRecord balanceRecord=balanceService.viewBalanceRecord(batchId,Image2Base64Util.getBase64Decoder(rcordId));
+
+            BalanceRecord balanceRecord=balanceService.viewBalanceRecord(Image2Base64Util.getBase64Decoder(batchId),Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.buildSuccess(balanceRecord);
         } catch (Exception e) {
             e.printStackTrace();

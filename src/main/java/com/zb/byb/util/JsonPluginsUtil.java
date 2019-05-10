@@ -487,7 +487,10 @@ public class JsonPluginsUtil
     private static JSONArray getListData(String jsonString)throws Exception{
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code"))){
-            throw new Exception(jsonObject.getString("msg"));
+            if(jsonObject.has("msg")){
+                throw new Exception(jsonObject.getString("msg"));
+            }
+            throw new Exception(jsonObject.getString("查询失败"));
         }
         return jsonObject.getJSONArray("data");
     }

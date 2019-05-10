@@ -52,7 +52,7 @@ public class LoginController {
         if (C.checkNullOrEmpty(openId))
 //            openId="123456789";//为测试方便，先写死openId*/
         //openId = "oNwsZuKKiWmFOTufWZEgKHVlBFsQ";
-        openId = "oNwsZuIoLTuo6M5oIa8-it2Zkk0E";
+        openId = "oNwsZuGea1lCu8yPmwPBxkOU26-g";
 
         session.setAttribute("openId",openId);
 
@@ -85,15 +85,9 @@ public class LoginController {
             Batch batch = new Batch();
             batch.setPageNumber(1);
             batch.setPageSize(50);
-            String str=batchRecordService.getBatchList(userId,batch);
-            String batchIdlist=JSONObject.parseObject(str).getString("data");
-            if (!C.checkNullOrEmpty(batchIdlist))
-            {
-
-                System.out.println("登录初始化批次方法-------"+batchIdlist);
-                List<Batch> list=objectMapper.readValue(batchIdlist,List.class);
-                session.setAttribute("pcList", list);
-            }
+            List<Batch> list=batchRecordService.getBatchList(userId,batch);
+            System.out.println("批次："+ net.sf.json.JSONObject.fromObject(list));
+            session.setAttribute("pcList", list);
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
             e.printStackTrace();
