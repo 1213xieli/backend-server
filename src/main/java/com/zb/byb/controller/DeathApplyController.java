@@ -42,7 +42,7 @@ public class DeathApplyController {
             List<FileEntry> list=new ArrayList<>();
             for (String serverId : deathApply.getServerIds()) {
                 File file = HttpConnectionUtil.downloadWxImg(serverId);
-                String base64Img = Image2Base64Util.BaseSys(file);
+                String base64Img = Image2Base64Util.fileToBase64(file);
                 FileEntry fileEntry = new FileEntry();
                 fileEntry.setImgContent(base64Img);
                 fileEntry.setImgType("jpg");
