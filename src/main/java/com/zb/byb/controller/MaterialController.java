@@ -185,7 +185,7 @@ public class MaterialController {
     public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply) throws IOException {
         try{
             File file = HttpConnectionUtil.downloadWxFile(drugApply.getServerId());
-            String base64Amr = Image2Base64Util.BaseSys(file);
+            String base64Amr = Image2Base64Util.fileToBase64(file);
             FileEntry fileEntry=new FileEntry();
             fileEntry.setImgContent(base64Amr);
             fileEntry.setImgType("mp3");

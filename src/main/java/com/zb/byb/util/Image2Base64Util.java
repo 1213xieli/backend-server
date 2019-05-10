@@ -17,35 +17,14 @@ import java.io.*;
  */
 public class Image2Base64Util {
 
-//    public static void main(String[] args) throws IOException {
-//        File imgFile = new File("C:\\Users\\pc2\\Desktop\\3.jpg");//待处理的图片
-//        String imgbese = BaseSys(imgFile);
-//        System.out.println(imgbese.length());
+//    public static void main(String[] args) throws Exception {
+//        File file = new File("C:\\Users\\pc2\\Desktop\\3.jpg");//待处理的图片
+//        String imgbese = fileToBase64(file);
 //        System.out.println(imgbese);
+//////        System.out.println(imgbese.length());
+////        System.out.println(imgbese);
+//    base64ToFile(imgbese,"C:\\Users\\pc2\\Desktop\\4.jpg","C:\\Users\\pc2\\Desktop");
 //    }
-
-    /**
-     * 将图片转换成Base64编码
-     *
-     * @param imgFile 待处理图片
-     * @return
-     */
-    public static String getImgStr(String imgFile) {
-        //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-        InputStream in = null;
-        byte[] data = null;
-        //读取图片字节数组
-        try {
-            in = new FileInputStream(imgFile);
-            data = new byte[in.available()];
-            in.read(data);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new String(Base64.encodeBase64(data));
-    }
-
     /**
      * 将图片转换成Base64编码
      *
@@ -154,19 +133,32 @@ public class Image2Base64Util {
         return s;
     }
     /**
-    * @Function: 文件转base64
+    * @Function: base64解码为文件
     * @Author: shaoys
-    * @Date: Created in 11:30 2019/5/10
+    * @Date: Created in 16:24 2019/5/10
     **/
-    public static String BaseSys(File file) throws IOException {
-        FileInputStream fis = new FileInputStream(file);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
-        byte[] b = new byte[1000];
-        int n;
-        while ((n = fis.read(b)) != -1){
-            bos.write(b,0,n);
+    public static void base64ToFile(String base64Code, String filePath,String path)
+            throws Exception {
+        File file = new File(path);
+        if(file.exists()==false){
+            file.mkdirs();
         }
-        return new BASE64Encoder().encode(b);
+        byte[] buffer = new BASE64Decoder().decodeBuffer(base64Code);
+        FileOutputStream out = new FileOutputStream(filePath);
+        out.write(buffer);
+        out.close();
     }
 
+    /**
+     * @Function: 文件转base64
+     * @Author: shaoys
+     * @Date: Created in 11:30 2019/5/10
+     **/
+    public static String fileToBase64(File file) throws IOException {
+        InputStream in = new FileInputStream(file);
+        byte[] data = new byte[in.available()];
+        in.read(data);
+        in.close();
+        return new BASE64Encoder().encode(data);
+    }
 }
