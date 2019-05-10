@@ -169,5 +169,11 @@ public class Image2Base64Util {
         fis.close();
         return new BASE64Encoder().encode(bos.toByteArray());
     }
-
+    public static String fileToBase64(File file) throws IOException {
+        InputStream in = new FileInputStream(file);
+        byte[] data = new byte[in.available()];
+        in.read(data);
+        in.close();
+        return new BASE64Encoder().encode(data);
+    }
 }
