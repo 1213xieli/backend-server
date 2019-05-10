@@ -17,14 +17,14 @@ import java.io.*;
  */
 public class Image2Base64Util {
 
-    public static void main(String[] args) throws Exception {
-        File file = new File("C:\\Users\\pc2\\Desktop\\3.jpg");//待处理的图片
-        String imgbese = fileToBase64(file);
-        System.out.println(imgbese);
-////        System.out.println(imgbese.length());
+//    public static void main(String[] args) throws Exception {
+//        File file = new File("C:\\Users\\pc2\\Desktop\\3.jpg");//待处理的图片
+//        String imgbese = fileToBase64(file);
 //        System.out.println(imgbese);
-//    decoderBase64File(imgbese,"C:\\Users\\pc2\\Desktop\\4.jpg","C:\\Users\\pc2\\Desktop");
-    }
+//////        System.out.println(imgbese.length());
+////        System.out.println(imgbese);
+////    decoderBase64File(imgbese,"C:\\Users\\pc2\\Desktop\\4.jpg","C:\\Users\\pc2\\Desktop");
+//    }
     /**
      * 将图片转换成Base64编码
      *
