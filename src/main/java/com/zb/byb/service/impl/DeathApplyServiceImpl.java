@@ -2,6 +2,7 @@ package com.zb.byb.service.impl;
 
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.Death;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.DrugApply;
 import com.zb.byb.entity.FeedRecord;
@@ -49,18 +50,18 @@ public class DeathApplyServiceImpl implements DeathApplyService  {
     }
 
     @Override
-    public DeathApply getDeathApplyRecordbyId(String rcordId) throws Exception {
+    public Death getDeathApplyRecordbyId(String rcordId) throws Exception {
         if (C.checkNullOrEmpty(rcordId))
-            return new DeathApply();
+            return new Death();
         Map<String, Object> map = new HashMap<>();
-        map.put("source", Commonconst.WX_Flag);
-        DeathApply  deathApply = new DeathApply();
+        Death deathApply = new Death();
         deathApply.setRcordId(rcordId);
+        map.put("source", Commonconst.WX_Flag);
         map.put("data", deathApply);
         String data=JSONObject.fromObject(map).toString();
         String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_YZRHDEATH);
         //{"code":"0000","data":{"Curcnt":0,"applyDieCnt":0,"billStatus":"保存","billStatusIndex":"10","custid":"vKYTT1wJTV+A7XdlVyduYMyeztQ=","dieAvg":11,"dieCnt":1111111,"dieDate":"2019-04-21","freedDay":111,"imgUrl":[],"latitude":0,"longitude":0,"number":"SWJL1904230004","pigfarmerCode":"SYLWYH009","rcordId":"Va4AAAicc9tSz43W","state":1},"msg":"查询成功!"}
-        return JsonPluginsUtil.jsonToBean(jsonBack, DeathApply.class);
+        return JsonPluginsUtil.jsonToBean(jsonBack, Death.class);
     }
 
     @Override

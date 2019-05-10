@@ -1,5 +1,6 @@
 package com.zb.byb.service;
 
+import com.zb.byb.entity.Death;
 import com.zb.byb.entity.DeathApply;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface DeathApplyService {
      * @return
      * @throws Exception
      */
-    DeathApply getDeathApplyRecordbyId(String rcord)throws  Exception;
+    Death getDeathApplyRecordbyId(String rcord)throws  Exception;
 
     /**
      * 取消死亡申报

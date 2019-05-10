@@ -4,6 +4,7 @@ package com.zb.byb.controller;
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.entity.Death;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.FileEntry;
@@ -91,7 +92,7 @@ public class DeathApplyController {
     }
     @ApiOperation("查看死亡申报记录详情")
     @GetMapping("/queryInfoById")
-    public ResponseEntity<DeathApply> queryInfoById(String rcordId)
+    public ResponseEntity<Death> queryInfoById(String rcordId)
     {
         try{
             if (C.checkNull(rcordId))
