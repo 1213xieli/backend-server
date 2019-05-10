@@ -4,8 +4,10 @@ package com.zb.byb.controller;
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.*;
-import com.zb.byb.service.BatchRecordService;
+import com.zb.byb.entity.Death;
+import com.zb.byb.entity.DeathApply;
+import com.zb.byb.entity.FeedRecord;
+import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.DeathApplyService;
 import com.zb.byb.util.DateUtil;
 import com.zb.byb.util.HttpConnectionUtil;
@@ -44,7 +46,7 @@ public class DeathApplyController {
             List<FileEntry> list=new ArrayList<>();
             for (String serverId : deathApply.getServerIds()) {
                 File file = HttpConnectionUtil.downloadWxImg(serverId);
-                String base64Img = Image2Base64Util.BaseSys(file);
+                String base64Img = Image2Base64Util.fileToBase64(file);
                 FileEntry fileEntry = new FileEntry();
                 fileEntry.setImgContent(base64Img);
                 fileEntry.setImgType("jpg");
@@ -96,7 +98,7 @@ public class DeathApplyController {
     }
     @ApiOperation("查看死亡申报记录详情")
     @GetMapping("/queryInfoById")
-    public ResponseEntity<DeathApply> queryInfoById(String rcordId)
+    public ResponseEntity<Death> queryInfoById(String rcordId)
     {
         try{
             if (C.checkNull(rcordId))
