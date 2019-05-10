@@ -113,13 +113,13 @@ public class LoginController {
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
         if (!loginService.check(phone,code)){
-           return ResponseEntity.build(400,"验证码错误");
+           return ResponseEntity.build(400,"验证码错误", null);
         };
         logger.info("-----验证success---");
         try {
             //传人绑定信息,返回信息
             boolean id = loginService.bind(userInfo, openId);//true表示绑定成功
-            return ResponseEntity.build(200,"绑定成功");
+            return ResponseEntity.build(200,"绑定成功", null);
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
@@ -169,11 +169,11 @@ public class LoginController {
     public ResponseEntity<?> isSessionAlive(HttpServletRequest request) {
         if(request.getSession(false)==null){
             System.out.println("Session has been invalidated!");
-            return ResponseEntity.build(200,"Session has been invalidated!");
+            return ResponseEntity.build(200,"Session has been invalidated!", null);
         }
         else{
             System.out.println("Session is active!");
-            return ResponseEntity.build(201, "Session is active!");
+            return ResponseEntity.build(201, "Session is active!", null);
         }
 
     }

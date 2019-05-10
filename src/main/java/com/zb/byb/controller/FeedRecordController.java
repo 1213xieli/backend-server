@@ -80,7 +80,7 @@ public class FeedRecordController {
             }
             List<FeedRecord> list = feedRecordService.queryFeedRecordList(custId,feedRecord);
             if(list==null || list.size()==0) {
-                return ResponseEntity.build(200, "无记录");
+                return ResponseEntity.build(200, "无记录", null);
             }
             for(int i=0;i<list.size();i++){
                 list.get(i).setBatchId(list.get(i).getFeedList().get(0).getBatchId());
@@ -108,7 +108,7 @@ public class FeedRecordController {
                 throw new Exception("未传入rcordId.");
             FeedRecord feedRecord = feedRecordService.queryFeedRecordbyRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             if (null==feedRecord){
-                return ResponseEntity.build(100, "无法查询到数据");
+                return ResponseEntity.build(100, "无法查询到数据", null);
             }
             List<Pigwash> feedList = feedRecord.getFeedList();
             ResponseEntity<FeedRecord> recordResponseEntity=new ResponseEntity<>();
@@ -134,7 +134,7 @@ public class FeedRecordController {
             if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             String s = feedRecordService.cancleFeedRecord(Image2Base64Util.getBase64Decoder(rcordId));
-            return ResponseEntity.build(100, "取消成功");
+            return ResponseEntity.build(100, "取消成功", null);
         }
         catch (Exception e)
         {

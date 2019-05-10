@@ -144,7 +144,7 @@ public class DeathApplyController {
             String s = deathApplyService.signerDeathApply(deathApply);
             if ("0000".equals(JSONObject.fromObject(s).getString("code")))
                 return ResponseEntity.buildSuccess(s);
-            return ResponseEntity.build(100,"签名保存失败");
+            return ResponseEntity.build(100,"签名保存失败",null);
         }
         catch (Exception e)
         {

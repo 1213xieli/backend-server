@@ -38,7 +38,7 @@ public class RegisterController {
         String code=userInfo.getInvitationCode();
         //openId="12345687";
         if (!loginService.check(phone,code)){
-            return ResponseEntity.build(100,"验证码错误");
+            return ResponseEntity.build(100,"验证码错误", null);
         };
         try {
             if(userInfo.getIdno()==null || userInfo.getIdno().length()==0){

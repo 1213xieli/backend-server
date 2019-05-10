@@ -307,7 +307,7 @@ public class MaterialController {
             drugApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String data=drugApplyService.singer(drugApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
-                return ResponseEntity.build(100, "签名失败");
+                return ResponseEntity.build(100, "签名失败", null);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -512,7 +512,7 @@ public class MaterialController {
             equipmentApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String data=equipmentApplyService.signerEquipApply(equipmentApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
-                return ResponseEntity.build(100, "签名失败");
+                return ResponseEntity.build(100, "签名失败", null);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
