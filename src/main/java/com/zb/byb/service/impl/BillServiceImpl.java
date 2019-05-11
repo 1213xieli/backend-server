@@ -21,8 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 作者：谢李
- */
+* @Function: 对账单列表和详情
+* @Author: shaoys
+* @Date: Created in 1:21 2019/5/12
+**/
 @Service
 public class BillServiceImpl implements BillService {
 
@@ -42,20 +44,25 @@ public class BillServiceImpl implements BillService {
         String data = JSONObject.toJSONString(map);
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
         System.out.println("对账单，查询query方法----" + jsonData);
-
         return JsonPluginsUtil.jsonToBeanList(jsonData, BillInfo.class);
     }
 
     @Override
-    public String queryBillRecordById( BillInfo info) throws Exception {
-        if (C.checkNullOrEmpty(info.getCustId()) || C.checkNullOrEmpty(info.getRcordId()))
+    public String queryBillRecordById(BillInfo info) throws Exception {
+        if (C.checkNullOrEmpty(info.getCustId()))
             throw new Exception("未传入记录id");
-
+        Map<String, Object> map = new HashMap<>();
+        map.put("source", Commonconst.WX_Flag);
+        map.put("data", info);
+        String data = JSONObject.toJSONString(map);
+        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
+        System.out.println("根据recordId获取单个记录" +jsonData);
         List<BillInfo> list = this.queryInfoRecordList(info);
         for (BillInfo bill : list) {
+
             //  如果记录为空，或者记录id不一致
-//            if (C.checkNullOrEmpty(bill.getRcordId()) || !bill.getRcordId().equals(info.getRcordId()))
-//                continue;
+            if (C.checkNullOrEmpty(bill.getRcordId()) || !bill.getRcordId().equals(info.getRcordId()))
+                continue;
 
             return generateHtmlTempStr(bill);
         }
@@ -131,7 +138,7 @@ public class BillServiceImpl implements BillService {
         templateStr.append("<body>\n<table class=\"tftable\" border=\"1\">\n");
         // 列头部分--养户信息
         templateStr.append("<tr>\n" +
-                "            <td colspan=\"11\">"+info.getDepartment()+"服务部养户月度对账单</td>\n" +
+                "            <td colspan=\"11\">"+info.getDepartment()+"养户月度对账单</td>\n" +
                 "        </tr>\n" +
                 "        <tr>\n" +
                 "            <td colspan=\"1\">养户姓名</td>\n" +
@@ -142,6 +149,7 @@ public class BillServiceImpl implements BillService {
                 "            <td colspan=\"2\">"+info.getPeriod()+"</td>\n" +
                 "            <td colspan=\"2\"></td>\n" +
                 "        </tr>\n");
+        System.out.println(info.getBatchName());
 
         // 猪苗领用---详情部分
         templateStr.append(
@@ -310,7 +318,6 @@ public class BillServiceImpl implements BillService {
         for (FeedEntry entry : list) {
             if (entry == null || C.checkNullOrEmpty(entry.getMaterialName()))
                 continue;
-            System.out.println(entry.getIsSelf());
             // 领用日期	品名	规格 （kg/包）	数量 （包）	单价 （元/包）	数量（kg）	金额（元）	是否本人领取	委托司机	司机车牌
             result.append(  "        <tr>\n" +
                             "            <td>"+entry.getApplyDate()+"</td>\n" +
