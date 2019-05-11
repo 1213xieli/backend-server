@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.FileEntry;
+import com.zb.byb.entity.SingerTM;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.TouMiaoService;
 import com.zb.byb.util.BaseController;
@@ -75,8 +76,8 @@ public class TouMiaoController extends BaseController {
         try{
 
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            custId = "Va4AAAVyFHXMns7U";
 //            String startDate = C.parseStr(request);
-
             List list = touMiaoService.queryInfoRecordList(custId, touMiao);
             PageInfo<TouMiao> info = new PageInfo(list);
             return ResponseEntity.build(200,new Message(), info);
@@ -114,17 +115,19 @@ public class TouMiaoController extends BaseController {
     @ApiOperation("投苗签名")
     @PostMapping("/signerTouMiao")
     @ResponseBody
-    public ResponseEntity<TouMiao> signerTouMiao(@RequestBody FileEntry fileEntry,String rcordId,HttpServletRequest request)
+    public ResponseEntity<TouMiao> signerTouMiao(@RequestBody SingerTM fileEntry,HttpServletRequest request)
     {
         String userId=(String)request.getSession().getAttribute("userId");
+        System.out.println(fileEntry.getFileEntry());
         //处理投苗签名base64
-        fileEntry= Image2Base64Util.subBase64(fileEntry);
+        Image2Base64Util.subBase64(fileEntry.getFileEntry());
+
         List<FileEntry> signerList=new ArrayList<>();
-        signerList.add(fileEntry);
+        signerList.add(fileEntry.getFileEntry());
         TouMiao touMiao =new TouMiao();
         touMiao.setSignerList(signerList);
         try{
-            touMiao.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
+            touMiao.setRcordId(Image2Base64Util.getBase64Decoder(fileEntry.getRcordId()));
             if (C.checkNullOrEmpty(userId))
                 throw new Exception("未登入");
             return ResponseEntity.buildSuccess(touMiaoService.singerTouMiao(touMiao));
