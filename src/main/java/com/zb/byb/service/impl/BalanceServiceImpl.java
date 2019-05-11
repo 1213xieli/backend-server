@@ -90,7 +90,6 @@ public class BalanceServiceImpl implements BalanceService {
 
     @Override
     public String singer(BalanceRecord BalanceRecord) throws Exception {
-
         Map<String, Object> map = new HashMap<>();
         //map.put("userId",userId);
         map.put("source",Commonconst.WX_Flag);//微信

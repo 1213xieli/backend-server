@@ -126,11 +126,12 @@ public class BalanceRecordController {
     @PostMapping("/signer")
     public ResponseEntity<List<BalanceRecord>> signer(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
+        
         fileEntry= Image2Base64Util.subBase64(fileEntry);
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);
         BalanceRecord balanceRecord=new BalanceRecord();
-        balanceRecord.setFileEntry(signerList);
+        balanceRecord.setSignerList(signerList);
 
         //userId="Va4AAABJzw/Mns7U";
         try {

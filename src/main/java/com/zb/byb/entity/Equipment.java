@@ -27,5 +27,7 @@ public class Equipment implements Serializable {
     private Double price;
     @ApiModelProperty("金额")
     private Double amount;
+    @ApiModelProperty("库存")
+    private String stock;//库存
 
 }
