@@ -76,8 +76,6 @@ public class TouMiaoController extends BaseController {
         try{
 
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
-            custId = "Va4AAAVyFHXMns7U";
-//            String startDate = C.parseStr(request);
             List list = touMiaoService.queryInfoRecordList(custId, touMiao);
             PageInfo<TouMiao> info = new PageInfo(list);
             return ResponseEntity.build(200,new Message(), info);
