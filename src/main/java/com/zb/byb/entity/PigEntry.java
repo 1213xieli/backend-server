@@ -35,6 +35,4 @@ public class PigEntry {
     private String insPrice;
     @ApiModelProperty("金额")
     private String ammount;
-    @ApiModelProperty("能否签名")
-    private Boolean canSinger;
 }

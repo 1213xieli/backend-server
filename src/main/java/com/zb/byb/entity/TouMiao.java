@@ -50,6 +50,8 @@ public class TouMiao {
     private String remark = "";
     @ApiModelProperty("sessionId")
     private String sessionId;
+    @ApiModelProperty("是否签名")
+    private Boolean canSinger;
 
     @ApiModelProperty("实际投苗日期")
     private String actDate;
