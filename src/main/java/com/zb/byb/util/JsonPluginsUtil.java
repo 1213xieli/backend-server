@@ -273,33 +273,11 @@ public class JsonPluginsUtil
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass) {
+    public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass)throws Exception {
         if (beanClass == null || C.checkNullOrEmpty(jsonString))
             return new ArrayList<>();
-        if(!"0000".equals(com.alibaba.fastjson.JSONObject.parseObject(jsonString).getString("code"))){
-            return null;
-        }
-        // 通过Data 字段获取数据
-        com.alibaba.fastjson.JSONObject jsonObject = com.alibaba.fastjson.JSONObject.parseObject(jsonString);
-        String obj = jsonObject.getString(Data);
-        if (C.checkNullOrEmpty(obj))
-            return null;
-
-        // 进行数据转换，变成实体对象
-//        JSONArray jsonArray = JSONArray.fromObject(obj);
-//        JSONObject jsonObjectValue;
-//        T bean;
-//        int size = jsonArray.size();
-//        List<T> list = new ArrayList<T>(size);
-//
-//        for (int i = 0; i < size; i++) {
-//            jsonObjectValue = jsonArray.getJSONObject(i);
-//            bean = (T) JSONObject.toBean(jsonObjectValue, beanClass);
-////             bean = (T) com.alibaba.fastjson.JSON.parseObject(obj, beanClass);
-//            list.add(bean);
-//        }
-        List<T> list=JSON.parseArray(obj, beanClass);
-
+        JSONArray listdata=getListData(jsonString);
+        List<T> list =com.alibaba.fastjson.JSONArray.parseArray(listdata.toString(),beanClass);
         return list;
 
     }
@@ -468,7 +446,7 @@ public class JsonPluginsUtil
             return null;
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code")))
-            throw new Exception("保存失败信息："+jsonObject.getString("msg"));
+            throw new Exception("保存失败："+((jsonObject.has("msg"))?jsonObject.getString("msg"):"保存信息未写全"));
         String id = C.parseStr(jsonObject.getString(Id ));
         if (C.checkNullOrEmpty(Id))
             return "";
@@ -478,7 +456,7 @@ public class JsonPluginsUtil
     private static String getData(String jsonString)throws Exception{
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code"))){
-            throw new Exception(jsonObject.getString("msg"));
+            throw new Exception("查询失败："+((jsonObject.has("msg"))?jsonObject.getString("msg"):"缺少查询条件"));
         }
         return jsonObject.getString("data");
     }
@@ -487,10 +465,7 @@ public class JsonPluginsUtil
     private static JSONArray getListData(String jsonString)throws Exception{
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code"))){
-            if(jsonObject.has("msg")){
-                throw new Exception(jsonObject.getString("msg"));
-            }
-            throw new Exception(jsonObject.getString("查询失败"));
+            throw new Exception("查询失败："+((jsonObject.has("msg"))?jsonObject.getString("msg"):"缺少查询条件"));
         }
         return jsonObject.getJSONArray("data");
     }
