@@ -54,8 +54,8 @@ public class BillServiceImpl implements BillService {
         List<BillInfo> list = this.queryInfoRecordList(info);
         for (BillInfo bill : list) {
             //  如果记录为空，或者记录id不一致
-            if (C.checkNullOrEmpty(bill.getRcordId()) || !bill.getRcordId().equals(info.getRcordId()))
-                continue;
+//            if (C.checkNullOrEmpty(bill.getRcordId()) || !bill.getRcordId().equals(info.getRcordId()))
+//                continue;
 
             return generateHtmlTempStr(bill);
         }
