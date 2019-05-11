@@ -257,8 +257,8 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getQty()+"</td>\n" +
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+entry.getIsSelf()+"</td>\n" +
-                            "            <td>"+entry.getEntrustName()+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getEntrustName()!=null?entry.getEntrustName():"")+"</td>\n" +
                             "        </tr>\n");
         }
 
@@ -288,8 +288,8 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getQty()+"</td>\n" +
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+entry.getIsSelf()+"</td>\n" +
-                            "            <td>"+entry.getEntrustName()+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getEntrustName()!=null?entry.getEntrustName():"")+"</td>\n" +
 
                             "        </tr>\n");
         }
@@ -320,9 +320,9 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getBaseQty()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+entry.getIsSelf()+"</td>\n" +
-                            "            <td>"+entry.getDriverName()+"</td>\n" +
-                            "            <td>"+entry.getDriverCarNo()+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getDriverName()!=null?entry.getDriverName():"")+"</td>\n" +
+                            "            <td>"+(entry.getDriverCarNo()!=null?entry.getDriverCarNo():"")+"</td>\n" +
                             "        </tr>\n");
         }
 
