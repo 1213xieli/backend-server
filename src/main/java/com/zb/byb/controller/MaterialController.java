@@ -205,7 +205,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setMessage("保存失败");
+            message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus,message,null);
         }
     }

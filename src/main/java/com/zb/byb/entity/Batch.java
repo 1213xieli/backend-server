@@ -36,6 +36,8 @@ public class Batch {
     private String status;//10保存，20提交，30审核
     @ApiModelProperty("传1代表已结算批次,2代表可结算批次，3代表未结算（包含1和2）不传表示在养批次")
     private String flag;//
+    @ApiModelProperty("批次开始日期")
+    private String birthday;
 
 
 }

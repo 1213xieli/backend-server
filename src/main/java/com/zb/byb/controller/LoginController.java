@@ -86,7 +86,7 @@ public class LoginController {
             batch.setPageNumber(1);
             batch.setPageSize(50);
             List<Batch> list=batchRecordService.getBatchList(userId,batch);
-            System.out.println("批次："+ net.sf.json.JSONObject.fromObject(list));
+            System.out.println("批次："+ JSONObject.toJSONString(list));
             session.setAttribute("pcList", list);
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {

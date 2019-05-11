@@ -168,6 +168,9 @@ public class DeathApplyController {
     @GetMapping("/initDieDay")
     public ResponseEntity<?> initDieDay(String dieDate,String birthday)
     {
+        if(dieDate==null || birthday==null){
+            return ResponseEntity.build(400, "日期不能为空",null);
+        }
         try{
             return ResponseEntity.buildSuccess(DateUtil.getBetweenDay(DateUtil.parseDate(dieDate,"yyyy-MM-dd"),DateUtil.parseDate(birthday,"yyyy-MM-dd")));
         }
