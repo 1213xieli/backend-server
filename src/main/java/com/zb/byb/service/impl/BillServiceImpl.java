@@ -131,7 +131,7 @@ public class BillServiceImpl implements BillService {
         templateStr.append("<body>\n<table class=\"tftable\" border=\"1\">\n");
         // 列头部分--养户信息
         templateStr.append("<tr>\n" +
-                "            <td colspan=\"11\">"+info.getDepartment()+"服务部养护月度对账单</td>\n" +
+                "            <td colspan=\"11\">"+info.getDepartment()+"服务部养户月度对账单</td>\n" +
                 "        </tr>\n" +
                 "        <tr>\n" +
                 "            <td colspan=\"1\">养户姓名</td>\n" +
