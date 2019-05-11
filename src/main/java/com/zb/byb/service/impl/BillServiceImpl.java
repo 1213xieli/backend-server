@@ -257,7 +257,7 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getQty()+"</td>\n" +
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+(entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
                             "            <td>"+(entry.getEntrustName()!=null?entry.getEntrustName():"无")+"</td>\n" +
                             "        </tr>\n");
         }
@@ -288,7 +288,7 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getQty()+"</td>\n" +
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+(entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
                             "            <td>"+(entry.getEntrustName()!=null?entry.getEntrustName():"无")+"</td>\n" +
 
                             "        </tr>\n");
@@ -310,7 +310,7 @@ public class BillServiceImpl implements BillService {
         for (FeedEntry entry : list) {
             if (entry == null || C.checkNullOrEmpty(entry.getMaterialName()))
                 continue;
-
+            System.out.println(entry.getIsSelf());
             // 领用日期	品名	规格 （kg/包）	数量 （包）	单价 （元/包）	数量（kg）	金额（元）	是否本人领取	委托司机	司机车牌
             result.append(  "        <tr>\n" +
                             "            <td>"+entry.getApplyDate()+"</td>\n" +
@@ -320,9 +320,9 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getBaseQty()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+(entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
-                            "            <td>"+(entry.getDriverName()!=null?entry.getDriverName():"无")+"</td>\n" +
-                            "            <td>"+(entry.getDriverCarNo()!=null?entry.getDriverCarNo():"无")+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+entry.getDriverName()+"</td>\n" +
+                            "            <td>"+entry.getDriverCarNo()+"</td>\n" +
                             "        </tr>\n");
         }
 
