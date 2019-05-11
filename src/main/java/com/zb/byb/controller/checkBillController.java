@@ -1,8 +1,6 @@
 package com.zb.byb.controller;
 
-/**
- * 作者：谢李
- */
+
 
 import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
@@ -10,6 +8,7 @@ import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.BillInfo;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.BillService;
+import com.zb.byb.service.impl.BillServiceImpl;
 import com.zb.byb.util.HtmlToImageUtil;
 import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
@@ -22,17 +21,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.io.*;
 import java.util.List;
 
 /**
- * 对账单
- */
+ * @Function: 对账单控制类
+ * @Author: shaoys
+ * @Date: Created in 1:22 2019/5/12
+ **/
 @RestController
 @RequestMapping("/api/bill")
 public class checkBillController {
@@ -46,7 +45,7 @@ public class checkBillController {
     {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
-
+//            custId = "Va4AAAHluXvMns7U";
             info.setCustId(custId);
             List list = billService.queryInfoRecordList(info);
             PageInfo<BillInfo> pageInfo = new PageInfo(list);
@@ -69,7 +68,9 @@ public class checkBillController {
     {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            custId = "Va4AAAHluXvMns7U";
             info.setCustId(custId);
+            //info.setBatchId("Va4AAAUOv3xSsdKc");
             info.setDepartment(C.parseStr(request.getSession().getAttribute("servicedep")));
             String htmlTemplate = billService.queryBillRecordById(info);
             if (C.checkNullOrEmpty(htmlTemplate))
