@@ -321,8 +321,8 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getBaseQty()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
                             "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
-                            "            <td>"+entry.getDriverName()+"</td>\n" +
-                            "            <td>"+entry.getDriverCarNo()+"</td>\n" +
+                            "            <td>"+(entry.getDriverName()!=null?entry.getMaterialName():"无")+"</td>\n" +
+                            "            <td>"+(entry.getDriverCarNo()!=null?entry.getDriverCarNo():"无")+"</td>\n" +
                             "        </tr>\n");
         }
 
