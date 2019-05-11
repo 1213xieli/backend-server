@@ -284,7 +284,7 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getApplyDate()+"</td>\n" +
                             "            <td colspan=\"2\">"+entry.getMaterialName()+"</td>\n" +
                             "            <td colspan=\"2\">"+(entry.getModel()!=null?entry.getModel():"无")+"</td>\n" +
-                            "            <td>"+entry.getUnit()+"</td>\n" +
+                            "            <td>"+(entry.getUnit()!=null?entry.getUnit():"无")+"</td>\n" +
                             "            <td>"+entry.getQty()+"</td>\n" +
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
