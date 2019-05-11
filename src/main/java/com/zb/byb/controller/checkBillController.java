@@ -68,9 +68,8 @@ public class checkBillController {
     {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
-            custId = "Va4AAAHluXvMns7U";
+//            custId = "Va4AAAHluXvMns7U";
             info.setCustId(custId);
-            //info.setBatchId("Va4AAAUOv3xSsdKc");
             info.setDepartment(C.parseStr(request.getSession().getAttribute("servicedep")));
             String htmlTemplate = billService.queryBillRecordById(info);
             if (C.checkNullOrEmpty(htmlTemplate))
