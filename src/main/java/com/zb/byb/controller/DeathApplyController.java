@@ -47,6 +47,17 @@ public class DeathApplyController {
             List<FileEntry> list=new ArrayList<>();
             for (String serverId : deathApply.getServerIds()) {
                 File file = HttpConnectionUtil.downloadWxImg(serverId);
+                try {
+                    if (file == null) {
+                        throw new Exception("获取文件失败");
+                    }
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    Message message = new Message();
+                    message.setCode(C.parseStr(Commonconst.FailStatus));
+                    message.setMessage(e.getMessage());
+                    return ResponseEntity.build(Commonconst.FailStatus, message);
+                }
                 String base64Img = Image2Base64Util.fileToBase64(file);
                 FileEntry fileEntry = new FileEntry();
                 fileEntry.setImgContent(base64Img);
