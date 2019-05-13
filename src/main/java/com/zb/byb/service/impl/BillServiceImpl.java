@@ -28,7 +28,6 @@ import java.util.Map;
 @Service
 public class BillServiceImpl implements BillService {
 
-
     @Override
     public List queryInfoRecordList(BillInfo info) throws Exception {
 
@@ -149,8 +148,6 @@ public class BillServiceImpl implements BillService {
                 "            <td colspan=\"2\">"+info.getPeriod()+"</td>\n" +
                 "            <td colspan=\"2\"></td>\n" +
                 "        </tr>\n");
-        System.out.println(info.getBatchName());
-
         // 猪苗领用---详情部分
         templateStr.append(
                 "        <tr class=\"bg\">\n" +
@@ -246,8 +243,7 @@ public class BillServiceImpl implements BillService {
     /**
      * 设备领用
      */
-    private String sblyData(BillInfo info)
-    {
+    private String sblyData(BillInfo info) {
         if (info == null || info.getEquipEntry().size() <= 0)
             return "";
 
@@ -266,7 +262,7 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getQty()+"</td>\n" +
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals("1")?"是":"否")+"</td>\n" +
                             "            <td>"+(entry.getEntrustName()!=null?entry.getEntrustName():"无")+"</td>\n" +
                             "        </tr>\n");
         }
@@ -277,8 +273,7 @@ public class BillServiceImpl implements BillService {
     /**
      * 兽药领用数据
      */
-    private String sylyData(BillInfo info)
-    {
+    private String sylyData(BillInfo info) {
         if (info == null || info.getDrugEntry().size() <= 0)
             return "";
 
@@ -297,7 +292,7 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getQty()+"</td>\n" +
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals("1")?"是":"否")+"</td>\n" +
                             "            <td>"+(entry.getEntrustName()!=null?entry.getEntrustName():"无")+"</td>\n" +
                             "        </tr>\n");
         }
@@ -308,8 +303,7 @@ public class BillServiceImpl implements BillService {
     /**
      * 饲料领用数据
      */
-    private String swlyData(BillInfo info)
-    {
+    private String swlyData(BillInfo info) {
         if (info == null || info.getFeedEntry().size() <= 0)
             return "";
 
@@ -327,7 +321,7 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getPrice()+"</td>\n" +
                             "            <td>"+entry.getBaseQty()+"</td>\n" +
                             "            <td>"+entry.getAmount()+"</td>\n" +
-                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
+                            "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals("1")?"是":"否")+"</td>\n" +
                             "            <td>"+(entry.getDriverName()!=null?entry.getMaterialName():"无")+"</td>\n" +
                             "            <td>"+(entry.getDriverCarNo()!=null?entry.getDriverCarNo():"无")+"</td>\n" +
                             "        </tr>\n");
@@ -338,8 +332,7 @@ public class BillServiceImpl implements BillService {
     /**
      * 猪苗领用数据
       */
-    private String zmlyData(BillInfo info)
-    {
+    private String zmlyData(BillInfo info) {
         if (info == null || info.getPigEntry().size() <= 0)
             return "";
 
