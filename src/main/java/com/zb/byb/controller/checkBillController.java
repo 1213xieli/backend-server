@@ -45,7 +45,6 @@ public class checkBillController {
     {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
-//            custId = "Va4AAAHluXvMns7U";
             info.setCustId(custId);
             List list = billService.queryInfoRecordList(info);
             PageInfo<BillInfo> pageInfo = new PageInfo(list);
@@ -64,11 +63,10 @@ public class checkBillController {
     @ApiOperation("对账单记录查询")
     @GetMapping("/queryBillRecordById")
     @ResponseBody
-    public ResponseEntity<?> queryBillRecordById(HttpServletRequest request, HttpServletResponse response, BillInfo info)
+    public ResponseEntity<?> queryBillRecordById(HttpServletRequest request, BillInfo info)
     {
         try{
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
-//            custId = "Va4AAAHluXvMns7U";
             info.setCustId(custId);
             info.setDepartment(C.parseStr(request.getSession().getAttribute("servicedep")));
             String htmlTemplate = billService.queryBillRecordById(info);
@@ -76,12 +74,6 @@ public class checkBillController {
                 throw new Exception("未获取账单数据");
 
             byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
-//            String pngStr = C.newGuid() + ".png";
-//            String filePath =Commonconst.TempPath  + pngStr;
-//            OutputStream out = new FileOutputStream(new File(filePath));
-//            out.write(bytes);
-//            out.close();
-
             System.out.println("data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
             return ResponseEntity.build(200,new Message(), "data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
         }
