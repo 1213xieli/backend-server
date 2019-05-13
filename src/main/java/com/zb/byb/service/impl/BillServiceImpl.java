@@ -200,6 +200,7 @@ public class BillServiceImpl implements BillService {
         templateStr.append(this.swlyData(info));
 //        templateStr.append(this.userHasConfirm());
 
+
         // 设备领用--详情部分
         templateStr.append(
                 "        <tr class=\"bg\">\n" +
@@ -216,7 +217,7 @@ public class BillServiceImpl implements BillService {
                 "            <td>是否本人领取</td>\n" +
                 "            <td>委托领取人</td>\n" +
                 "        </tr>\n" );
-        templateStr.append(this.sylyData(info));
+        templateStr.append(this.sblyData(info));
 //        templateStr.append(this.userHasConfirm());
 
         // 兽药领用--详情部分
@@ -235,7 +236,7 @@ public class BillServiceImpl implements BillService {
                 "            <td>是否本人领取</td>\n" +
                 "            <td>委托领取人</td>\n" +
                 "        </tr>\n" );
-        templateStr.append(this.sblyData(info));
+        templateStr.append(this.sylyData(info));
 //        templateStr.append(this.userHasConfirm());
 
         templateStr.append("    </table>\n" + "</body>\n" + "\n" + "</html>" );
@@ -332,7 +333,6 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+(entry.getDriverCarNo()!=null?entry.getDriverCarNo():"无")+"</td>\n" +
                             "        </tr>\n");
         }
-
         return result.toString();
     }
 
@@ -354,7 +354,7 @@ public class BillServiceImpl implements BillService {
             result.append(  "        <tr>\n" +
                             "            <td>"+pigEntry.getPigingDate()+"</td>\n" +
                             "            <td>"+pigEntry.getQty()+"</td>\n" +
-                            "            <td>"+pigEntry.getMaterialName()+"</td>\n" +
+                            "            <td>"+(pigEntry.getMaterialName()!=null?pigEntry.getMaterialName():"无")+"</td>\n" +
                             "            <td>"+pigEntry.getDayAge()+"</td>\n" +
                             "            <td>"+pigEntry.getAvgWeight()+"</td>\n" +
                             "            <td>"+pigEntry.getWeight()+"</td>\n" +
@@ -365,7 +365,6 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+pigEntry.getAmmount()+"</td>\n" +
                             "        </tr>\n");
         }
-
         return result.toString();
     }
 
