@@ -254,7 +254,7 @@ public class BillServiceImpl implements BillService {
         List<EquipEntry> list = info.getEquipEntry();
         StringBuilder result = new StringBuilder();
         for (EquipEntry entry : list) {
-            if (entry == null || C.checkNullOrEmpty(entry.getMaterialName()))
+            if (entry == null)
                 continue;
 
             // 领用日期	品名	 规格	 单位	 数量	 结算单价	结算金额（元）	是否本人领取	委托领取人
@@ -285,7 +285,7 @@ public class BillServiceImpl implements BillService {
         List<DrugEntry> list = info.getDrugEntry();
         StringBuilder result = new StringBuilder();
         for (DrugEntry entry : list) {
-            if (entry == null || C.checkNullOrEmpty(entry.getMaterialName()))
+            if (entry == null)
                 continue;
 
             // 领用日期	品名	规格	 单位	数量	 结算单价	结算金额（元）	是否本人领取	委托领取人
@@ -317,7 +317,7 @@ public class BillServiceImpl implements BillService {
         List<FeedEntry> list = info.getFeedEntry();
         StringBuilder result = new StringBuilder();
         for (FeedEntry entry : list) {
-            if (entry == null || C.checkNullOrEmpty(entry.getMaterialName()))
+            if (entry == null)
                 continue;
             // 领用日期	品名	规格 （kg/包）	数量 （包）	单价 （元/包）	数量（kg）	金额（元）	是否本人领取	委托司机	司机车牌
             result.append(  "        <tr>\n" +
@@ -347,7 +347,7 @@ public class BillServiceImpl implements BillService {
         List<PigEntry> list = info.getPigEntry();
         StringBuilder result = new StringBuilder();
         for (PigEntry pigEntry : list) {
-            if (pigEntry == null || C.checkNullOrEmpty(pigEntry.getMaterialName()))
+            if (pigEntry == null)
                 continue;
 
             // 投苗日期	头数	 品种	投苗日龄	均重(kg)	重量(kg)	基础重 （kg）	基础价 （元/头	超重价 （元/kg）	低重价 （元/kg）	结算金额 （元)
