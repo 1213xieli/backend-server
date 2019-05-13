@@ -299,7 +299,6 @@ public class BillServiceImpl implements BillService {
                             "            <td>"+entry.getAmount()+"</td>\n" +
                             "            <td>"+(entry.getIsSelf()!=null && entry.getIsSelf().equals(1)?"是":"否")+"</td>\n" +
                             "            <td>"+(entry.getEntrustName()!=null?entry.getEntrustName():"无")+"</td>\n" +
-
                             "        </tr>\n");
         }
 
