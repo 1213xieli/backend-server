@@ -139,7 +139,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_EQUIPMENTRECBILL);
-        return JsonPluginsUtil.isRequestSuccessBackId(jsonData);
+        return jsonData;
     }
 
     @Override

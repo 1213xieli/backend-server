@@ -129,9 +129,10 @@ public class MaterialController {
         //空格处理
         try {
             String data=feedApplyService.cancleFeedApply(Image2Base64Util.getBase64Decoder(rcordId));
+            if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
+                throw new Exception("取消失败");
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
-            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -150,7 +151,6 @@ public class MaterialController {
             List <Driver> driverList= feedApplyService.getDriverList(feedApply,custId);
             return ResponseEntity.buildSuccess(driverList);
         } catch (Exception e) {
-            e.printStackTrace();
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -313,7 +313,7 @@ public class MaterialController {
             drugApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String data=drugApplyService.singer(drugApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
-                return ResponseEntity.build(100, "签名失败", null);
+                return ResponseEntity.build(400, "签名失败", null);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -334,7 +334,6 @@ public class MaterialController {
             ;
             if (C.checkNull(id))
                 throw new Exception("未传入id");
-
             return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(Image2Base64Util.getBase64Decoder(id)));
         }
         catch (Exception e)
@@ -453,7 +452,7 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -469,11 +468,15 @@ public class MaterialController {
         try{
             if (C.checkNull(id))
                 throw new Exception("未传入id");
-            return ResponseEntity.buildSuccess(equipmentApplyService.deleteInfoById(Image2Base64Util.getBase64Decoder(id)));
+            String data=equipmentApplyService.deleteInfoById(Image2Base64Util.getBase64Decoder(id));
+            if (!"0000".equals(JSONObject.fromObject(data).getString("code"))){
+                throw new Exception("取消失败");
+            }
+            return ResponseEntity.buildSuccess(data);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
@@ -518,10 +521,10 @@ public class MaterialController {
             equipmentApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String data=equipmentApplyService.signerEquipApply(equipmentApply);
             if (!"0000".equals(JSONObject.fromObject(data).getString("code")))
-                return ResponseEntity.build(100, "签名失败", null);
+                return ResponseEntity.build(400, "签名失败", null);
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
-            e.printStackTrace();
+
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
