@@ -29,8 +29,6 @@ public class BalanceRecordController {
     @GetMapping("/initInfoByBatchId")
     public ResponseEntity<?> initInfoByBatchId(String batchId,HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
-        //userId="Va4AAABJzw/Mns7U";
-
         try {
             ;//解密
             Balance balance=balanceService.initInfoByBatchId(Image2Base64Util.getBase64Decoder(batchId),userId);
@@ -132,8 +130,6 @@ public class BalanceRecordController {
         signerList.add(fileEntry);
         BalanceRecord balanceRecord=new BalanceRecord();
         balanceRecord.setSignerList(signerList);
-
-        //userId="Va4AAABJzw/Mns7U";
         try {
             balanceRecord.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             String id=balanceService.singer(balanceRecord );

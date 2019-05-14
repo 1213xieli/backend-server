@@ -49,7 +49,6 @@ public class SaleNoticeController {
     public ResponseEntity<?> viewSale(HttpServletRequest request) {
         try {
             String custId = C.parseStr(request.getSession().getAttribute("custId"));
-//            String custId = "Va4AAABL9PPMns7U";
             List<SaleNotice> list = saleNoticeService.getSaleRecordList(custId);
             PageInfo page = new PageInfo(list);
             return ResponseEntity.buildSuccess(page);

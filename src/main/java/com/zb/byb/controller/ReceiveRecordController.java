@@ -43,7 +43,6 @@ public class ReceiveRecordController {
     @GetMapping("/receivedRecord")
     public ResponseEntity<?> getReceivedRecordList(String batchId,String type,Integer pageNumber,Integer pageSize,String state,String starttime,String endtime,HttpServletRequest request){
         String userId = (String)request.getSession().getAttribute("userId");
-        //batchId="TsVQKmc6g4XgU5oBWApJqFKx0pw=";
         ReceivedRecord receivedRecord=new ReceivedRecord();
         receivedRecord.setPageNumber(pageNumber);
         receivedRecord.setPageSize(pageSize);

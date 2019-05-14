@@ -45,7 +45,6 @@ public class BatchRecordController {
     public ResponseEntity<BatchRecord> getList(HttpServletRequest request,String batchid){
         String userId=(String) request.getSession().getAttribute("userId");
         //批次号
-
         try {
             BatchRecord batchRecord1= batchRecordService.viewBatchRecord(Image2Base64Util.getBase64Decoder(batchid),userId);
 
@@ -64,8 +63,6 @@ public class BatchRecordController {
     @GetMapping("/batchListList")
     public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){//
         String userId=(String) request.getSession().getAttribute("userId");
-        //userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
-//        System.out.println("=="+userId);
         try {
             List<Batch> list=batchRecordService.getBatchList(userId,batch);
             ResponseEntity<List<Batch>> resp=new ResponseEntity<>();

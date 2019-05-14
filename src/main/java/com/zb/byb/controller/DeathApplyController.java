@@ -33,15 +33,12 @@ import java.util.List;
 @RequestMapping("/api/deathApply")
 public class DeathApplyController {
     @Autowired
-    private BatchRecordService batchRecordService;
-    @Autowired
     private DeathApplyService deathApplyService;
     @ApiOperation("保存死亡申报")
     @PostMapping("/save")
     public ResponseEntity<?> deathApply(@RequestBody(required = false) DeathApply deathApply, HttpServletRequest request) throws IOException {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-//        userId = "Va4AAAdGxznMns7U";
         if (deathApply.getServerIds() != null && deathApply.getServerIds().size() > 0 )
         {
             List<FileEntry> list=new ArrayList<>();

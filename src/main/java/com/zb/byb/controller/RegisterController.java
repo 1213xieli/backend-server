@@ -15,6 +15,8 @@ import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +29,14 @@ import java.util.*;
 @RestController
 @RequestMapping("/api/register")
 public class RegisterController {
+    private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
     @Autowired
     private LoginService loginService;
     @ApiOperation("保存注册信息")
     @PostMapping("/save")
     public ResponseEntity<?> register(@RequestBody UserInfo userInfo, HttpServletRequest request) {
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-//        System.out.println("openId="+openId);
+        logger.info("保存注册openId="+openId);
         String phone=userInfo.getTelNum();
         String code=userInfo.getInvitationCode();
         //openId="12345687";
@@ -48,7 +51,7 @@ public class RegisterController {
                 throw new Exception("名字不能为空");
             }
             String backData=loginService.register(userInfo,openId);
-//            System.out.println("data="+backData);
+           logger.info("backData=" + backData);
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
             Message message = new Message();

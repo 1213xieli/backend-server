@@ -476,7 +476,6 @@ public class MaterialController {
         }
         catch (Exception e)
         {
-
             Message message = new Message();
             message.setCode(C.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());

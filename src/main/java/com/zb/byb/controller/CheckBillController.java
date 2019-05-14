@@ -6,15 +6,15 @@ import com.github.pagehelper.PageInfo;
 import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.BillInfo;
-import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.BillService;
-import com.zb.byb.service.impl.BillServiceImpl;
 import com.zb.byb.util.HtmlToImageUtil;
-import com.zb.byb.util.Image2Base64Util;
+
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
@@ -34,7 +34,8 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/api/bill")
-public class checkBillController {
+public class CheckBillController {
+    private static final Logger logger = LoggerFactory.getLogger(CheckBillController.class);
     @Autowired
     private BillService billService;
 
@@ -74,7 +75,7 @@ public class checkBillController {
                 throw new Exception("未获取账单数据");
 
             byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
-//            System.out.println("data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
+            logger.info("data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
             return ResponseEntity.build(200,new Message(), "data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
         }
         catch (Exception e)
