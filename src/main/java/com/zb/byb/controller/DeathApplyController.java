@@ -18,6 +18,8 @@ import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +34,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/deathApply")
 public class DeathApplyController {
+    private static final Logger logger = LoggerFactory.getLogger(DeathApplyController.class);
     @Autowired
     private DeathApplyService deathApplyService;
     @ApiOperation("保存死亡申报")
@@ -56,8 +59,10 @@ public class DeathApplyController {
                     return ResponseEntity.build(Commonconst.FailStatus, message);
                 }
                 String img = Image2Base64Util.fileToBase64(file);
+                logger.info("------------------图片的Base64码" + img);
                 //图片截取
                 String base64Img = Image2Base64Util.splitBase64(img);
+
                 FileEntry fileEntry = new FileEntry();
                 fileEntry.setImgContent(base64Img);
                 fileEntry.setImgType("jpg");

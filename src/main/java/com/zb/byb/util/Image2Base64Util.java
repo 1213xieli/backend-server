@@ -81,6 +81,10 @@ public class Image2Base64Util {
          fileEntry.setImgContent(base64Str);
          return fileEntry;
     }
+    public static String splitBase64(String file){
+        String base64Str = file.split(",")[1];
+        return base64Str;
+    }
 
     /**
     * @Function: 将音频流转换为base64字符串
