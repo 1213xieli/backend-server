@@ -58,8 +58,9 @@ public class DeathApplyController {
                     message.setMessage(e.getMessage());
                     return ResponseEntity.build(Commonconst.FailStatus, message);
                 }
-                String base64Img = Image2Base64Util.fileToBase64(file);
+                String img = Image2Base64Util.fileToBase64(file);
                 FileEntry fileEntry = new FileEntry();
+                String base64Img = Image2Base64Util.splitBase64(img);
                 fileEntry.setImgContent(base64Img);
                 fileEntry.setImgType("jpg");
                 list.add(fileEntry);
