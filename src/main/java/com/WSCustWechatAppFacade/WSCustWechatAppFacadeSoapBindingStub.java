@@ -5,7 +5,7 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package WSCustWechatAppFacade;
+package com.WSCustWechatAppFacade;
 
 public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client.Stub implements WSCustWechatAppFacadeSrvProxy {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
@@ -126,7 +126,7 @@ public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
             qName = new javax.xml.namespace.QName("urn:client.custwechatappfacade", "WSInvokeException");
             cachedSerQNames.add(qName);
-            cls = custwechatappfacade.client.WSInvokeException.class;
+            cls = com.custwechatappfacade.client.WSInvokeException.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -198,7 +198,7 @@ public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client
         }
     }
 
-    public java.lang.String getData(java.lang.String bizType, java.lang.String jsonType) throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException {
+    public java.lang.String getData(java.lang.String bizType, java.lang.String jsonType) throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -229,15 +229,15 @@ public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client
         if (axisFaultException.detail instanceof java.rmi.RemoteException) {
               throw (java.rmi.RemoteException) axisFaultException.detail;
          }
-        if (axisFaultException.detail instanceof custwechatappfacade.client.WSInvokeException) {
-              throw (custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
+        if (axisFaultException.detail instanceof com.custwechatappfacade.client.WSInvokeException) {
+              throw (com.custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
          }
    }
   throw axisFaultException;
 }
     }
 
-    public java.lang.String bybHandler(java.lang.String methodName, java.lang.String jsonData) throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException {
+    public java.lang.String bybHandler(java.lang.String methodName, java.lang.String jsonData) throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -268,15 +268,15 @@ public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client
         if (axisFaultException.detail instanceof java.rmi.RemoteException) {
               throw (java.rmi.RemoteException) axisFaultException.detail;
          }
-        if (axisFaultException.detail instanceof custwechatappfacade.client.WSInvokeException) {
-              throw (custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
+        if (axisFaultException.detail instanceof com.custwechatappfacade.client.WSInvokeException) {
+              throw (com.custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
          }
    }
   throw axisFaultException;
 }
     }
 
-    public java.lang.String importData(java.lang.String bizType, java.lang.String jsonTpye) throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException {
+    public java.lang.String importData(java.lang.String bizType, java.lang.String jsonTpye) throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -307,15 +307,15 @@ public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client
         if (axisFaultException.detail instanceof java.rmi.RemoteException) {
               throw (java.rmi.RemoteException) axisFaultException.detail;
          }
-        if (axisFaultException.detail instanceof custwechatappfacade.client.WSInvokeException) {
-              throw (custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
+        if (axisFaultException.detail instanceof com.custwechatappfacade.client.WSInvokeException) {
+              throw (com.custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
          }
    }
   throw axisFaultException;
 }
     }
 
-    public void updateToken() throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException {
+    public void updateToken() throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -339,8 +339,8 @@ public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client
         if (axisFaultException.detail instanceof java.rmi.RemoteException) {
               throw (java.rmi.RemoteException) axisFaultException.detail;
          }
-        if (axisFaultException.detail instanceof custwechatappfacade.client.WSInvokeException) {
-              throw (custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
+        if (axisFaultException.detail instanceof com.custwechatappfacade.client.WSInvokeException) {
+              throw (com.custwechatappfacade.client.WSInvokeException) axisFaultException.detail;
          }
    }
   throw axisFaultException;

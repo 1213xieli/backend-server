@@ -1,59 +1,59 @@
 /**
- * WSCustWechatAppFacadeSrvProxyServiceLocator.java
+ * EASLoginProxyServiceLocator.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package WSCustWechatAppFacade;
+package com.EASLogin;
 
-public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis.client.Service implements WSCustWechatAppFacadeSrvProxyService {
+public class EASLoginProxyServiceLocator extends org.apache.axis.client.Service implements EASLoginProxyService {
 
-    public WSCustWechatAppFacadeSrvProxyServiceLocator() {
+    public EASLoginProxyServiceLocator() {
     }
 
 
-    public WSCustWechatAppFacadeSrvProxyServiceLocator(org.apache.axis.EngineConfiguration config) {
+    public EASLoginProxyServiceLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
     }
 
-    public WSCustWechatAppFacadeSrvProxyServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
+    public EASLoginProxyServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
     }
 
-    // Use to get a proxy class for WSCustWechatAppFacade
-    private java.lang.String WSCustWechatAppFacade_address = "http://192.168.91.35:56898/ormrpc/services/WSCustWechatAppFacade";
+    // Use to get a proxy class for EASLogin
+    private java.lang.String EASLogin_address = "http://192.168.91.35:56898/ormrpc/services/EASLogin";
 
-    public java.lang.String getWSCustWechatAppFacadeAddress() {
-        return WSCustWechatAppFacade_address;
+    public java.lang.String getEASLoginAddress() {
+        return EASLogin_address;
     }
 
     // The WSDD service name defaults to the port name.
-    private java.lang.String WSCustWechatAppFacadeWSDDServiceName = "WSCustWechatAppFacade";
+    private java.lang.String EASLoginWSDDServiceName = "EASLogin";
 
-    public java.lang.String getWSCustWechatAppFacadeWSDDServiceName() {
-        return WSCustWechatAppFacadeWSDDServiceName;
+    public java.lang.String getEASLoginWSDDServiceName() {
+        return EASLoginWSDDServiceName;
     }
 
-    public void setWSCustWechatAppFacadeWSDDServiceName(java.lang.String name) {
-        WSCustWechatAppFacadeWSDDServiceName = name;
+    public void setEASLoginWSDDServiceName(java.lang.String name) {
+        EASLoginWSDDServiceName = name;
     }
 
-    public WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacade() throws javax.xml.rpc.ServiceException {
+    public EASLoginProxy getEASLogin() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
-            endpoint = new java.net.URL(WSCustWechatAppFacade_address);
+            endpoint = new java.net.URL(EASLogin_address);
         }
         catch (java.net.MalformedURLException e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
-        return getWSCustWechatAppFacade(endpoint);
+        return getEASLogin(endpoint);
     }
 
-    public WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacade(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public EASLoginProxy getEASLogin(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            WSCustWechatAppFacadeSoapBindingStub _stub = new WSCustWechatAppFacadeSoapBindingStub(portAddress, this);
-            _stub.setPortName(getWSCustWechatAppFacadeWSDDServiceName());
+            EASLoginSoapBindingStub _stub = new EASLoginSoapBindingStub(portAddress, this);
+            _stub.setPortName(getEASLoginWSDDServiceName());
             return _stub;
         }
         catch (org.apache.axis.AxisFault e) {
@@ -61,8 +61,8 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
         }
     }
 
-    public void setWSCustWechatAppFacadeEndpointAddress(java.lang.String address) {
-        WSCustWechatAppFacade_address = address;
+    public void setEASLoginEndpointAddress(java.lang.String address) {
+        EASLogin_address = address;
     }
 
     /**
@@ -72,9 +72,9 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (WSCustWechatAppFacadeSrvProxy.class.isAssignableFrom(serviceEndpointInterface)) {
-                WSCustWechatAppFacadeSoapBindingStub _stub = new WSCustWechatAppFacadeSoapBindingStub(new java.net.URL(WSCustWechatAppFacade_address), this);
-                _stub.setPortName(getWSCustWechatAppFacadeWSDDServiceName());
+            if (EASLoginProxy.class.isAssignableFrom(serviceEndpointInterface)) {
+                EASLoginSoapBindingStub _stub = new EASLoginSoapBindingStub(new java.net.URL(EASLogin_address), this);
+                _stub.setPortName(getEASLoginWSDDServiceName());
                 return _stub;
             }
         }
@@ -94,8 +94,8 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if ("WSCustWechatAppFacade".equals(inputPortName)) {
-            return getWSCustWechatAppFacade();
+        if ("EASLogin".equals(inputPortName)) {
+            return getEASLogin();
         }
         else  {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
@@ -105,7 +105,7 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
     }
 
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://127.0.0.1:56898/ormrpc/services/WSCustWechatAppFacade", "WSCustWechatAppFacadeSrvProxyService");
+        return new javax.xml.namespace.QName("http://192.168.91.35:56898/ormrpc/services/EASLogin", "EASLoginProxyService");
     }
 
     private java.util.HashSet ports = null;
@@ -113,7 +113,7 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://127.0.0.1:56898/ormrpc/services/WSCustWechatAppFacade", "WSCustWechatAppFacade"));
+            ports.add(new javax.xml.namespace.QName("http://192.168.91.35:56898/ormrpc/services/EASLogin", "EASLogin"));
         }
         return ports.iterator();
     }
@@ -123,8 +123,8 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
     */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         
-if ("WSCustWechatAppFacade".equals(portName)) {
-            setWSCustWechatAppFacadeEndpointAddress(address);
+if ("EASLogin".equals(portName)) {
+            setEASLoginEndpointAddress(address);
         }
         else 
 { // Unknown Port Name

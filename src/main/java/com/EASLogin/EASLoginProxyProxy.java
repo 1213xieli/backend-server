@@ -1,4 +1,4 @@
-package EASLogin;
+package com.EASLogin;
 
 public class EASLoginProxyProxy implements EASLoginProxy {
   private String _endpoint = null;

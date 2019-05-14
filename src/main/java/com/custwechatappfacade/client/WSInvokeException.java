@@ -5,14 +5,14 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package custwechatappfacade.client;
+package com.custwechatappfacade.client;
 
-public class WSInvokeException  extends org.apache.axis.AxisFault  implements java.io.Serializable {
+public class WSInvokeException extends org.apache.axis.AxisFault  implements java.io.Serializable {
     public WSInvokeException() {
     }
 
-    private java.lang.Object __equalsCalc = null;
-    public synchronized boolean equals(java.lang.Object obj) {
+    private Object __equalsCalc = null;
+    public synchronized boolean equals(Object obj) {
         if (!(obj instanceof WSInvokeException)) return false;
         WSInvokeException other = (WSInvokeException) obj;
         if (obj == null) return false;
@@ -57,10 +57,10 @@ public class WSInvokeException  extends org.apache.axis.AxisFault  implements ja
      * Get Custom Serializer
      */
     public static org.apache.axis.encoding.Serializer getSerializer(
-           java.lang.String mechType, 
-           java.lang.Class _javaType,  
+           String mechType,
+           Class _javaType,
            javax.xml.namespace.QName _xmlType) {
-        return 
+        return
           new  org.apache.axis.encoding.ser.BeanSerializer(
             _javaType, _xmlType, typeDesc);
     }
@@ -69,8 +69,8 @@ public class WSInvokeException  extends org.apache.axis.AxisFault  implements ja
      * Get Custom Deserializer
      */
     public static org.apache.axis.encoding.Deserializer getDeserializer(
-           java.lang.String mechType, 
-           java.lang.Class _javaType,  
+           String mechType,
+           Class _javaType,
            javax.xml.namespace.QName _xmlType) {
         return 
           new  org.apache.axis.encoding.ser.BeanDeserializer(

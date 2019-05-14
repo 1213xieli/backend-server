@@ -1,9 +1,9 @@
 package com.zb.byb.util;
 
-import WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub;
-import WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxyServiceLocator;
-import EASLogin.EASLoginProxyServiceLocator;
-import EASLogin.EASLoginSoapBindingStub;
+import com.WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub;
+import com.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxyServiceLocator;
+import com.EASLogin.EASLoginProxyServiceLocator;
+import com.EASLogin.EASLoginSoapBindingStub;
 import client.WSContext;
 import client.WSWSAppDataDealFacadeSoapBindingStub;
 import client.WSWSAppDataDealFacadeSrvProxyServiceLocator;

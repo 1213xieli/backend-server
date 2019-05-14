@@ -1,4 +1,4 @@
-package WSCustWechatAppFacade;
+package com.WSCustWechatAppFacade;
 
 public class WSCustWechatAppFacadeSrvProxyProxy implements WSCustWechatAppFacadeSrvProxy {
   private String _endpoint = null;
@@ -44,25 +44,25 @@ public class WSCustWechatAppFacadeSrvProxyProxy implements WSCustWechatAppFacade
     return wSCustWechatAppFacadeSrvProxy;
   }
   
-  public java.lang.String getData(java.lang.String bizType, java.lang.String jsonType) throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException{
+  public java.lang.String getData(java.lang.String bizType, java.lang.String jsonType) throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException{
     if (wSCustWechatAppFacadeSrvProxy == null)
       _initWSCustWechatAppFacadeSrvProxyProxy();
     return wSCustWechatAppFacadeSrvProxy.getData(bizType, jsonType);
   }
   
-  public java.lang.String bybHandler(java.lang.String methodName, java.lang.String jsonData) throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException{
+  public java.lang.String bybHandler(java.lang.String methodName, java.lang.String jsonData) throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException{
     if (wSCustWechatAppFacadeSrvProxy == null)
       _initWSCustWechatAppFacadeSrvProxyProxy();
     return wSCustWechatAppFacadeSrvProxy.bybHandler(methodName, jsonData);
   }
   
-  public java.lang.String importData(java.lang.String bizType, java.lang.String jsonTpye) throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException{
+  public java.lang.String importData(java.lang.String bizType, java.lang.String jsonTpye) throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException{
     if (wSCustWechatAppFacadeSrvProxy == null)
       _initWSCustWechatAppFacadeSrvProxyProxy();
     return wSCustWechatAppFacadeSrvProxy.importData(bizType, jsonTpye);
   }
   
-  public void updateToken() throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException{
+  public void updateToken() throws java.rmi.RemoteException, com.custwechatappfacade.client.WSInvokeException{
     if (wSCustWechatAppFacadeSrvProxy == null)
       _initWSCustWechatAppFacadeSrvProxyProxy();
     wSCustWechatAppFacadeSrvProxy.updateToken();
