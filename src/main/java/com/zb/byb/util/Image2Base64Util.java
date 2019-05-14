@@ -9,10 +9,10 @@ import sun.misc.BASE64Encoder;
 import java.io.*;
 
 /**
-* @Function:  File互转Base64
-* @Author: shaoys
-* @Date: Created in 10:41 2019/5/14
-**/
+ * @Function:  File互转Base64
+ * @Author: shaoys
+ * @Date: Created in 10:41 2019/5/14
+ **/
 public class Image2Base64Util {
 
 //    public static void main(String[] args) throws Exception {
@@ -78,8 +78,8 @@ public class Image2Base64Util {
 
     public static FileEntry subBase64(FileEntry fileEntry){
         String base64Str=fileEntry.getImgContent().split(",")[1];
-         fileEntry.setImgContent(base64Str);
-         return fileEntry;
+        fileEntry.setImgContent(base64Str);
+        return fileEntry;
     }
     public static String splitBase64(String file){
         String base64Str = file.split(",")[1];
@@ -87,10 +87,10 @@ public class Image2Base64Util {
     }
 
     /**
-    * @Function: 将音频流转换为base64字符串
-    * @Author: shaoys
-    * @Date: Created in 14:41 2019/5/7
-    **/
+     * @Function: 将音频流转换为base64字符串
+     * @Author: shaoys
+     * @Date: Created in 14:41 2019/5/7
+     **/
     public static String getBase64FromInputStream(InputStream in) {
         // 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
         byte[] data = null;
@@ -139,10 +139,10 @@ public class Image2Base64Util {
         return s;
     }
     /**
-    * @Function: base64解码为文件
-    * @Author: shaoys
-    * @Date: Created in 16:24 2019/5/10
-    **/
+     * @Function: base64解码为文件
+     * @Author: shaoys
+     * @Date: Created in 16:24 2019/5/10
+     **/
     public static void base64ToFile(String base64Code, String targetPath,String catalogue)
             throws Exception {
         File file = new File(catalogue);
@@ -168,10 +168,10 @@ public class Image2Base64Util {
         return new BASE64Encoder().encode(data);
     }
     /**
-    * @Function: 图片
-    * @Author: shaoys
-    * @Date: Created in 19:15 2019/5/10
-    **/
+     * @Function: 图片
+     * @Author: shaoys
+     * @Date: Created in 19:15 2019/5/10
+     **/
     public static String imgToBase64(File file) throws IOException {
         FileInputStream fis = new FileInputStream(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -214,8 +214,7 @@ public class Image2Base64Util {
         return encoder.encode(data);
     }
 
-//    public static void main(String[] args) {
-//        String abc=GetImageStr("C:\\fakepath\\企业微信截图_1557473165743.png");
-//        System.out.println(abc);
+//    public static void main(String[] args) throws Exception {
+//       base64ToFile("","C:\\Users\\pc2\\Desktop\\123456.JPG","C:\\Users\\pc2\\Desktop");
 //    }
 }

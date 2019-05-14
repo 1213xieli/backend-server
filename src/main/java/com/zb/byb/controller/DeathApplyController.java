@@ -43,25 +43,26 @@ public class DeathApplyController {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
         try{
-        if (deathApply.getServerIds() != null && deathApply.getServerIds().size() >= 2 )
-        {
-            List<FileEntry> list=new ArrayList<>();
-            for (String serverId : deathApply.getServerIds()) {
-                File file = HttpConnectionUtil.downloadWxImg(serverId);
-                String base64Img = Image2Base64Util.fileToBase64(file);
-                logger.info("------------------图片的Base64码" + base64Img);
-//                logger.info("------------------图片的Base64码" + img);
-                //图片截取
-//                String base64Img = Image2Base64Util.splitBase64(img);
-                FileEntry fileEntry = new FileEntry();
-                fileEntry.setImgContent(base64Img);
-                fileEntry.setImgType("jpg");
-                list.add(fileEntry);
+            if (deathApply.getServerIds() != null && deathApply.getServerIds().size() >= 2 )
+            {
+                List<FileEntry> list=new ArrayList<>();
+                for (String serverId : deathApply.getServerIds()) {
+                    File file = HttpConnectionUtil.downloadWxImg(serverId);
+                    if (C.checkNullOrEmpty(file)){
+                        logger.info("---------------file文件为空");
+                        throw new Exception("未获取到文件");
+                    }
+                    String base64Img = Image2Base64Util.fileToBase64(file);
+                    logger.info("---------图片的Base64" + base64Img);
+                    FileEntry fileEntry = new FileEntry();
+                    fileEntry.setImgContent(base64Img);
+                    fileEntry.setImgType("jpg");
+                    list.add(fileEntry);
+                }
+                deathApply.setImgUrl(list);
+            }else{
+                throw new Exception("未传入两个serviceId");
             }
-            deathApply.setImgUrl(list);
-        }else{
-            throw new Exception("未获取到两个serviceId");
-        }
             if(C.checkNullOrEmpty(userId)){
                 throw new Exception("未传人养户id");
             }
@@ -146,17 +147,17 @@ public class DeathApplyController {
     public ResponseEntity<DeathApply> singer(String rcordId, @RequestBody FileEntry fileEntry)
     {
         try{
-        fileEntry= Image2Base64Util.subBase64(fileEntry);
-        List<FileEntry> signerList=new ArrayList<>();
-        signerList.add(fileEntry);
-        DeathApply deathApply=new DeathApply();
-        deathApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
-        deathApply.setSignerList(signerList);
+            fileEntry= Image2Base64Util.subBase64(fileEntry);
+            List<FileEntry> signerList=new ArrayList<>();
+            signerList.add(fileEntry);
+            DeathApply deathApply=new DeathApply();
+            deathApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
+            deathApply.setSignerList(signerList);
             if (C.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             String s = deathApplyService.signerDeathApply(deathApply);
             if (!"0000".equals(JSONObject.fromObject(s).getString("code")))
-            throw new Exception("签名失败");
+                throw new Exception("签名失败");
             return ResponseEntity.buildSuccess(s);
         }
         catch (Exception e)
