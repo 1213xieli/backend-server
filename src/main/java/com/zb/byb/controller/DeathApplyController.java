@@ -48,7 +48,7 @@ public class DeathApplyController {
             for (String serverId : deathApply.getServerIds()) {
                 File file = HttpConnectionUtil.downloadWxImg(serverId);
                 try {
-                    if (file == null) {
+                    if (file == null) { 
                         throw new Exception("获取文件失败");
                     }
                 }catch (Exception e) {
