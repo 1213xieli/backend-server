@@ -5,9 +5,9 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package _1._0._0._127.ormrpc.services.WSCustWechatAppFacade;
+package WSCustWechatAppFacade;
 
-public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis.client.Service implements _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxyService {
+public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis.client.Service implements WSCustWechatAppFacadeSrvProxyService {
 
     public WSCustWechatAppFacadeSrvProxyServiceLocator() {
     }
@@ -39,7 +39,7 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
         WSCustWechatAppFacadeWSDDServiceName = name;
     }
 
-    public _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacade() throws javax.xml.rpc.ServiceException {
+    public WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacade() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(WSCustWechatAppFacade_address);
@@ -50,9 +50,9 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
         return getWSCustWechatAppFacade(endpoint);
     }
 
-    public _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacade(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacade(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub _stub = new _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub(portAddress, this);
+            WSCustWechatAppFacadeSoapBindingStub _stub = new WSCustWechatAppFacadeSoapBindingStub(portAddress, this);
             _stub.setPortName(getWSCustWechatAppFacadeWSDDServiceName());
             return _stub;
         }
@@ -72,8 +72,8 @@ public class WSCustWechatAppFacadeSrvProxyServiceLocator extends org.apache.axis
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (_1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxy.class.isAssignableFrom(serviceEndpointInterface)) {
-                _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub _stub = new _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub(new java.net.URL(WSCustWechatAppFacade_address), this);
+            if (WSCustWechatAppFacadeSrvProxy.class.isAssignableFrom(serviceEndpointInterface)) {
+                WSCustWechatAppFacadeSoapBindingStub _stub = new WSCustWechatAppFacadeSoapBindingStub(new java.net.URL(WSCustWechatAppFacade_address), this);
                 _stub.setPortName(getWSCustWechatAppFacadeWSDDServiceName());
                 return _stub;
             }

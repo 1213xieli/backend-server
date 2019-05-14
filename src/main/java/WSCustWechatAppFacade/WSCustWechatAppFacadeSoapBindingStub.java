@@ -5,9 +5,9 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package _1._0._0._127.ormrpc.services.WSCustWechatAppFacade;
+package WSCustWechatAppFacade;
 
-public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client.Stub implements _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxy {
+public class WSCustWechatAppFacadeSoapBindingStub extends org.apache.axis.client.Stub implements WSCustWechatAppFacadeSrvProxy {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();

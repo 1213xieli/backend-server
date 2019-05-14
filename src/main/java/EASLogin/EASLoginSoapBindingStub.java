@@ -5,9 +5,9 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package _35._91._168._192.ormrpc.services.EASLogin;
+package EASLogin;
 
-public class EASLoginSoapBindingStub extends org.apache.axis.client.Stub implements _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxy {
+public class EASLoginSoapBindingStub extends org.apache.axis.client.Stub implements EASLoginProxy {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();

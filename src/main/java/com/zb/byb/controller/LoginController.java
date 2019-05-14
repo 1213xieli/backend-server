@@ -15,7 +15,6 @@ import com.zb.byb.util.RequestUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Array;
 import java.util.*;
 
 @RestController
@@ -70,7 +68,7 @@ public class LoginController {
 
             String userId = jsonMap.getString("id");
             //userId="Va4AAAVyFHXMns7U";//甘建国
-            System.out.println("userId="+userId);
+//            System.out.println("userId="+userId);
 
             if (C.checkNullOrEmpty(userId)){
                 throw new Exception("登录失败");
@@ -87,7 +85,7 @@ public class LoginController {
             batch.setPageSize(50);
             List<Batch> list=batchRecordService.getBatchList(userId,batch);
             //System.out.println("批次："+ net.sf.json.JSONObject.fromObject(list));
-            System.out.println("批次："+ JSONObject.toJSONString(list));
+//            System.out.println("批次："+ JSONObject.toJSONString(list));
             session.setAttribute("pcList", list);
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
@@ -163,11 +161,11 @@ public class LoginController {
     @GetMapping("/isSessionAlive")
     public ResponseEntity<?> isSessionAlive(HttpServletRequest request) {
         if(request.getSession(false)==null){
-            System.out.println("Session has been invalidated!");
+//            System.out.println("Session has been invalidated!");
             return ResponseEntity.build(200,"Session has been invalidated!", null);
         }
         else{
-            System.out.println("Session is active!");
+//            System.out.println("Session is active!");
             return ResponseEntity.build(201, "Session is active!", null);
         }
 

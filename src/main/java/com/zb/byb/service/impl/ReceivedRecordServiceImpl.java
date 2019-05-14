@@ -28,7 +28,7 @@ public class ReceivedRecordServiceImpl implements ReceivedRecordService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_APPLYRECORD);
-        System.out.println("领用记录查看----" + jsonData);
+//        System.out.println("领用记录查看----" + jsonData);
         //获取数据明细
         List<ReceivedDetail> details=JsonPluginsUtil.jsonTOList(jsonData, ReceivedDetail.class);
         receivedRecord.setDetails(details);

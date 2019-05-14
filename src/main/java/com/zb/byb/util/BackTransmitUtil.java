@@ -1,9 +1,9 @@
 package com.zb.byb.util;
 
-import _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub;
-import _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxyServiceLocator;
-import _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxyServiceLocator;
-import _35._91._168._192.ormrpc.services.EASLogin.EASLoginSoapBindingStub;
+import WSCustWechatAppFacade.WSCustWechatAppFacadeSoapBindingStub;
+import WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxyServiceLocator;
+import EASLogin.EASLoginProxyServiceLocator;
+import EASLogin.EASLoginSoapBindingStub;
 import client.WSContext;
 import client.WSWSAppDataDealFacadeSoapBindingStub;
 import client.WSWSAppDataDealFacadeSrvProxyServiceLocator;
@@ -12,9 +12,10 @@ import org.apache.axis.message.SOAPHeaderElement;
 import java.net.URL;
 
 /**
- * 后台传输数据公共方法
- * 作者：谢李
- */
+* @Function: 后台传输数据公共方法
+* @Author: shaoys
+* @Date: Created in 10:39 2019/5/14
+**/
 public class BackTransmitUtil {
 
     /**
@@ -33,9 +34,9 @@ public class BackTransmitUtil {
         //设置头部
         soap.setHeader(new SOAPHeaderElement("http://login.webservice.bos.kingdee.com", "SessionId", ""));
         //获取sessionId
-        WSContext ctx = soap.login("zengneng", "", "eas", Resource.DC_NAME, "l2", 1);
+        WSContext ctx = soap.login(Resource.USER_NAME, Resource.PASS_WORD, Resource.SLN_NAME, Resource.DC_NAME, Resource.LANGUAGE, Resource.DB_TYPE);
         String sessionId = ctx.getSessionId();
-        System.out.println(DateUtil.getCurrentDateFolder());
+//        System.out.println(DateUtil.getCurrentDateFolder());
 
         WSCustWechatAppFacadeSrvProxyServiceLocator locator2 = new WSCustWechatAppFacadeSrvProxyServiceLocator();
         URL url2 = new URL(Resource.URL_TASK_TEST);
@@ -59,9 +60,9 @@ public class BackTransmitUtil {
         //设置头部
         soap.setHeader(new SOAPHeaderElement("http://login.webservice.bos.kingdee.com", "SessionId", ""));
         //获取sessionId
-        WSContext ctx = soap.login("zengneng", "", "eas", "CS1116", "l2", 1);
+        WSContext ctx = soap.login(Resource.USER_NAME, Resource.PASS_WORD, Resource.SLN_NAME, Resource.DC_NAME, Resource.LANGUAGE, Resource.DB_TYPE);
         String sessionId = ctx.getSessionId();
-        System.out.println(sessionId);
+//        System.out.println(sessionId);
 
         WSWSAppDataDealFacadeSrvProxyServiceLocator locator2 = new WSWSAppDataDealFacadeSrvProxyServiceLocator();
         URL url2 = new URL(url1);

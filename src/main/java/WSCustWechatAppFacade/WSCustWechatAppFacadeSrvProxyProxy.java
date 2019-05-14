@@ -1,8 +1,8 @@
-package _1._0._0._127.ormrpc.services.WSCustWechatAppFacade;
+package WSCustWechatAppFacade;
 
-public class WSCustWechatAppFacadeSrvProxyProxy implements _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxy {
+public class WSCustWechatAppFacadeSrvProxyProxy implements WSCustWechatAppFacadeSrvProxy {
   private String _endpoint = null;
-  private _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxy wSCustWechatAppFacadeSrvProxy = null;
+  private WSCustWechatAppFacadeSrvProxy wSCustWechatAppFacadeSrvProxy = null;
   
   public WSCustWechatAppFacadeSrvProxyProxy() {
     _initWSCustWechatAppFacadeSrvProxyProxy();
@@ -15,7 +15,7 @@ public class WSCustWechatAppFacadeSrvProxyProxy implements _1._0._0._127.ormrpc.
   
   private void _initWSCustWechatAppFacadeSrvProxyProxy() {
     try {
-      wSCustWechatAppFacadeSrvProxy = (new _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxyServiceLocator()).getWSCustWechatAppFacade();
+      wSCustWechatAppFacadeSrvProxy = (new WSCustWechatAppFacadeSrvProxyServiceLocator()).getWSCustWechatAppFacade();
       if (wSCustWechatAppFacadeSrvProxy != null) {
         if (_endpoint != null)
           ((javax.xml.rpc.Stub)wSCustWechatAppFacadeSrvProxy)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
@@ -38,7 +38,7 @@ public class WSCustWechatAppFacadeSrvProxyProxy implements _1._0._0._127.ormrpc.
     
   }
   
-  public _1._0._0._127.ormrpc.services.WSCustWechatAppFacade.WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacadeSrvProxy() {
+  public WSCustWechatAppFacadeSrvProxy getWSCustWechatAppFacadeSrvProxy() {
     if (wSCustWechatAppFacadeSrvProxy == null)
       _initWSCustWechatAppFacadeSrvProxyProxy();
     return wSCustWechatAppFacadeSrvProxy;

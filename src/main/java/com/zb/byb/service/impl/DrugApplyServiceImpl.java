@@ -35,7 +35,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         map.put("data", info);
         String data = JSONObject.fromObject(map).toString();
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_MEDICINEAPPLY);
-        System.out.println("领药申请,保存方法---" + jsonBackStr);
+//        System.out.println("领药申请,保存方法---" + jsonBackStr);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
     }
 
@@ -54,7 +54,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         String data = JSON.toJSONString(map);
         String jsonBackStr = JsonPluginsUtil.getSuccessData(BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_queryMaterial));
         jsonBackStr = JsonPluginsUtil.getSuccessData(jsonBackStr, "materialDetails");
-        System.out.println("根据关键字+批次id进行模糊查询药品列表-------------" + jsonBackStr);
+//        System.out.println("根据关键字+批次id进行模糊查询药品列表-------------" + jsonBackStr);
         return JSON.parseArray(jsonBackStr, MaterialInfo.class);
     }
 
@@ -69,7 +69,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_MEDICINEAPPLY);
-        System.out.println("领药申请,初始化单个view方法---" + jsonData);
+//        System.out.println("领药申请,初始化单个view方法---" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, DrugApply.class);
     }
 
@@ -84,7 +84,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_MEDICINEAPPLY);
-        System.out.println("领药申请,查询query方法---" + jsonData);
+//        System.out.println("领药申请,查询query方法---" + jsonData);
         List<DrugApply> drugApplies = JsonPluginsUtil.jsonToBeanList(jsonData, DrugApply.class);
         //领药rcordid进行base64加密
         for (int i = 0; i < drugApplies.size(); i++) {
@@ -106,7 +106,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_MEDICINEAPPLY);
-        System.out.println("领药申请,查询单个view方法---" + jsonData);
+//        System.out.println("领药申请,查询单个view方法---" + jsonData);
         return JsonPluginsUtil.jsonToBean(jsonData, DrugApply.class);
     }
 
@@ -122,7 +122,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_MEDICINEAPPLY);
-        System.out.println("领药申请,删除单个view方法---" + jsonData);
+//        System.out.println("领药申请,删除单个view方法---" + jsonData);
         return "0000".equals(JSONObject.fromObject(jsonData).getString("code")) ? true : false;
     }
 
@@ -134,7 +134,7 @@ public class DrugApplyServiceImpl implements DrugApplyService {
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_MEDICINEAPPLY);
-        System.out.println("领药申请,删除单个view方法---" + jsonData);
+//        System.out.println("领药申请,删除单个view方法---" + jsonData);
         return jsonData;
     }
 }

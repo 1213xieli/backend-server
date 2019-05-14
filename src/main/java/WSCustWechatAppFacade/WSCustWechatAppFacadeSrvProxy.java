@@ -5,7 +5,7 @@
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
-package _1._0._0._127.ormrpc.services.WSCustWechatAppFacade;
+package WSCustWechatAppFacade;
 
 public interface WSCustWechatAppFacadeSrvProxy extends java.rmi.Remote {
     public java.lang.String getData(java.lang.String bizType, java.lang.String jsonType) throws java.rmi.RemoteException, custwechatappfacade.client.WSInvokeException;

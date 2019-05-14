@@ -51,7 +51,7 @@ public class FeedRecordController {
         String sessionId=(String) request.getSession().getAttribute("sessionId");
 
 
-        System.out.println("sessionId="+sessionId);
+//        System.out.println("sessionId="+sessionId);
         try {
             String batchId=Image2Base64Util.getBase64Decoder(batch.getId());
             return ResponseEntity.buildSuccess(feedRecordService.pigwashList(batchId));

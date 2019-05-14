@@ -37,7 +37,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         String data = JSONObject.fromObject(map).toString();
         String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PROBLEMFEEDBACK);
         String id = JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
-        System.out.println("保存问题，反馈的记录id----" + id);
+//        System.out.println("保存问题，反馈的记录id----" + id);
         return id;
     }
 
@@ -59,7 +59,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         String data= JSONObject.fromObject(map).toString();
         //{"pageNumber":"1","data":{"bizdate":"","custId":"Va4AAAdGxznMns7U","custname":"","details":"","extendsOne":"","id":"","order":"","pageNumber":1,"pageSize":1000,"rcordId":"","remark":"","replydate":"","replydetails":"","replypersonid":"","replypersonname":""},"custId":"Va4AAAdGxznMns7U","pageSize":"1000"}
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PROBLEMFEEDBACK);
-        System.out.println("问题反馈，查询列表---" + jsonData);
+//        System.out.println("问题反馈，查询列表---" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, QuestionReportInfo.class);
     }
 
@@ -78,7 +78,7 @@ public class QuestionReportInfoServiceImpl implements QuestionReportInfoService 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PROBLEMFEEDBACK);
-        System.out.println("问题反馈，查询view方法---" + jsonData);
+//        System.out.println("问题反馈，查询view方法---" + jsonData);
        //{"code":"0000","data":{"bizdate":"2019-05-06","custid":"Va4AAAO6drnMns7U","custname":"胡亿龙","details":"思考dont","rcordId":"Va4AAAiiQDt/YF2u","replydate":"2019-05-06","replydetails":"666","replypersonid":"IkE9MNuvTZ2/OleSqVTYJxO33n8=","replypersonname":"冯常耀"},"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBean(jsonData, QuestionReportInfo.class);
     }

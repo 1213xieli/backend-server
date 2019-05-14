@@ -1,7 +1,6 @@
 package com.zb.byb.util;
 
 
-import com.zb.byb.common.C;
 import com.zb.byb.entity.FileEntry;
 import org.apache.commons.codec.binary.Base64;
 import sun.misc.BASE64Decoder;
@@ -10,11 +9,10 @@ import sun.misc.BASE64Encoder;
 import java.io.*;
 
 /**
- * 将图片转换为Base64<br>
- * 将base64编码字符串解码成img图片
- *
- * @创建时间 2015-06-01 15:50
- */
+* @Function:  File互转Base64
+* @Author: shaoys
+* @Date: Created in 10:41 2019/5/14
+**/
 public class Image2Base64Util {
 
 //    public static void main(String[] args) throws Exception {
@@ -25,6 +23,7 @@ public class Image2Base64Util {
 ////        System.out.println(imgbese);
 ////    decoderBase64File(imgbese,"C:\\Users\\pc2\\Desktop\\4.jpg","C:\\Users\\pc2\\Desktop");
 //    }
+
     /**
      * 将图片转换成Base64编码
      *
@@ -211,8 +210,8 @@ public class Image2Base64Util {
         return encoder.encode(data);
     }
 
-    public static void main(String[] args) {
-        String abc=GetImageStr("C:\\fakepath\\企业微信截图_1557473165743.png");
-        System.out.println(abc);
-    }
+//    public static void main(String[] args) {
+//        String abc=GetImageStr("C:\\fakepath\\企业微信截图_1557473165743.png");
+//        System.out.println(abc);
+//    }
 }

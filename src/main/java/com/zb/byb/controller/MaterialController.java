@@ -67,7 +67,7 @@ public class MaterialController {
     @GetMapping("/feedList")
     public ResponseEntity<List<FeedApply>> getFeedList(FeedApply feedApply,HttpServletRequest request){
         String userId=(String) request.getSession().getAttribute("userId");
-        System.out.println(userId);
+//        System.out.println(userId);
         try {
             if (C.checkNull(userId))
                 throw new Exception("未传入养户id");

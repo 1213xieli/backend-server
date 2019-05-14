@@ -33,7 +33,7 @@ public class MyInfoController {
     @GetMapping("/list")
     public ResponseEntity<MyInfo> queryMyInfo(HttpServletRequest request) {
         String openId=(String) request.getSession().getAttribute("openId");
-        System.out.println("openId="+openId);
+//        System.out.println("openId="+openId);
         try {
             if (C.checkNull(openId)){
                 throw new Exception("未获取openId");

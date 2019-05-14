@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class AlgorithmUtil {
 	
-	public static void main(String[] args) {
-		System.out.println(doAssert("{1,8，2.0}", 2));
-	}
+//	public static void main(String[] args) {
+//		System.out.println(doAssert("{1,8，2.0}", 2));
+//	}
 
 	/**
 	 * 
@@ -35,7 +35,7 @@ public class AlgorithmUtil {
 		if (!validateReginon(region))
 			return false;
 		
-		System.out.println(region);
+//		System.out.println(region);
 		String startStr = C.parseStr(region.charAt(0));
 		String endStr = C.parseStr(region.charAt(region.length() - 1));
 		// 3.1 算法比较，{1,2,3,4} a 是1,2,3,4中的一种则满足

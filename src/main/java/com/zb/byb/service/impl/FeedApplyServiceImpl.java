@@ -39,7 +39,7 @@ public class FeedApplyServiceImpl implements FeedApplyService {
         map.put("data", feedApply);//参数QUERY_
         String data = JSONObject.fromObject(map).toString();
         String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PICKINGAPPLY);
-        System.out.println("领料申请,查询query方法---" + jsonStr);
+//        System.out.println("领料申请,查询query方法---" + jsonStr);
 
         List<FeedApply> feedApplies = JsonPluginsUtil.jsonTOList(jsonStr, FeedApply.class);
         //对领料rcordId进行base64加密

@@ -100,7 +100,7 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         data.put("batchid",batchId);
         map.put("data",data);
         String dataStr=JSONObject.fromObject(map).toString();
-        System.out.println(dataStr);
+//        System.out.println(dataStr);
         String jsonBack= BackTransmitUtil.newInvokeFunc(dataStr, "selectFeedVarieties", Resource.URL_BATCH_TEST);
         if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
             return null;

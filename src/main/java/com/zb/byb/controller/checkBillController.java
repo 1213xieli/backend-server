@@ -74,7 +74,7 @@ public class checkBillController {
                 throw new Exception("未获取账单数据");
 
             byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
-            System.out.println("data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
+//            System.out.println("data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
             return ResponseEntity.build(200,new Message(), "data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
         }
         catch (Exception e)

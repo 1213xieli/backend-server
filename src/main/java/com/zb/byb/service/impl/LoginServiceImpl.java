@@ -101,9 +101,9 @@ public class LoginServiceImpl implements LoginService {
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> r = restTemplate.exchange(url.toString(), HttpMethod.POST, requestEntity, String.class);
         String jsonback = r.getBody();
-        System.out.println("json=" + jsonback);
+//        System.out.println("json=" + jsonback);
         int code1 = JSONObject.fromObject(jsonback).getInt("status");
-        System.out.println(code1);
+//        System.out.println(code1);
         if (200 == code1) {
             return true;
         }

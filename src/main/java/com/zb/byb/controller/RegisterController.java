@@ -33,7 +33,7 @@ public class RegisterController {
     @PostMapping("/save")
     public ResponseEntity<?> register(@RequestBody UserInfo userInfo, HttpServletRequest request) {
         String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        System.out.println("openId="+openId);
+//        System.out.println("openId="+openId);
         String phone=userInfo.getTelNum();
         String code=userInfo.getInvitationCode();
         //openId="12345687";
@@ -48,7 +48,7 @@ public class RegisterController {
                 throw new Exception("名字不能为空");
             }
             String backData=loginService.register(userInfo,openId);
-            System.out.println("data="+backData);
+//            System.out.println("data="+backData);
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
             Message message = new Message();

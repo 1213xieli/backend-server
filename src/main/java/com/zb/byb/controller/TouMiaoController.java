@@ -116,7 +116,7 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<TouMiao> signerTouMiao(@RequestBody SingerTM fileEntry,HttpServletRequest request)
     {
         String userId=(String)request.getSession().getAttribute("userId");
-        System.out.println(fileEntry.getFileEntry());
+//        System.out.println(fileEntry.getFileEntry());
         //处理投苗签名base64
         Image2Base64Util.subBase64(fileEntry.getFileEntry());
 

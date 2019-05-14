@@ -1,8 +1,8 @@
-package _35._91._168._192.ormrpc.services.EASLogin;
+package EASLogin;
 
-public class EASLoginProxyProxy implements _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxy {
+public class EASLoginProxyProxy implements EASLoginProxy {
   private String _endpoint = null;
-  private _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxy eASLoginProxy = null;
+  private EASLoginProxy eASLoginProxy = null;
   
   public EASLoginProxyProxy() {
     _initEASLoginProxyProxy();
@@ -15,7 +15,7 @@ public class EASLoginProxyProxy implements _35._91._168._192.ormrpc.services.EAS
   
   private void _initEASLoginProxyProxy() {
     try {
-      eASLoginProxy = (new _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxyServiceLocator()).getEASLogin();
+      eASLoginProxy = (new EASLoginProxyServiceLocator()).getEASLogin();
       if (eASLoginProxy != null) {
         if (_endpoint != null)
           ((javax.xml.rpc.Stub)eASLoginProxy)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
@@ -38,7 +38,7 @@ public class EASLoginProxyProxy implements _35._91._168._192.ormrpc.services.EAS
     
   }
   
-  public _35._91._168._192.ormrpc.services.EASLogin.EASLoginProxy getEASLoginProxy() {
+  public EASLoginProxy getEASLoginProxy() {
     if (eASLoginProxy == null)
       _initEASLoginProxyProxy();
     return eASLoginProxy;

@@ -42,7 +42,7 @@ public class BillServiceImpl implements BillService {
         // 要传入数据进行转化
         String data = JSONObject.toJSONString(map);
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
-        System.out.println("对账单，查询query方法----" + jsonData);
+//        System.out.println("对账单，查询query方法----" + jsonData);
         return JsonPluginsUtil.jsonToBeanList(jsonData, BillInfo.class);
     }
 
@@ -55,7 +55,7 @@ public class BillServiceImpl implements BillService {
         map.put("data", info);
         String data = JSONObject.toJSONString(map);
         String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
-        System.out.println("根据recordId获取单个记录" +jsonData);
+//        System.out.println("根据recordId获取单个记录" +jsonData);
         List<BillInfo> list = this.queryInfoRecordList(info);
         for (BillInfo bill : list) {
 
@@ -423,7 +423,7 @@ public class BillServiceImpl implements BillService {
                 "            <td>语文</td>\r\n" +
                 "        </tr>\r\n" +
                 "    </table>";
-        System.out.println(htmlTemplate);
+//        System.out.println(htmlTemplate);
         byte[] bytes = new byte[0];
         try {
             bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);

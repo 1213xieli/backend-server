@@ -22,8 +22,21 @@ import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStream;
  * @author gongxunqiang
  */
 public class WeixinUtils {
-	public static final String URL_DOWNLOAD_TEMP_MEDIA="https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID";
 
+	// 获取access_token的接口地址（GET） 限200（次/天）
+	public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+
+	// 菜单创建（POST） 限100（次/天）
+	public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+
+	// 获取jsapi_ticket的接口
+	public final static String jsapi_ticket_url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
+
+	// 获取phone账号接口
+	public final static String phone_url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&userid=USERID";
+
+	//获取微信个人信息接口
+	public final static String userid_url = "https://api.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE";
 	/**
 	 * 发起https请求并获取结果
 	 * 
@@ -91,9 +104,6 @@ public class WeixinUtils {
 		return result;
 	}
 
-	// 获取access_token的接口地址（GET） 限200（次/天）
-	public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-
 	/**
 	 * 获取access_token
 	 * 
@@ -121,8 +131,7 @@ public class WeixinUtils {
 		return accessToken;
 	}
 
-	// 菜单创建（POST） 限100（次/天）
-	public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+
 
 	/**
 	 * 创建菜单
@@ -143,9 +152,6 @@ public class WeixinUtils {
 
 		return httpRequest(url, "POST", jsonMenu);
 	}
-
-	// 获取jsapi_ticket的接口
-	public final static String jsapi_ticket_url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
 
 	/**
 	 * 获取jsapi_ticket
@@ -168,8 +174,6 @@ public class WeixinUtils {
 		}
 		return ticket;
 	}
-
-	public final static String phone_url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&userid=USERID";
 
 	/**
 	 * 获取phone
@@ -199,8 +203,6 @@ public class WeixinUtils {
 		return phone;
 	}
 
-	public final static String userid_url = "https://api.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE";
-
 	/**
 	 * 企业号获取userid
 	 * 
@@ -228,44 +230,4 @@ public class WeixinUtils {
 		}
 		return userId;
 	}
-	/**
-	 * @Function: 去腾讯下载音频
-	 * @Author: shaoys
-	 * @Date: Created in 15:07 2019/5/7
-	 **/
-	public static String getInputStream(String mediaId) {
-		AccessToken accessToken = WxCache.getInstance().getAccessToken();
-		InputStream is = null;
-		try {
-			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN", accessToken.getToken()).replace("MEDIA_ID", mediaId);
-//			String url = URL_DOWNLOAD_TEMP_MEDIA.replace("ACCESS_TOKEN",
-//					"21_-GOZGmnfax2_ENdrqBmMP6cPDirx1Z5skqzhs1S9IhWpCKLAH7E7zAjXkDWGAZtIgJpo6cmrQsQdqcBss6lyfBdqkHW7bFPiScvpp_JE8wqITMY5yMzq4IF4AZEYCKhAIAHLT")
-//					.replace("MEDIA_ID", "1237378768e7q8e7r8qwesafdasdfasdfaxss111");
-			URL urlGet = new URL(url);
-			HttpURLConnection http = (HttpURLConnection) urlGet.openConnection();
-			http.setRequestMethod("GET"); // 必须是get方式请求
-			http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			http.setDoOutput(true);
-			http.setDoInput(true);
-			System.setProperty("sun.net.client.defaultConnectTimeout", "30000");// 连接超时30秒
-			System.setProperty("sun.net.client.defaultReadTimeout", "30000"); // 读取超时30秒
-			http.connect();
-			// 获取文件转化为byte流
-			is = http.getInputStream();
-
-			System.out.println(is);
-			String base64FromInputStream = getBase64FromInputStream(is);
-			System.out.println(base64FromInputStream);
-			return base64FromInputStream;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-//	public static void main(String[] args) {
-//		String accessToken = "21_BC8sW8znnzwzT5furk59tsY5yINpXXmon8RSgEgv02R84HoFCsvfD0hCUwm41acdqz5gyELEfCZxEp2C4muRyBKrCgQMWCsvbzV_w-WtE5rkG6hkfnrCj3VLsvgiH9Ce8vy1hNrZzZE_OEl9FVGcAEARHS";
-//		System.out.println(accessToken);
-//		HttpConnectionUtil.downloadWxFile("G1i5ed0ryKciyuJanEy8iLLyXbJPvrK88ei_S1IAizSDS-B7IUSEcZqSOZOgyNLB",accessToken);
-//	}
 }

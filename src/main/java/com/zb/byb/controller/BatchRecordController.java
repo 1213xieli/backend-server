@@ -65,7 +65,7 @@ public class BatchRecordController {
     public ResponseEntity<List<Batch>> getBatchList(HttpServletRequest request,Batch batch){//
         String userId=(String) request.getSession().getAttribute("userId");
         //userId="mRkwGN6DQgGNsONd+yMkV8yeztQ=";
-        System.out.println("=="+userId);
+//        System.out.println("=="+userId);
         try {
             List<Batch> list=batchRecordService.getBatchList(userId,batch);
             ResponseEntity<List<Batch>> resp=new ResponseEntity<>();
