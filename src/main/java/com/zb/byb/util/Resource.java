@@ -24,7 +24,7 @@ public class Resource {
 
     public static final String DC_NAME ="CS0404";
 
-    public static final String USER_NAME = "zengneng";
+    public static final String USER_NAME = "yhfwh";
 
     public static final String PASS_WORD = "";
 
