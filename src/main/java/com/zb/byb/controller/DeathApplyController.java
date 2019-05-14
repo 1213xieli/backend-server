@@ -58,11 +58,11 @@ public class DeathApplyController {
                     message.setMessage(e.getMessage());
                     return ResponseEntity.build(Commonconst.FailStatus, message);
                 }
-                String img = Image2Base64Util.fileToBase64(file);
-                logger.info("------------------图片的Base64码" + img);
+                String base64Img = Image2Base64Util.fileToBase64(file);
+                logger.info("------------------图片的Base64码" + base64Img);
+//                logger.info("------------------图片的Base64码" + img);
                 //图片截取
-                String base64Img = Image2Base64Util.splitBase64(img);
-
+//                String base64Img = Image2Base64Util.splitBase64(img);
                 FileEntry fileEntry = new FileEntry();
                 fileEntry.setImgContent(base64Img);
                 fileEntry.setImgType("jpg");
