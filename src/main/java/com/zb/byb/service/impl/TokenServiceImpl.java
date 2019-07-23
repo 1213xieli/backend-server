@@ -15,7 +15,7 @@ public class TokenServiceImpl implements TokenService {
     public void updateWxAccessToken(String appId, String token, String appSecret) {
         String fid = tokenMapper.getAppConfig(appId);
         if (StringUtils.isEmpty(fid)) {
-            tokenMapper.addWxAccessToken(appId, token, appSecret);
+            tokenMapper.addWxAccessToken("Va4Arehrhe7474ugR", appId, token, appSecret);
         } else {
             tokenMapper.updateWxAccessToken(appId, token);
         }

@@ -7,6 +7,8 @@
 
 package EASLogin;
 
+import client.WSInvokeException;
+
 public class EASLoginSoapBindingStub extends org.apache.axis.client.Stub implements EASLoginProxy {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
@@ -164,7 +166,7 @@ public class EASLoginSoapBindingStub extends org.apache.axis.client.Stub impleme
         oper.addFault(new org.apache.axis.description.FaultDesc(
                       new javax.xml.namespace.QName("http://192.168.91.35:56898/ormrpc/services/EASLogin", "fault"),
                       "com.kingdee.bos.webservice.WSInvokeException",
-                      new javax.xml.namespace.QName("http://webservice.bos.kingdee.com", "WSInvokeException"), 
+                new javax.xml.namespace.QName("http://webservice.bos.kingdee.com", "WSInvokeException"),
                       true
                      ));
         _operations[7] = oper;
@@ -202,7 +204,7 @@ public class EASLoginSoapBindingStub extends org.apache.axis.client.Stub impleme
             java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
             qName = new javax.xml.namespace.QName("http://webservice.bos.kingdee.com", "WSInvokeException");
             cachedSerQNames.add(qName);
-            cls = com.kingdee.bos.webservice.WSInvokeException.class;
+        cls = WSInvokeException.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -498,7 +500,7 @@ public class EASLoginSoapBindingStub extends org.apache.axis.client.Stub impleme
 }
     }
 
-    public java.lang.String loginZBAPP(java.lang.String jsonStr) throws java.rmi.RemoteException, com.kingdee.bos.webservice.WSInvokeException {
+    public java.lang.String loginZBAPP(java.lang.String jsonStr) throws java.rmi.RemoteException, WSInvokeException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -529,8 +531,8 @@ public class EASLoginSoapBindingStub extends org.apache.axis.client.Stub impleme
         if (axisFaultException.detail instanceof java.rmi.RemoteException) {
               throw (java.rmi.RemoteException) axisFaultException.detail;
          }
-        if (axisFaultException.detail instanceof com.kingdee.bos.webservice.WSInvokeException) {
-              throw (com.kingdee.bos.webservice.WSInvokeException) axisFaultException.detail;
+        if (axisFaultException.detail instanceof WSInvokeException) {
+            throw (WSInvokeException) axisFaultException.detail;
          }
    }
   throw axisFaultException;

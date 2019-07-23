@@ -55,6 +55,6 @@ wx:
 
 #pagehelper分页插件
 pagehelper:
-  helperDialect: mysql
+  helperDialect: oracle
   reasonable: true
   supportMethodsArguments: true
