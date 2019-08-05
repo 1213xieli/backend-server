@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: yzfwh
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+  datasource:
+    name: oracle
+    url: jdbc:oracle:thin:@10.88.1.154:1521:easdb
+    username: jxzb
+    password: sa123456
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+logging:
+  level:
+    io.swagger.models.parameters.AbstractSerializableParameter: error
+
+mybatis-plus:
+  typeEnumsPackage: com.zb.byb.entity
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 9100
+zb:
+  rest:
+    enabled: true
+swagger:
+  enabled: false
+  base-package: com.zb.byb.controller
+  title: 邦养宝养户服务号
+  version: 1.0.0.SNAPSHOT
+  description: 邦养宝养户服务号API
+
+wx:
+  appId: wx56fe29f4352d4a1f
+  appsecret: 321840ea8382c3759faecd5bd777962f
+  token: 6A9EDCB7B63821802AA44D35D531C9FC
+
+eas:
+  ip: eas.zhengbang.com
+  port: 6888
+  common-url: http://${eas.ip}:${eas.port}/ormrpc/services
+  login-url: http://${eas.ip}:${eas.port}/ormrpc/services/EASLogin
+  task-url: http://${eas.ip}:${eas.port}/ormrpc/services/WSCustWechatAppFacade
+  batch-url: http://${eas.ip}:${eas.port}/ormrpc/services/WSWSAppDataDealFacade
+  dc-name: zbjt
+  user-name: yhfwh
+  password: yhfwh
