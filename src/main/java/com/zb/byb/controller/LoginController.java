@@ -2,32 +2,30 @@ package com.zb.byb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.common.Constants;
-import com.zb.byb.entity.*;
+import com.zb.byb.common.Func;
+import com.zb.byb.entity.Batch;
+import com.zb.byb.entity.BindInfo;
 import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.LoginService;
 import com.zb.byb.service.MyInfoService;
-import com.zb.byb.util.JDService;
+import com.zb.byb.util.HttpUtils;
 import com.zb.byb.util.JsonPluginsUtil;
-import com.zb.byb.util.RequestUtils;
-import com.zb.framework.common.entity.Message;
+import com.zb.framework.common.constant.StatusCode;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/login")
 public class LoginController {
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private LoginService loginService;
     @Autowired
@@ -44,82 +42,68 @@ public class LoginController {
 
         HttpSession session=  request.getSession();
 
-        String sessionId="";
         //获取openId,并存入session
-        String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        if (C.checkNullOrEmpty(openId))
-//            openId="123456789";//为测试方便，先写死openId*/
-        //openId = "oNwsZuKKiWmFOTufWZEgKHVlBFsQ";
-        openId = "oNwsZuGea1lCu8yPmwPBxkOU26-g";
-
+        String openId = HttpUtils.getCookieByName(request, Commonconst.OPEN_ID);
+//        openId = Commonconst.OpenId;
         session.setAttribute("openId",openId);
 
         try {
-            //获取操作业务权限的sessionId
-            session.setAttribute("sessionId",JDService.login());
             String json=myInfoService.viewMyInfo(openId);
-            logger.info("-------通过openId获取的个人信息json串-------："+json);
             String myInfoStr = JsonPluginsUtil.getSuccessData(json);
 
-            if (C.checkNullOrEmpty(myInfoStr))
+            if (Func.checkNullOrEmpty(myInfoStr)){
+                log.error("登录失败，未获取个人信息");
                 throw new Exception("登录失败，未获取个人信息");
+            }
 
             JSONObject jsonMap = JSONObject.parseObject(myInfoStr);
 
             String userId = jsonMap.getString("id");
-            //userId="Va4AAAVyFHXMns7U";//甘建国
-//            System.out.println("userId="+userId);
-
-            if (C.checkNullOrEmpty(userId)){
+            if (Func.checkNullOrEmpty(userId)){
+                log.error("登录失败,未获取到用户id");
                 throw new Exception("登录失败");
             }
+
             //养户id存入session
             session.setAttribute("userId",userId);
             session.setAttribute("fname", jsonMap.getString("fname"));
             session.setAttribute("custId", userId);
             session.setAttribute("cfwinternum", jsonMap.getString("cfwinternum"));
             session.setAttribute("servicedep", jsonMap.getString("servicedep"));
+            log.info("养户登录成功,养户id:" + userId);
+
             //  批次
             Batch batch = new Batch();
             batch.setPageNumber(1);
             batch.setPageSize(50);
             List<Batch> list=batchRecordService.getBatchList(userId,batch);
-            //System.out.println("批次："+ net.sf.json.JSONObject.fromObject(list));
-//            System.out.println("批次："+ JSONObject.toJSONString(list));
             session.setAttribute("pcList", list);
             return ResponseEntity.buildSuccess("登入成功");
         } catch (Exception e) {
             e.printStackTrace();
-            Message message = new Message();
-            message.setCode("991");
-            message.setMessage(e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.build(Commonconst.LOGIN_FAIL, message);
+            log.error(e.getMessage());
+            return ResponseEntity.build(StatusCode.SERVER_ERROR, e.getMessage(), openId);
         }
     }
 
     @ApiOperation("绑定")
     @PostMapping("/bind")
     public ResponseEntity<?> bind(@RequestBody(required = false) BindInfo userInfo, HttpServletRequest request){
-        String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        logger.info("-------openId-------："+openId);
+        String openId = HttpUtils.getCookieByName(request, Commonconst.OPEN_ID);
         String code=userInfo.getInvitationCode();//验证码
         String phone=userInfo.getTelNum();//电话号码
         if (!loginService.check(phone,code)){
-           return ResponseEntity.build(400,"验证码错误", null);
+            log.info("验证码错误");
+            return ResponseEntity.build(400, "验证码错误", null);
         };
-        logger.info("-----验证success---");
         try {
             //传人绑定信息,返回信息
             boolean id = loginService.bind(userInfo, openId);//true表示绑定成功
             return ResponseEntity.build(200,"绑定成功", null);
         } catch (Exception e) {
             e.printStackTrace();
-            Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
-            message.setMessage(e.getMessage());
-            logger.info("-----异常信息---："+e.getMessage());
-            return ResponseEntity.build(Commonconst.FailStatus, message);
+            log.error(e.getMessage());
+            return ResponseEntity.build(StatusCode.SERVER_ERROR, e.getMessage(), openId);
         }
 
     }
@@ -127,8 +111,8 @@ public class LoginController {
     @ApiOperation("解除绑定")
     @GetMapping("/unbind")
     public ResponseEntity<?> unbind(HttpServletRequest request){
-        String openId= RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-        if (C.checkNullOrEmpty(openId)) {
+        String openId = HttpUtils.getCookieByName(request, Commonconst.OPEN_ID);
+        if (Func.checkNullOrEmpty(openId)) {
             openId=(String)request.getSession().getAttribute("openId");
         }
         try {
@@ -136,12 +120,11 @@ public class LoginController {
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             e.printStackTrace();
-            Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
-            message.setMessage(e.getMessage());
-            return ResponseEntity.build(Commonconst.FailStatus, message);
+            log.error(e.getMessage());
+            return ResponseEntity.build(StatusCode.SERVER_ERROR, e.getMessage(), openId);
         }
     }
+
     @ApiOperation("获取验证码")
     @GetMapping("/getCode")
     public ResponseEntity<?> getCode(String telNum, HttpServletRequest request) {
@@ -150,10 +133,8 @@ public class LoginController {
             return ResponseEntity.buildSuccess(status);
         } catch (Exception e) {
             e.printStackTrace();
-            Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
-            message.setMessage(e.getMessage());
-            return ResponseEntity.build(Commonconst.FailStatus, message);
+            log.error(e.getMessage());
+            return ResponseEntity.build(StatusCode.SERVER_ERROR, e.getMessage(), null);
         }
     }
 
@@ -161,11 +142,8 @@ public class LoginController {
     @GetMapping("/isSessionAlive")
     public ResponseEntity<?> isSessionAlive(HttpServletRequest request) {
         if(request.getSession(false)==null){
-//            System.out.println("Session has been invalidated!");
             return ResponseEntity.build(200,"Session has been invalidated!", null);
-        }
-        else{
-//            System.out.println("Session is active!");
+        } else {
             return ResponseEntity.build(201, "Session is active!", null);
         }
 

@@ -1,7 +1,7 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.C;
+import com.zb.byb.common.Func;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.Batch;
 import com.zb.byb.entity.FeedRecord;
@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,19 +27,20 @@ import java.util.List;
 public class FeedRecordController {
     @Autowired
     private FeedRecordService feedRecordService;
+
     @ApiOperation("保存饲喂记录")
     @PostMapping("/save")
+    @ResponseBody
     public ResponseEntity<?> saveFeedRecord(@RequestBody(required = false) FeedRecord feedRecord, HttpServletRequest request) {
         //获取userId
         String userId=(String) request.getSession().getAttribute("userId");
-
         try {
             //解密
             feedRecord.setBatchId(Image2Base64Util.getBase64Decoder(feedRecord.getBatchId()));
             return ResponseEntity.buildSuccess(feedRecordService.addFeedRecord(feedRecord,userId));
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -48,16 +48,12 @@ public class FeedRecordController {
     @ApiOperation("获取饲料列表")
     @GetMapping("/getPigwashList")
     public ResponseEntity<?> getPigwashList(Batch batch, HttpServletRequest request) {
-        String sessionId=(String) request.getSession().getAttribute("sessionId");
-
-
-//        System.out.println("sessionId="+sessionId);
         try {
             String batchId=Image2Base64Util.getBase64Decoder(batch.getId());
             return ResponseEntity.buildSuccess(feedRecordService.pigwashList(batchId));
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -78,7 +74,7 @@ public class FeedRecordController {
             feedRecord.setState(state);
         }
         try {
-            if (C.checkNull(custId)){
+            if (Func.checkNull(custId)){
                 throw new Exception("无养户id");
             }
             List<FeedRecord> list = feedRecordService.queryFeedRecordList(custId,feedRecord);
@@ -95,7 +91,7 @@ public class FeedRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -107,7 +103,7 @@ public class FeedRecordController {
     public ResponseEntity<FeedRecord> queryInfoById(String rcordId)
     {
         try{
-            if (C.checkNull(rcordId))
+            if (Func.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             FeedRecord feedRecord = feedRecordService.queryFeedRecordbyRcordId(Image2Base64Util.getBase64Decoder(rcordId));
             if (null==feedRecord){
@@ -122,7 +118,7 @@ public class FeedRecordController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -134,7 +130,7 @@ public class FeedRecordController {
     public ResponseEntity<FeedRecord> cancleById(String rcordId)
     {
         try{
-            if (C.checkNull(rcordId))
+            if (Func.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             String s = feedRecordService.cancleFeedRecord(Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.build(100, "取消成功", null);
@@ -143,7 +139,7 @@ public class FeedRecordController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

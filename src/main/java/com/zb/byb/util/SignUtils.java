@@ -10,16 +10,16 @@ import java.util.UUID;
 
 /**
  * 请求校验工具类
- * 
+ *
  * @author zc
- * 
+ *
  */
 public class SignUtils {
 
 	/**
 	 * 验证签名 加密/校验流程如下： 1. 将token、timestamp、nonce三个参数进行字典序排序 2.
 	 * 将三个参数字符串拼接成一个字符串进行sha1加密 3. 开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
-	 * 
+     *
 	 * @param signature
 	 * @param timestamp
 	 * @param nonce
@@ -70,21 +70,21 @@ public class SignUtils {
 
 	/**
 	 * 将字节数组转换为十六进制字符串 byte 转换为int 时 因为byte 为8位字节 int最大为32位，所以需要转换为16进制进行补码
-	 * 
+     *
 	 * @param byteArray
 	 * @return
 	 */
 	private static String byteToStr(byte[] byteArray) {
-		String strDigest = "";
+        StringBuffer strDigest = new StringBuffer();
 		for (int i = 0; i < byteArray.length; i++) {
-			strDigest += byteToHexStr(byteArray[i]);
-		}
-		return strDigest;
+            strDigest.append(byteToHexStr(byteArray[i]));
+        }
+        return strDigest.toString();
 	}
 
 	/**
 	 * 将字节转换为十六进制字符串 bye
-	 * 
+     *
 	 * @param mByte
 	 * @return
 	 */

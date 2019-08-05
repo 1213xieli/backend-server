@@ -1,8 +1,8 @@
 package com.zb.byb.task;
 
-import com.zb.byb.common.AccessToken;
-import com.zb.byb.common.Ticket;
-import com.zb.byb.common.WxCache;
+import com.zb.byb.config.AccessToken;
+import com.zb.byb.config.Ticket;
+import com.zb.byb.config.WxCache;
 import com.zb.byb.service.TokenService;
 import com.zb.byb.util.WeixinUtils;
 import org.slf4j.Logger;
@@ -23,6 +23,7 @@ public class WxJobs {
 
     @Autowired
     private TokenService tokenService;
+
     @Scheduled(fixedRate= 90 * 60 * 1000)
     public void refreshAccessToken(){
         AccessToken accesstoken = WeixinUtils.getAccessToken(appId, appsecret);

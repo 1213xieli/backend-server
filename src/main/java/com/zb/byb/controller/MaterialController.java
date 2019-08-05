@@ -1,13 +1,13 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.DrugApplyService;
 import com.zb.byb.service.EquipmentApplyService;
 import com.zb.byb.service.FeedApplyService;
-import com.zb.byb.util.HttpConnectionUtil;
+import com.zb.byb.util.HttpUtils;
 import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
@@ -48,7 +48,7 @@ public class MaterialController {
     public ResponseEntity<?> feedApply(@RequestBody FeedApply feedApply,HttpServletRequest request) {
         String userId=(String) request.getSession().getAttribute("userId");
         try {
-            if (C.checkNull(userId))
+            if (Func.checkNull(userId))
                 throw new Exception("未传入养户id");
             String batchId=Image2Base64Util.getBase64Decoder(feedApply.getBatchId());
             feedApply.setBatchId(batchId);
@@ -57,7 +57,7 @@ public class MaterialController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -67,15 +67,14 @@ public class MaterialController {
     @GetMapping("/feedList")
     public ResponseEntity<List<FeedApply>> getFeedList(FeedApply feedApply,HttpServletRequest request){
         String userId=(String) request.getSession().getAttribute("userId");
-//        System.out.println(userId);
         try {
-            if (C.checkNull(userId))
+            if (Func.checkNull(userId))
                 throw new Exception("未传入养户id");
             return ResponseEntity.buildSuccess(feedApplyService.queryFeedApply(feedApply,userId));
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -90,7 +89,7 @@ public class MaterialController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -115,7 +114,7 @@ public class MaterialController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -134,7 +133,7 @@ public class MaterialController {
             return ResponseEntity.buildSuccess(data);
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -152,7 +151,7 @@ public class MaterialController {
             return ResponseEntity.buildSuccess(driverList);
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -171,7 +170,7 @@ public class MaterialController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -187,7 +186,7 @@ public class MaterialController {
     @PostMapping("/saveDrugApply")
     public ResponseEntity<?> saveDrugApply(HttpServletRequest request, @RequestBody DrugApply drugApply) throws IOException {
         try{
-            File file = HttpConnectionUtil.downloadWxFile(drugApply.getServerId());
+            File file = HttpUtils.downloadWxFile(drugApply.getServerId());
             String base64Amr = Image2Base64Util.fileToBase64(file);
             FileEntry fileEntry=new FileEntry();
             fileEntry.setImgContent(base64Amr);
@@ -195,7 +194,7 @@ public class MaterialController {
             List<FileEntry> list=new ArrayList<>();
             list.add(fileEntry);
             drugApply.setVoiceList(list);
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
             drugApply.setCustId(custId);
             String batchId=Image2Base64Util.getBase64Decoder(drugApply.getBatchId());
             drugApply.setBatchId(batchId);
@@ -214,9 +213,9 @@ public class MaterialController {
     @GetMapping("/queryMaterialInfoByBatchId")
     public ResponseEntity<MaterialInfo> queryMaterialInfoByBatchId(HttpServletRequest request, MaterialInfo queryInfo)
     {
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(custId))
+            if (Func.checkNull(custId))
                 throw new Exception("未传入养户id");
             queryInfo.setBatchId(Image2Base64Util.getBase64Decoder(queryInfo.getBatchId()));
             queryInfo.setCustId(custId);
@@ -228,7 +227,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -238,9 +237,9 @@ public class MaterialController {
     @GetMapping("/queryDrugApplyInitData")
     public ResponseEntity<DrugApply> queryDrugApplyInitData(HttpServletRequest request)
     {
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(custId))
+            if (Func.checkNull(custId))
                 throw new Exception("未传入养户id");
 
             return ResponseEntity.buildSuccess(drugApplyService.queryListInitData(custId));
@@ -249,7 +248,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -259,9 +258,9 @@ public class MaterialController {
     @GetMapping("/queryDrugApplyRecordList")
     public ResponseEntity<?> queryDrugApplyRecordList(HttpServletRequest request, DrugApply queryInfo,HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(custId))
+            if (Func.checkNull(custId))
                 throw new Exception("未传入养户id");
 
             List<DrugApply> list = drugApplyService.queryInfoRecordList(custId,queryInfo);
@@ -272,7 +271,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -283,9 +282,9 @@ public class MaterialController {
     @ResponseBody
     public ResponseEntity<DrugApply> queryDrugApplyInfoById(HttpServletRequest request, String rcordId)
     {
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(rcordId))
+            if (Func.checkNull(rcordId))
                 throw new Exception("未传入id");
             DrugApply drugApply = drugApplyService.queryInfoById(Image2Base64Util.getBase64Decoder(rcordId));
             return ResponseEntity.buildSuccess(drugApply);
@@ -294,7 +293,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -318,7 +317,7 @@ public class MaterialController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -332,7 +331,7 @@ public class MaterialController {
 
         try{
             ;
-            if (C.checkNull(id))
+            if (Func.checkNull(id))
                 throw new Exception("未传入id");
             return ResponseEntity.buildSuccess(drugApplyService.deleteInfoById(Image2Base64Util.getBase64Decoder(id)));
         }
@@ -340,7 +339,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -356,7 +355,7 @@ public class MaterialController {
     @PostMapping("/saveEquipmentApply")
     public ResponseEntity<?> saveEquipmentApply(HttpServletRequest request, @RequestBody EquipmentApply equipmentApply) {
         try{
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
             equipmentApply.setCustId(custId);
             return ResponseEntity.buildSuccess(equipmentApplyService.saveInfo(equipmentApply));
         }
@@ -364,7 +363,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -376,9 +375,9 @@ public class MaterialController {
     @GetMapping("/queryEquipmentApplyInitData")
     public ResponseEntity queryEquipmentApplyInitData(HttpServletRequest request)
     {
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(custId))
+            if (Func.checkNull(custId))
                 throw new Exception("未传入id");
             return ResponseEntity.buildSuccess(equipmentApplyService.queryListInitData(custId));
         }
@@ -386,7 +385,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -396,9 +395,9 @@ public class MaterialController {
     @GetMapping("/queryEquipmentApplyRecordList")
     public ResponseEntity<?> queryEquipmentApplyRecordList(HttpServletRequest request, EquipmentApply info)
     {
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(custId))
+            if (Func.checkNull(custId))
                 throw new Exception("未传入id");
             info.setCustId(custId);
             List<EquipmentApply> list = equipmentApplyService.queryInfoRecordList(info);
@@ -409,7 +408,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -419,9 +418,9 @@ public class MaterialController {
     @GetMapping("/queryEntrustList")
     public ResponseEntity<?> queryEntrustList(HttpServletRequest request, EquipmentApply info)
     {
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(custId))
+            if (Func.checkNull(custId))
                 throw new Exception("未传入id");
 
             info.setCustId(custId);
@@ -433,7 +432,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -446,7 +445,7 @@ public class MaterialController {
     public ResponseEntity<EquipmentApply> queryEquipmentApplyInfoById(String rcordId)
     {
         try{
-            if (C.checkNull(rcordId))
+            if (Func.checkNull(rcordId))
                 throw new Exception("未传入id");
             return ResponseEntity.buildSuccess(equipmentApplyService.queryInfoById(Image2Base64Util.getBase64Decoder(rcordId)));
         }
@@ -454,7 +453,7 @@ public class MaterialController {
         {
 
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -466,7 +465,7 @@ public class MaterialController {
     public ResponseEntity<?> deleteEquipmentApplyInfoById(String id)
     {
         try{
-            if (C.checkNull(id))
+            if (Func.checkNull(id))
                 throw new Exception("未传入id");
             String data=equipmentApplyService.deleteInfoById(Image2Base64Util.getBase64Decoder(id));
             if (!"0000".equals(JSONObject.fromObject(data).getString("code"))){
@@ -478,7 +477,7 @@ public class MaterialController {
         {
 
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -489,9 +488,9 @@ public class MaterialController {
     @GetMapping("/searchEquimp")
     public ResponseEntity<?> searchEquimp(HttpServletRequest request, String keyword)
     {
-        String custId = C.parseStr(request.getSession().getAttribute("custId"));
+        String custId = Func.parseStr(request.getSession().getAttribute("custId"));
         try{
-            if (C.checkNull(custId))
+            if (Func.checkNull(custId))
                 throw new Exception("未传入id");
             List<Equipment> list = equipmentApplyService.searchEquipment(keyword,custId);
             PageInfo page = new PageInfo(list);
@@ -501,7 +500,7 @@ public class MaterialController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -526,7 +525,7 @@ public class MaterialController {
         } catch (Exception e) {
 
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message,null);
         }

@@ -1,13 +1,12 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.FileEntry;
 import com.zb.byb.entity.SingerTM;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.TouMiaoService;
-import com.zb.byb.util.BaseController;
 import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
@@ -25,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/toumiao")
-public class TouMiaoController extends BaseController {
+public class TouMiaoController {
     @Autowired
     private TouMiaoService touMiaoService;
 
@@ -35,7 +34,7 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<?> saveToumiaoApply(HttpServletRequest request, HttpServletResponse response, TouMiao touMiao) {
 
         try{
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
             touMiao.setCustId(custId);
 
             return ResponseEntity.buildSuccess(touMiaoService.saveInfo(touMiao));
@@ -43,7 +42,7 @@ public class TouMiaoController extends BaseController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -56,13 +55,13 @@ public class TouMiaoController extends BaseController {
     {
         try{
 
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
             return ResponseEntity.buildSuccess(touMiaoService.queryListInitData(custId));
         }
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -75,7 +74,7 @@ public class TouMiaoController extends BaseController {
     {
         try{
 
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
             List list = touMiaoService.queryInfoRecordList(custId, touMiao);
             PageInfo<TouMiao> info = new PageInfo(list);
             return ResponseEntity.build(200,new Message(), info);
@@ -84,7 +83,7 @@ public class TouMiaoController extends BaseController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -96,7 +95,7 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<TouMiao> queryInfoById(String recordId)
     {
         try{
-            if (C.checkNullOrEmpty(recordId))
+            if (Func.checkNullOrEmpty(recordId))
                 throw new Exception("未传入记录id");
 
             return ResponseEntity.buildSuccess(touMiaoService.queryInfoById(Image2Base64Util.getBase64Decoder(recordId)));
@@ -104,7 +103,7 @@ public class TouMiaoController extends BaseController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -116,7 +115,6 @@ public class TouMiaoController extends BaseController {
     public ResponseEntity<TouMiao> signerTouMiao(@RequestBody SingerTM fileEntry,HttpServletRequest request)
     {
         String userId=(String)request.getSession().getAttribute("userId");
-//        System.out.println(fileEntry.getFileEntry());
         //处理投苗签名base64
         Image2Base64Util.subBase64(fileEntry.getFileEntry());
 
@@ -126,14 +124,14 @@ public class TouMiaoController extends BaseController {
         touMiao.setSignerList(signerList);
         try{
             touMiao.setRcordId(Image2Base64Util.getBase64Decoder(fileEntry.getRcordId()));
-            if (C.checkNullOrEmpty(userId))
+            if (Func.checkNullOrEmpty(userId))
                 throw new Exception("未登入");
             return ResponseEntity.buildSuccess(touMiaoService.singerTouMiao(touMiao));
         }
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -146,14 +144,14 @@ public class TouMiaoController extends BaseController {
     {
         String userid=(String)request.getSession().getAttribute("userId");
         try{
-            if (C.checkNullOrEmpty(userid))
+            if (Func.checkNullOrEmpty(userid))
                 throw new Exception("未登入");
             return ResponseEntity.buildSuccess(touMiaoService.cancleTouMiao(Image2Base64Util.getBase64Decoder(rcordId)));
         }
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

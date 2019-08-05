@@ -1,17 +1,22 @@
 package com.zb.byb.service.impl;
 
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.MyInfoService;
 import com.zb.byb.service.TouMiaoService;
-import com.zb.byb.util.*;
+import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
+import com.zb.byb.util.JsonPluginsUtil;
+import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 投苗
@@ -21,7 +26,8 @@ import java.util.*;
 public class TouMiaoServiceImpl implements TouMiaoService {
     @Autowired
     private MyInfoService myInfoService;
-
+    @Autowired
+    private BackTransmitUtil backTransmitUtil;
     @Override
     public String queryListByUser(String openId) throws Exception {
         return null;
@@ -29,15 +35,10 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 
     @Override
     public String saveInfo(TouMiao info) throws Exception {
-        if (info == null || C.checkNullOrEmpty(info.getCustId()) || info.getApplyDate() == null)
+        if (info == null || Func.checkNullOrEmpty(info.getCustId()) || info.getApplyDate() == null)
         {
             throw new Exception("无法保存");
         }
-
-//        Farmer farmer = new Farmer();
-//        farmer.setSize("32");
-//        farmer.setName("xieli");
-//        info.setFarmer(farmer);
 
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
@@ -45,8 +46,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         map.put("data", info);
 
         String data = JSONObject.fromObject(map).toString();
-        String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_PIGINGAPPLY);
-//        System.out.println("投苗保存功能-----" + jsonBackStr);
+        String jsonBackStr = backTransmitUtil.invokeFunc(data, "handle");
 
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
     }
@@ -63,7 +63,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_CUSTINFO);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_CUSTINFO);
 
         JSONObject jsonObject = JSONObject.fromObject(jsonData);
         String obj = jsonObject.getString(JsonPluginsUtil.Data);
@@ -77,7 +77,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 
     @Override
     public TouMiao queryInfoById(String tmid) throws Exception {
-        if (C.checkNullOrEmpty(tmid))
+        if (Func.checkNullOrEmpty(tmid))
             return new TouMiao();
 
         Map<String, Object> map = new HashMap<>();
@@ -89,15 +89,14 @@ public class TouMiaoServiceImpl implements TouMiaoService {
 
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PIGINGAPPLY);
-//        System.out.println("投苗记录查询VIEW----" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_PIGINGAPPLY);
         return JsonPluginsUtil.jsonToBean(jsonData, TouMiao.class);
     }
 
     @Override
     public List<TouMiao> queryInfoRecordList(String custId, TouMiao info) throws Exception
     {
-        if (C.checkNullOrEmpty(custId))
+        if (Func.checkNullOrEmpty(custId))
             return new ArrayList<>();
         Map<String, Object> map = new HashMap<>();
         map.put("custId", custId);
@@ -105,9 +104,8 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         map.put("data", info);
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_PIGINGAPPLY);
 
-//        System.out.println("投苗记录列表查询Query----" + jsonData);
         List<TouMiao> toumiaoList=JsonPluginsUtil.jsonToBeanList(jsonData, TouMiao.class);
         //对投苗rcordId进行base64加密
         for (int i=0;i<toumiaoList.size();i++){
@@ -123,7 +121,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         map.put("source","WECHAT");//微信
         map.put("data",touMiao);
         String data=JSONObject.fromObject(map).toString();
-        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_PIGINGAPPLY);
+        String jsonBack=backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_PIGINGAPPLY);
         return jsonBack;
     }
 
@@ -135,7 +133,7 @@ public class TouMiaoServiceImpl implements TouMiaoService {
         map.put("source","WECHAT");//微信
         map.put("data",param);
         String data=JSONObject.fromObject(map).toString();
-        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_PIGINGAPPLY);
+        String jsonBack=backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_PIGINGAPPLY);
         return jsonBack;
     }
 

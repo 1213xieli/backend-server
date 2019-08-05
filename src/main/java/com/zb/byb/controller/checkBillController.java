@@ -1,16 +1,12 @@
 package com.zb.byb.controller;
 
 
-
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.BillInfo;
-import com.zb.byb.entity.TouMiao;
 import com.zb.byb.service.BillService;
-import com.zb.byb.service.impl.BillServiceImpl;
 import com.zb.byb.util.HtmlToImageUtil;
-import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
@@ -44,7 +39,7 @@ public class checkBillController {
     public ResponseEntity<?> queryBillRecordList(HttpServletRequest request, BillInfo info)
     {
         try{
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
             info.setCustId(custId);
             List list = billService.queryInfoRecordList(info);
             PageInfo<BillInfo> pageInfo = new PageInfo(list);
@@ -54,7 +49,7 @@ public class checkBillController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -66,21 +61,20 @@ public class checkBillController {
     public ResponseEntity<?> queryBillRecordById(HttpServletRequest request, BillInfo info)
     {
         try{
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
             info.setCustId(custId);
-            info.setDepartment(C.parseStr(request.getSession().getAttribute("servicedep")));
+            info.setDepartment(Func.parseStr(request.getSession().getAttribute("servicedep")));
             String htmlTemplate = billService.queryBillRecordById(info);
-            if (C.checkNullOrEmpty(htmlTemplate))
+            if (Func.checkNullOrEmpty(htmlTemplate))
                 throw new Exception("未获取账单数据");
 
             byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
-//            System.out.println("data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
             return ResponseEntity.build(200,new Message(), "data:image/png;base64," + new String(Base64.encodeBase64(bytes)));
         }
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

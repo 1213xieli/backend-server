@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class Pigwash implements Serializable {
     @ApiModelProperty("饲料品种")
     private String feedName;
     @ApiModelProperty("数量（包数）")
-    private Integer consumeQty;
+    private BigDecimal consumeQty;
     @ApiModelProperty("单价")
     private Double price;
     @ApiModelProperty("金额")

@@ -1,14 +1,15 @@
 package com.zb.byb.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.BillService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.HtmlToImageUtil;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.border.EmptyBorder;
@@ -27,11 +28,12 @@ import java.util.Map;
 **/
 @Service
 public class BillServiceImpl implements BillService {
-
+    @Autowired
+    private BackTransmitUtil backTransmitUtil;
     @Override
     public List queryInfoRecordList(BillInfo info) throws Exception {
 
-        if (C.checkNullOrEmpty(info.getCustId()))
+        if (Func.checkNullOrEmpty(info.getCustId()))
             throw new Exception("未传入养户id");
 
         Map<String, Object> map = new HashMap<>();
@@ -41,26 +43,24 @@ public class BillServiceImpl implements BillService {
 
         // 要传入数据进行转化
         String data = JSONObject.toJSONString(map);
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
-//        System.out.println("对账单，查询query方法----" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
         return JsonPluginsUtil.jsonToBeanList(jsonData, BillInfo.class);
     }
 
     @Override
     public String queryBillRecordById(BillInfo info) throws Exception {
-        if (C.checkNullOrEmpty(info.getCustId()))
+        if (Func.checkNullOrEmpty(info.getCustId()))
             throw new Exception("未传入记录id");
         Map<String, Object> map = new HashMap<>();
         map.put("source", Commonconst.WX_Flag);
         map.put("data", info);
         String data = JSONObject.toJSONString(map);
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
-//        System.out.println("根据recordId获取单个记录" +jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.Method_Name_checkBill);
         List<BillInfo> list = this.queryInfoRecordList(info);
         for (BillInfo bill : list) {
 
             //  如果记录为空，或者记录id不一致
-            if (C.checkNullOrEmpty(bill.getRcordId()) || !bill.getRcordId().equals(info.getRcordId()))
+            if (Func.checkNullOrEmpty(bill.getRcordId()) || !bill.getRcordId().equals(info.getRcordId()))
                 continue;
 
             return generateHtmlTempStr(bill);
@@ -423,11 +423,10 @@ public class BillServiceImpl implements BillService {
                 "            <td>语文</td>\r\n" +
                 "        </tr>\r\n" +
                 "    </table>";
-//        System.out.println(htmlTemplate);
         byte[] bytes = new byte[0];
         try {
             bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), HtmlToImageUtil.Width, HtmlToImageUtil.Height);
-            String filePath = Commonconst.TempPath + C.newGuid() + ".png";
+            String filePath = Commonconst.TempPath + Func.newGuid() + ".png";
             OutputStream out = new FileOutputStream(new File(filePath));
             out.write(bytes);
             out.close();

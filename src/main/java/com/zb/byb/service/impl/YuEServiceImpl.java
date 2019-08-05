@@ -5,12 +5,15 @@ import com.zb.byb.service.YuEService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 @Service
 public class YuEServiceImpl implements YuEService {
+    @Autowired
+    private BackTransmitUtil backTransmitUtil;
     @Override
     public String queryYuE(YuE yuE,String userId) throws Exception{
         Map<String, Object> map = new HashMap<>();
@@ -19,7 +22,7 @@ public class YuEServiceImpl implements YuEService {
         map.put("data",yuE);//参数
 
         String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_BALANCE);
+        String jsonStr = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_BALANCE);
 
         if(!"0000".equals(JSONObject.fromObject(jsonStr).get("code"))){
             //捕获异常信息

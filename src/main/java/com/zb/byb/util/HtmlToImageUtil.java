@@ -1,16 +1,18 @@
 package com.zb.byb.util;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import javax.imageio.ImageIO;
-import javax.swing.JTextPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicEditorPaneUI;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 
+/**
+ * @author xieli
+ * @date 2019/8/1 17:34
+ * @description HtmlToImageUtil
+ */
 public class HtmlToImageUtil {
 
     public static final int Height = 3200;
@@ -28,7 +30,7 @@ public class HtmlToImageUtil {
         g2.translate(0f, 0f);
         panel.paint(g2);
     }
- 
+
     /**
      * html转换为png文件
      *
@@ -69,69 +71,4 @@ public class HtmlToImageUtil {
         return bytes;
     }
 
-//    public static void main(String[] args) {
-//        String htmlTemplate = "    <table border=\"1\" width=\"60%\" bgcolor=\"#e9faff\" cellpadding=\"2\">\r\n" +
-//                "        <caption>课程表</caption>\r\n" +
-//                "        <tr align=\"center\">\r\n" +
-//                "            <td colspan=\"2\">时间\\日期</td>\r\n" +
-//                "            <td>一</td>\r\n" +
-//                "            <td>二</td>\r\n" +
-//                "            <td>三</td>\r\n" +
-//                "            <td>四</td>\r\n" +
-//                "            <td>五</td>\r\n" +
-//                "        </tr>\r\n" +
-//                "\r\n" +
-//                "        <tr align=\"center\">\r\n" +
-//                "            <td rowspan=\"2\">上午</td>\r\n" +
-//                "            <td>9:30-10:15</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "        </tr>\r\n" +
-//                "\r\n" +
-//                "        <tr align=\"center\">\r\n" +
-//                "            <td>10:25-11:10</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "        </tr>\r\n" +
-//                "\r\n" +
-//                "        <tr>\r\n" +
-//                "            <td colspan=\"7\">&nbsp;</td>\r\n" +
-//                "        </tr>\r\n" +
-//                "\r\n" +
-//                "        <tr align=\"center\">\r\n" +
-//                "            <td rowspan=\"2\">下午</td>\r\n" +
-//                "            <td>14:30-15:15</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "        </tr>\r\n" +
-//                "\r\n" +
-//                "        <tr align=\"center\">\r\n" +
-//                "            <td>15:25-16:10</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "            <td>语文</td>\r\n" +
-//                "        </tr>\r\n" +
-//                "    </table>";
-//        System.out.println(htmlTemplate);
-//        try {
-//            byte[] bytes = HtmlToImageUtil.html2png(Color.white, htmlTemplate, new EmptyBorder(0, 0, 0, 0), Width, Height );
-//            OutputStream out = new FileOutputStream(new File("d://test321.png"));
-//            out.write(bytes);
-//            out.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

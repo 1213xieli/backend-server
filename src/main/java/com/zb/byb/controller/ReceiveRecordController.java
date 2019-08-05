@@ -1,6 +1,6 @@
 package com.zb.byb.controller;
 
-import com.zb.byb.common.C;
+import com.zb.byb.common.Func;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.*;
 import com.zb.byb.service.ReceivedRecordService;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -61,7 +60,7 @@ public class ReceiveRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

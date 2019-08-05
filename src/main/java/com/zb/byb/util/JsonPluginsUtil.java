@@ -1,7 +1,7 @@
 package com.zb.byb.util;
 
 import com.alibaba.fastjson.JSON;
-import com.zb.byb.common.C;
+import com.zb.byb.common.Func;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -32,11 +32,8 @@ public class JsonPluginsUtil
     @SuppressWarnings("unchecked")
     public static <T> T jsonToBean(String jsonString, Class<T> beanCalss)throws Exception {
         String data = getData(jsonString);//处理数据
-        if (C.checkNullOrEmpty(data))
+        if (Func.checkNullOrEmpty(data))
             return null;
-
-        JSONObject beanJson = JSONObject.fromObject(data);
-//        T bean = (T) JSONObject.toBean(beanJson, beanCalss);
 
         T bean = (T) JSON.parseObject(data, beanCalss);
         return bean;
@@ -54,7 +51,6 @@ public class JsonPluginsUtil
         JSONObject json = JSONObject.fromObject(bean);
 
         return json.toString();
-
     }
 
     /**
@@ -72,12 +68,10 @@ public class JsonPluginsUtil
             Field[] fields = bean.getClass().getDeclaredFields();
             String str = "";
             for(Field field : fields){
-//              System.out.println(field.getName());
                 str+=(":"+field.getName());
             }
             fields = bean.getClass().getSuperclass().getDeclaredFields();
             for(Field field : fields){
-//              System.out.println(field.getName());
                 str+=(":"+field.getName());
             }
             str+=":";
@@ -88,8 +82,6 @@ public class JsonPluginsUtil
 
         }else{//转换除了_nory_changes里的属性
 
-
-
             json = JSONObject.fromObject(bean,configJson(_nory_changes));
         }
 
@@ -98,21 +90,12 @@ public class JsonPluginsUtil
         return json.toString();
 
     }
+
     private static JsonConfig configJson(String[] excludes) {
 
         JsonConfig jsonConfig = new JsonConfig();
-
         jsonConfig.setExcludes(excludes);
-//
         jsonConfig.setIgnoreDefaultExcludes(false);
-//
-//              jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
-
-//              jsonConfig.registerJsonValueProcessor(Date.class,
-//
-//                  new DateJsonValueProcessor(datePattern));
-
-
 
         return jsonConfig;
 
@@ -131,17 +114,12 @@ public class JsonPluginsUtil
     public static String beanListToJson(List beans) {
 
         StringBuffer rest = new StringBuffer();
-
         rest.append("[");
-
         int size = beans.size();
 
         for (int i = 0; i < size; i++) {
-
             rest.append(beanToJson(beans.get(i))+((i<size-1)?",":""));
-
         }
-
         rest.append("]");
 
         return rest.toString();
@@ -159,9 +137,7 @@ public class JsonPluginsUtil
         StringBuffer rest = new StringBuffer();
 
         rest.append("[");
-
         int size = beans.size();
-
         for (int i = 0; i < size; i++) {
             try{
                 rest.append(beanToJson(beans.get(i),_nory_changes,nory));
@@ -174,7 +150,6 @@ public class JsonPluginsUtil
         }
 
         rest.append("]");
-
         return rest.toString();
 
     }
@@ -187,12 +162,12 @@ public class JsonPluginsUtil
      */
     @SuppressWarnings({ "unchecked" })
     public static Map jsonToMap(String jsonString) {
-        if (C.checkNullOrEmpty(jsonString))
+        if (Func.checkNullOrEmpty(jsonString))
             return new HashMap();
 
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         String obj = jsonObject.getString(Data);
-        if (C.checkNullOrEmpty(obj))
+        if (Func.checkNullOrEmpty(obj))
             return new HashMap();
 
         JSONObject mapJson = JSONObject.fromObject(obj);
@@ -252,17 +227,13 @@ public class JsonPluginsUtil
     public static Object[] jsonToObjectArray(String jsonString) {
 
         JSONArray jsonArray = JSONArray.fromObject(jsonString);
-
         return jsonArray.toArray();
-
     }
 
     public static String listToJson(List<?> list) {
 
         JSONArray jsonArray = JSONArray.fromObject(list);
-
         return jsonArray.toString();
-
     }
 
     /**
@@ -274,7 +245,7 @@ public class JsonPluginsUtil
      */
     @SuppressWarnings("unchecked")
     public static <T> List<T> jsonToBeanList(String jsonString, Class<T> beanClass)throws Exception {
-        if (beanClass == null || C.checkNullOrEmpty(jsonString))
+        if (beanClass == null || Func.checkNullOrEmpty(jsonString))
             return new ArrayList<>();
         JSONArray listdata=getListData(jsonString);
         List<T> list =com.alibaba.fastjson.JSONArray.parseArray(listdata.toString(),beanClass);
@@ -292,7 +263,7 @@ public class JsonPluginsUtil
     public static <T>List<T> jsonTOList(String jsonStr,Class<T> s)throws Exception{
 
         JSONArray listdata = getListData(jsonStr);//处理数据
-        if (C.checkNullOrEmpty(listdata))
+        if (Func.checkNullOrEmpty(listdata))
             return null;
         List<T> list =com.alibaba.fastjson.JSONArray.parseArray(listdata.toString(),s);
         return list;
@@ -309,11 +280,8 @@ public class JsonPluginsUtil
         JSONArray jsonArray = JSONArray.fromObject(jsonString);
         String[] stringArray = new String[jsonArray.size()];
         int size = jsonArray.size();
-
         for (int i = 0; i < size; i++) {
-
             stringArray[i] = jsonArray.getString(i);
-
         }
 
         return stringArray;
@@ -376,13 +344,10 @@ public class JsonPluginsUtil
         Double[] doubleArray = new Double[size];
 
         for (int i = 0; i < size; i++) {
-
             doubleArray[i] = jsonArray.getDouble(i);
-
         }
 
         return doubleArray;
-
     }
 
     /**
@@ -392,11 +357,11 @@ public class JsonPluginsUtil
      */
     public static String getSuccessData(String jsonStr)
     {
-        if (C.checkNullOrEmpty(jsonStr))
+        if (Func.checkNullOrEmpty(jsonStr))
             return null;
 
         JSONObject jsonObject = JSONObject.fromObject(jsonStr);
-        return C.parseStr(jsonObject.getString(Data ));
+        return Func.parseStr(jsonObject.getString(Data));
     }
 
     /**
@@ -406,10 +371,10 @@ public class JsonPluginsUtil
      */
     public static String getSuccessData(String jsonStr, String key)
     {
-        if (C.checkNullOrEmpty(jsonStr))
+        if (Func.checkNullOrEmpty(jsonStr))
             return null;
 
-        if (C.checkNullOrEmpty(key))
+        if (Func.checkNullOrEmpty(key))
             key = Data;
 
         com.alibaba.fastjson.JSONObject jsonObj = JSON.parseObject(jsonStr);
@@ -425,8 +390,8 @@ public class JsonPluginsUtil
     public static boolean isRequestSuccess(String jsonString)
     {
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
-        String code = C.parseStr(jsonObject.getString(Code ));
-        if (C.checkNullOrEmpty(code))
+        String code = Func.parseStr(jsonObject.getString(Code ));
+        if (Func.checkNullOrEmpty(code))
             return false;
 
         if (code.equalsIgnoreCase("0000"))
@@ -442,18 +407,18 @@ public class JsonPluginsUtil
      */
     public static String isRequestSuccessBackId(String jsonString)throws Exception
     {
-        if (C.checkNullOrEmpty(jsonString))
+        if (Func.checkNullOrEmpty(jsonString))
             return null;
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code")))
             throw new Exception("保存失败："+((jsonObject.has("msg"))?jsonObject.getString("msg"):"保存信息未写全"));
-        String id = C.parseStr(jsonObject.getString(Id ));
-        if (C.checkNullOrEmpty(Id))
+        String id = Func.parseStr(jsonObject.getString(Id ));
+        if (Func.checkNullOrEmpty(Id))
             return "";
         return id;
     }
 
-    private static String getData(String jsonString)throws Exception{
+    public static String getData(String jsonString) throws Exception {
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code"))){
             throw new Exception("查询失败："+((jsonObject.has("msg"))?jsonObject.getString("msg"):"缺少查询条件"));
@@ -462,7 +427,7 @@ public class JsonPluginsUtil
     }
 
 
-    private static JSONArray getListData(String jsonString)throws Exception{
+    public static JSONArray getListData(String jsonString) throws Exception {
         JSONObject jsonObject = JSONObject.fromObject(jsonString);
         if(!"0000".equals(jsonObject.getString("code"))){
             throw new Exception("查询失败："+((jsonObject.has("msg"))?jsonObject.getString("msg"):"缺少查询条件"));

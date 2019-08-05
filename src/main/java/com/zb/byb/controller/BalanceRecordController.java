@@ -1,6 +1,6 @@
 package com.zb.byb.controller;
 
-import com.zb.byb.common.C;
+import com.zb.byb.common.Func;
 import com.zb.byb.common.Commonconst;
 import com.zb.byb.entity.Balance;
 import com.zb.byb.entity.BalanceRecord;
@@ -38,7 +38,7 @@ public class BalanceRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -57,7 +57,7 @@ public class BalanceRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -79,7 +79,7 @@ public class BalanceRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -97,7 +97,7 @@ public class BalanceRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -115,7 +115,7 @@ public class BalanceRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -126,7 +126,7 @@ public class BalanceRecordController {
     @PostMapping("/signer")
     public ResponseEntity<List<BalanceRecord>> signer(String rcordId,@RequestBody FileEntry fileEntry, HttpServletRequest request){
         String userId = (String) request.getSession().getAttribute("userId");
-        
+
         fileEntry= Image2Base64Util.subBase64(fileEntry);
         List<FileEntry> signerList=new ArrayList<>();
         signerList.add(fileEntry);
@@ -141,7 +141,7 @@ public class BalanceRecordController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

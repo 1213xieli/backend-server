@@ -1,10 +1,8 @@
 package com.zb.byb.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.C;
+import com.zb.byb.common.Func;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.DeathApply;
-import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.SaleNotice;
 import com.zb.byb.service.SaleNoticeService;
 import com.zb.byb.util.Image2Base64Util;
@@ -39,7 +37,7 @@ public class SaleNoticeController {
         catch (Exception e)
         {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -48,14 +46,14 @@ public class SaleNoticeController {
     @GetMapping("/querySale")
     public ResponseEntity<?> viewSale(HttpServletRequest request) {
         try {
-            String custId = C.parseStr(request.getSession().getAttribute("custId"));
+            String custId = Func.parseStr(request.getSession().getAttribute("custId"));
 //            String custId = "Va4AAABL9PPMns7U";
             List<SaleNotice> list = saleNoticeService.getSaleRecordList(custId);
             PageInfo page = new PageInfo(list);
             return ResponseEntity.buildSuccess(page);
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

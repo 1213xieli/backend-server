@@ -2,16 +2,16 @@ package com.zb.byb.controller;
 
 
 import com.github.pagehelper.PageInfo;
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.*;
+import com.zb.byb.common.Func;
+import com.zb.byb.entity.Death;
 import com.zb.byb.entity.DeathApply;
 import com.zb.byb.entity.FeedRecord;
 import com.zb.byb.entity.FileEntry;
 import com.zb.byb.service.BatchRecordService;
 import com.zb.byb.service.DeathApplyService;
 import com.zb.byb.util.DateUtil;
-import com.zb.byb.util.HttpConnectionUtil;
+import com.zb.byb.util.HttpUtils;
 import com.zb.byb.util.Image2Base64Util;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
@@ -46,15 +46,15 @@ public class DeathApplyController {
         {
             List<FileEntry> list=new ArrayList<>();
             for (String serverId : deathApply.getServerIds()) {
-                File file = HttpConnectionUtil.downloadWxImg(serverId);
+                File file = HttpUtils.downloadWxImg(serverId);
                 try {
-                    if (file == null) { 
+                    if (file == null) {
                         throw new Exception("获取文件失败");
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
                     Message message = new Message();
-                    message.setCode(C.parseStr(Commonconst.FailStatus));
+                    message.setCode(Func.parseStr(Commonconst.FailStatus));
                     message.setMessage(e.getMessage());
                     return ResponseEntity.build(Commonconst.FailStatus, message);
                 }
@@ -67,7 +67,7 @@ public class DeathApplyController {
             deathApply.setImgUrl(list);
         }
         try {
-            if(C.checkNullOrEmpty(userId)){
+            if(Func.checkNullOrEmpty(userId)){
                 throw new Exception("未传人养户id");
             }
             //解密成功
@@ -78,7 +78,7 @@ public class DeathApplyController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -102,7 +102,7 @@ public class DeathApplyController {
         } catch (Exception e) {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -113,7 +113,7 @@ public class DeathApplyController {
     public ResponseEntity<Death> queryInfoById(String rcordId)
     {
         try{
-            if (C.checkNull(rcordId))
+            if (Func.checkNull(rcordId))
                 throw new Exception("未传入rcordId");
             return ResponseEntity.buildSuccess(deathApplyService.getDeathApplyRecordbyId(Image2Base64Util.getBase64Decoder(rcordId)));
         }
@@ -121,7 +121,7 @@ public class DeathApplyController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -132,7 +132,7 @@ public class DeathApplyController {
     public ResponseEntity<DeathApply> cancleById(String rcordId)
     {
         try{
-            if (C.checkNull(rcordId))
+            if (Func.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             return ResponseEntity.buildSuccess(deathApplyService.cancleDeathApply(Image2Base64Util.getBase64Decoder(rcordId)));
         }
@@ -140,7 +140,7 @@ public class DeathApplyController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -157,7 +157,7 @@ public class DeathApplyController {
         DeathApply deathApply=new DeathApply();
         deathApply.setRcordId(Image2Base64Util.getBase64Decoder(rcordId));
         deathApply.setSignerList(signerList);
-            if (C.checkNull(rcordId))
+            if (Func.checkNull(rcordId))
                 throw new Exception("未传入rcordId.");
             String s = deathApplyService.signerDeathApply(deathApply);
             if (!"0000".equals(JSONObject.fromObject(s).getString("code")))
@@ -168,7 +168,7 @@ public class DeathApplyController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -189,7 +189,7 @@ public class DeathApplyController {
         {
             e.printStackTrace();
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

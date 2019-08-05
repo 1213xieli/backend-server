@@ -1,8 +1,12 @@
 package com.zb.byb.util;
 
 
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.FileEntry;
+import lombok.Cleanup;
+import lombok.Data;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -13,16 +17,8 @@ import java.io.*;
 * @Author: shaoys
 * @Date: Created in 10:41 2019/5/14
 **/
+@Data
 public class Image2Base64Util {
-
-//    public static void main(String[] args) throws Exception {
-//        File file = new File("C:\\Users\\pc2\\Desktop\\3.jpg");//待处理的图片
-//        String imgbese = fileToBase64(file);
-//        System.out.println(imgbese);
-//////        System.out.println(imgbese.length());
-////        System.out.println(imgbese);
-////    decoderBase64File(imgbese,"C:\\Users\\pc2\\Desktop\\4.jpg","C:\\Users\\pc2\\Desktop");
-//    }
 
     /**
      * 将图片转换成Base64编码
@@ -32,14 +28,14 @@ public class Image2Base64Util {
      */
     public static String getImgStr(File imgFile) {
         //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
-        InputStream in = null;
         byte[] data = null;
         //读取图片字节数组
         try {
-            in = new FileInputStream(imgFile);
-            data = new byte[in.available()];
-            in.read(data);
-            in.close();
+            @Cleanup InputStream in = new FileInputStream(imgFile);
+            data = IOUtils.toByteArray(in);
+//            data = new byte[in.available()];
+//            in.read(data);
+//            in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -117,23 +113,23 @@ public class Image2Base64Util {
     /**
      * 字符串加密
      */
-
     public static String getBase64Encoder(String str) throws IOException {
-        String encode = new BASE64Encoder().encode(str.getBytes());
-        return encode;
+        if (Func.checkNullOrEmpty(str))
+            return null;
+
+        return new BASE64Encoder().encode(str.getBytes());
     }
 
     /**
      * 字符串解密
      */
-
     public static String getBase64Decoder(String str) throws IOException {
-        if(str==null ){
+        if (Func.checkNullOrEmpty(str))
             return null;
-        };
-        String s = new String(new BASE64Decoder().decodeBuffer(str));
-        return s;
+
+        return new String(new BASE64Decoder().decodeBuffer(str));
     }
+
     /**
     * @Function: base64解码为文件
     * @Author: shaoys
@@ -157,10 +153,11 @@ public class Image2Base64Util {
      * @Date: Created in 11:30 2019/5/10
      **/
     public static String fileToBase64(File file) throws IOException {
-        InputStream in = new FileInputStream(file);
-        byte[] data = new byte[in.available()];
-        in.read(data);
-        in.close();
+        if (file == null)
+            return null;
+
+        @Cleanup InputStream in = new FileInputStream(file);
+        byte[] data = IOUtils.toByteArray(in);
         return new BASE64Encoder().encode(data);
     }
     /**
@@ -190,15 +187,15 @@ public class Image2Base64Util {
         //将图片文件转化为字节数组字符串，并对其进行Base64编码处理
         //待处理的图片
         String imgFile = path;
-        InputStream in = null;
         byte[] data = null;
         //读取图片字节数组
         try
         {
-            in = new FileInputStream(imgFile);
-            data = new byte[in.available()];
-            in.read(data);
-            in.close();
+            @Cleanup InputStream in = new FileInputStream(imgFile);
+//            data = new byte[in.available()];
+//            in.read(data);
+//            in.close();
+            data = IOUtils.toByteArray(in);
         }
         catch (IOException e)
         {
@@ -210,8 +207,4 @@ public class Image2Base64Util {
         return encoder.encode(data);
     }
 
-//    public static void main(String[] args) {
-//        String abc=GetImageStr("C:\\fakepath\\企业微信截图_1557473165743.png");
-//        System.out.println(abc);
-//    }
 }

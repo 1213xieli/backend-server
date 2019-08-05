@@ -3,22 +3,23 @@ package com.zb.byb.util;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zb.byb.common.*;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
+import com.zb.byb.common.Func;
+import com.zb.byb.common.MyX509TrustManager;
+import com.zb.byb.config.AccessToken;
+import com.zb.byb.config.Ticket;
+import com.zb.byb.entity.FileEntry;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import java.io.*;
-import java.net.*;
-
-import static com.zb.byb.util.Image2Base64Util.getBase64FromInputStream;
+import java.net.ConnectException;
+import java.net.URL;
 
 /**
  * 公众平台通用接口工具类
- * 
+ *
  * @author gongxunqiang
  */
 public class WeixinUtils {
@@ -37,9 +38,13 @@ public class WeixinUtils {
 
 	//获取微信个人信息接口
 	public final static String userid_url = "https://api.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE";
+
+	//发送消息
+	public final static String message_url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN";
+
 	/**
 	 * 发起https请求并获取结果
-	 * 
+	 *
 	 * @param requestUrl
 	 *            请求地址
 	 * @param requestMethod
@@ -105,8 +110,60 @@ public class WeixinUtils {
 	}
 
 	/**
+	 * 获取phone
+	 *
+	 * @param token  凭证
+	 * @param userId 密钥
+	 * @return
+	 */
+	public static String getPhone(String token, String userId) {
+		String phone = "";
+
+		String requestUrl = phone_url.replace("ACCESS_TOKEN", token).replace("USERID", userId);
+		String json = httpRequest(requestUrl, "GET", null);
+
+		// 如果请求成功
+		if (null != json) {
+			try {
+				ObjectMapper objectMapper = new ObjectMapper();
+				JsonNode jsonNode = objectMapper.readTree(json);
+				phone = jsonNode.get("mobile").asText();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return phone;
+	}
+
+	/**
+	 * 企业号获取userid
+	 *
+	 * @param token 凭证
+	 * @param code  密钥
+	 * @return
+	 */
+	public static String getUserId(String token, String code) {
+		String userId = "";
+		String requestUrl = userid_url.replace("ACCESS_TOKEN", token).replace("CODE", code);
+		String json = httpRequest(requestUrl, "GET", null);
+
+		// 如果请求成功
+		if (null != json) {
+			try {
+				ObjectMapper objectMapper = new ObjectMapper();
+				JsonNode jsonNode = objectMapper.readTree(json);
+				userId = jsonNode.get("UserId").asText();
+			} catch (Exception e) {
+				userId = "";
+				e.printStackTrace();
+			}
+		}
+		return userId;
+	}
+
+	/**
 	 * 获取access_token
-	 * 
+	 *
 	 * @param appid
 	 *            凭证
 	 * @param appsecret
@@ -132,30 +189,9 @@ public class WeixinUtils {
 	}
 
 
-
-	/**
-	 * 创建菜单
-	 * 
-	 * @param menu
-	 *            菜单实例
-	 * @param accessToken
-	 *            有效的access_token
-	 * @return 0表示成功，其他值表示失败
-	 */
-	public static String createMenu(Menu menu, String accessToken) throws IOException{
-
-		// 拼装创建菜单的url
-		String url = menu_create_url.replace("ACCESS_TOKEN", accessToken);
-		// 将菜单对象转换成json字符串
-		ObjectMapper objectMapper = new ObjectMapper();
-		String jsonMenu = objectMapper.writeValueAsString(menu);
-
-		return httpRequest(url, "POST", jsonMenu);
-	}
-
 	/**
 	 * 获取jsapi_ticket
-	 * 
+	 *
 	 * @return
 	 */
 	public static Ticket getJsApiTicket(String accessToken) {
@@ -175,59 +211,43 @@ public class WeixinUtils {
 		return ticket;
 	}
 
-	/**
-	 * 获取phone
-	 * 
-	 * @param token
-	 *            凭证
-	 * @param userId
-	 *            密钥
-	 * @return
-	 */
-	public static String getPhone(String token, String userId) {
-		String phone = "";
-
-		String requestUrl = phone_url.replace("ACCESS_TOKEN", token).replace("USERID", userId);
-		String json = httpRequest(requestUrl, "GET", null);
-
-		// 如果请求成功
-		if (null != json) {
-			try {
-				ObjectMapper objectMapper = new ObjectMapper();
-				JsonNode jsonNode = objectMapper.readTree(json);
-				phone = jsonNode.get("mobile").asText();
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return phone;
-	}
 
 	/**
 	 * 企业号获取userid
-	 * 
+	 *
 	 * @param token
 	 *            凭证
-	 * @param code
+	 * @param body
 	 *            密钥
 	 * @return
 	 */
-	public static String getUserId(String token, String code) {
-		String userId = "";
-		String requestUrl = userid_url.replace("ACCESS_TOKEN", token).replace("CODE", code);
-		String json = httpRequest(requestUrl, "GET", null);
-
-		// 如果请求成功
-		if (null != json) {
-			try {
-				ObjectMapper objectMapper = new ObjectMapper();
-				JsonNode jsonNode = objectMapper.readTree(json);
-				userId = jsonNode.get("UserId").asText();
-			}catch (Exception e) {
-				userId = "";
-				e.printStackTrace();
-			}
-		}
-		return userId;
+	public static String pushMessage(String token, String body) {
+		String requestUrl = message_url.replace("ACCESS_TOKEN", token);
+		String json = httpRequest(requestUrl, "POST", body);
+		return json;
 	}
+
+	/* *
+	 * @description 根据serverid获取图片(都是以jpg)
+	 * @author xieli
+	 * @date  15:52 2019/7/26
+	 * @param [serverId]
+	 * @return com.zb.byb.entity.FileEntry
+	 **/
+	public static void getFileEntryByServerId(FileEntry fileEntry, String serverId) throws Exception {
+		if (Func.checkNullOrEmpty(serverId))
+			return;
+
+		File file = HttpUtils.downloadWxImg(serverId);
+		if (file == null)
+			return;
+
+		String base64Img = Image2Base64Util.fileToBase64(file);
+		fileEntry.setImgContent(base64Img);
+		fileEntry.setImgType("jpg");
+		fileEntry.setServerId(serverId);
+
+        return;
+	}
+
 }

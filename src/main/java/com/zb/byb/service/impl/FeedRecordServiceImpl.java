@@ -1,15 +1,17 @@
 package com.zb.byb.service.impl;
 
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.FeedApply;
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.FeedRecord;
-
 import com.zb.byb.entity.Pigwash;
 import com.zb.byb.service.FeedRecordService;
-import com.zb.byb.util.*;
+import com.zb.byb.util.BackTransmitUtil;
+import com.zb.byb.util.Image2Base64Util;
+import com.zb.byb.util.JsonPluginsUtil;
+import com.zb.byb.util.MethodName;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 @Service
 public class FeedRecordServiceImpl implements FeedRecordService {
+    @Autowired
+    private BackTransmitUtil backTransmitUtil;
     @Override
     public String addFeedRecord(FeedRecord feedRecord, String userId) throws Exception{
 
@@ -28,14 +32,14 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         map.put("source", Commonconst.WX_Flag);
         map.put("data",feedRecord);
         String data= JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_SUPPLIESBILL);
+        String jsonStr = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_SUPPLIESBILL);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonStr);
     }
 
 
     @Override
     public List<FeedRecord> queryFeedRecordList(String userId,FeedRecord feedRecord) throws Exception{
-        if (C.checkNullOrEmpty(userId))
+        if (Func.checkNullOrEmpty(userId))
             return new ArrayList<>();
 
         Map<String, Object> map = new HashMap<>();
@@ -43,7 +47,7 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         map.put("source","WECHAT");//微信
         map.put("data",feedRecord);//参数QUERY_
         String data=JSONObject.fromObject(map).toString();
-        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SUPPLIESBILL);
+        String jsonBack=backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SUPPLIESBILL);
         if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
             return null;
         }
@@ -62,7 +66,7 @@ public class FeedRecordServiceImpl implements FeedRecordService {
 
     @Override
     public FeedRecord queryFeedRecordbyRcordId(String rcordId) throws Exception {
-        if (C.checkNullOrEmpty(rcordId))
+        if (Func.checkNullOrEmpty(rcordId))
             return new FeedRecord();
         Map<String, Object> map = new HashMap<>();
         map.put("source", Commonconst.WX_Flag);
@@ -70,7 +74,7 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         feedRecord.setRcordId(rcordId);
         map.put("data", feedRecord);
         String data=JSONObject.fromObject(map).toString();
-        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_SUPPLIESBILL);
+        String jsonBack=backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_SUPPLIESBILL);
         //{"code":"0000","data":[{"billState":"保存","billStateIndex":"10","feedDate":"2019-04-19","feedList":[{"batchId":"QOKuwU+4Q5uVQ5msWQNUVEMbbjA=","batchName":"001","columnQty":0,"consumeQty":112,"feedId":"Va4AAAAJLFb1CZfS","feedName":"保育料","id":"Va4AAAib16PHfMLr"}],"rcordId":"Va4AAAib16Kzx1nH","state":1}],"msg":"查询成功!"}
         if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
             return null;
@@ -100,19 +104,17 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         data.put("batchid",batchId);
         map.put("data",data);
         String dataStr=JSONObject.fromObject(map).toString();
-//        System.out.println(dataStr);
-        String jsonBack= BackTransmitUtil.newInvokeFunc(dataStr, "selectFeedVarieties", Resource.URL_BATCH_TEST);
+        String jsonBack= backTransmitUtil.newInvokeFunc(dataStr, "selectFeedVarieties");
         if(!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))){
             return null;
         }
         JSONArray pigwashList=JSONObject.fromObject(jsonBack).getJSONObject("feeding").getJSONArray("data");//feeding->data数组
-        //Object[] objects = pigwashList.toArray();
         return JSONArray.toList(pigwashList,Pigwash.class);
     }
 
     @Override
     public String cancleFeedRecord(String rcordId) throws Exception {
-        if (C.checkNullOrEmpty(rcordId))
+        if (Func.checkNullOrEmpty(rcordId))
             return null;
         Map<String, Object> map = new HashMap<>();
         map.put("source", Commonconst.WX_Flag);
@@ -120,7 +122,7 @@ public class FeedRecordServiceImpl implements FeedRecordService {
         feedRecord.setRcordId(rcordId);
         map.put("data", feedRecord);
         String data=JSONObject.fromObject(map).toString();
-        String jsonBack=BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_SUPPLIESBILL);
+        String jsonBack=backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_SUPPLIESBILL);
         return  jsonBack;
     }
 

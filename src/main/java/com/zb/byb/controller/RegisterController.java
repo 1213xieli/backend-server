@@ -1,25 +1,20 @@
 package com.zb.byb.controller;
 
-import com.zb.byb.common.C;
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.common.Constants;
-
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.ServiceDept;
 import com.zb.byb.entity.UserInfo;
 import com.zb.byb.service.LoginService;
-import com.zb.byb.util.JDService;
-import com.zb.byb.util.MethodName;
-import com.zb.byb.util.RequestUtils;
+import com.zb.byb.util.HttpUtils;
 import com.zb.framework.common.entity.Message;
 import com.zb.framework.common.entity.ResponseEntity;
 import io.swagger.annotations.ApiOperation;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.List;
 
 /**
  * 注册信息
@@ -32,8 +27,7 @@ public class RegisterController {
     @ApiOperation("保存注册信息")
     @PostMapping("/save")
     public ResponseEntity<?> register(@RequestBody UserInfo userInfo, HttpServletRequest request) {
-        String openId = RequestUtils.getCookieByName(request, Constants.OPEN_ID);
-//        System.out.println("openId="+openId);
+        String openId = HttpUtils.getCookieByName(request, Commonconst.OPEN_ID);
         String phone=userInfo.getTelNum();
         String code=userInfo.getInvitationCode();
         //openId="12345687";
@@ -48,11 +42,10 @@ public class RegisterController {
                 throw new Exception("名字不能为空");
             }
             String backData=loginService.register(userInfo,openId);
-//            System.out.println("data="+backData);
             return ResponseEntity.buildSuccess(backData);
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -74,7 +67,7 @@ public class RegisterController {
             return ResponseEntity.buildSuccess(list);
         }catch (Exception e){
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }
@@ -106,7 +99,7 @@ public class RegisterController {
             return ResponseEntity.buildSuccess(deptList);
         } catch (Exception e) {
             Message message = new Message();
-            message.setCode(C.parseStr(Commonconst.FailStatus));
+            message.setCode(Func.parseStr(Commonconst.FailStatus));
             message.setMessage(e.getMessage());
             return ResponseEntity.build(Commonconst.FailStatus, message);
         }

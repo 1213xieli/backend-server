@@ -1,6 +1,6 @@
 package com.zb.byb.service.impl;
 
-import com.zb.byb.controller.LoginController;
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.BindInfo;
 import com.zb.byb.entity.Introducer;
 import com.zb.byb.entity.ServiceDept;
@@ -9,31 +9,27 @@ import com.zb.byb.service.LoginService;
 import com.zb.byb.util.BackTransmitUtil;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
-import com.zb.framework.common.constant.Global;
-import com.zb.framework.common.entity.Message;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
-
 @Service
 public class LoginServiceImpl implements LoginService {
     private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
-
+    @Autowired
+    private BackTransmitUtil backTransmitUtil;
     /**
      * 绑定用户
      *
@@ -45,16 +41,14 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean bind(BindInfo userInfo, String openId) throws Exception {
 
-        if (openId == null || openId.length() == 0) {
+        if (Func.checkNullOrEmpty(openId)) {
             throw new Exception("未获取到openId");
         }
         Map<String, Object> map = new HashMap<>();
         map.put("data", userInfo);
         map.put("openId", openId);
         String data = JSONObject.fromObject(map).toString();
-        logger.info("----dataStr----" + data);
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
-        logger.info("----jsonStr----" + jsonStr);
+        String jsonStr = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
         JSONObject jsonObject=JSONObject.fromObject(jsonStr);
         String status = jsonObject.getString("code");
         if(!"0000".equals(status)){
@@ -101,9 +95,7 @@ public class LoginServiceImpl implements LoginService {
         HttpEntity<String> requestEntity = new HttpEntity<String>(null, headers);
         ResponseEntity<String> r = restTemplate.exchange(url.toString(), HttpMethod.POST, requestEntity, String.class);
         String jsonback = r.getBody();
-//        System.out.println("json=" + jsonback);
         int code1 = JSONObject.fromObject(jsonback).getInt("status");
-//        System.out.println(code1);
         if (200 == code1) {
             return true;
         }
@@ -132,7 +124,7 @@ public class LoginServiceImpl implements LoginService {
         Map<String, Object> map = new HashMap<>();
         map.put("openId", openId);
         String data = JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_UNBIND_CUSTINFO);
+        String jsonStr = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_UNBIND_CUSTINFO);
         return jsonStr;
     }
 
@@ -151,7 +143,7 @@ public class LoginServiceImpl implements LoginService {
         map.put("data", userInfo);
         map.put("openId", openId);
         String data = JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
+        String jsonStr = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_BIND_CUSTINFO);
         return jsonStr;
     }
 
@@ -163,7 +155,7 @@ public class LoginServiceImpl implements LoginService {
         map.put("openId", openId);//微信id
         map.put("data", userInfo);//开户信息
         String data = JSONObject.fromObject(map).toString();
-        String jsonStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_CUSTSTART);
+        String jsonStr = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_CUSTSTART);
         return jsonStr;
     }
 
@@ -174,7 +166,7 @@ public class LoginServiceImpl implements LoginService {
         map.put("source", "WECHAT");//微信
         map.put("data", introducer);//
         String data = JSONObject.fromObject(map).toString();
-        String jsonBack = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_INTRODUCER_CUSTSTART);
+        String jsonBack = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_INTRODUCER_CUSTSTART);
         if (!"0000".equals(JSONObject.fromObject(jsonBack).getString("code"))) {
             return null;
         }
@@ -191,7 +183,7 @@ public class LoginServiceImpl implements LoginService {
         map.put("source", "WECHAT");//微信
         map.put("data", serviceDept);//
         String data = JSONObject.fromObject(map).toString();
-        String jsonBack = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SERVICE);
+        String jsonBack = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_SERVICE);
         return JsonPluginsUtil.jsonTOList(jsonBack, ServiceDept.class);
     }
 }

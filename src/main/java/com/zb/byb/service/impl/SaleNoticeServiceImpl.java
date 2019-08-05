@@ -1,7 +1,7 @@
 package com.zb.byb.service.impl;
 
 import com.zb.byb.common.Commonconst;
-import com.zb.byb.entity.BalanceRecord;
+import com.zb.byb.common.Func;
 import com.zb.byb.entity.SaleNotice;
 import com.zb.byb.service.SaleNoticeService;
 import com.zb.byb.util.BackTransmitUtil;
@@ -9,8 +9,8 @@ import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.zb.byb.common.C;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +23,11 @@ import java.util.Map;
  **/
 @Service
 public class SaleNoticeServiceImpl implements SaleNoticeService {
-
+    @Autowired
+    private BackTransmitUtil backTransmitUtil;
     @Override
     public List<SaleNotice> getSaleRecordList(String id) throws Exception {
-        if (C.checkNullOrEmpty(id))
+        if (Func.checkNullOrEmpty(id))
             return new ArrayList<>();
 
         SaleNotice saleNotice = new SaleNotice();
@@ -40,8 +41,7 @@ public class SaleNoticeServiceImpl implements SaleNoticeService {
 
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_QUERY_SALE);
-//        System.out.println("销售列表，查询列表---" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_QUERY_SALE);
         //销售通知base64加密
         List<SaleNotice> saleNotices=JsonPluginsUtil.jsonToBeanList(jsonData, SaleNotice.class);
         for (int i=0;i<saleNotices.size();i++){
@@ -53,7 +53,7 @@ public class SaleNoticeServiceImpl implements SaleNoticeService {
 
     @Override
     public SaleNotice getQuerySale(String id) throws Exception {
-        if (C.checkNullOrEmpty(id))
+        if (Func.checkNullOrEmpty(id))
             return new SaleNotice();
 
         SaleNotice saleNotice = new SaleNotice();
@@ -63,8 +63,7 @@ public class SaleNoticeServiceImpl implements SaleNoticeService {
         map.put("source", Commonconst.WX_Flag);
         // 要传入数据进行转化
         String data= JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_VIEW_SALE);
-//        System.out.println("单个销售,查询列表---" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_VIEW_SALE);
         return JsonPluginsUtil.jsonToBean(jsonData, SaleNotice.class);
     }
 }

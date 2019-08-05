@@ -10,6 +10,7 @@ import com.zb.byb.util.Image2Base64Util;
 import com.zb.byb.util.JsonPluginsUtil;
 import com.zb.byb.util.MethodName;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,31 +23,21 @@ import java.util.Map;
  */
 @Service
 public class EquipmentApplyServiceImpl implements EquipmentApplyService {
+    @Autowired
+    private BackTransmitUtil backTransmitUtil;
     @Override
     public String saveInfo(EquipmentApply info) throws Exception {
         if (info == null) {
             throw new Exception("无法保存");
         }
 
-        //info.setEquipAmt("100");
-//        info.setIsEntrust(true);
-        //info.setEntrustorId("vKYTT1wJTV+A7XdlVyduYMyeytQ=");
-//        info.setEntrustorName("测试");
-        //info.setDescription("测试idcard");
         Map<String, Object> map = new HashMap<>();
         map.put("custId", info.getCustId());
         map.put("source", Commonconst.WX_Flag);
         map.put("data", info);
         String data = JSONObject.fromObject(map).toString();
-        String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_EQUIPMENTRECBILL);
-//        System.out.println("设备申请，保存方法----" + jsonBackStr);
+        String jsonBackStr = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SAVE_EQUIPMENTRECBILL);
         return JsonPluginsUtil.isRequestSuccessBackId(jsonBackStr);
-
-//        String jsonBackStr = BackTransmitUtil.invokeFunc(data,"queryEntrust");
-//        //{"code":"0000","count":1,"data":[{"id":"vKYTT1wJTV+A7XdlVys=","idcard":"测试idcard","isDefault":true,"name":"测试","phone":"测试phone"}],"msg":"查询成功!"}
-//        System.out.println(jsonBackStr);
-//        return null;
-
     }
 
     @Override
@@ -60,9 +51,8 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         map.put("source", Commonconst.WX_Flag);
         map.put("data", info);
         String data = JSON.toJSONString(map);
-        String jsonBackStr = BackTransmitUtil.invokeFunc(data, MethodName.Method_Name_queryEntrust);
+        String jsonBackStr = backTransmitUtil.invokeFunc(data, MethodName.Method_Name_queryEntrust);
         //{"code":"0000","count":1,"data":[{"id":"vKYTT1wJTV+A7XdlVys=","idcard":"测试idcard","isDefault":true,"name":"测试","phone":"测试phone"}],"msg":"查询成功!"}
-//        System.out.println("查询委托人列表----" + jsonBackStr);
         return JsonPluginsUtil.jsonToBeanList(jsonBackStr, EntrustInfo.class);
     }
 
@@ -78,8 +68,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
 
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_COUNT_EQUIPMENTRECBILL);
-//        System.out.println("设备申请，金额初始化----" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_COUNT_EQUIPMENTRECBILL);
         //{"code":"0000","data":0,"msg":"查询成功!"}
         JSONObject jsonObject = JSONObject.fromObject(jsonData);
         if (!"0000".equals(jsonObject.getString("code"))) {
@@ -98,9 +87,8 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
 
         // 要传入数据进行转化
         String data = JSON.toJSONString(map);
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENTRECBILL);
         //{"code":"0000","count":1,"data":[{"billStatus":"审核","billStatusIndex":"30","bizDate":"2019-04-28","custId":"Va4AAACPobTMns7U","custName":"陈帮平","entrys":[{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","model":"臭氧消毒机","price":836,"qty":1,"unit":"台"}],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAieujeZvJQc","serviceId":"Va4AAAAbxwL4nGYi","serviceName":"弋阳服务部","state":1}],"msg":"查询成功!"}
-//        System.out.println("设备申请，查询query方法----" + jsonData);
         List<EquipmentApply> equipmentApplies = JsonPluginsUtil.jsonToBeanList(jsonData, EquipmentApply.class);
         //设备领用rcordid进行base64加密
         for (int i = 0; i < equipmentApplies.size(); i++) {
@@ -120,8 +108,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
 
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
-//        System.out.println("设备查询view方法----" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_VIEW_EQUIPMENTRECBILL);
         // {"code":"0000","data":{"actEntrys":[],"billStatus":"审核","billStatusIndex":"30","bizDate":"2019-04-28","custId":"Va4AAACPobTMns7U","custName":"陈帮平","entrys":[{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","model":"臭氧消毒机","price":836,"qty":1,"unit":"台"},{"amount":836,"id":"Va4AAAieujjcx7W2","materialId":"Va4AAAGrS/ZECefw","materialName":"臭氧消毒机","price":836,"qty":1}],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAieujeZvJQc","serviceId":"Va4AAAAbxwL4nGYi","serviceName":"弋阳服务部","signerImgs":[{"img":"http://10.88.1.10:8080/share.cgi/201904291447053050zengneng_20190429144705726.base64?ssid=03x0LOR&fid=03x0LOR&path=%2F99BC941C%2F20190429&filename=201904291447053050zengneng_20190429144705726.base64&openfolder=normal&ep="}],"state":2},"msg":"查询成功!"}
         //设备查询view方法----{"code":"0000","data":{"actEntrys":[],"billStatus":"保存","billStatusIndex":"10","bizDate":"2019-05-07","custId":"Va4AAAO6drnMns7U","custName":"胡亿龙","entrys":[],"equipAmt":0,"isEntrust":false,"rcordId":"Va4AAAiiofiZvJQc","serviceId":"Va4AAAAZJeX4nGYi","serviceName":"洋河服务部","signerUrl":[{"img":"http://10.88.1.10:8080/share.cgi/201905071859250210zengnengSIGNER_20190507185925489.jpg?ssid=03x0LOR&fid=03x0LOR&path=%2F99BC941C%2F20190506&filename=201905071859250210zengnengSIGNER_20190507185925489.jpg&openfolder=normal&ep="}],"state":2},"msg":"查询成功!"}
         return JsonPluginsUtil.jsonToBean(jsonData, EquipmentApply.class);
@@ -138,7 +125,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
 
         // 要传入数据进行转化
         String data = JSONObject.fromObject(map).toString();
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_EQUIPMENTRECBILL);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_DELETE_EQUIPMENTRECBILL);
         return jsonData;
     }
 
@@ -152,8 +139,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         map.put("data", param);
         // 要传入数据进行转化
         String data = JSON.toJSONString(map);
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENT);
-//        System.out.println("搜索设备----" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_QUERY_EQUIPMENT);
         return JsonPluginsUtil.jsonTOList(jsonData, Equipment.class);
     }
 
@@ -164,8 +150,7 @@ public class EquipmentApplyServiceImpl implements EquipmentApplyService {
         map.put("data", equipmentApply);
         // 要传入数据进行转化
         String data = JSON.toJSONString(map);
-        String jsonData = BackTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_EQUIPMENTRECBILL);
-//        System.out.println("签名----" + jsonData);
+        String jsonData = backTransmitUtil.invokeFunc(data, MethodName.METHOD_NAME_SIGNER_EQUIPMENTRECBILL);
         return jsonData;
     }
 }

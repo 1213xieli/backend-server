@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.zb.byb</groupId>
-    <artifactId>yzfwh</artifactId>
+    <artifactId>yhfwh</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <properties>
         <version.swagger>2.9.2</version.swagger>
     </properties>
@@ -45,16 +46,6 @@
             <groupId>com.zb.framework</groupId>
             <artifactId>zb-rest-spring-boot-starter</artifactId>
             <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${version.swagger}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${version.swagger}</version>
         </dependency>
 
         <dependency>
@@ -94,7 +85,7 @@
             <artifactId>jave</artifactId>
             <version>1.0.4</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.github.drtrang</groupId>
             <artifactId>druid-spring-boot2-starter</artifactId>
@@ -147,7 +138,7 @@
 
     </dependencies>
     <build>
-        <finalName>account</finalName>
+        <finalName>yhfwh</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -101,3 +101,8 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
+<<<<<<< HEAD
+/target/
+=======
+target/
+>>>>>>> 31c6f424849117550977ac578c139c31ef11349e
